@@ -10,7 +10,7 @@ import UIKit
 
 final class AppController: NSObject {
 
-    private var rootViewController: UIViewController!
+    private var rootViewController: RootViewController!
     
     var username: String = ""
     
@@ -24,7 +24,7 @@ final class AppController: NSObject {
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        self.rootViewController = mainStoryboard.instantiateViewController(withIdentifier: "RootViewController") as! ViewController
+        self.rootViewController = mainStoryboard.instantiateViewController(withIdentifier: "RootViewController") as! RootViewController
         
         window.rootViewController = self.rootViewController
         
