@@ -14,7 +14,7 @@ enum LoginType : Int {
 }
 
 
-typealias LoginCompletionHandlerType = (_ success: Bool) -> Void
+typealias AsyncCompletionHandlerType = (_ success: Bool) -> Void
 
 
 final class UserModelController: NSObject {
@@ -22,7 +22,7 @@ final class UserModelController: NSObject {
     var isUserAuthenticated: Bool
     var rememberMe: Bool
     
-    private var completionClosure: LoginCompletionHandlerType?
+    private var completionClosure: AsyncCompletionHandlerType?
     private var username: String = ""
     private var password: String = ""
     private var loginType: LoginType = LoginType.None
@@ -57,7 +57,7 @@ final class UserModelController: NSObject {
         return (!self.username.isEmpty && !self.password.isEmpty)
     }
     
-    func authorizeUser (completion: @escaping LoginCompletionHandlerType) {
+    func authorizeUser (completion: @escaping AsyncCompletionHandlerType) {
         completionClosure = completion
         
         if (self.haveCredentials()) {

@@ -12,6 +12,12 @@
 		C1F3E673E6BCF568D5BFCA60 /* Pods_AssistiveResources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EE8B2CD99623C42D941D32 /* Pods_AssistiveResources.framework */; };
 		D24E4DB01DE3EB6F008A11FB /* UserModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DAF1DE3EB6F008A11FB /* UserModelController.swift */; };
 		D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */; };
+		D24E4DB51DE55F7B008A11FB /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DB41DE55F7B008A11FB /* DataService.swift */; };
+		D24E4DB71DE56320008A11FB /* AuthenticationProcess.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */; };
+		D24E4DB91DE5637E008A11FB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DB81DE5637E008A11FB /* LoginViewController.swift */; };
+		D24E4DBB1DE56ACF008A11FB /* AuthenticationProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DBA1DE56ACF008A11FB /* AuthenticationProcessController.swift */; };
+		D24E4DBE1DE56D6F008A11FB /* NavigationPlaybook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DBC1DE56D6F008A11FB /* NavigationPlaybook.swift */; };
+		D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */; };
 		D2C9AD711DDFF5120028341D /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD701DDFF5120028341D /* AppController.swift */; };
 		D2C9AD731DE00A8D0028341D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD721DE00A8D0028341D /* RootViewController.swift */; };
 		D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */; };
@@ -49,6 +55,12 @@
 		AB555A1779314481D6BFF3DC /* Pods_AssistiveResourcesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AssistiveResourcesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D24E4DAF1DE3EB6F008A11FB /* UserModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModelController.swift; sourceTree = "<group>"; };
 		D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertySettings.swift; sourceTree = "<group>"; };
+		D24E4DB41DE55F7B008A11FB /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AuthenticationProcess.storyboard; sourceTree = "<group>"; };
+		D24E4DB81DE5637E008A11FB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D24E4DBA1DE56ACF008A11FB /* AuthenticationProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProcessController.swift; sourceTree = "<group>"; };
+		D24E4DBC1DE56D6F008A11FB /* NavigationPlaybook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationPlaybook.swift; sourceTree = "<group>"; };
+		D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePlaybook.swift; sourceTree = "<group>"; };
 		D2C9AD701DDFF5120028341D /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		D2C9AD721DE00A8D0028341D /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		D2F91E8C1DDFE5D20084F00E /* AssistiveResources.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssistiveResources.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +120,9 @@
 		D24E4DAB1DE3E553008A11FB /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				D24E4DBA1DE56ACF008A11FB /* AuthenticationProcessController.swift */,
+				D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */,
+				D24E4DB81DE5637E008A11FB /* LoginViewController.swift */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -139,6 +154,7 @@
 		D24E4DB31DE3F111008A11FB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				D24E4DB41DE55F7B008A11FB /* DataService.swift */,
 				D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */,
 			);
 			name = Utilities;
@@ -148,7 +164,6 @@
 			isa = PBXGroup;
 			children = (
 				D2C9AD701DDFF5120028341D /* AppController.swift */,
-				D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */,
 				D2C9AD721DE00A8D0028341D /* RootViewController.swift */,
 				D2F91E931DDFE5D20084F00E /* Main.storyboard */,
 			);
@@ -190,6 +205,9 @@
 		D2F91E8E1DDFE5D20084F00E /* AssistiveResources */ = {
 			isa = PBXGroup;
 			children = (
+				D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */,
+				D24E4DBC1DE56D6F008A11FB /* NavigationPlaybook.swift */,
+				D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */,
 				D2C9AD6C1DDFF3800028341D /* AppController */,
 				D24E4DAD1DE3E593008A11FB /* ModelControllers */,
 				D24E4DAC1DE3E581008A11FB /* ProcessControllers */,
@@ -349,6 +367,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D24E4DB71DE56320008A11FB /* AuthenticationProcess.storyboard in Resources */,
 				D2F91E9A1DDFE5D20084F00E /* LaunchScreen.storyboard in Resources */,
 				D2F91E971DDFE5D20084F00E /* Assets.xcassets in Resources */,
 				D2F91E951DDFE5D20084F00E /* Main.storyboard in Resources */,
@@ -514,10 +533,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D24E4DB91DE5637E008A11FB /* LoginViewController.swift in Sources */,
 				D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */,
+				D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */,
 				D24E4DB01DE3EB6F008A11FB /* UserModelController.swift in Sources */,
+				D24E4DBB1DE56ACF008A11FB /* AuthenticationProcessController.swift in Sources */,
 				D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */,
+				D24E4DB51DE55F7B008A11FB /* DataService.swift in Sources */,
 				D2C9AD731DE00A8D0028341D /* RootViewController.swift in Sources */,
+				D24E4DBE1DE56D6F008A11FB /* NavigationPlaybook.swift in Sources */,
 				D2C9AD711DDFF5120028341D /* AppController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
