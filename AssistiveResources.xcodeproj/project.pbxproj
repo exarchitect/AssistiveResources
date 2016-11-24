@@ -18,6 +18,10 @@
 		D24E4DBE1DE56D6F008A11FB /* NavigationPlaybook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DBC1DE56D6F008A11FB /* NavigationPlaybook.swift */; };
 		D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */; };
 		D24E4DC21DE73AFA008A11FB /* ResourcesModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DC11DE73AFA008A11FB /* ResourcesModelController.swift */; };
+		D24E4DC61DE74066008A11FB /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DC51DE74066008A11FB /* Organization.swift */; };
+		D24E4DC81DE74167008A11FB /* PublicEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DC71DE74167008A11FB /* PublicEvent.swift */; };
+		D24E4DCA1DE741E4008A11FB /* DateUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DC91DE741E4008A11FB /* DateUtilities.swift */; };
+		D24E4DCC1DE74750008A11FB /* ProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DCB1DE74750008A11FB /* ProcessController.swift */; };
 		D2C9AD711DDFF5120028341D /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD701DDFF5120028341D /* AppController.swift */; };
 		D2C9AD731DE00A8D0028341D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD721DE00A8D0028341D /* RootViewController.swift */; };
 		D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */; };
@@ -61,6 +65,10 @@
 		D24E4DBC1DE56D6F008A11FB /* NavigationPlaybook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationPlaybook.swift; sourceTree = "<group>"; };
 		D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePlaybook.swift; sourceTree = "<group>"; };
 		D24E4DC11DE73AFA008A11FB /* ResourcesModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesModelController.swift; sourceTree = "<group>"; };
+		D24E4DC51DE74066008A11FB /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
+		D24E4DC71DE74167008A11FB /* PublicEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicEvent.swift; sourceTree = "<group>"; };
+		D24E4DC91DE741E4008A11FB /* DateUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtilities.swift; sourceTree = "<group>"; };
+		D24E4DCB1DE74750008A11FB /* ProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessController.swift; sourceTree = "<group>"; };
 		D2C9AD701DDFF5120028341D /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		D2C9AD721DE00A8D0028341D /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		D2F91E8C1DDFE5D20084F00E /* AssistiveResources.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssistiveResources.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +138,7 @@
 		D24E4DAC1DE3E581008A11FB /* ProcessControllers */ = {
 			isa = PBXGroup;
 			children = (
+				D24E4DCB1DE74750008A11FB /* ProcessController.swift */,
 				D24E4DAB1DE3E553008A11FB /* Authentication */,
 			);
 			name = ProcessControllers;
@@ -156,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */,
+				D24E4DC91DE741E4008A11FB /* DateUtilities.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -163,7 +173,10 @@
 		D24E4DC01DE73AC2008A11FB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */,
 				D24E4DC11DE73AFA008A11FB /* ResourcesModelController.swift */,
+				D24E4DC51DE74066008A11FB /* Organization.swift */,
+				D24E4DC71DE74167008A11FB /* PublicEvent.swift */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -215,7 +228,6 @@
 			children = (
 				D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */,
 				D24E4DBC1DE56D6F008A11FB /* NavigationPlaybook.swift */,
-				D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */,
 				D2C9AD6C1DDFF3800028341D /* AppController */,
 				D24E4DAD1DE3E593008A11FB /* ModelControllers */,
 				D24E4DAC1DE3E581008A11FB /* ProcessControllers */,
@@ -542,6 +554,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D24E4DB91DE5637E008A11FB /* LoginViewController.swift in Sources */,
+				D24E4DCC1DE74750008A11FB /* ProcessController.swift in Sources */,
 				D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */,
 				D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */,
 				D24E4DC21DE73AFA008A11FB /* ResourcesModelController.swift in Sources */,
@@ -550,7 +563,10 @@
 				D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */,
 				D2C9AD731DE00A8D0028341D /* RootViewController.swift in Sources */,
 				D24E4DBE1DE56D6F008A11FB /* NavigationPlaybook.swift in Sources */,
+				D24E4DC81DE74167008A11FB /* PublicEvent.swift in Sources */,
+				D24E4DC61DE74066008A11FB /* Organization.swift in Sources */,
 				D2C9AD711DDFF5120028341D /* AppController.swift in Sources */,
+				D24E4DCA1DE741E4008A11FB /* DateUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

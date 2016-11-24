@@ -8,6 +8,6 @@
 
 import UIKit
 
-class AuthenticationProcessController: NSObject {
+class AuthenticationProcessController: ProcessController {
 
 }

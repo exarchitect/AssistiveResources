@@ -11,9 +11,10 @@ import UIKit
 class AppController: NSObject {
 
     private var rootViewController: RootViewController!
-    private var userModelController: UserModelController!
-    private var resourcesModelController : ResourcesModelController!
+    private var topProcessController: ProcessController!
     
+    private var userModelController: UserModelController!
+    private var resourcesModelController : ResourcesModelController
     
     var username: String = ""
     
