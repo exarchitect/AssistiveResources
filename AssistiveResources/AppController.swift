@@ -11,15 +11,17 @@ import UIKit
 class AppController: NSObject {
 
     private var rootViewController: RootViewController!
-    private var userModelController: UserModelController?
-    private var dataService : DataService!
+    private var userModelController: UserModelController!
+    private var resourcesModelController : ResourcesModelController!
     
     
     var username: String = ""
     
     override init() {
+        
+        initializeDatabase()
         self.userModelController = UserModelController()
-        dataService = DataService()
+        self.resourcesModelController = ResourcesModelController()
         
         super.init()
     }
@@ -43,8 +45,10 @@ class AppController: NSObject {
 
         self.userModelController?.authorizeUser(completion: { (success) in
             if (success) {
+                print("logged in")
                 // launch the mainnav processcontroller
             } else {
+                print("NOT logged in")
                 // launch the login processcontroller
             }
         })
