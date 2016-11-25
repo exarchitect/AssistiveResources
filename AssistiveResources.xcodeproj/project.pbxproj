@@ -129,8 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				D24E4DBA1DE56ACF008A11FB /* AuthenticationProcessController.swift */,
-				D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */,
 				D24E4DB81DE5637E008A11FB /* LoginViewController.swift */,
+				D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";

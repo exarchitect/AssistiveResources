@@ -18,7 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.appController = AppController()
         self.window = self.appController?.setup()
-        self.appController?.start()
+        
+        // let the rootvc draw...
+        //let when = DispatchTime.now() + 0.1
+        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.1)) {
+            self.appController?.start()
+        }
 
         return true
     }

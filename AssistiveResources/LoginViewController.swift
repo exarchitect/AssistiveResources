@@ -8,7 +8,16 @@
 
 import UIKit
 
+
+protocol LoginViewControllerCompletionProtocol {
+    func loginAction (username: String, password: String)
+}
+
+
+
 class LoginViewController: UIViewController {
+
+    private var completionProtocol: LoginViewControllerCompletionProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +30,19 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    // methods
+    func setup(completionProtocol: LoginViewControllerCompletionProtocol) {
+        self.completionProtocol = completionProtocol
+    }
+    
+    
+    
+    // button actions
+    @IBAction func loginButtonAction(_ sender: Any) {
+        self.completionProtocol?.loginAction(username: "", password: "")
+        
+    }
 
     /*
     // MARK: - Navigation

@@ -8,16 +8,19 @@
 
 import UIKit
 
-class AppController: NSObject {
+class AppController: NSObject, ProcessControllerCompletionProtocol {
 
-    private var rootViewController: RootViewController!
     private var topProcessController: ProcessController!
+    private var rootViewController: RootViewController!
+    private var authProcessController: AuthenticationProcessController!
     
     private var userModelController: UserModelController!
     private var resourcesModelController : ResourcesModelController
     
     var username: String = ""
     
+    //static let sharedInstance = AppController()     // singleton
+
     override init() {
         
         initializeDatabase()
@@ -51,8 +54,20 @@ class AppController: NSObject {
             } else {
                 print("NOT logged in")
                 // launch the login processcontroller
+                self.authProcessController = AuthenticationProcessController()
+                let success = self.authProcessController.push(userModelController: self.userModelController, authenticationResponseProtocol:self, parentViewController:self.rootViewController)
+                if (!success) {
+                    
+                }
             }
         })
+    }
+    
+    
+    //ProcessControllerCompletionProtocol
+    func completionAction (action: ProcessCompletionAction, teardown: ProcessCompletionDisposition) -> Bool {
+        self.authProcessController.teardown()
+        return true
     }
 }
 
