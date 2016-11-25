@@ -12,7 +12,7 @@
         <!--Login View Controller-->
         <scene sceneID="D5i-tf-sLf">
             <objects>
-                <viewController storyboardIdentifier="LoginSBIdentifier" id="6cu-Tl-4Vi" customClass="LoginViewController" customModule="AssistiveResources" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginStoryboardID" id="6cu-Tl-4Vi" customClass="LoginViewController" customModule="AssistiveResources" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Qtu-XE-oWB"/>
                         <viewControllerLayoutGuide type="bottom" id="Pfi-l1-p3S"/>

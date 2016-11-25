@@ -57,8 +57,3 @@ class AppController: NSObject {
 }
 
 
-func displayViewController(storyboardName: String, storyboardID: String, onTopOf: UIViewController) {
-    let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
-    let viewController = storyboard.instantiateViewController(withIdentifier: storyboardID)
-    onTopOf.present(viewController, animated: true, completion: nil)
-}

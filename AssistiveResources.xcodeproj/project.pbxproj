@@ -173,10 +173,10 @@
 		D24E4DC01DE73AC2008A11FB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */,
 				D24E4DC11DE73AFA008A11FB /* ResourcesModelController.swift */,
 				D24E4DC51DE74066008A11FB /* Organization.swift */,
 				D24E4DC71DE74167008A11FB /* PublicEvent.swift */,
+				D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
