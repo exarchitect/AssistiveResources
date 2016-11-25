@@ -44,7 +44,6 @@ class AppController: NSObject, ProcessControllerCompletionProtocol {
     
     func start()  {
         
-        // temp
         //self.userModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
 
         self.userModelController?.authorizeUser(completion: { (success) in
