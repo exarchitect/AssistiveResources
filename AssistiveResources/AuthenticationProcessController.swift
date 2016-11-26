@@ -23,19 +23,19 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         super.init()
     }
     
-    func push(userModelController: UserModelController, authenticationResponseProtocol: ProcessControllerCompletionProtocol, parentViewController: UIViewController) -> Bool {
+    func launch(userModelController: UserModelController, authenticationResponseProtocol: ProcessControllerCompletionProtocol, parentViewController: UIViewController) -> Bool {
         
         self.responseProtocol = authenticationResponseProtocol
         self.userMC = userModelController
         self.parentVC = parentViewController
         
-        let authenticationStoryboard: UIStoryboard = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
-        self.loginViewController = authenticationStoryboard.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
+        let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
+        self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
         self.loginViewController.setup(completionProtocol: self)
         
         parentViewController.present(self.loginViewController, animated: false, completion: nil)
         
-        return true
+        return (authenticationStoryboard != nil && self.loginViewController != nil)
     }
     
     func teardown () {

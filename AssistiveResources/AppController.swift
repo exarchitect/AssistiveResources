@@ -12,6 +12,7 @@ class AppController: NSObject, ProcessControllerCompletionProtocol {
 
     private var topProcessController: ProcessController!
     private var rootViewController: RootViewController!
+    
     private var authProcessController: AuthenticationProcessController!
     
     private var userModelController: UserModelController!
@@ -34,8 +35,8 @@ class AppController: NSObject, ProcessControllerCompletionProtocol {
         let window = UIWindow(frame: UIScreen.main.bounds)
         
         // create a root view controller as a backdrop for all other view controllers
-        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        self.rootViewController = mainStoryboard.instantiateViewController(withIdentifier: "RootViewController") as! RootViewController
+        let mainStoryboard: UIStoryboard? = UIStoryboard(name: "Main", bundle: nil)
+        self.rootViewController = mainStoryboard?.instantiateViewController(withIdentifier: "RootViewController") as! RootViewController
         window.rootViewController = self.rootViewController
         window.makeKeyAndVisible()
         
@@ -49,12 +50,14 @@ class AppController: NSObject, ProcessControllerCompletionProtocol {
         self.userModelController?.authorizeUser(completion: { (success) in
             if (success) {
                 print("logged in")
+                
                 // launch the mainnav processcontroller
+                
             } else {
                 print("NOT logged in")
-                // launch the login processcontroller
+
                 self.authProcessController = AuthenticationProcessController()
-                let success = self.authProcessController.push(userModelController: self.userModelController, authenticationResponseProtocol:self, parentViewController:self.rootViewController)
+                let success = self.authProcessController.launch(userModelController: self.userModelController, authenticationResponseProtocol:self, parentViewController:self.rootViewController)
                 if (!success) {
                     
                 }
@@ -65,7 +68,14 @@ class AppController: NSObject, ProcessControllerCompletionProtocol {
     
     //ProcessControllerCompletionProtocol
     func completionAction (action: ProcessCompletionAction, teardown: ProcessCompletionDisposition) -> Bool {
-        self.authProcessController.teardown()
+        // take action
+        // xx
+        
+        if (teardown == ProcessCompletionDisposition.close) {
+            self.authProcessController.teardown()
+        } else {
+            // remain in place
+        }
         return true
     }
 }
