@@ -24,7 +24,7 @@ class AppController: NSObject, ProcessControllerCompletionProtocol {
 
     override init() {
         
-        initializeDatabase()
+        initializeRemoteDatabase()
         self.userModelController = UserModelController()
         self.resourcesModelController = ResourcesModelController()
         

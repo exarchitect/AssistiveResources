@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = self.appController?.setup()
         
         // let the rootvc draw...
-        //let when = DispatchTime.now() + 0.1
         DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.1)) {
             self.appController?.start()
         }
