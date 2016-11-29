@@ -20,9 +20,9 @@ enum ProcessCompletionDisposition : String {
 
 
 
-protocol ProcessControllerCompletionProtocol {
-    func completionAction (action: ProcessCompletionAction, teardown: ProcessCompletionDisposition) -> Bool
-}
+//protocol ProcessControllerCompletionProtocol {
+//    func completionAction (action: ProcessCompletionAction, teardown: ProcessCompletionDisposition) -> Bool
+//}
 
 
 
