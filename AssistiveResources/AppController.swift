@@ -8,13 +8,14 @@
 
 import UIKit
 
-class AppController: NSObject, AuthenticationCompletionProtocol {
+class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompletionProtocol {
 
     private var topProcessController: ProcessController!
     private var rootViewController: RootViewController!
     private var navController: UINavigationController!
     
     private var authProcessController: AuthenticationProcessController!
+    private var navListProcessController: NavListProcessController!
     
     private var userModelController: UserModelController!
     private var resourcesModelController : ResourcesModelController
@@ -39,6 +40,7 @@ class AppController: NSObject, AuthenticationCompletionProtocol {
         let mainStoryboard: UIStoryboard? = UIStoryboard(name: "Main", bundle: nil)
         self.rootViewController = mainStoryboard?.instantiateViewController(withIdentifier: "RootViewController") as! RootViewController
         self.navController = UINavigationController(rootViewController: self.rootViewController)
+        self.navController.setNavigationBarHidden(true, animated: false)
 
 //        window.rootViewController = self.rootViewController
         window.rootViewController = self.navController
@@ -72,13 +74,31 @@ class AppController: NSObject, AuthenticationCompletionProtocol {
     }
     
     
-    //AuthenticationCompletionProtocol
+    // AuthenticationCompletionProtocol
     func authenticationCompletionAction () {
         // take action
         
         self.authProcessController.teardown()
         
+        self.navListProcessController = NavListProcessController()
+        let success = self.navListProcessController.launch(userModelController: self.userModelController, navListResponseProtocol:self, navController: self.navController)
+        if (!success) {
+            
+        }
+    }
+
+
+    // NavListCompletionProtocol
+    func navListCompletionAction() {
+        // take action
         
+        self.authProcessController.teardown()
+        
+//        self.navListProcessController = NavListProcessController()
+//        let success = self.navListProcessController.launch(userModelController: self.userModelController, navListResponseProtocol:self, navController: self.navController)
+//        if (!success) {
+//            
+//        }
     }
 }
 
