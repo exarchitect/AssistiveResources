@@ -13,8 +13,9 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
     private var selectorDelegate: NavigationSelectorProtocol!
     private var userMC: UserModelController!
+    private var navigationData: NavigationContent!
+
     private var navListViewController: NavListViewController!
-    
     private var navCtrller: UINavigationController?
     
     override init() {
@@ -28,13 +29,15 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         
         self.selectorDelegate = navSelectorDelegate
         self.userMC = userModelController
+        self.navigationData = NavigationContent()
+        
         self.navCtrller = navController
         
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "NavList", bundle: nil)
         self.navListViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "navListStoryboardID") as! NavListViewController
-        self.navListViewController.setup(selectorDelegate: self)
+        self.navListViewController.setup(navItems: self.navigationData, selectorDelegate: self)
         
-        navController.pushViewController(self.navListViewController, animated: true)
+        navController.pushViewController(self.navListViewController, animated: false)
         
         return (authenticationStoryboard != nil && self.navListViewController != nil)
     }

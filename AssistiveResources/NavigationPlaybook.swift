@@ -9,6 +9,9 @@
 import Foundation
 
 
+let updateNotificationKey = "notify_navigation_content_changed"
+
+
 enum Destination : String {
     case Organizations, Events, Facilities, Travel, Inbox, Profile, News
 }
@@ -17,7 +20,7 @@ enum Destination : String {
 struct DestinationDescriptor {
     var destination: Destination
     var title: String
-    var subTitle: String
+    var subtitle: String
     var imageName: String
     
     init(dest: Destination,subtitle:String?=nil)
@@ -57,9 +60,9 @@ struct DestinationDescriptor {
         }
         
         if let _subtitle = subtitle {
-            subTitle = _subtitle
+            self.subtitle = _subtitle
         } else {
-            subTitle = placeholderSubtitle
+            self.subtitle = placeholderSubtitle
         }
     }
 }

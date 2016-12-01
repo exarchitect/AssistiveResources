@@ -56,18 +56,28 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
         //self.userModelController?.storeUserCredentials(username: "", password: "")
 
 
+        self.loadResourceModelController()
+        
+        // launch the mainnav processcontroller
+        self.navListProcessController = NavListProcessController()
+        let success = self.navListProcessController.launch(userModelController: self.userModelController, navSelectorDelegate:self, navController: self.navController)
+        if (!success) {
+            
+        }
+        
+
         self.userModelController?.authorizeUser(completion: { (success) in
             if (success) {
                 print("logged in")
                 
-                self.loadResourceModelController()
-
-                // launch the mainnav processcontroller
-                self.navListProcessController = NavListProcessController()
-                let success = self.navListProcessController.launch(userModelController: self.userModelController, navSelectorDelegate:self, navController: self.navController)
-                if (!success) {
-                    
-                }
+//                self.loadResourceModelController()
+//
+//                // launch the mainnav processcontroller
+//                self.navListProcessController = NavListProcessController()
+//                let success = self.navListProcessController.launch(userModelController: self.userModelController, navSelectorDelegate:self, navController: self.navController)
+//                if (!success) {
+//                    
+//                }
                 
             } else {
                 print("NOT logged in")
@@ -89,12 +99,14 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
         self.authProcessController.teardown()
         //self.authProcessController = nil      // TODO - need to free this later
         
-        self.loadResourceModelController()
-        self.navListProcessController = NavListProcessController()
-        let success = self.navListProcessController.launch(userModelController: self.userModelController, navSelectorDelegate:self, navController: self.navController)
-        if (!success) {
-            
-        }
+        NotificationCenter.default.post(name: Notification.Name(rawValue: updateNotificationKey), object: nil)
+        
+//        self.loadResourceModelController()
+//        self.navListProcessController = NavListProcessController()
+//        let success = self.navListProcessController.launch(userModelController: self.userModelController, navSelectorDelegate:self, navController: self.navController)
+//        if (!success) {
+//            
+//        }
     }
 
 
