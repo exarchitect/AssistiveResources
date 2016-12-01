@@ -10,6 +10,8 @@
 		78BE6FBF8913BE5E60A80F72 /* Pods_AssistiveResourcesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB555A1779314481D6BFF3DC /* Pods_AssistiveResourcesUITests.framework */; };
 		82A2F78C360FA96106099AEF /* Pods_AssistiveResourcesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32905B721FA008F6AD1B3B6C /* Pods_AssistiveResourcesTests.framework */; };
 		C1F3E673E6BCF568D5BFCA60 /* Pods_AssistiveResources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EE8B2CD99623C42D941D32 /* Pods_AssistiveResources.framework */; };
+		D22768551DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22768531DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift */; };
+		D22768561DEFBB4D00C1917A /* MainNavTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22768541DEFBB4D00C1917A /* MainNavTableViewCell.swift */; };
 		D24E4DB01DE3EB6F008A11FB /* UserModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DAF1DE3EB6F008A11FB /* UserModelController.swift */; };
 		D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */; };
 		D24E4DB71DE56320008A11FB /* AuthenticationProcess.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */; };
@@ -60,6 +62,8 @@
 		63147EA889513E185CD2ADEF /* Pods-AssistiveResourcesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AssistiveResourcesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AssistiveResourcesTests/Pods-AssistiveResourcesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6EF60E8FC5E67E799797B663 /* Pods-AssistiveResources.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AssistiveResources.release.xcconfig"; path = "Pods/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources.release.xcconfig"; sourceTree = "<group>"; };
 		AB555A1779314481D6BFF3DC /* Pods_AssistiveResourcesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AssistiveResourcesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D22768531DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationTableAdaptor.swift; sourceTree = "<group>"; };
+		D22768541DEFBB4D00C1917A /* MainNavTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavTableViewCell.swift; sourceTree = "<group>"; };
 		D24E4DAF1DE3EB6F008A11FB /* UserModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModelController.swift; sourceTree = "<group>"; };
 		D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertySettings.swift; sourceTree = "<group>"; };
 		D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AuthenticationProcess.storyboard; sourceTree = "<group>"; };
@@ -194,6 +198,8 @@
 				D24E4DCE1DED173F008A11FB /* NavListProcessController.swift */,
 				D24E4DD21DED2703008A11FB /* NavListViewController.swift */,
 				D24E4DD01DED26DF008A11FB /* NavList.storyboard */,
+				D22768531DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift */,
+				D22768541DEFBB4D00C1917A /* MainNavTableViewCell.swift */,
 			);
 			name = NavList;
 			sourceTree = "<group>";
@@ -572,6 +578,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D24E4DB91DE5637E008A11FB /* LoginViewController.swift in Sources */,
+				D22768551DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift in Sources */,
 				D24E4DCC1DE74750008A11FB /* ProcessController.swift in Sources */,
 				D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */,
 				D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */,
@@ -584,6 +591,7 @@
 				D24E4DBE1DE56D6F008A11FB /* NavigationPlaybook.swift in Sources */,
 				D24E4DC81DE74167008A11FB /* PublicEvent.swift in Sources */,
 				D24E4DC61DE74066008A11FB /* Organization.swift in Sources */,
+				D22768561DEFBB4D00C1917A /* MainNavTableViewCell.swift in Sources */,
 				D2C9AD711DDFF5120028341D /* AppController.swift in Sources */,
 				D24E4DCA1DE741E4008A11FB /* DateUtilities.swift in Sources */,
 				D24E4DCF1DED173F008A11FB /* NavListProcessController.swift in Sources */,

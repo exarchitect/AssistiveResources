@@ -53,19 +53,25 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompleti
     func start()  {
         
         //self.userModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
+        //self.userModelController?.storeUserCredentials(username: "", password: "")
+
 
         self.userModelController?.authorizeUser(completion: { (success) in
             if (success) {
                 print("logged in")
                 
                 // launch the mainnav processcontroller
+                self.navListProcessController = NavListProcessController()
+                let success = self.navListProcessController.launch(userModelController: self.userModelController, navListResponseDelegate:self, navController: self.navController)
+                if (!success) {
+                    
+                }
                 
             } else {
                 print("NOT logged in")
 
                 self.authProcessController = AuthenticationProcessController()
-//                let success = self.authProcessController.launch(userModelController: self.userModelController, authenticationResponseProtocol:self, parentViewController:self.rootViewController)
-                let success = self.authProcessController.launch(userModelController: self.userModelController, authenticationResponseProtocol:self, navController: self.navController)
+                let success = self.authProcessController.launch(userModelController: self.userModelController, authenticationResponseDelegate:self, parentViewController:self.rootViewController)
                 if (!success) {
                     
                 }
@@ -79,9 +85,10 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompleti
         // take action
         
         self.authProcessController.teardown()
+        self.authProcessController = nil
         
         self.navListProcessController = NavListProcessController()
-        let success = self.navListProcessController.launch(userModelController: self.userModelController, navListResponseProtocol:self, navController: self.navController)
+        let success = self.navListProcessController.launch(userModelController: self.userModelController, navListResponseDelegate:self, navController: self.navController)
         if (!success) {
             
         }
@@ -92,7 +99,8 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompleti
     func navListCompletionAction() {
         // take action
         
-        self.authProcessController.teardown()
+        self.navListProcessController.teardown()
+        self.navListProcessController = nil
         
 //        self.navListProcessController = NavListProcessController()
 //        let success = self.navListProcessController.launch(userModelController: self.userModelController, navListResponseProtocol:self, navController: self.navController)

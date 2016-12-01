@@ -28,9 +28,9 @@ class NavListProcessController: ProcessController, NavListViewControllerCompleti
         super.init()
     }
     
-    func launch(userModelController: UserModelController, navListResponseProtocol: NavListCompletionProtocol, navController: UINavigationController) -> Bool {
+    func launch(userModelController: UserModelController, navListResponseDelegate: NavListCompletionProtocol, navController: UINavigationController) -> Bool {
         
-        self.responseProtocol = navListResponseProtocol
+        self.responseProtocol = navListResponseDelegate
         self.userMC = userModelController
         self.navCtrller = navController
         
@@ -47,7 +47,7 @@ class NavListProcessController: ProcessController, NavListViewControllerCompleti
         let _ = self.navCtrller?.popViewController(animated: true)
     }
     
-    //LoginViewControllerCompletionProtocol
+    // ?Protocol
     func navAction (selection: TopDestination){
         self.responseProtocol.navListCompletionAction()
     }

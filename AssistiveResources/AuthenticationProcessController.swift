@@ -20,37 +20,34 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     private var userMC: UserModelController!
     private var loginViewController: LoginViewController!
 
-//    private var parentVC: UIViewController?
-    private var navVC: UINavigationController?
+    private var parentVC: UIViewController?
 
+    
     override init() {
-        
         // init ?
         
         super.init()
     }
     
-//    func launch(userModelController: UserModelController, authenticationResponseProtocol: ProcessControllerCompletionProtocol, parentViewController: UIViewController) -> Bool {
-    func launch(userModelController: UserModelController, authenticationResponseProtocol: AuthenticationCompletionProtocol, navController: UINavigationController) -> Bool {
+    func launch(userModelController: UserModelController,
+                authenticationResponseDelegate: AuthenticationCompletionProtocol,
+                parentViewController: UIViewController) -> Bool {
         
-        self.responseProtocol = authenticationResponseProtocol
+        self.responseProtocol = authenticationResponseDelegate
         self.userMC = userModelController
-//        self.parentVC = parentViewController
-        self.navVC = navController
+        self.parentVC = parentViewController
         
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
         self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
         self.loginViewController.setup(completionProtocol: self)
         
-//        parentViewController.present(self.loginViewController, animated: false, completion: nil)
-        navController.pushViewController(self.loginViewController, animated: true)
+        parentViewController.present(self.loginViewController, animated: true, completion: nil)
         
         return (authenticationStoryboard != nil && self.loginViewController != nil)
     }
     
     func teardown () {
-//        self.parentVC?.dismiss(animated: true, completion: nil)
-        let _ = self.navVC?.popViewController(animated: true)
+        self.parentVC?.dismiss(animated: true, completion: nil)
     }
     
     //LoginViewControllerCompletionProtocol

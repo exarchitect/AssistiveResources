@@ -14,10 +14,13 @@ protocol NavListViewControllerCompletionProtocol {
 }
 
 
-class NavListViewController: UIViewController {
+class NavListViewController: UIViewController, MainNavTableAdaptorNotificationProtocol {
 
     private var completionProtocol: NavListViewControllerCompletionProtocol?
     
+    @IBOutlet weak var navTable: UITableView!
+    var tableAdaptor:MainNavigationTableAdaptor?
+
     func setup(completionProtocol: NavListViewControllerCompletionProtocol) {
         self.completionProtocol = completionProtocol
     }
@@ -26,7 +29,7 @@ class NavListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, delegate: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,19 +38,43 @@ class NavListViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    
     func navSelectionAction () {
         
     }
 
+    //MARK: tableView delegate
+    
+    func notifyRowSelected(dest: Destination) {
+        switch dest {
+        case Destination.Organizations:
+            let _ = 7
+            
+        case Destination.Events:
+            performSegue(withIdentifier: "showMainEvent", sender: self)
+            
+        case Destination.Facilities:
+            let _ = 7
+            
+        case Destination.Travel:
+            let _ = 7
+            
+        case Destination.News:
+            let _ = 7
+            
+        case Destination.Inbox:
+            let _ = 7
+            
+        case Destination.Profile:
+            // TEMP
+            let _ = 7
+            //let user = AuthenticatedUser.sharedInstance
+            //AuthenticatedUser.sharedInstance.logout()
+        }
+        
+    }
+    
+    func notifyRowDeleted(rowIndex: Int) {
+        
+    }
+    
 }
