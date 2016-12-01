@@ -22,6 +22,7 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
     
     var username: String = ""
     
+    
     //static let sharedInstance = AppController()     // singleton
 
     override init() {
