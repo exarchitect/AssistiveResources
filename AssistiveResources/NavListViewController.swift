@@ -9,27 +9,31 @@
 import UIKit
 
 
-protocol NavListViewControllerCompletionProtocol {
+protocol NavigationSelectorProtocol {
     func selectedNavigationItem (selection: Destination)
 }
 
 
-class NavListViewController: UIViewController, MainNavTableAdaptorNotificationProtocol {
+class NavListViewController: UIViewController {
+//class NavListViewController: UIViewController, MainNavTableAdaptorNotificationProtocol {
 
-    private var completionDelegate: NavListViewControllerCompletionProtocol?
+    private var selectorDelegate: NavigationSelectorProtocol?
     
     @IBOutlet weak var navTable: UITableView!
     var tableAdaptor:MainNavigationTableAdaptor?
 
-    func setup(completionProtocol: NavListViewControllerCompletionProtocol) {
-        self.completionDelegate = completionProtocol
+    func setup(selectorDelegate: NavigationSelectorProtocol) {
+        self.selectorDelegate = selectorDelegate
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, delegate: self)
+        self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, selector: { (destination:Destination) -> Void in
+            
+            self.selectorDelegate?.selectedNavigationItem(selection: destination)
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,46 +42,12 @@ class NavListViewController: UIViewController, MainNavTableAdaptorNotificationPr
     }
     
 
-    func navSelectionAction () {
-        
-    }
-
-    //MARK: tableView delegate
-    
 //    func notifyRowSelected(dest: Destination) {
-//        switch dest {
-//        case Destination.Organizations:
-//            let _ = 7
-//            
-//        case Destination.Events:
-//            performSegue(withIdentifier: "showMainEvent", sender: self)
-//            
-//        case Destination.Facilities:
-//            let _ = 7
-//            
-//        case Destination.Travel:
-//            let _ = 7
-//            
-//        case Destination.News:
-//            let _ = 7
-//            
-//        case Destination.Inbox:
-//            let _ = 7
-//            
-//        case Destination.Profile:
-//            // TEMP
-//            let _ = 7
-//            //let user = AuthenticatedUser.sharedInstance
-//            //AuthenticatedUser.sharedInstance.logout()
-//        }
+//        self.completionDelegate?.selectedNavigationItem(selection: dest)
+//    }
+//    
+//    func notifyRowDeleted(rowIndex: Int) {
 //        
 //    }
-    func notifyRowSelected(dest: Destination) {
-        self.completionDelegate?.selectedNavigationItem(selection: dest)
-    }
-    
-    func notifyRowDeleted(rowIndex: Int) {
-        
-    }
     
 }

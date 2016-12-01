@@ -43,16 +43,6 @@ final class UserModelController: NSObject {
         super.init()
     }
     
-    func storeUserCredentials (username: String, password: String) {
-        self.username = username
-        self.password = password
-
-        let props = PropertySettings.sharedInstance
-        props.username = username
-        props.password = password
-        props.write()
-}
-    
     func haveCredentials() -> Bool {
         return (!self.username.isEmpty && !self.password.isEmpty)
     }
@@ -89,4 +79,15 @@ final class UserModelController: NSObject {
         })
         
     }
+
+    private func storeUserCredentials (username: String, password: String) {
+        self.username = username
+        self.password = password
+        
+        let props = PropertySettings.sharedInstance
+        props.username = username
+        props.password = password
+        props.write()
+    }
+    
 }

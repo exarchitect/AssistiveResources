@@ -12,26 +12,28 @@ import UIKit
 let kHomeNavCellID = "HomeNavigationCellIdentifier"
 let kHomeNavCellHeight: CGFloat = 90.0
 
+typealias DestinationSelector = (_ destination:Destination) -> Void
 
-protocol MainNavTableAdaptorNotificationProtocol
-{
-    func notifyRowSelected(dest: Destination)
-    func notifyRowDeleted(rowIndex: Int)
-}
+//protocol MainNavTableAdaptorNotificationProtocol
+//{
+//    func notifyRowSelected(dest: Destination)
+//    func notifyRowDeleted(rowIndex: Int)
+//}
+
 
 class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     var tableView: UITableView!
     //var repository: EventOfInterestRepository!
-    var notificationDelegate:MainNavTableAdaptorNotificationProtocol?
     var navigationArray:[DestinationDescriptor] = []
+    var selectorCallback: DestinationSelector!
     
-    init(table: UITableView, delegate: MainNavTableAdaptorNotificationProtocol) {
+    init(table: UITableView, selector: @escaping DestinationSelector) {
         super.init()
         
-        tableView = table
+        self.tableView = table
         //repository = repo
-        notificationDelegate = delegate
+        self.selectorCallback = selector
         
         setupNavigation()
         
@@ -82,7 +84,8 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView .deselectRow(at: indexPath as IndexPath, animated: true)
-        notificationDelegate?.notifyRowSelected(dest: navigationArray[indexPath.row].destination)
+ 
+        self.selectorCallback?(navigationArray[indexPath.row].destination)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

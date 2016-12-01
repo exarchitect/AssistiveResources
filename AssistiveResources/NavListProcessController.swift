@@ -8,14 +8,10 @@
 
 import UIKit
 
-protocol NavListCompletionProtocol {
-    func navListAction (selection: Destination)
-}
 
-
-class NavListProcessController: ProcessController, NavListViewControllerCompletionProtocol {
+class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
-    private var responseDelegate: NavListCompletionProtocol!
+    private var selectorDelegate: NavigationSelectorProtocol!
     private var userMC: UserModelController!
     private var navListViewController: NavListViewController!
     
@@ -28,15 +24,15 @@ class NavListProcessController: ProcessController, NavListViewControllerCompleti
         super.init()
     }
     
-    func launch(userModelController: UserModelController, navListResponseDelegate: NavListCompletionProtocol, navController: UINavigationController) -> Bool {
+    func launch(userModelController: UserModelController, navSelectorDelegate: NavigationSelectorProtocol, navController: UINavigationController) -> Bool {
         
-        self.responseDelegate = navListResponseDelegate
+        self.selectorDelegate = navSelectorDelegate
         self.userMC = userModelController
         self.navCtrller = navController
         
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "NavList", bundle: nil)
         self.navListViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "navListStoryboardID") as! NavListViewController
-        self.navListViewController.setup(completionProtocol: self)
+        self.navListViewController.setup(selectorDelegate: self)
         
         navController.pushViewController(self.navListViewController, animated: true)
         
@@ -47,9 +43,9 @@ class NavListProcessController: ProcessController, NavListViewControllerCompleti
         let _ = self.navCtrller?.popViewController(animated: true)
     }
     
-    // ?Protocol
+    // NavigationSelectorProtocol
     func selectedNavigationItem (selection: Destination) {
-        self.responseDelegate.navListAction(selection: selection)
+        self.selectorDelegate.selectedNavigationItem(selection: selection)
     }
     
 }

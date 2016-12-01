@@ -22,6 +22,15 @@ import Foundation
 //    
 //}
 
+func dateFromMoDyYr (dateString: String) -> Date
+{
+        let dateStringFormatter = DateFormatter()
+        dateStringFormatter.dateFormat = "MM-dd-yyyy"
+        dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale!
+        return dateStringFormatter.date(from: dateString)! 
+}
+
+
 
 //func militaryToAmPm (hours: Int, minutes: Int) -> String {
 //    var startTime: String

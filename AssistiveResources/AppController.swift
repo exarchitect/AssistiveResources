@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompletionProtocol {
+class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelectorProtocol {
 
     private var topProcessController: ProcessController!
     private var rootViewController: RootViewController!
@@ -18,7 +18,7 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompleti
     private var navListProcessController: NavListProcessController!
     
     private var userModelController: UserModelController!
-    private var resourcesModelController : ResourcesModelController
+    private var resourcesModelController : ResourcesModelController!
     
     var username: String = ""
     
@@ -28,7 +28,6 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompleti
         
         initializeRemoteDatabase()
         self.userModelController = UserModelController()
-        self.resourcesModelController = ResourcesModelController()
         
         super.init()
     }
@@ -60,9 +59,11 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompleti
             if (success) {
                 print("logged in")
                 
+                self.loadResourceModelController()
+
                 // launch the mainnav processcontroller
                 self.navListProcessController = NavListProcessController()
-                let success = self.navListProcessController.launch(userModelController: self.userModelController, navListResponseDelegate:self, navController: self.navController)
+                let success = self.navListProcessController.launch(userModelController: self.userModelController, navSelectorDelegate:self, navController: self.navController)
                 if (!success) {
                     
                 }
@@ -85,10 +86,11 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompleti
         // take action
         
         self.authProcessController.teardown()
-        self.authProcessController = nil
+        //self.authProcessController = nil      // TODO - need to free this later
         
+        self.loadResourceModelController()
         self.navListProcessController = NavListProcessController()
-        let success = self.navListProcessController.launch(userModelController: self.userModelController, navListResponseDelegate:self, navController: self.navController)
+        let success = self.navListProcessController.launch(userModelController: self.userModelController, navSelectorDelegate:self, navController: self.navController)
         if (!success) {
             
         }
@@ -96,7 +98,7 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompleti
 
 
     // NavListCompletionProtocol
-    func navListAction(selection:Destination) {
+    func selectedNavigationItem(selection:Destination) {
         // take action
 
             switch selection {
@@ -124,15 +126,21 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompleti
                 //let user = AuthenticatedUser.sharedInstance
                 //AuthenticatedUser.sharedInstance.logout()
             }
-            
 
-        
 //        self.navListProcessController = NavListProcessController()
 //        let success = self.navListProcessController.launch(userModelController: self.userModelController, navListResponseProtocol:self, navController: self.navController)
 //        if (!success) {
 //            
 //        }
     }
+    
+    private func loadResourceModelController () {
+        if (self.resourcesModelController == nil) {
+            self.resourcesModelController = ResourcesModelController()
+            self.resourcesModelController.loadResources()
+        }
+    }
+  
 }
 
 
