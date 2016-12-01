@@ -96,11 +96,36 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavListCompleti
 
 
     // NavListCompletionProtocol
-    func navListCompletionAction() {
+    func navListAction(selection:Destination) {
         // take action
-        
-        self.navListProcessController.teardown()
-        self.navListProcessController = nil
+
+            switch selection {
+            case Destination.Organizations:
+                let _ = 7
+                
+            case Destination.Events:
+                let _ = 7
+                
+            case Destination.Facilities:
+                let _ = 7
+                
+            case Destination.Travel:
+                let _ = 7
+                
+            case Destination.News:
+                let _ = 7
+                
+            case Destination.Inbox:
+                let _ = 7
+                
+            case Destination.Profile:
+                // TEMP
+                let _ = 7
+                //let user = AuthenticatedUser.sharedInstance
+                //AuthenticatedUser.sharedInstance.logout()
+            }
+            
+
         
 //        self.navListProcessController = NavListProcessController()
 //        let success = self.navListProcessController.launch(userModelController: self.userModelController, navListResponseProtocol:self, navController: self.navController)

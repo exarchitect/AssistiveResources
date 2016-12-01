@@ -195,11 +195,12 @@
 		D24E4DCD1DED1699008A11FB /* NavList */ = {
 			isa = PBXGroup;
 			children = (
+				D24E4DBC1DE56D6F008A11FB /* NavigationPlaybook.swift */,
 				D24E4DCE1DED173F008A11FB /* NavListProcessController.swift */,
 				D24E4DD21DED2703008A11FB /* NavListViewController.swift */,
-				D24E4DD01DED26DF008A11FB /* NavList.storyboard */,
 				D22768531DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift */,
 				D22768541DEFBB4D00C1917A /* MainNavTableViewCell.swift */,
+				D24E4DD01DED26DF008A11FB /* NavList.storyboard */,
 			);
 			name = NavList;
 			sourceTree = "<group>";
@@ -250,7 +251,6 @@
 			isa = PBXGroup;
 			children = (
 				D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */,
-				D24E4DBC1DE56D6F008A11FB /* NavigationPlaybook.swift */,
 				D2C9AD6C1DDFF3800028341D /* AppController */,
 				D24E4DAD1DE3E593008A11FB /* ModelControllers */,
 				D24E4DAC1DE3E581008A11FB /* ProcessControllers */,

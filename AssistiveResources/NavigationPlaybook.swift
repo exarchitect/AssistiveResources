@@ -14,7 +14,7 @@ enum Destination : String {
 }
 
 
-struct TopDestination {
+struct DestinationDescriptor {
     var destination: Destination
     var title: String
     var subTitle: String

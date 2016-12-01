@@ -9,13 +9,13 @@
 import UIKit
 
 protocol NavListCompletionProtocol {
-    func navListCompletionAction ()
+    func navListAction (selection: Destination)
 }
 
 
 class NavListProcessController: ProcessController, NavListViewControllerCompletionProtocol {
     
-    private var responseProtocol: NavListCompletionProtocol!
+    private var responseDelegate: NavListCompletionProtocol!
     private var userMC: UserModelController!
     private var navListViewController: NavListViewController!
     
@@ -30,7 +30,7 @@ class NavListProcessController: ProcessController, NavListViewControllerCompleti
     
     func launch(userModelController: UserModelController, navListResponseDelegate: NavListCompletionProtocol, navController: UINavigationController) -> Bool {
         
-        self.responseProtocol = navListResponseDelegate
+        self.responseDelegate = navListResponseDelegate
         self.userMC = userModelController
         self.navCtrller = navController
         
@@ -48,8 +48,8 @@ class NavListProcessController: ProcessController, NavListViewControllerCompleti
     }
     
     // ?Protocol
-    func navAction (selection: TopDestination){
-        self.responseProtocol.navListCompletionAction()
+    func selectedNavigationItem (selection: Destination) {
+        self.responseDelegate.navListAction(selection: selection)
     }
     
 }

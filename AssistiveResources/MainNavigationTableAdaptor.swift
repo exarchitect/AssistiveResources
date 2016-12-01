@@ -24,7 +24,7 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
     var tableView: UITableView!
     //var repository: EventOfInterestRepository!
     var notificationDelegate:MainNavTableAdaptorNotificationProtocol?
-    var navigationArray:[TopDestination] = []
+    var navigationArray:[DestinationDescriptor] = []
     
     init(table: UITableView, delegate: MainNavTableAdaptorNotificationProtocol) {
         super.init()
@@ -48,13 +48,13 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
     
     func setupNavigation() {
         
-        navigationArray.append(TopDestination(dest: Destination.Organizations))
-        navigationArray.append(TopDestination(dest: Destination.Events))
-        navigationArray.append(TopDestination(dest: Destination.Facilities))
-        navigationArray.append(TopDestination(dest: Destination.Travel))
-        navigationArray.append(TopDestination(dest: Destination.News))
-        navigationArray.append(TopDestination(dest: Destination.Inbox, subtitle: "You have 3 unread messages"))
-        navigationArray.append(TopDestination(dest: Destination.Profile))
+        navigationArray.append(DestinationDescriptor(dest: Destination.Organizations))
+        navigationArray.append(DestinationDescriptor(dest: Destination.Events))
+        navigationArray.append(DestinationDescriptor(dest: Destination.Facilities))
+        navigationArray.append(DestinationDescriptor(dest: Destination.Travel))
+        navigationArray.append(DestinationDescriptor(dest: Destination.News))
+        navigationArray.append(DestinationDescriptor(dest: Destination.Inbox, subtitle: "You have 3 unread messages"))
+        navigationArray.append(DestinationDescriptor(dest: Destination.Profile))
     }
     
     
