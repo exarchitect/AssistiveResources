@@ -29,9 +29,9 @@ class ResourcesModelController: NSObject {
     }
     
 
-    subscript(pos: Int) -> Organization {
-        return organizations[pos]
-    }
+//    subscript(pos: Int) -> Organization {
+//        return organizations[pos]
+//    }
     
     subscript(pos: Int) -> PublicEvent {
         return events[pos]

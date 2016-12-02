@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelectorProtocol {
+class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelectorProtocol, EventSelectorProtocol {
 
     private var topProcessController: ProcessController!
     private var rootViewController: RootViewController!
@@ -16,6 +16,7 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
     
     private var authProcessController: AuthenticationProcessController!
     private var navListProcessController: NavListProcessController!
+    private var eventListProcessController: EventListProcessController!
     
     private var userModelController: UserModelController!
     private var resourcesModelController : ResourcesModelController!
@@ -55,10 +56,7 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
         //self.userModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
         //self.userModelController?.storeUserCredentials(username: "", password: "")
 
-
         self.loadResourceModelController()
-        
-        // launch the mainnav processcontroller
         self.navListProcessController = NavListProcessController()
         let success = self.navListProcessController.launch(userModelController: self.userModelController, navSelectorDelegate:self, navController: self.navController)
         if (!success) {
@@ -69,15 +67,6 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
         self.userModelController?.authorizeUser(completion: { (success) in
             if (success) {
                 print("logged in")
-                
-//                self.loadResourceModelController()
-//
-//                // launch the mainnav processcontroller
-//                self.navListProcessController = NavListProcessController()
-//                let success = self.navListProcessController.launch(userModelController: self.userModelController, navSelectorDelegate:self, navController: self.navController)
-//                if (!success) {
-//                    
-//                }
                 
             } else {
                 print("NOT logged in")
@@ -94,32 +83,27 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
     
     // AuthenticationCompletionProtocol
     func authenticationCompletionAction () {
-        // take action
         
         self.authProcessController.teardown()
         //self.authProcessController = nil      // TODO - need to free this later
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: updateNotificationKey), object: nil)
-        
-//        self.loadResourceModelController()
-//        self.navListProcessController = NavListProcessController()
-//        let success = self.navListProcessController.launch(userModelController: self.userModelController, navSelectorDelegate:self, navController: self.navController)
-//        if (!success) {
-//            
-//        }
     }
 
 
     // NavListCompletionProtocol
     func selectedNavigationItem(selection:Destination) {
-        // take action
 
             switch selection {
             case Destination.Organizations:
                 let _ = 7
                 
             case Destination.Events:
-                let _ = 7
+                self.eventListProcessController = EventListProcessController()
+                let success = self.eventListProcessController.launch(rsrcsModelController: self.resourcesModelController, eventSelectorDelegate: self, navController: self.navController)
+                if (!success) {
+                    
+                }
                 
             case Destination.Facilities:
                 let _ = 7
@@ -134,18 +118,17 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
                 let _ = 7
                 
             case Destination.Profile:
-                // TEMP
                 let _ = 7
-                //let user = AuthenticatedUser.sharedInstance
-                //AuthenticatedUser.sharedInstance.logout()
             }
 
-//        self.navListProcessController = NavListProcessController()
-//        let success = self.navListProcessController.launch(userModelController: self.userModelController, navListResponseProtocol:self, navController: self.navController)
-//        if (!success) {
-//            
-//        }
     }
+    
+    // AuthenticationCompletionProtocol
+    func selectedEvent(selection: Int) {
+        
+        
+    }
+    
     
     private func loadResourceModelController () {
         if (self.resourcesModelController == nil) {
