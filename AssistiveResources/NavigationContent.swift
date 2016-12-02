@@ -61,4 +61,30 @@ class NavigationContent: NSObject {
             index = index + 1
         }
     }
+
+//    func update1Subtitle(dest: DestinationDescriptor) {
+//        switch dest.destination {
+//        case Destination.Organizations:
+//            let _ = 8
+//            //navigationArray[index].subtitle = "Hi MOM!"
+//            
+//        case Destination.Events:
+//            let _ = 8
+//            
+//        case Destination.Facilities:
+//            let _ = 8
+//            
+//        case Destination.Travel:
+//            let _ = 8
+//            
+//        case Destination.News:
+//            let _ = 8
+//            
+//        case Destination.Inbox:
+//            dest.subtitle = "You have 3 unread messages"
+//            
+//        case Destination.Profile:
+//            let _ = 8
+//        }
+//    }
 }

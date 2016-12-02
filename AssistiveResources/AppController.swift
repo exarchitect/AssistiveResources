@@ -88,12 +88,11 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
         self.authProcessController.teardown()
         //self.authProcessController = nil      // TODO - need to free this later
         
-        //NotificationCenter.default.post(name: Notification.Name(rawValue: updateNotificationKey), object: nil)
         requestMainNavigationRefresh()
     }
 
 
-    // MARK: - NavListCompletionProtocol
+    // MARK: - NavigationSelectorProtocol
     
     func selectedNavigationItem(selection:Destination) {
 
