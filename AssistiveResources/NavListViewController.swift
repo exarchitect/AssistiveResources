@@ -15,7 +15,6 @@ protocol NavigationSelectorProtocol {
 
 
 class NavListViewController: UIViewController {
-//class NavListViewController: UIViewController, MainNavTableAdaptorNotificationProtocol {
 
     private var selectorDelegate: NavigationSelectorProtocol?
     private var navigationData: NavigationContent!
@@ -31,7 +30,7 @@ class NavListViewController: UIViewController {
         self.navigationData = navItems
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: NSNotification.Name(rawValue: updateNotificationKey), object: nil)
-}
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +69,7 @@ class NavListViewController: UIViewController {
             self.needContentRefresh = true
         }
     }
+    
 //    func notifyRowSelected(dest: Destination) {
 //        self.completionDelegate?.selectedNavigationItem(selection: dest)
 //    }
@@ -79,3 +79,11 @@ class NavListViewController: UIViewController {
 //    }
     
 }
+
+//MARK: helper functions
+
+func requestMainNavigationRefresh() {
+    NotificationCenter.default.post(name: Notification.Name(rawValue: updateNotificationKey), object: nil)
+}
+
+

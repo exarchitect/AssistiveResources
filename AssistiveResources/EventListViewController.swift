@@ -13,11 +13,11 @@ protocol EventSelectorProtocol {
 }
 
 
-class EventListViewController: UIViewController, EventListTableAdaptorNotificationProtocol {
+class EventListViewController: UIViewController, EventListContainerNotificationProtocol {
 
     @IBOutlet weak var tableView: UITableView!
     
-    private var tableAdaptor:EventListTableAdaptor!
+    //private var tableAdaptor:EventListTableAdaptor!
     private var selectorDelegate:EventSelectorProtocol!
     private var resourcesModelController:ResourcesModelController!
     
@@ -29,7 +29,7 @@ class EventListViewController: UIViewController, EventListTableAdaptorNotificati
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableAdaptor = EventListTableAdaptor.init(table: self.tableView, rsrcModelController: self.resourcesModelController, delegate: self)
+        //self.tableAdaptor = EventListTableAdaptor.init(table: self.tableView, rsrcModelController: self.resourcesModelController, delegate: self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -38,23 +38,30 @@ class EventListViewController: UIViewController, EventListTableAdaptorNotificati
     }
     
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var containerViewController: EventContainerViewController?
+            if segue.identifier == "EventContainerSegueID" {
+                containerViewController = segue.destination as? EventContainerViewController
+                containerViewController?.setup(rsrcModelController: resourcesModelController, delegate: self)
+            }
+
+    }
+
+    //MARK: @IBAction
+
+    @IBAction func backButtonAction(_ sender: Any) {
+        _ = self.navigationController?.popViewController(animated: true)
+    }
     
-    //MARK: tableView delegate
     
-    func notifyRowSelected(rowIndex: Int) {
+    
+    //MARK: delegate
+    
+    func notifyRowDetailSelected(rowIndex: Int) {
         
     }
     
-    func notifyRowDeleted(rowIndex: Int) {
-        
+    func notifyFilterSelected() {
+    
     }
 }

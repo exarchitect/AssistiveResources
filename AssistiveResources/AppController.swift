@@ -10,7 +10,7 @@ import UIKit
 
 class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelectorProtocol, EventSelectorProtocol {
 
-    private var topProcessController: ProcessController!
+    //private weak var topProcessController: ProcessController!
     private var rootViewController: RootViewController!
     private var navController: UINavigationController!
     
@@ -81,17 +81,20 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
     }
     
     
-    // AuthenticationCompletionProtocol
+    // MARK: - AuthenticationCompletionProtocol
+    
     func authenticationCompletionAction () {
         
         self.authProcessController.teardown()
         //self.authProcessController = nil      // TODO - need to free this later
         
-        NotificationCenter.default.post(name: Notification.Name(rawValue: updateNotificationKey), object: nil)
+        //NotificationCenter.default.post(name: Notification.Name(rawValue: updateNotificationKey), object: nil)
+        requestMainNavigationRefresh()
     }
 
 
-    // NavListCompletionProtocol
+    // MARK: - NavListCompletionProtocol
+    
     func selectedNavigationItem(selection:Destination) {
 
             switch selection {
@@ -123,12 +126,15 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
 
     }
     
-    // AuthenticationCompletionProtocol
+    // MARK: - EventSelectorProtocol
+    
     func selectedEvent(selection: Int) {
         
         
     }
     
+    
+    // MARK: - Utilities
     
     private func loadResourceModelController () {
         if (self.resourcesModelController == nil) {
