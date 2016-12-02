@@ -20,13 +20,17 @@ class NavigationContent: NSObject {
     }
     
     override init() {
+        super.init()
+        self.initilizeNavigation()
+    }
+    
+    func initilizeNavigation() {
         
         navigationArray.append(DestinationDescriptor(dest: Destination.Organizations))
         navigationArray.append(DestinationDescriptor(dest: Destination.Events))
         navigationArray.append(DestinationDescriptor(dest: Destination.Facilities))
         navigationArray.append(DestinationDescriptor(dest: Destination.Travel))
         navigationArray.append(DestinationDescriptor(dest: Destination.News))
-        //navigationArray.append(DestinationDescriptor(dest: Destination.Inbox, subtitle: "You have 3 unread messages"))
         navigationArray.append(DestinationDescriptor(dest: Destination.Inbox))
         navigationArray.append(DestinationDescriptor(dest: Destination.Profile))
     }
