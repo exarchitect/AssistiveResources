@@ -69,7 +69,7 @@ class EventListTableAdaptor: NSObject, UITableViewDelegate, UITableViewDataSourc
         tableView.reloadRows(at: pathArray as! [IndexPath], with: UITableViewRowAnimation.automatic)
     }
     
-    //MARK: tableView delegate
+    //MARK: tableView delegates
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (expandedRowIndex == indexPath.row) ? 286.0 : 100

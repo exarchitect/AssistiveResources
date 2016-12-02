@@ -66,6 +66,8 @@ class EventListTableViewCell: UITableViewCell {
         }
     }
 
-    @IBAction func showDetailButtonAction(sender: AnyObject) {
+    @IBAction func showDetailButtonAction(_ sender: UIButton) {
+        
     }
+    
 }

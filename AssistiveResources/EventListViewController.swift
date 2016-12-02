@@ -24,8 +24,6 @@ class EventListViewController: UIViewController, EventListTableAdaptorNotificati
     func setup(resources: ResourcesModelController, selectorDelegate: EventSelectorProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
-        
-        //NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: NSNotification.Name(rawValue: updateNotificationKey), object: nil)
     }
     
     override func viewDidLoad() {

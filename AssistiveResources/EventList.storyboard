@@ -144,9 +144,6 @@
                                                     <state key="normal" title="Details" backgroundImage="blue_button">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="showDetailButtonAction:" destination="iUr-9f-piu" eventType="touchUpInside" id="ymH-dP-Ffs"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
