@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol EventProcessMessageProtocol {
+protocol EventListProcessControllerResponseProtocol {
     func dismissEventProcessController ()
 }
 
@@ -16,7 +16,7 @@ protocol EventProcessMessageProtocol {
 
 class EventListProcessController: ProcessController, EventSelectorProtocol {
     
-    private var eventDelegate: EventProcessMessageProtocol!
+    private var eventDelegate: EventListProcessControllerResponseProtocol!
     private var rsrcModelController: ResourcesModelController!
     
     private var eventListViewController: EventListViewController!
@@ -27,7 +27,7 @@ class EventListProcessController: ProcessController, EventSelectorProtocol {
         super.init()
     }
     
-    func dependencies(rsrcsModelController: ResourcesModelController, eventProcessMessageDelegate: EventProcessMessageProtocol) {
+    func dependencies(rsrcsModelController: ResourcesModelController, eventProcessMessageDelegate: EventListProcessControllerResponseProtocol) {
         
         self.eventDelegate = eventProcessMessageDelegate
         self.rsrcModelController = rsrcsModelController

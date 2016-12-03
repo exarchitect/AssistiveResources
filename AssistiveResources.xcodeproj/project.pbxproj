@@ -30,7 +30,6 @@
 		D28C80CF1DF0D956002D3940 /* NavigationContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80CE1DF0D956002D3940 /* NavigationContent.swift */; };
 		D28C80D11DF0E821002D3940 /* EventListProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D01DF0E821002D3940 /* EventListProcessController.swift */; };
 		D28C80D41DF0E8B6002D3940 /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D31DF0E8B6002D3940 /* EventListViewController.swift */; };
-		D28C80D71DF0E8DE002D3940 /* EventListTableAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D51DF0E8DE002D3940 /* EventListTableAdaptor.swift */; };
 		D28C80D81DF0E8DE002D3940 /* EventListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */; };
 		D28C80DA1DF0E908002D3940 /* EventList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D28C80D91DF0E908002D3940 /* EventList.storyboard */; };
 		D28C80DC1DF12B76002D3940 /* EventContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80DB1DF12B76002D3940 /* EventContainerViewController.swift */; };
@@ -89,7 +88,6 @@
 		D28C80CE1DF0D956002D3940 /* NavigationContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationContent.swift; sourceTree = "<group>"; };
 		D28C80D01DF0E821002D3940 /* EventListProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListProcessController.swift; sourceTree = "<group>"; };
 		D28C80D31DF0E8B6002D3940 /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
-		D28C80D51DF0E8DE002D3940 /* EventListTableAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListTableAdaptor.swift; sourceTree = "<group>"; };
 		D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListTableViewCell.swift; sourceTree = "<group>"; };
 		D28C80D91DF0E908002D3940 /* EventList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EventList.storyboard; sourceTree = "<group>"; };
 		D28C80DB1DF12B76002D3940 /* EventContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventContainerViewController.swift; sourceTree = "<group>"; };
@@ -226,10 +224,9 @@
 			children = (
 				D28C80D01DF0E821002D3940 /* EventListProcessController.swift */,
 				D28C80D31DF0E8B6002D3940 /* EventListViewController.swift */,
-				D28C80D51DF0E8DE002D3940 /* EventListTableAdaptor.swift */,
+				D28C80DB1DF12B76002D3940 /* EventContainerViewController.swift */,
 				D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */,
 				D28C80D91DF0E908002D3940 /* EventList.storyboard */,
-				D28C80DB1DF12B76002D3940 /* EventContainerViewController.swift */,
 			);
 			name = EventList;
 			sourceTree = "<group>";
@@ -614,7 +611,6 @@
 				D28C80D81DF0E8DE002D3940 /* EventListTableViewCell.swift in Sources */,
 				D28C80DC1DF12B76002D3940 /* EventContainerViewController.swift in Sources */,
 				D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */,
-				D28C80D71DF0E8DE002D3940 /* EventListTableAdaptor.swift in Sources */,
 				D28C80D11DF0E821002D3940 /* EventListProcessController.swift in Sources */,
 				D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */,
 				D24E4DC21DE73AFA008A11FB /* ResourcesModelController.swift in Sources */,

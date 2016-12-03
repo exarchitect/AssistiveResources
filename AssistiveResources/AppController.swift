@@ -11,7 +11,7 @@ import UIKit
 let memoryWarningNotificationKey = "notify_did_receive_memory_warning"
 
 
-class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, NavListProcessControllerResponseProtocol, EventProcessMessageProtocol {
+class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, NavListProcessControllerResponseProtocol, EventListProcessControllerResponseProtocol {
 
     //private weak var topProcessController: ProcessController!
     private var rootViewController: RootViewController!
@@ -130,7 +130,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
 
     }
     
-    // MARK: - EventSelectorProtocol
+    // MARK: - EventListProcessControllerResponseProtocol
     
     func dismissEventProcessController () {
         self.eventListProcessController.terminate()
