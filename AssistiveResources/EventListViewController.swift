@@ -10,6 +10,7 @@ import UIKit
 
 protocol EventSelectorProtocol {
     func selectedEvent (selection: Int)
+    func backButtonTapped ()
 }
 
 
@@ -34,7 +35,8 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        freeMemory()
     }
     
     
@@ -50,7 +52,8 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     //MARK: @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
-        _ = self.navigationController?.popViewController(animated: true)
+        //_ = self.navigationController?.popViewController(animated: true)
+        self.selectorDelegate.backButtonTapped()
     }
     
     

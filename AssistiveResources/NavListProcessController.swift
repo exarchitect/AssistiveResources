@@ -9,9 +9,15 @@
 import UIKit
 
 
+protocol NavListProcessControllerResponseProtocol {
+    func selectedNavigationItem (selection: Destination)
+}
+
+
+
 class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
-    private var selectorDelegate: NavigationSelectorProtocol!
+    private var selectorDelegate: NavListProcessControllerResponseProtocol!
     private var userMC: UserModelController!
     private var navigationData: NavigationContent!
 
@@ -19,32 +25,59 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     private var navCtrller: UINavigationController?
     
     override init() {
-        
         // init ?
-        
         super.init()
     }
     
-    func launch(userModelController: UserModelController, navSelectorDelegate: NavigationSelectorProtocol, navController: UINavigationController) -> Bool {
+    func dependencies(userModelController: UserModelController, navSelectorDelegate: NavListProcessControllerResponseProtocol) {
         
         self.selectorDelegate = navSelectorDelegate
         self.userMC = userModelController
-        self.navigationData = NavigationContent()
+    }
+    
+    func launch(navController: UINavigationController) -> Bool {
         
+        precondition(self.selectorDelegate != nil)
+        precondition(self.userMC != nil)
         self.navCtrller = navController
         
-        let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "NavList", bundle: nil)
-        self.navListViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "navListStoryboardID") as! NavListViewController
+        self.navigationData = NavigationContent()
+        
+        self.navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
         self.navListViewController.setup(navItems: self.navigationData, selectorDelegate: self)
         
         navController.pushViewController(self.navListViewController, animated: false)
         
-        return (authenticationStoryboard != nil && self.navListViewController != nil)
+        return (self.navListViewController != nil)
     }
     
-    func teardown () {
+    override func terminate () {
         let _ = self.navCtrller?.popViewController(animated: true)
     }
+    
+
+    
+//    func launch(userModelController: UserModelController, navSelectorDelegate: NavigationSelectorProtocol, navController: UINavigationController) -> Bool {
+//        
+//        self.selectorDelegate = navSelectorDelegate
+//        self.userMC = userModelController
+//        self.navigationData = NavigationContent()
+//        
+//        self.navCtrller = navController
+//        
+//        let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "NavList", bundle: nil)
+//        self.navListViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "navListStoryboardID") as! NavListViewController
+//        self.navListViewController.setup(navItems: self.navigationData, selectorDelegate: self)
+//        
+//        navController.pushViewController(self.navListViewController, animated: false)
+//        
+//        return (authenticationStoryboard != nil && self.navListViewController != nil)
+//    }
+//    
+//    func teardown () {
+//        let _ = self.navCtrller?.popViewController(animated: true)
+//    }
+
     
     // NavigationSelectorProtocol
     func selectedNavigationItem (selection: Destination) {

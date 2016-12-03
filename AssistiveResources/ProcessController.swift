@@ -25,14 +25,24 @@ enum ProcessCompletionDisposition : String {
 //}
 
 
-
 class ProcessController: NSObject {
+    
+    var inUse: Bool = false
 
+    override init() {
+        self.inUse = true
+        super.init()
+    }
+
+    func terminate () {
+        self.inUse = false
+    }
+    
 }
 
 
-func displayViewController(storyboardName: String, storyboardID: String, onTopOf: UIViewController) {
+func instantiateViewController(storyboardName: String, storyboardID: String) -> UIViewController {
     let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
     let viewController = storyboard.instantiateViewController(withIdentifier: storyboardID)
-    onTopOf.present(viewController, animated: true, completion: nil)
+    return viewController
 }

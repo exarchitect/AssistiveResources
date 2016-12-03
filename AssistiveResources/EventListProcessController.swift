@@ -8,44 +8,61 @@
 
 import UIKit
 
+protocol EventProcessMessageProtocol {
+    func dismissEventProcessController ()
+}
 
-class EventListProcessController: NSObject, EventSelectorProtocol {
+
+
+class EventListProcessController: ProcessController, EventSelectorProtocol {
     
-    private var selectorDelegate: EventSelectorProtocol!
+    private var eventDelegate: EventProcessMessageProtocol!
     private var rsrcModelController: ResourcesModelController!
     
     private var eventListViewController: EventListViewController!
     private var navCtrller: UINavigationController?
     
     override init() {
-        
         // init ?
-        
         super.init()
     }
     
-    func launch(rsrcsModelController: ResourcesModelController, eventSelectorDelegate: EventSelectorProtocol, navController: UINavigationController) -> Bool {
+    func dependencies(rsrcsModelController: ResourcesModelController, eventProcessMessageDelegate: EventProcessMessageProtocol) {
         
-        self.selectorDelegate = eventSelectorDelegate
+        self.eventDelegate = eventProcessMessageDelegate
         self.rsrcModelController = rsrcsModelController
+    }
+    
+    func launch(navController: UINavigationController) -> Bool {
+        
+        //self.eventDelegate = eventProcessMessageDelegate
+        //self.rsrcModelController = rsrcsModelController
         self.navCtrller = navController
         
         let eventStoryboard: UIStoryboard? = UIStoryboard(name: "EventList", bundle: nil)
         self.eventListViewController = eventStoryboard?.instantiateViewController(withIdentifier: "EventListStoryboardID") as! EventListViewController
-        self.eventListViewController.setup(resources: rsrcsModelController, selectorDelegate: self)
+        self.eventListViewController.setup(resources: self.rsrcModelController, selectorDelegate: self)
         
         navController.pushViewController(self.eventListViewController, animated: true)
         
         return (eventStoryboard != nil && self.eventListViewController != nil)
     }
     
-    func teardown () {
+    override func terminate () {
         let _ = self.navCtrller?.popViewController(animated: true)
     }
     
-    // NavigationSelectorProtocol
+    // EventSelectorProtocol
     func selectedEvent (selection: Int) {
         
     }
     
+    func backButtonTapped () {
+        self.eventDelegate.dismissEventProcessController()
+    }
+
+    func filterButtonTapped () {
+        
+    }
+
 }

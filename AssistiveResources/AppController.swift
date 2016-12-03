@@ -8,7 +8,10 @@
 
 import UIKit
 
-class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelectorProtocol, EventSelectorProtocol {
+let memoryWarningNotificationKey = "notify_did_receive_memory_warning"
+
+
+class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, NavListProcessControllerResponseProtocol, EventProcessMessageProtocol {
 
     //private weak var topProcessController: ProcessController!
     private var rootViewController: RootViewController!
@@ -18,7 +21,7 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
     private var navListProcessController: NavListProcessController!
     private var eventListProcessController: EventListProcessController!
     
-    private var userModelController: UserModelController!
+    private var usrModelController: UserModelController!
     private var resourcesModelController : ResourcesModelController!
     
     var username: String = ""
@@ -29,21 +32,21 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
     override init() {
         
         initializeRemoteDatabase()
-        self.userModelController = UserModelController()
-        
+        self.usrModelController = UserModelController()
+
         super.init()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.freeTerminatedProcessControllers), name: NSNotification.Name(rawValue: memoryWarningNotificationKey), object: nil)
     }
     
     func setup() -> UIWindow {
         let window = UIWindow(frame: UIScreen.main.bounds)
         
         // create a root view controller as a backdrop for all other view controllers
-        let mainStoryboard: UIStoryboard? = UIStoryboard(name: "Main", bundle: nil)
-        self.rootViewController = mainStoryboard?.instantiateViewController(withIdentifier: "RootViewController") as! RootViewController
+        self.rootViewController = instantiateViewController(storyboardName: "Main", storyboardID: "RootViewController") as! RootViewController
         self.navController = UINavigationController(rootViewController: self.rootViewController)
         self.navController.setNavigationBarHidden(true, animated: false)
 
-//        window.rootViewController = self.rootViewController
         window.rootViewController = self.navController
         
         window.makeKeyAndVisible()
@@ -57,22 +60,24 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
         //self.userModelController?.storeUserCredentials(username: "", password: "")
 
         self.loadResourceModelController()
-        self.navListProcessController = NavListProcessController()
-        let success = self.navListProcessController.launch(userModelController: self.userModelController, navSelectorDelegate:self, navController: self.navController)
+        //self.navListProcessController = NavListProcessController()
+        //self.navListProcessController.dependencies(userModelController: self.usrModelController, navSelectorDelegate: self)
+        self.createNavigationListProcessController()
+        let success = self.navListProcessController.launch(navController: self.navController)
         if (!success) {
-            
         }
         
 
-        self.userModelController?.authorizeUser(completion: { (success) in
+        self.usrModelController?.authorizeUser(completion: { (success) in
             if (success) {
                 print("logged in")
                 
             } else {
                 print("NOT logged in")
 
-                self.authProcessController = AuthenticationProcessController()
-                let success = self.authProcessController.launch(userModelController: self.userModelController, authenticationResponseDelegate:self, parentViewController:self.rootViewController)
+                //self.authProcessController = AuthenticationProcessController()
+                self.createAuthorizationProcessController()
+                let success = self.authProcessController.launch(parentViewController:self.rootViewController)
                 if (!success) {
                     
                 }
@@ -81,18 +86,17 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
     }
     
     
-    // MARK: - AuthenticationCompletionProtocol
+    // MARK: - AuthenticationProcessControllerResponseProtocol
     
     func authenticationCompletionAction () {
         
-        self.authProcessController.teardown()
-        //self.authProcessController = nil      // TODO - need to free this later
+        self.authProcessController.terminate()
         
         requestMainNavigationRefresh()
     }
 
 
-    // MARK: - NavigationSelectorProtocol
+    // MARK: - NavListProcessControllerResponseProtocol
     
     func selectedNavigationItem(selection:Destination) {
 
@@ -101,8 +105,9 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
                 let _ = 7
                 
             case Destination.Events:
-                self.eventListProcessController = EventListProcessController()
-                let success = self.eventListProcessController.launch(rsrcsModelController: self.resourcesModelController, eventSelectorDelegate: self, navController: self.navController)
+                //self.eventListProcessController = EventListProcessController()
+                self.createEventListProcessController()
+                let success = self.eventListProcessController.launch(navController: self.navController)
                 if (!success) {
                     
                 }
@@ -127,13 +132,48 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
     
     // MARK: - EventSelectorProtocol
     
-    func selectedEvent(selection: Int) {
-        
-        
+    func dismissEventProcessController () {
+        self.eventListProcessController.terminate()
     }
     
     
     // MARK: - Utilities
+    
+    private func createAuthorizationProcessController () {
+        freeTerminatedProcessControllers()
+        
+        precondition(self.usrModelController != nil)
+        self.authProcessController = AuthenticationProcessController()
+        self.authProcessController.dependencies(userModelController: self.usrModelController, authenticationResponseDelegate:self)
+    }
+    
+    private func createNavigationListProcessController () {
+        freeTerminatedProcessControllers()
+        
+        precondition(self.usrModelController != nil)
+        self.navListProcessController = NavListProcessController()
+        self.navListProcessController.dependencies(userModelController: self.usrModelController, navSelectorDelegate: self)
+    }
+    
+    private func createEventListProcessController () {
+        freeTerminatedProcessControllers()
+        
+        precondition(self.usrModelController != nil)
+        self.eventListProcessController = EventListProcessController()
+        self.eventListProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventProcessMessageDelegate: self)
+    }
+    
+    func freeTerminatedProcessControllers () {
+        if (self.authProcessController != nil && !self.authProcessController.inUse) {
+            self.authProcessController = nil
+        }
+        if (self.navListProcessController != nil && !self.navListProcessController.inUse) {
+            self.navListProcessController = nil
+        }
+        if (self.eventListProcessController != nil && !self.eventListProcessController.inUse) {
+            self.eventListProcessController = nil
+        }
+    }
     
     private func loadResourceModelController () {
         if (self.resourcesModelController == nil) {
@@ -141,7 +181,13 @@ class AppController: NSObject, AuthenticationCompletionProtocol, NavigationSelec
             self.resourcesModelController.loadResources()
         }
     }
-  
+    
+}
+
+//MARK: helper functions
+
+func freeMemory() {
+    NotificationCenter.default.post(name: Notification.Name(rawValue: memoryWarningNotificationKey), object: nil)
 }
 
 

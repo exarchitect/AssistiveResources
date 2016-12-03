@@ -9,14 +9,14 @@
 import UIKit
 
 
-protocol AuthenticationCompletionProtocol {
+protocol AuthenticationProcessControllerResponseProtocol {
     func authenticationCompletionAction ()
 }
 
 
 class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
     
-    private var responseProtocol: AuthenticationCompletionProtocol!
+    private var responseProtocol: AuthenticationProcessControllerResponseProtocol!
     private var userMC: UserModelController!
     private var loginViewController: LoginViewController!
 
@@ -29,12 +29,16 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         super.init()
     }
     
-    func launch(userModelController: UserModelController,
-                authenticationResponseDelegate: AuthenticationCompletionProtocol,
-                parentViewController: UIViewController) -> Bool {
+    func dependencies(userModelController: UserModelController, authenticationResponseDelegate: AuthenticationProcessControllerResponseProtocol) {
         
         self.responseProtocol = authenticationResponseDelegate
         self.userMC = userModelController
+    }
+    
+    func launch(parentViewController: UIViewController) -> Bool {
+        
+        //self.responseProtocol = authenticationResponseDelegate
+        //self.userMC = userModelController
         self.parentVC = parentViewController
         
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
@@ -46,7 +50,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         return (authenticationStoryboard != nil && self.loginViewController != nil)
     }
     
-    func teardown () {
+    override func terminate () {
         self.parentVC?.dismiss(animated: true, completion: nil)
     }
     
