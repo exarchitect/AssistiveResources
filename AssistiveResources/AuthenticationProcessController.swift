@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol AuthenticationProcessControllerResponseProtocol {
-    func authenticationCompletionAction ()
+    func notifyAuthenticationCompletion ()
 }
 
 
@@ -51,12 +51,13 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     }
     
     override func terminate () {
+        super.terminate()
         self.parentVC?.dismiss(animated: true, completion: nil)
     }
     
     //LoginViewControllerCompletionProtocol
     func loginAction (username: String, password: String) {
-        self.responseProtocol.authenticationCompletionAction()
+        self.responseProtocol.notifyAuthenticationCompletion()
     }
     
 }

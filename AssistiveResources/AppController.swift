@@ -8,7 +8,7 @@
 
 import UIKit
 
-let memoryWarningNotificationKey = "notify_did_receive_memory_warning"
+let memoryWarningNotificationKeyName = NSNotification.Name(rawValue: "notify_did_receive_memory_warning")
 
 
 class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, NavListProcessControllerResponseProtocol, EventListProcessControllerResponseProtocol {
@@ -36,7 +36,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
 
         super.init()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.freeTerminatedProcessControllers), name: NSNotification.Name(rawValue: memoryWarningNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.freeTerminatedProcessControllers), name: memoryWarningNotificationKeyName, object: nil)
     }
     
     func setup() -> UIWindow {
@@ -60,8 +60,6 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         //self.userModelController?.storeUserCredentials(username: "", password: "")
 
         self.loadResourceModelController()
-        //self.navListProcessController = NavListProcessController()
-        //self.navListProcessController.dependencies(userModelController: self.usrModelController, navSelectorDelegate: self)
         self.createNavigationListProcessController()
         let success = self.navListProcessController.launch(navController: self.navController)
         if (!success) {
@@ -75,7 +73,6 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
             } else {
                 print("NOT logged in")
 
-                //self.authProcessController = AuthenticationProcessController()
                 self.createAuthorizationProcessController()
                 let success = self.authProcessController.launch(parentViewController:self.rootViewController)
                 if (!success) {
@@ -88,7 +85,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     
     // MARK: - AuthenticationProcessControllerResponseProtocol
     
-    func authenticationCompletionAction () {
+    func notifyAuthenticationCompletion () {
         
         self.authProcessController.terminate()
         
@@ -98,14 +95,13 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
 
     // MARK: - NavListProcessControllerResponseProtocol
     
-    func selectedNavigationItem(selection:Destination) {
+    func notifyNavigationItemSelected(selection:Destination) {
 
             switch selection {
             case Destination.Organizations:
                 let _ = 7
                 
             case Destination.Events:
-                //self.eventListProcessController = EventListProcessController()
                 self.createEventListProcessController()
                 let success = self.eventListProcessController.launch(navController: self.navController)
                 if (!success) {
@@ -113,7 +109,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
                 }
                 
             case Destination.Facilities:
-                let _ = 7
+                freeMemory()        //
                 
             case Destination.Travel:
                 let _ = 7
@@ -135,7 +131,11 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     func dismissEventProcessController () {
         self.eventListProcessController.terminate()
     }
-    
+
+    func notifyOrganizationSelected (org: EntityDescriptor) {
+        
+    }
+
     
     // MARK: - Utilities
     
@@ -187,7 +187,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
 //MARK: helper functions
 
 func freeMemory() {
-    NotificationCenter.default.post(name: Notification.Name(rawValue: memoryWarningNotificationKey), object: nil)
+    NotificationCenter.default.post(name: memoryWarningNotificationKeyName, object: nil)
 }
 
 

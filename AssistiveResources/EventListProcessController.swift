@@ -10,6 +10,7 @@ import UIKit
 
 protocol EventListProcessControllerResponseProtocol {
     func dismissEventProcessController ()
+    func notifyOrganizationSelected (org: EntityDescriptor)
 }
 
 
@@ -49,6 +50,7 @@ class EventListProcessController: ProcessController, EventSelectorProtocol {
     }
     
     override func terminate () {
+        super.terminate()
         let _ = self.navCtrller?.popViewController(animated: true)
     }
     

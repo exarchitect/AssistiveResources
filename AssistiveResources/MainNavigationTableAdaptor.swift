@@ -14,11 +14,6 @@ let kHomeNavCellHeight: CGFloat = 90.0
 
 typealias DestinationSelector = (_ destination:Destination) -> Void
 
-//protocol MainNavTableAdaptorNotificationProtocol
-//{
-//    func notifyRowSelected(dest: Destination)
-//    func notifyRowDeleted(rowIndex: Int)
-//}
 
 
 class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewDataSource {

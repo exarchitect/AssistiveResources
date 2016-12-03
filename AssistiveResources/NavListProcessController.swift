@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol NavListProcessControllerResponseProtocol {
-    func selectedNavigationItem (selection: Destination)
+    func notifyNavigationItemSelected (selection: Destination)
 }
 
 
@@ -52,6 +52,7 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     }
     
     override func terminate () {
+        super.terminate()
         let _ = self.navCtrller?.popViewController(animated: true)
     }
     
@@ -80,8 +81,8 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
 
     
     // NavigationSelectorProtocol
-    func selectedNavigationItem (selection: Destination) {
-        self.selectorDelegate.selectedNavigationItem(selection: selection)
+    func selectNavigationItem (selection: Destination) {
+        self.selectorDelegate.notifyNavigationItemSelected(selection: selection)
     }
     
 }

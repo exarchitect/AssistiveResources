@@ -49,7 +49,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
 
     }
 
-    //MARK: @IBAction
+    //MARK: - @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
         //_ = self.navigationController?.popViewController(animated: true)
@@ -58,7 +58,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     
     
     
-    //MARK: delegate
+    //MARK: - delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
         

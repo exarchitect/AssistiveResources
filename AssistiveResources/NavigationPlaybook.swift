@@ -9,7 +9,7 @@
 import Foundation
 
 
-let updateNotificationKey = "notify_navigation_content_changed"
+let updateNotificationKeyName = NSNotification.Name(rawValue: "notify_navigation_content_changed")
 
 
 enum Destination : String {

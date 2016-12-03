@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol NavigationSelectorProtocol {
-    func selectedNavigationItem (selection: Destination)
+    func selectNavigationItem (selection: Destination)
 }
 
 
@@ -23,13 +23,12 @@ class NavListViewController: UIViewController {
     
     @IBOutlet weak var navTable: UITableView!
     var tableAdaptor:MainNavigationTableAdaptor?
-
     
     func setup(navItems: NavigationContent, selectorDelegate: NavigationSelectorProtocol) {
         self.selectorDelegate = selectorDelegate
         self.navigationData = navItems
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: NSNotification.Name(rawValue: updateNotificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateNotificationKeyName, object: nil)
     }
     
     override func viewDidLoad() {
@@ -37,7 +36,7 @@ class NavListViewController: UIViewController {
 
         self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:Destination) -> Void in
             
-            self.selectorDelegate?.selectedNavigationItem(selection: destination)
+            self.selectorDelegate?.selectNavigationItem(selection: destination)
         })
     }
     
@@ -71,20 +70,12 @@ class NavListViewController: UIViewController {
         }
     }
     
-//    func notifyRowSelected(dest: Destination) {
-//        self.completionDelegate?.selectedNavigationItem(selection: dest)
-//    }
-//    
-//    func notifyRowDeleted(rowIndex: Int) {
-//        
-//    }
-    
 }
 
 //MARK: helper functions
 
 func requestMainNavigationRefresh() {
-    NotificationCenter.default.post(name: Notification.Name(rawValue: updateNotificationKey), object: nil)
+    NotificationCenter.default.post(name: updateNotificationKeyName, object: nil)
 }
 
 
