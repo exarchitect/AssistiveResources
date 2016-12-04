@@ -8,8 +8,8 @@
 
 import UIKit
 
-protocol EventSelectorProtocol {
-    func selectedEvent (selection: Int)
+protocol EventListViewControllerResponseProtocol {
+    //func selectedEvent (selection: Int)
     func backButtonTapped ()
 }
 
@@ -19,10 +19,10 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     @IBOutlet weak var tableView: UITableView!
     
     //private var tableAdaptor:EventListTableAdaptor!
-    private var selectorDelegate:EventSelectorProtocol!
+    private var selectorDelegate:EventListViewControllerResponseProtocol!
     private var resourcesModelController:ResourcesModelController!
     
-    func setup(resources: ResourcesModelController, selectorDelegate: EventSelectorProtocol) {
+    func setup(resources: ResourcesModelController, selectorDelegate: EventListViewControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
     }
@@ -42,14 +42,14 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var containerViewController: EventContainerViewController?
-            if segue.identifier == "EventContainerSegueID" {
-                containerViewController = segue.destination as? EventContainerViewController
-                containerViewController?.setup(rsrcModelController: resourcesModelController, delegate: self)
-            }
+        if segue.identifier == "EventContainerSegueID" {
+            containerViewController = segue.destination as? EventContainerViewController
+            containerViewController?.setup(rsrcModelController: resourcesModelController, delegate: self)
+        }
 
     }
 
-    //MARK: - @IBAction
+    //MARK: @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
         //_ = self.navigationController?.popViewController(animated: true)
@@ -58,13 +58,13 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     
     
     
-    //MARK: - delegate
+    //MARK: delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-        
+        let _ = 4
     }
     
     func notifyFilterSelected() {
-    
+        let _ = 4
     }
 }

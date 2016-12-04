@@ -15,7 +15,7 @@ protocol EventListProcessControllerResponseProtocol {
 
 
 
-class EventListProcessController: ProcessController, EventSelectorProtocol {
+class EventListProcessController: ProcessController, EventListViewControllerResponseProtocol {
     
     private var eventDelegate: EventListProcessControllerResponseProtocol!
     private var rsrcModelController: ResourcesModelController!
@@ -54,17 +54,10 @@ class EventListProcessController: ProcessController, EventSelectorProtocol {
         let _ = self.navCtrller?.popViewController(animated: true)
     }
     
-    // EventSelectorProtocol
-    func selectedEvent (selection: Int) {
-        
-    }
+    // EventListViewControllerResponseProtocol
     
     func backButtonTapped () {
         self.eventDelegate.dismissEventProcessController()
-    }
-
-    func filterButtonTapped () {
-        
     }
 
 }

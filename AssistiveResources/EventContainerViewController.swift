@@ -131,6 +131,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
             notificationDelegate?.notifyRowDetailSelected(rowIndex: row)
         }
     }
+    
+    @IBAction func filterButtonAction(_ sender: Any) {
+        notificationDelegate?.notifyFilterSelected()
+    }
 
 }
 

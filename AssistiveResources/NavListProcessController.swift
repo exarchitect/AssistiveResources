@@ -18,7 +18,7 @@ protocol NavListProcessControllerResponseProtocol {
 class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
     private var selectorDelegate: NavListProcessControllerResponseProtocol!
-    private var userMC: UserModelController!
+    private var usrModelController: UserModelController!
     private var navigationData: NavigationContent!
 
     private var navListViewController: NavListViewController!
@@ -32,13 +32,13 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     func dependencies(userModelController: UserModelController, navSelectorDelegate: NavListProcessControllerResponseProtocol) {
         
         self.selectorDelegate = navSelectorDelegate
-        self.userMC = userModelController
+        self.usrModelController = userModelController
     }
     
     func launch(navController: UINavigationController) -> Bool {
         
         precondition(self.selectorDelegate != nil)
-        precondition(self.userMC != nil)
+        precondition(self.usrModelController != nil)
         self.navCtrller = navController
         
         self.navigationData = NavigationContent()
@@ -57,29 +57,6 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     }
     
 
-    
-//    func launch(userModelController: UserModelController, navSelectorDelegate: NavigationSelectorProtocol, navController: UINavigationController) -> Bool {
-//        
-//        self.selectorDelegate = navSelectorDelegate
-//        self.userMC = userModelController
-//        self.navigationData = NavigationContent()
-//        
-//        self.navCtrller = navController
-//        
-//        let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "NavList", bundle: nil)
-//        self.navListViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "navListStoryboardID") as! NavListViewController
-//        self.navListViewController.setup(navItems: self.navigationData, selectorDelegate: self)
-//        
-//        navController.pushViewController(self.navListViewController, animated: false)
-//        
-//        return (authenticationStoryboard != nil && self.navListViewController != nil)
-//    }
-//    
-//    func teardown () {
-//        let _ = self.navCtrller?.popViewController(animated: true)
-//    }
-
-    
     // NavigationSelectorProtocol
     func selectNavigationItem (selection: Destination) {
         self.selectorDelegate.notifyNavigationItemSelected(selection: selection)

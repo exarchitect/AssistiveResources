@@ -337,6 +337,9 @@
                                             <constraint firstAttribute="width" constant="34" id="tcb-DD-ZLb"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="settings"/>
+                                        <connections>
+                                            <action selector="filterButtonAction:" destination="BO0-If-4BN" eventType="touchUpInside" id="s2U-Bm-71b"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.7459995317" green="0.82946075200000002" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -418,7 +421,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Challenger Baseball Field of Dreams" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WfL-G4-5Q6">
-                                                    <rect key="frame" x="86" y="6" width="506" height="59"/>
+                                                    <rect key="frame" x="86" y="6" width="281" height="59"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="59" id="MpA-H2-aOb"/>
                                                     </constraints>
@@ -427,7 +430,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sat 1-5pm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arF-6r-xx8">
-                                                    <rect key="frame" x="86" y="71" width="506" height="21"/>
+                                                    <rect key="frame" x="86" y="71" width="281" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="4pi-YD-aig"/>
                                                     </constraints>
@@ -436,7 +439,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4CF-Kx-I8V">
-                                                    <rect key="frame" x="8" y="101" width="584" height="76"/>
+                                                    <rect key="frame" x="8" y="101" width="359" height="76"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="76" id="JpK-G1-2lK"/>
                                                     </constraints>
@@ -446,7 +449,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Atherton High School, 222 Dundee Rd." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hif-yP-s4r">
-                                                    <rect key="frame" x="8" y="185" width="584" height="21"/>
+                                                    <rect key="frame" x="8" y="185" width="359" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="NZz-HD-YbJ"/>
                                                     </constraints>
@@ -455,7 +458,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sponsored by Challenger Baseball" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INf-2a-NiK">
-                                                    <rect key="frame" x="8" y="211" width="584" height="21"/>
+                                                    <rect key="frame" x="8" y="211" width="359" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="QFz-Cn-Adc"/>
                                                     </constraints>
