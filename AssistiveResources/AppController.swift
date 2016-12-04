@@ -32,14 +32,13 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     override init() {
         
         initializeRemoteDatabase()
-        self.usrModelController = UserModelController()
 
         super.init()
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.freeTerminatedProcessControllers), name: memoryWarningNotificationKeyName, object: nil)
     }
     
-    func setup() -> UIWindow {
+    func setupApplicationWindow() -> UIWindow {
         let window = UIWindow(frame: UIScreen.main.bounds)
         
         // create a root view controller as a backdrop for all other view controllers
@@ -59,6 +58,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         //self.userModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
         //self.userModelController?.storeUserCredentials(username: "", password: "")
 
+        self.loadUserModelController()
         self.loadResourceModelController()
         self.createNavigationListProcessController()
         let success = self.navListProcessController.launch(navController: self.navController)
@@ -73,7 +73,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
             } else {
                 print("NOT logged in")
 
-                self.createAuthorizationProcessController()
+                self.createAuthenticationProcessController()
                 let success = self.authProcessController.launch(parentViewController:self.rootViewController)
                 if (!success) {
                     
@@ -139,7 +139,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     
     // MARK: - Utilities
     
-    private func createAuthorizationProcessController () {
+    private func createAuthenticationProcessController () {
         freeTerminatedProcessControllers()
         
         precondition(self.usrModelController != nil)
@@ -179,6 +179,12 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         if (self.resourcesModelController == nil) {
             self.resourcesModelController = ResourcesModelController()
             self.resourcesModelController.loadResources()
+        }
+    }
+    
+    private func loadUserModelController () {
+        if (self.usrModelController == nil) {
+            self.usrModelController = UserModelController()
         }
     }
     
