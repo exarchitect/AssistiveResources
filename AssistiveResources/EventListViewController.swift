@@ -21,6 +21,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     //private var tableAdaptor:EventListTableAdaptor!
     private var selectorDelegate:EventListViewControllerResponseProtocol!
     private var resourcesModelController:ResourcesModelController!
+    private var filterViewController:UIViewController?
     
     func setup(resources: ResourcesModelController, selectorDelegate: EventListViewControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
@@ -65,6 +66,10 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     }
     
     func notifyFilterSelected() {
-        let _ = 4
+        self.filterViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as! UIViewController
+        //self.loginViewController.setup(completionProtocol: self)
+        //guard
+        self.present(self.filterViewController!, animated: true, completion: nil)
+
     }
 }

@@ -38,6 +38,10 @@ class ProcessController: NSObject {
         self.inUse = false
     }
     
+    func topViewController () -> UIViewController {
+        assert(false)   // must be overridden or will assert at runtime
+    }
+    
 }
 
 

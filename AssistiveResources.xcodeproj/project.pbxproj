@@ -27,6 +27,7 @@
 		D24E4DCF1DED173F008A11FB /* NavListProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DCE1DED173F008A11FB /* NavListProcessController.swift */; };
 		D24E4DD11DED26DF008A11FB /* NavList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D24E4DD01DED26DF008A11FB /* NavList.storyboard */; };
 		D24E4DD31DED2703008A11FB /* NavListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DD21DED2703008A11FB /* NavListViewController.swift */; };
+		D27440EF1DF6459C008E0476 /* UXUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27440EE1DF6459C008E0476 /* UXUtilities.swift */; };
 		D28C80D11DF0E821002D3940 /* EventListProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D01DF0E821002D3940 /* EventListProcessController.swift */; };
 		D28C80D41DF0E8B6002D3940 /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D31DF0E8B6002D3940 /* EventListViewController.swift */; };
 		D28C80D81DF0E8DE002D3940 /* EventListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */; };
@@ -84,6 +85,7 @@
 		D24E4DCE1DED173F008A11FB /* NavListProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavListProcessController.swift; sourceTree = "<group>"; };
 		D24E4DD01DED26DF008A11FB /* NavList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NavList.storyboard; sourceTree = "<group>"; };
 		D24E4DD21DED2703008A11FB /* NavListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavListViewController.swift; sourceTree = "<group>"; };
+		D27440EE1DF6459C008E0476 /* UXUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXUtilities.swift; sourceTree = "<group>"; };
 		D28C80D01DF0E821002D3940 /* EventListProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListProcessController.swift; sourceTree = "<group>"; };
 		D28C80D31DF0E8B6002D3940 /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
 		D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListTableViewCell.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			children = (
 				D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */,
 				D24E4DC91DE741E4008A11FB /* DateUtilities.swift */,
+				D27440EE1DF6459C008E0476 /* UXUtilities.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D24E4DB91DE5637E008A11FB /* LoginViewController.swift in Sources */,
+				D27440EF1DF6459C008E0476 /* UXUtilities.swift in Sources */,
 				D28C80D41DF0E8B6002D3940 /* EventListViewController.swift in Sources */,
 				D22768551DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift in Sources */,
 				D24E4DCC1DE74750008A11FB /* ProcessController.swift in Sources */,

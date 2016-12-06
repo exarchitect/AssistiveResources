@@ -65,8 +65,11 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         if (!success) {
         }
         
+        //startActivityAlert(presentingController: self.navListProcessController.topViewController(), title: nil, message: "Logging in")
 
         self.usrModelController?.authorizeUser(completion: { (success) in
+            //stopActivityAlert(presentingController: self.navListProcessController.topViewController())
+            
             if (success) {
                 print("logged in")
                 

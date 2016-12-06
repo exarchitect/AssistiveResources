@@ -56,6 +56,9 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         let _ = self.navCtrller?.popViewController(animated: true)
     }
     
+    override func topViewController() -> UIViewController {
+        return self.navListViewController
+    }
 
     // NavigationSelectorProtocol
     func selectNavigationItem (selection: Destination) {

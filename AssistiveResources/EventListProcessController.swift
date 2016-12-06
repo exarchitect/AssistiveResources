@@ -40,13 +40,14 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
         //self.rsrcModelController = rsrcsModelController
         self.navCtrller = navController
         
-        let eventStoryboard: UIStoryboard? = UIStoryboard(name: "EventList", bundle: nil)
-        self.eventListViewController = eventStoryboard?.instantiateViewController(withIdentifier: "EventListStoryboardID") as! EventListViewController
+//        let eventStoryboard: UIStoryboard? = UIStoryboard(name: "EventList", bundle: nil)
+//        self.eventListViewController = eventStoryboard?.instantiateViewController(withIdentifier: "EventListStoryboardID") as! EventListViewController
+        self.eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
         self.eventListViewController.setup(resources: self.rsrcModelController, selectorDelegate: self)
         
         navController.pushViewController(self.eventListViewController, animated: true)
         
-        return (eventStoryboard != nil && self.eventListViewController != nil)
+        return (self.eventListViewController != nil)
     }
     
     override func terminate () {

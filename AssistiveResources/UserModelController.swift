@@ -65,7 +65,9 @@ final class UserModelController: NSObject {
                 self.completionClosure = nil
             })
         } else {
-            self.completionClosure?(false)      // failed, since we dont have creds
+            //DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 1.1)) {
+                self.completionClosure?(false)      // failed, since we dont have creds
+            //}
         }
         
     }
