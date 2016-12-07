@@ -14,14 +14,14 @@ protocol EventListViewControllerResponseProtocol {
 }
 
 
-class EventListViewController: UIViewController, EventListContainerNotificationProtocol {
+class EventListViewController: UIViewController, EventListContainerNotificationProtocol, EventFilterViewControllerResponseProtocol {
 
     @IBOutlet weak var tableView: UITableView!
     
     //private var tableAdaptor:EventListTableAdaptor!
     private var selectorDelegate:EventListViewControllerResponseProtocol!
     private var resourcesModelController:ResourcesModelController!
-    private var filterViewController:UIViewController?
+    private var filterViewController:EventFilterViewController?
     
     func setup(resources: ResourcesModelController, selectorDelegate: EventListViewControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
@@ -66,10 +66,19 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     }
     
     func notifyFilterSelected() {
-        self.filterViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as! UIViewController
-        //self.loginViewController.setup(completionProtocol: self)
+        self.filterViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController
+        self.filterViewController?.setup(resources: self.resourcesModelController, selectorDelegate: self)
         //guard
         self.present(self.filterViewController!, animated: true, completion: nil)
 
     }
+    
+    func okFilterButtonAction() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func cancelFilterButtonAction() {
+        
+    }
+    
 }

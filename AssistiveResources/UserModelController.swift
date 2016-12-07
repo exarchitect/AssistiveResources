@@ -65,9 +65,9 @@ final class UserModelController: NSObject {
                 self.completionClosure = nil
             })
         } else {
-            //DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 1.1)) {
+            DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 1.1)) {
                 self.completionClosure?(false)      // failed, since we dont have creds
-            //}
+            }
         }
         
     }
@@ -82,7 +82,7 @@ final class UserModelController: NSObject {
         
     }
 
-    private func storeUserCredentials (username: String, password: String) {
+    func storeUserCredentials (username: String, password: String) {
         self.username = username
         self.password = password
         

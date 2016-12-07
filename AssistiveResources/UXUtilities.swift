@@ -26,10 +26,11 @@ func startActivityIndicator (indicator: UIActivityIndicatorView) {
 
 func stopActivityIndicator (indicator: UIActivityIndicatorView) {
     indicator.stopAnimating()
+    UIApplication.shared.isNetworkActivityIndicatorVisible = false
 }
 
 
-func startActivityAlert(presentingController: UIViewController, title: String?, message: String?) {
+func startBackgroundActivityAlert(presentingController: UIViewController, title: String?, message: String?) {
     //create an alert controller
     let pending = UIAlertController(title: title, message: message, preferredStyle: .alert)
     
@@ -45,6 +46,6 @@ func startActivityAlert(presentingController: UIViewController, title: String?, 
     presentingController.present(pending, animated: true, completion: nil)
 }
 
-func stopActivityAlert(presentingController: UIViewController) {
+func stopBackgroundActivityAlert(presentingController: UIViewController) {
     presentingController.dismiss(animated: true, completion: nil)
 }

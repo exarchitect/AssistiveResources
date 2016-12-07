@@ -535,10 +535,10 @@
             </objects>
             <point key="canvasLocation" x="2212" y="-116"/>
         </scene>
-        <!--View Controller-->
+        <!--Event Filter View Controller-->
         <scene sceneID="eNS-PZ-75E">
             <objects>
-                <viewController storyboardIdentifier="filterStoryboardID" id="NF8-cM-Y1I" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="filterStoryboardID" id="NF8-cM-Y1I" customClass="EventFilterViewController" customModule="AssistiveResources" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Zjq-HT-O2A"/>
                         <viewControllerLayoutGuide type="bottom" id="945-cw-ssw"/>
@@ -554,6 +554,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d5w-yM-SAh">
+                                <rect key="frame" x="53" y="69" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="OK"/>
+                                <connections>
+                                    <action selector="okButtonAction:" destination="NF8-cM-Y1I" eventType="touchUpInside" id="vv2-7o-NhA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
