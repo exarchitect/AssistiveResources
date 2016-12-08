@@ -58,8 +58,8 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         self.loadUserModelController()
         self.loadResourceModelController()
 
-        self.usrModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
-        //self.userModelController?.storeUserCredentials(username: "", password: "")
+        //self.usrModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
+        //self.usrModelController?.storeUserCredentials(username: "", password: "")
         
         self.createNavigationListProcessController()
         let success = self.navListProcessController.launch(navController: self.navController)

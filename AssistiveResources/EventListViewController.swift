@@ -16,6 +16,7 @@ protocol EventListViewControllerResponseProtocol {
 
 class EventListViewController: UIViewController, EventListContainerNotificationProtocol, EventFilterViewControllerResponseProtocol {
 
+    @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var tableView: UITableView!
     
     //private var tableAdaptor:EventListTableAdaptor!
@@ -31,7 +32,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //self.tableAdaptor = EventListTableAdaptor.init(table: self.tableView, rsrcModelController: self.resourcesModelController, delegate: self)
+        self.headerView.titleLabel.text = "Upcoming Events"
     }
     
     override func didReceiveMemoryWarning() {
