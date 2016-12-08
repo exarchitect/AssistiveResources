@@ -24,7 +24,7 @@ class NavListViewController: UIViewController {
     @IBOutlet weak var navTable: UITableView!
     var tableAdaptor:MainNavigationTableAdaptor?
     
-    func setup(navItems: NavigationContent, selectorDelegate: NavigationSelectorProtocol) {
+    func dependencies(navItems: NavigationContent, selectorDelegate: NavigationSelectorProtocol) {
         self.selectorDelegate = selectorDelegate
         self.navigationData = navItems
 
@@ -33,6 +33,9 @@ class NavListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        precondition(self.selectorDelegate != nil)
+        precondition(self.navigationData != nil)
 
         self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:Destination) -> Void in
             

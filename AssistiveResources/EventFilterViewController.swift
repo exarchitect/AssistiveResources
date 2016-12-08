@@ -22,7 +22,7 @@ class EventFilterViewController: UIViewController {
     private var selectorDelegate:EventFilterViewControllerResponseProtocol!
     private var resourcesModelController:ResourcesModelController!
 
-    func setup(resources: ResourcesModelController, selectorDelegate: EventFilterViewControllerResponseProtocol) {
+    func dependencies(resources: ResourcesModelController, selectorDelegate: EventFilterViewControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
     }
@@ -30,7 +30,8 @@ class EventFilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        precondition(self.selectorDelegate != nil)
+        precondition(self.resourcesModelController != nil)
     }
 
     override func didReceiveMemoryWarning() {

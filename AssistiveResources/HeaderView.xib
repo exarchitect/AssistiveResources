@@ -46,6 +46,7 @@
                         <constraint firstItem="t1V-ko-Yla" firstAttribute="centerX" secondItem="E5t-qO-oaH" secondAttribute="centerX" constant="45.5" id="IdP-dp-rBZ"/>
                         <constraint firstAttribute="bottom" secondItem="t1V-ko-Yla" secondAttribute="bottom" constant="-52" id="MSy-Bt-aLm"/>
                         <constraint firstItem="IjS-rS-pyn" firstAttribute="leading" secondItem="E5t-qO-oaH" secondAttribute="leading" constant="10" id="XK8-Mn-qMS"/>
+                        <constraint firstAttribute="height" constant="110" id="dtJ-xh-jv2"/>
                         <constraint firstAttribute="bottom" secondItem="IjS-rS-pyn" secondAttribute="bottom" constant="-10" id="mwI-WZ-Qsg"/>
                     </constraints>
                 </view>

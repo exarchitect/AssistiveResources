@@ -44,7 +44,7 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         self.navigationData = NavigationContent()
         
         self.navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
-        self.navListViewController.setup(navItems: self.navigationData, selectorDelegate: self)
+        self.navListViewController.dependencies(navItems: self.navigationData, selectorDelegate: self)
         
         navController.pushViewController(self.navListViewController, animated: false)
         

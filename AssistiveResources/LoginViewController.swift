@@ -19,10 +19,15 @@ class LoginViewController: UIViewController {
 
     private var completionProtocol: LoginViewControllerCompletionProtocol?
 
-    func setup(completionProtocol: LoginViewControllerCompletionProtocol) {
+    func dependencies(completionProtocol: LoginViewControllerCompletionProtocol) {
         self.completionProtocol = completionProtocol
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        precondition(self.completionProtocol != nil)
+    }
 
     // overridden framework methods
     override func didReceiveMemoryWarning() {

@@ -26,10 +26,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     var expandedRowIndex = -1
     
 
-    func setup(rsrcModelController: ResourcesModelController, delegate: EventListContainerNotificationProtocol) {
+    func dependencies(rsrcModelController: ResourcesModelController, delegate: EventListContainerNotificationProtocol) {
     
-        resources = rsrcModelController
-        notificationDelegate = delegate
+        self.resources = rsrcModelController
+        self.notificationDelegate = delegate
         
         // attach table
 //        containerTableView.delegate = self
@@ -48,6 +48,9 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        precondition(self.resources != nil)
+        precondition(self.notificationDelegate != nil)
+        
         containerTableView.delegate = self
         containerTableView.dataSource = self
         
@@ -67,7 +70,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
     //MARK: utils
     
-    func expandCollapseRow(row: Int)
+    private func expandCollapseRow(row: Int)
     {
         var indexPathToExpand : IndexPath
         var indexPathToCollapse : IndexPath
