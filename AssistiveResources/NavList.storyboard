@@ -22,40 +22,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rWX-RF-0Bw">
-                                <rect key="frame" x="0.0" y="-2" width="375" height="97"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Assistive Resources" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vHs-22-UsV">
-                                        <rect key="frame" x="8" y="-11" width="203" height="118"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="118" id="XMq-y3-Qma"/>
-                                            <constraint firstAttribute="width" constant="203" id="bxg-Vl-1d8"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="36"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="wheelchair2" translatesAutoresizingMaskIntoConstraints="NO" id="7kf-Pv-gf1">
-                                        <rect key="frame" x="219" y="8" width="138" height="144"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                </subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rWX-RF-0Bw" customClass="HeaderView" customModule="AssistiveResources" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="-2" width="375" height="110"/>
                                 <color key="backgroundColor" red="0.054901960780000002" green="0.2666666667" blue="0.58039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="vHs-22-UsV" firstAttribute="top" secondItem="rWX-RF-0Bw" secondAttribute="top" constant="-11" id="PaY-D2-8D5"/>
-                                    <constraint firstAttribute="height" constant="97" id="iAz-WS-Apd"/>
-                                    <constraint firstItem="vHs-22-UsV" firstAttribute="leading" secondItem="rWX-RF-0Bw" secondAttribute="leading" constant="8" id="yav-qM-Kv9"/>
+                                    <constraint firstAttribute="height" constant="110" id="iAz-WS-Apd"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="94" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="noD-YO-6ng">
-                                <rect key="frame" x="0.0" y="95" width="375" height="572"/>
+                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeNavigationCellIdentifier" rowHeight="94" id="hcX-Bq-o9t" customClass="MainNavTableViewCell" customModule="AssistiveResources" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="1" width="375" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hcX-Bq-o9t" id="7hI-FN-W42">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="93"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="94"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="organization" translatesAutoresizingMaskIntoConstraints="NO" id="d1A-JA-o8Y">
@@ -116,13 +98,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="noD-YO-6ng" secondAttribute="trailing" id="GUf-ym-1mV"/>
-                            <constraint firstItem="noD-YO-6ng" firstAttribute="top" secondItem="dWS-cu-YjJ" secondAttribute="top" constant="95" id="HPa-00-Wnh"/>
-                            <constraint firstItem="rWX-RF-0Bw" firstAttribute="top" secondItem="dWS-cu-YjJ" secondAttribute="top" id="MYt-tD-lLb"/>
-                            <constraint firstItem="Yeu-Hb-l0X" firstAttribute="top" secondItem="noD-YO-6ng" secondAttribute="bottom" id="SXu-ra-7Ld"/>
+                            <constraint firstItem="noD-YO-6ng" firstAttribute="top" secondItem="rWX-RF-0Bw" secondAttribute="bottom" id="78K-m7-VLF"/>
+                            <constraint firstItem="rWX-RF-0Bw" firstAttribute="top" secondItem="dWS-cu-YjJ" secondAttribute="top" constant="-2" id="MYt-tD-lLb"/>
                             <constraint firstAttribute="trailing" secondItem="rWX-RF-0Bw" secondAttribute="trailing" id="VQC-oT-IMw"/>
+                            <constraint firstItem="Yeu-Hb-l0X" firstAttribute="top" secondItem="noD-YO-6ng" secondAttribute="bottom" id="VXI-Q3-yWi"/>
+                            <constraint firstAttribute="trailing" secondItem="noD-YO-6ng" secondAttribute="trailing" id="edw-4T-jhJ"/>
                             <constraint firstItem="rWX-RF-0Bw" firstAttribute="leading" secondItem="dWS-cu-YjJ" secondAttribute="leading" id="kvH-53-Q5j"/>
-                            <constraint firstItem="noD-YO-6ng" firstAttribute="leading" secondItem="dWS-cu-YjJ" secondAttribute="leading" id="vgb-YW-MvD"/>
+                            <constraint firstItem="noD-YO-6ng" firstAttribute="leading" secondItem="dWS-cu-YjJ" secondAttribute="leading" id="ljw-3b-pIn"/>
                         </constraints>
                     </view>
                     <connections>
@@ -136,6 +118,5 @@
     </scenes>
     <resources>
         <image name="organization" width="256" height="256"/>
-        <image name="wheelchair2" width="900" height="900"/>
     </resources>
 </document>

@@ -25,22 +25,12 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     var notificationDelegate:EventListContainerNotificationProtocol?
     var expandedRowIndex = -1
     
+    //MARK: - inherited
 
     func dependencies(rsrcModelController: ResourcesModelController, delegate: EventListContainerNotificationProtocol) {
     
         self.resources = rsrcModelController
         self.notificationDelegate = delegate
-        
-        // attach table
-//        containerTableView.delegate = self
-//        containerTableView.dataSource = self
-//        
-//        containerTableView.separatorInset = UIEdgeInsets.zero
-//        containerTableView.separatorColor = UIColor.blue
-//        containerTableView.backgroundColor = UIColor.white
-//        
-//        //tableView.allowsSelection = false
-//        containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
     }
     
     
@@ -64,11 +54,12 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+
+        freeMemory()
     }
     
     
-    //MARK: utils
+    //MARK: - utils
     
     private func expandCollapseRow(row: Int)
     {
@@ -95,7 +86,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         containerTableView.reloadRows(at: pathArray as! [IndexPath], with: UITableViewRowAnimation.automatic)
     }
     
-    //MARK: tableView delegates
+    //MARK: - tableView delegates
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (expandedRowIndex == indexPath.row) ? 286.0 : 100
@@ -126,7 +117,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         return false
     }
     
-    //MARK: @IBAction
+    // MARK: - @IBAction
     
     @IBAction func showRowDetailButtonAction(_ sender: UIButton) {
         let row = getRowFrom(sender, self.containerTableView)
@@ -141,6 +132,8 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 
 }
 
+
+// MARK: - funcs
 
 func getRowFrom(_ cellItem: UIView, _ fromTable: UITableView) -> Int {
     var parentCell: UIView! = cellItem as UIView

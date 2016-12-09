@@ -56,7 +56,6 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     //MARK: @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
-        //_ = self.navigationController?.popViewController(animated: true)
         self.selectorDelegate.backButtonTapped()
     }
     
