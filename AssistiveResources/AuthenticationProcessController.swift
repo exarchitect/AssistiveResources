@@ -43,7 +43,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
         self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
-        self.loginViewController.dependencies(completionProtocol: self)
+        self.loginViewController.dependencies(userModelController: self.userMC, completionProtocol: self)
         
         parentViewController.present(self.loginViewController, animated: true, completion: nil)
         

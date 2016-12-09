@@ -59,14 +59,14 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         self.loadResourceModelController()
 
         //self.usrModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
-        //self.usrModelController?.storeUserCredentials(username: "", password: "")
+        self.usrModelController?.storeUserCredentials(username: "", password: "")
         
         self.createNavigationListProcessController()
         let success = self.navListProcessController.launch(navController: self.navController)
         if (!success) {
         }
         
-        startBackgroundActivityAlert(presentingController: self.navListProcessController.topViewController(), title: nil, message: "Logging in")
+        startBackgroundActivityAlert(presentingController: self.navListProcessController.topViewController(), title: nil, message: "authenticating...")
 
         self.usrModelController?.authorizeUser(completion: { (success) in
             stopBackgroundActivityAlert(presentingController: self.navListProcessController.topViewController())
