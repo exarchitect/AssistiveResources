@@ -83,8 +83,8 @@ class Organization {
     
     var countryCodeISO: ISOCountryCode = ISOCountryCode.USA     // default
 
-    var chapterList:[Chapter] = []
-    var serviceList:[Service] = []
+//    var chapterList:[Chapter] = []
+//    var serviceList:[Service] = []
 
     init(entity:EntityDescriptor, tagline:String, mission:String, target:String, structure: OrganizationalStructure, scope: GeographicScope, location:LocationProfile, url:String) {
         organization = entity
@@ -100,14 +100,14 @@ class Organization {
         website = url
     }
     
-    func addChapter(chapter:EntityDescriptor, parentOrganization:EntityDescriptor, location:LocationProfile) {
-        let newchapter: Chapter = Chapter(chapter: chapter, parentOrganization: parentOrganization, location: location)
-        chapterList.append(newchapter)
-    }
-    
-    func addService(title:String, descrip:String, target:String) {
-        let newservice: Service = Service(serviceTitle: title, serviceDescrip: descrip, serviceTarget: target)
-        serviceList.append(newservice)
-    }
+//    func addChapter(chapter:EntityDescriptor, parentOrganization:EntityDescriptor, location:LocationProfile) {
+//        let newchapter: Chapter = Chapter(chapter: chapter, parentOrganization: parentOrganization, location: location)
+//        chapterList.append(newchapter)
+//    }
+//    
+//    func addService(title:String, descrip:String, target:String) {
+//        let newservice: Service = Service(serviceTitle: title, serviceDescrip: descrip, serviceTarget: target)
+//        serviceList.append(newservice)
+//    }
 }
 
