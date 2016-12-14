@@ -24,11 +24,11 @@ class OrganizationRepository: NSObject {
         return organizations[pos]
     }
     
-    func loadLocalData() {
+    func loadData() {
         self.dummyOrganizations()
     }
     
-    func loadRemoteData() {
+    private func loadRemoteData() {
         
     }
     

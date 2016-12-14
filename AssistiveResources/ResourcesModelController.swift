@@ -27,8 +27,8 @@ class ResourcesModelController: NSObject {
     }
     
     private func loadLocalResources() {
-        self.eventRepo.loadLocalData()
-        self.organizationRepo.loadLocalData()
+        self.eventRepo.loadData()
+        self.organizationRepo.loadData()
     }
     
     private func loadRemoteResources() {

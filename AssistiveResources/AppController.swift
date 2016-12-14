@@ -24,7 +24,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     private var usrModelController: UserModelController!
     private var resourcesModelController : ResourcesModelController!
     
-    var username: String = ""
+    //var username: String = ""
     
     
     //static let sharedInstance = AppController()     // singleton
@@ -59,7 +59,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         self.loadResourceModelController()
 
         //self.usrModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
-        self.usrModelController?.storeUserCredentials(username: "", password: "")
+        //self.usrModelController?.storeUserCredentials(username: "", password: "")
         
         self.createNavigationListProcessController()
         let success = self.navListProcessController.launch(navController: self.navController)
@@ -136,10 +136,10 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         self.eventListProcessController.terminate()
     }
 
-    func notifyOrganizationSelected (org: EntityDescriptor) {
-        
+    func notifyShowEventDetail (evt: EntityDescriptor) {
+        let _ = evt
     }
-
+    
     
     // MARK: - Utilities
     

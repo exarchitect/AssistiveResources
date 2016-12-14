@@ -10,7 +10,7 @@ import UIKit
 
 protocol EventListProcessControllerResponseProtocol {
     func dismissEventProcessController ()
-    func notifyOrganizationSelected (org: EntityDescriptor)
+    func notifyShowEventDetail (evt: EntityDescriptor)
 }
 
 
@@ -55,6 +55,10 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     
     // EventListViewControllerResponseProtocol
     
+    func selectedEvent (evt: EntityDescriptor) {
+        self.eventDelegate.notifyShowEventDetail(evt: evt)
+    }
+
     func backButtonTapped () {
         self.eventDelegate.dismissEventProcessController()
     }

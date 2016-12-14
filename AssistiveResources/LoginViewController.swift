@@ -22,6 +22,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var selectLoginType: UISegmentedControl!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var zipcodeTextField: UITextField!
     @IBOutlet weak var subtitleLabel: UILabel!
     
     @IBOutlet weak var tryoutSubtextLabel: UILabel!
@@ -60,6 +61,7 @@ class LoginViewController: UIViewController {
         self.subtitleLabel.isHidden = isTryout
         self.emailTextField.isHidden = isTryout
         self.passwordTextField.isHidden = isTryout
+        self.zipcodeTextField.isHidden = (ctrl.selectedSegmentIndex == 0)
         self.tryoutSubtextLabel.isHidden = !isTryout
 
         switch ctrl.selectedSegmentIndex {

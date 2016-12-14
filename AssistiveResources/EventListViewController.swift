@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EventListViewControllerResponseProtocol {
-    //func selectedEvent (selection: Int)
+    func selectedEvent (evt: EntityDescriptor)
     func backButtonTapped ()
 }
 
@@ -64,7 +64,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     //MARK: delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-        let _ = 4
+        self.selectorDelegate.selectedEvent(evt: EntityDescriptor("",0,0))
     }
     
     func notifyFilterSelected() {
