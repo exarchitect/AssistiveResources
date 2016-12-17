@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol EventListProcessControllerResponseProtocol {
+protocol EventListProcessControllerResponseProtocol: ProcessControllerProtocol {
     func dismissEventProcessController ()
     func notifyShowEventDetail (evt: EntityDescriptor)
 }
@@ -21,7 +21,6 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     private var rsrcModelController: ResourcesModelController!
     
     private var eventListViewController: EventListViewController!
-    private var navCtrller: UINavigationController?
     
     override init() {
         // init ?
@@ -34,23 +33,22 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
         self.rsrcModelController = rsrcsModelController
     }
     
-    func launch(navController: UINavigationController) -> Bool {
-        
-        //self.eventDelegate = eventProcessMessageDelegate
-        //self.rsrcModelController = rsrcsModelController
-        self.navCtrller = navController
+    func launch() -> Bool {
         
         self.eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
         self.eventListViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
         
-        navController.pushViewController(self.eventListViewController, animated: true)
+        let navCtrller = self.eventDelegate.navigationController()
+        navCtrller.pushViewController(self.eventListViewController, animated: true)
         
         return (self.eventListViewController != nil)
     }
     
     override func terminate () {
         super.terminate()
-        let _ = self.navCtrller?.popViewController(animated: true)
+
+        let navCtrller = self.eventDelegate.navigationController()
+        let _ = navCtrller.popViewController(animated: true)
     }
     
     // EventListViewControllerResponseProtocol

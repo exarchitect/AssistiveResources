@@ -13,7 +13,6 @@ let memoryWarningNotificationKeyName = NSNotification.Name(rawValue: "notify_did
 
 class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, NavListProcessControllerResponseProtocol, EventListProcessControllerResponseProtocol, EventDetailProcessControllerResponseProtocol {
 
-    //private weak var topProcessController: ProcessController!
     private var rootViewController: RootViewController!
     private var navController: UINavigationController!
     
@@ -25,9 +24,6 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     private var usrModelController: UserModelController!
     private var resourcesModelController : ResourcesModelController!
     
-    
-    //static let sharedInstance = AppController()     // singleton
-
     override init() {
         
         initializeRemoteDatabase()
@@ -61,7 +57,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         //self.usrModelController?.storeUserCredentials(username: "", password: "")
         
         self.createNavigationListProcessController()
-        let success = self.navListProcessController.launch(navController: self.navController)
+        let success = self.navListProcessController.launch()
         if (!success) {
         }
         
@@ -77,7 +73,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
                 print("NOT logged in")
 
                 self.createAuthenticationProcessController()
-                let success = self.authProcessController.launch(parentViewController:self.rootViewController)
+                let success = self.authProcessController.launch()
                 if (!success) {
                     
                 }
@@ -85,6 +81,11 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         })
     }
     
+    // MARK: - ProcessControllerProtocol
+
+    func navigationController () -> UINavigationController {
+        return self.navController
+    }
     
     // MARK: - AuthenticationProcessControllerResponseProtocol
     
@@ -106,7 +107,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
                 
             case Destination.Events:
                 self.createEventListProcessController()
-                let success = self.evtListProcessController.launch(navController: self.navController)
+                let success = self.evtListProcessController.launch()
                 if (!success) {
                     
                 }
@@ -136,8 +137,8 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     }
 
     func notifyShowEventDetail (evt: EntityDescriptor) {
-        self.createEventDetailProcessController()
-        let success = self.evtDetailProcessController.launch(navController: self.navController)
+        self.createEventDetailProcessController(evt: evt)
+        let success = self.evtDetailProcessController.launch()
         if (!success) {
             
         }
@@ -180,7 +181,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         self.evtListProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventProcessMessageDelegate: self)
     }
     
-    private func createEventDetailProcessController () {
+    private func createEventDetailProcessController (evt: EntityDescriptor) {
         freeTerminatedProcessControllers()
         
         precondition(self.resourcesModelController != nil)

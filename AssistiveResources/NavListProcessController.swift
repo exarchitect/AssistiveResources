@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol NavListProcessControllerResponseProtocol {
+protocol NavListProcessControllerResponseProtocol: ProcessControllerProtocol {
     func notifyNavigationItemSelected (selection: Destination)
 }
 
@@ -22,7 +22,6 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     private var navigationData: NavigationContent!
 
     private var navListViewController: NavListViewController!
-    private var navCtrller: UINavigationController?
     
     override init() {
         // init ?
@@ -35,31 +34,29 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         self.usrModelController = userModelController
     }
     
-    func launch(navController: UINavigationController) -> Bool {
+    func launch() -> Bool {
         
         precondition(self.selectorDelegate != nil)
         precondition(self.usrModelController != nil)
-        self.navCtrller = navController
         
         self.navigationData = NavigationContent()
         
         self.navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
         self.navListViewController.dependencies(navItems: self.navigationData, selectorDelegate: self)
         
-        navController.pushViewController(self.navListViewController, animated: false)
+        let navCtrller = self.selectorDelegate.navigationController()
+        navCtrller.pushViewController(self.navListViewController, animated: false)
         
         return (self.navListViewController != nil)
     }
     
     override func terminate () {
         super.terminate()
-        let _ = self.navCtrller?.popViewController(animated: true)
+
+        let navCtrller = self.selectorDelegate.navigationController()
+        let _ = navCtrller.popViewController(animated: true)
     }
     
-    override func topViewController() -> UIViewController {
-        return self.navListViewController
-    }
-
     // NavigationSelectorProtocol
     func selectNavigationItem (selection: Destination) {
         self.selectorDelegate.notifyNavigationItemSelected(selection: selection)

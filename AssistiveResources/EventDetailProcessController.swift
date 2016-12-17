@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol EventDetailProcessControllerResponseProtocol {
+protocol EventDetailProcessControllerResponseProtocol: ProcessControllerProtocol {
     func dismissEventDetailProcessController ()
     func notifyShowOrganizationDetail (org: EntityDescriptor)
 }
@@ -20,7 +20,6 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     private var eventDetailDelegate: EventDetailProcessControllerResponseProtocol!
     private var rsrcModelController: ResourcesModelController!
     private var eventDetailViewController: EventDetailViewController!
-    private var navCtrller: UINavigationController?
     
     override init() {
         // init ?
@@ -33,21 +32,22 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
         self.rsrcModelController = rsrcsModelController
     }
     
-    func launch(navController: UINavigationController) -> Bool {
-        
-        self.navCtrller = navController
+    func launch() -> Bool {
         
         self.eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
         self.eventDetailViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
         
-        navController.pushViewController(self.eventDetailViewController, animated: true)
+        let navCtrller = self.eventDetailDelegate.navigationController()
+        navCtrller.pushViewController(self.eventDetailViewController, animated: true)
         
         return (self.eventDetailViewController != nil)
     }
     
     override func terminate () {
         super.terminate()
-        let _ = self.navCtrller?.popViewController(animated: true)
+
+        let navCtrller = self.eventDetailDelegate.navigationController()
+        let _ = navCtrller.popViewController(animated: true)
     }
     
     // EventDetailViewControllerResponseProtocol
