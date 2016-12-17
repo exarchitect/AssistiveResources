@@ -16,7 +16,7 @@ protocol NavigationSelectorProtocol {
 
 class NavListViewController: UIViewController {
 
-    private var selectorDelegate: NavigationSelectorProtocol?
+    private var navVCDelegate: NavigationSelectorProtocol?
     private var navigationData: NavigationContent!
     private var isCurrentlyVisible: Bool = false
     private var needContentRefresh: Bool = false
@@ -24,8 +24,8 @@ class NavListViewController: UIViewController {
     @IBOutlet weak var navTable: UITableView!
     var tableAdaptor:MainNavigationTableAdaptor?
     
-    func dependencies(navItems: NavigationContent, selectorDelegate: NavigationSelectorProtocol) {
-        self.selectorDelegate = selectorDelegate
+    func dependencies(navItems: NavigationContent, navDelegate: NavigationSelectorProtocol) {
+        self.navVCDelegate = navDelegate
         self.navigationData = navItems
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateNotificationKeyName, object: nil)
@@ -34,12 +34,12 @@ class NavListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        precondition(self.selectorDelegate != nil)
+        precondition(self.navVCDelegate != nil)
         precondition(self.navigationData != nil)
 
         self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:Destination) -> Void in
             
-            self.selectorDelegate?.selectNavigationItem(selection: destination)
+            self.navVCDelegate?.selectNavigationItem(selection: destination)
         })
     }
     

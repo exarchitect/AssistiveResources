@@ -24,14 +24,13 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     private var usrModelController: UserModelController!
     private var resourcesModelController : ResourcesModelController!
     
+    
     override init() {
-        
         initializeRemoteDatabase()
-
         super.init()
-
         NotificationCenter.default.addObserver(self, selector: #selector(self.freeTerminatedProcessControllers), name: memoryWarningNotificationKeyName, object: nil)
     }
+    
     
     func setupApplicationWindow() -> UIWindow {
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -42,22 +41,20 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         self.navController.setNavigationBarHidden(true, animated: false)
 
         window.rootViewController = self.navController
-        
         window.makeKeyAndVisible()
         
         return window
     }
     
+    
     func start()  {
-        
         self.loadUserModelController()
         self.loadResourceModelController()
 
         //self.usrModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
         //self.usrModelController?.storeUserCredentials(username: "", password: "")
         
-        self.createNavigationListProcessController()
-        let success = self.navListProcessController.launch()
+        let success = self.pushNavigationListProcessController()
         if (!success) {
         }
         
@@ -72,8 +69,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
             } else {
                 print("NOT logged in")
 
-                self.createAuthenticationProcessController()
-                let success = self.authProcessController.launch()
+                let success = self.self.pushAuthenticationProcessController()
                 if (!success) {
                     
                 }
@@ -81,21 +77,19 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         })
     }
     
+    
     // MARK: - ProcessControllerProtocol
+
+    func dismissProcessController (controller: ProcessController) {
+        controller.terminate()
+        
+    }
 
     func navigationController () -> UINavigationController {
         return self.navController
     }
     
-    // MARK: - AuthenticationProcessControllerResponseProtocol
     
-    func notifyAuthenticationCompletion () {
-        
-        self.authProcessController.terminate()
-        
-        requestMainNavigationRefresh()
-    }
-
 
     // MARK: - NavListProcessControllerResponseProtocol
     
@@ -106,8 +100,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
                 let _ = 7
                 
             case Destination.Events:
-                self.createEventListProcessController()
-                let success = self.evtListProcessController.launch()
+                let success = self.pushEventListProcessController()
                 if (!success) {
                     
                 }
@@ -130,26 +123,19 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
 
     }
     
+    
     // MARK: - EventListProcessControllerResponseProtocol
     
-    func dismissEventProcessController () {
-        self.evtListProcessController.terminate()
-    }
-
     func notifyShowEventDetail (evt: EntityDescriptor) {
-        self.createEventDetailProcessController(evt: evt)
-        let success = self.evtDetailProcessController.launch()
+        let success = self.pushEventDetailProcessController(evt: evt)
         if (!success) {
             
         }
     }
     
+    
     // MARK: - EventDetailProcessControllerResponseProtocol
 
-    func dismissEventDetailProcessController () {
-        self.evtDetailProcessController.terminate()
-    }
-    
     func notifyShowOrganizationDetail (org: EntityDescriptor) {
         
     }
@@ -157,36 +143,44 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     
     // MARK: - Utilities
     
-    private func createAuthenticationProcessController () {
+    private func pushAuthenticationProcessController () -> Bool {
         freeTerminatedProcessControllers()
         
         precondition(self.usrModelController != nil)
         self.authProcessController = AuthenticationProcessController()
         self.authProcessController.dependencies(userModelController: self.usrModelController, authenticationResponseDelegate:self)
+        
+        return self.authProcessController.launch()
     }
     
-    private func createNavigationListProcessController () {
+    private func pushNavigationListProcessController () -> Bool {
         freeTerminatedProcessControllers()
         
         precondition(self.usrModelController != nil)
         self.navListProcessController = NavListProcessController()
-        self.navListProcessController.dependencies(userModelController: self.usrModelController, navSelectorDelegate: self)
+        self.navListProcessController.dependencies(userModelController: self.usrModelController, navDelegate: self)
+        
+        return self.navListProcessController.launch()
     }
     
-    private func createEventListProcessController () {
+    private func pushEventListProcessController () -> Bool {
         freeTerminatedProcessControllers()
         
         precondition(self.usrModelController != nil)
         self.evtListProcessController = EventListProcessController()
         self.evtListProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventProcessMessageDelegate: self)
+        
+        return self.evtListProcessController.launch()
     }
     
-    private func createEventDetailProcessController (evt: EntityDescriptor) {
+    private func pushEventDetailProcessController (evt: EntityDescriptor) -> Bool {
         freeTerminatedProcessControllers()
         
         precondition(self.resourcesModelController != nil)
         self.evtDetailProcessController = EventDetailProcessController()
         self.evtDetailProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventDetailProcessMessageDelegate: self)
+        
+        return self.evtDetailProcessController.launch()
     }
     
     func freeTerminatedProcessControllers () {

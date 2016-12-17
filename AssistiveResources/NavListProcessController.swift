@@ -17,7 +17,7 @@ protocol NavListProcessControllerResponseProtocol: ProcessControllerProtocol {
 
 class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
-    private var selectorDelegate: NavListProcessControllerResponseProtocol!
+    private var navigationDelegate: NavListProcessControllerResponseProtocol!
     private var usrModelController: UserModelController!
     private var navigationData: NavigationContent!
 
@@ -28,23 +28,23 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         super.init()
     }
     
-    func dependencies(userModelController: UserModelController, navSelectorDelegate: NavListProcessControllerResponseProtocol) {
+    func dependencies(userModelController: UserModelController, navDelegate: NavListProcessControllerResponseProtocol) {
         
-        self.selectorDelegate = navSelectorDelegate
+        self.navigationDelegate = navDelegate
         self.usrModelController = userModelController
     }
     
     func launch() -> Bool {
         
-        precondition(self.selectorDelegate != nil)
+        precondition(self.navigationDelegate != nil)
         precondition(self.usrModelController != nil)
         
         self.navigationData = NavigationContent()
         
         self.navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
-        self.navListViewController.dependencies(navItems: self.navigationData, selectorDelegate: self)
+        self.navListViewController.dependencies(navItems: self.navigationData, navDelegate: self)
         
-        let navCtrller = self.selectorDelegate.navigationController()
+        let navCtrller = self.navigationDelegate.navigationController()
         navCtrller.pushViewController(self.navListViewController, animated: false)
         
         return (self.navListViewController != nil)
@@ -53,13 +53,13 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     override func terminate () {
         super.terminate()
 
-        let navCtrller = self.selectorDelegate.navigationController()
+        let navCtrller = self.navigationDelegate.navigationController()
         let _ = navCtrller.popViewController(animated: true)
     }
     
     // NavigationSelectorProtocol
     func selectNavigationItem (selection: Destination) {
-        self.selectorDelegate.notifyNavigationItemSelected(selection: selection)
+        self.navigationDelegate.notifyNavigationItemSelected(selection: selection)
     }
     
 }

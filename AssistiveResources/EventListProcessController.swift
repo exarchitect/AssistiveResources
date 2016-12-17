@@ -9,7 +9,6 @@
 import UIKit
 
 protocol EventListProcessControllerResponseProtocol: ProcessControllerProtocol {
-    func dismissEventProcessController ()
     func notifyShowEventDetail (evt: EntityDescriptor)
 }
 
@@ -58,7 +57,7 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     }
 
     func backButtonTapped () {
-        self.eventDelegate.dismissEventProcessController()
+        self.eventDelegate.dismissProcessController(controller: self)
     }
 
 }

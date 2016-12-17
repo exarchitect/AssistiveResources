@@ -10,7 +10,6 @@ import UIKit
 
 
 protocol EventDetailProcessControllerResponseProtocol: ProcessControllerProtocol {
-    func dismissEventDetailProcessController ()
     func notifyShowOrganizationDetail (org: EntityDescriptor)
 }
 
@@ -57,7 +56,7 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     }
     
     func backButtonTapped () {
-        self.eventDetailDelegate.dismissEventDetailProcessController()
+        self.eventDetailDelegate.dismissProcessController(controller: self)
     }
 
 }

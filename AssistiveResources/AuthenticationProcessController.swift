@@ -10,14 +10,14 @@ import UIKit
 
 
 protocol AuthenticationProcessControllerResponseProtocol: ProcessControllerProtocol {
-    func notifyAuthenticationCompletion ()
+
 }
 
 
 class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
     
     private var responseProtocol: AuthenticationProcessControllerResponseProtocol!
-    private var userMC: UserModelController!
+    private var usrModelController: UserModelController!
     private var loginViewController: LoginViewController!
 
     override init() {
@@ -29,14 +29,14 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     func dependencies(userModelController: UserModelController, authenticationResponseDelegate: AuthenticationProcessControllerResponseProtocol) {
         
         self.responseProtocol = authenticationResponseDelegate
-        self.userMC = userModelController
+        self.usrModelController = userModelController
     }
     
     func launch() -> Bool {
         
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
         self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
-        self.loginViewController.dependencies(userModelController: self.userMC, completionProtocol: self)
+        self.loginViewController.dependencies(userModelController: self.usrModelController, completionProtocol: self)
         
         let parentViewController = self.responseProtocol.navigationController().topViewController
         parentViewController?.present(self.loginViewController, animated: true, completion: nil)
@@ -49,12 +49,14 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
 
         let parentViewController = self.responseProtocol.navigationController().topViewController
         parentViewController?.dismiss(animated: true, completion: nil)
+        
+        requestMainNavigationRefresh()
     }
     
     //LoginViewControllerCompletionProtocol
 
     func loginAction (username: String, password: String) {
-        self.responseProtocol.notifyAuthenticationCompletion()
+        self.responseProtocol.dismissProcessController(controller: self)
     }
     
 }
