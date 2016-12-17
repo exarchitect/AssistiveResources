@@ -26,6 +26,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var subtitleLabel: UILabel!
     
     @IBOutlet weak var tryoutSubtextLabel: UILabel!
+    
     func dependencies(userModelController: UserModelController, completionProtocol: LoginViewControllerCompletionProtocol) {
         self.usrModelController = userModelController
         self.completionProtocol = completionProtocol
@@ -36,8 +37,6 @@ class LoginViewController: UIViewController {
         
         precondition(self.usrModelController != nil)
         precondition(self.completionProtocol != nil)
-        
-        
     }
 
     // overridden framework methods

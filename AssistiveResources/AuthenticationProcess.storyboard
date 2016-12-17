@@ -22,24 +22,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xxP-Sp-lIB">
-                                <rect key="frame" x="29" y="209" width="263" height="29"/>
+                                <rect key="frame" x="38" y="209" width="244" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="d0J-DK-H48"/>
-                                    <constraint firstAttribute="width" constant="263" id="mZu-mm-IXa"/>
+                                    <constraint firstAttribute="width" constant="244" id="mZu-mm-IXa"/>
                                 </constraints>
                                 <segments>
                                     <segment title="Log In"/>
                                     <segment title="Sign Up"/>
-                                    <segment title="Try Us Out!"/>
+                                    <segment title="Try It Out!"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentedControlAction:" destination="6cu-Tl-4Vi" eventType="valueChanged" id="a9Z-3x-3Oc"/>
                                 </connections>
                             </segmentedControl>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email address" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="qe8-Z2-aUA">
-                                <rect key="frame" x="16" y="263" width="288" height="30"/>
+                                <rect key="frame" x="29" y="263" width="263" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="288" id="T79-0W-obw"/>
+                                    <constraint firstAttribute="width" constant="263" id="T79-0W-obw"/>
                                     <constraint firstAttribute="height" constant="30" id="iGx-4Q-axN"/>
                                 </constraints>
                                 <nil key="textColor"/>
@@ -58,9 +58,9 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="qJ8-xo-iXt">
-                                <rect key="frame" x="16" y="312" width="288" height="30"/>
+                                <rect key="frame" x="29" y="312" width="263" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="288" id="NX1-F4-F9g"/>
+                                    <constraint firstAttribute="width" constant="263" id="NX1-F4-F9g"/>
                                     <constraint firstAttribute="height" constant="30" id="cjH-15-jWL"/>
                                 </constraints>
                                 <nil key="textColor"/>
@@ -106,9 +106,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="zip code" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="tmU-0H-Fmw">
-                                <rect key="frame" x="16" y="359" width="288" height="30"/>
+                                <rect key="frame" x="29" y="359" width="263" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="288" id="B3v-d8-sB7"/>
+                                    <constraint firstAttribute="width" constant="263" id="B3v-d8-sB7"/>
                                     <constraint firstAttribute="height" constant="30" id="wyZ-nD-uY7"/>
                                 </constraints>
                                 <nil key="textColor"/>

@@ -11,7 +11,7 @@ import UIKit
 let memoryWarningNotificationKeyName = NSNotification.Name(rawValue: "notify_did_receive_memory_warning")
 
 
-class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, NavListProcessControllerResponseProtocol, EventListProcessControllerResponseProtocol {
+class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, NavListProcessControllerResponseProtocol, EventListProcessControllerResponseProtocol, EventDetailProcessControllerResponseProtocol {
 
     //private weak var topProcessController: ProcessController!
     private var rootViewController: RootViewController!
@@ -19,12 +19,11 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     
     private var authProcessController: AuthenticationProcessController!
     private var navListProcessController: NavListProcessController!
-    private var eventListProcessController: EventListProcessController!
+    private var evtListProcessController: EventListProcessController!
+    private var evtDetailProcessController: EventDetailProcessController!
     
     private var usrModelController: UserModelController!
     private var resourcesModelController : ResourcesModelController!
-    
-    //var username: String = ""
     
     
     //static let sharedInstance = AppController()     // singleton
@@ -66,10 +65,10 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         if (!success) {
         }
         
-        startBackgroundActivityAlert(presentingController: self.navListProcessController.topViewController(), title: nil, message: "authenticating...")
+        startBackgroundActivityAlert(presentingController: self.navController.topViewController!, title: nil, message: "authenticating...")
 
         self.usrModelController?.authorizeUser(completion: { (success) in
-            stopBackgroundActivityAlert(presentingController: self.navListProcessController.topViewController())
+            stopBackgroundActivityAlert(presentingController: self.navController.topViewController!)
             
             if (success) {
                 print("logged in")
@@ -107,7 +106,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
                 
             case Destination.Events:
                 self.createEventListProcessController()
-                let success = self.eventListProcessController.launch(navController: self.navController)
+                let success = self.evtListProcessController.launch(navController: self.navController)
                 if (!success) {
                     
                 }
@@ -133,13 +132,27 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     // MARK: - EventListProcessControllerResponseProtocol
     
     func dismissEventProcessController () {
-        self.eventListProcessController.terminate()
+        self.evtListProcessController.terminate()
     }
 
     func notifyShowEventDetail (evt: EntityDescriptor) {
-        let _ = evt
+        self.createEventDetailProcessController()
+        let success = self.evtDetailProcessController.launch(navController: self.navController)
+        if (!success) {
+            
+        }
     }
     
+    // MARK: - EventDetailProcessControllerResponseProtocol
+
+    func dismissEventDetailProcessController () {
+        self.evtDetailProcessController.terminate()
+    }
+    
+    func notifyShowOrganizationDetail (org: EntityDescriptor) {
+        
+    }
+
     
     // MARK: - Utilities
     
@@ -163,8 +176,16 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         freeTerminatedProcessControllers()
         
         precondition(self.usrModelController != nil)
-        self.eventListProcessController = EventListProcessController()
-        self.eventListProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventProcessMessageDelegate: self)
+        self.evtListProcessController = EventListProcessController()
+        self.evtListProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventProcessMessageDelegate: self)
+    }
+    
+    private func createEventDetailProcessController () {
+        freeTerminatedProcessControllers()
+        
+        precondition(self.resourcesModelController != nil)
+        self.evtDetailProcessController = EventDetailProcessController()
+        self.evtDetailProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventDetailProcessMessageDelegate: self)
     }
     
     func freeTerminatedProcessControllers () {
@@ -174,8 +195,11 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         if (self.navListProcessController != nil && !self.navListProcessController.inUse) {
             self.navListProcessController = nil
         }
-        if (self.eventListProcessController != nil && !self.eventListProcessController.inUse) {
-            self.eventListProcessController = nil
+        if (self.evtListProcessController != nil && !self.evtListProcessController.inUse) {
+            self.evtListProcessController = nil
+        }
+        if (self.evtDetailProcessController != nil && !self.evtDetailProcessController.inUse) {
+            self.evtDetailProcessController = nil
         }
     }
     
