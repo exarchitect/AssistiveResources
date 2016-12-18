@@ -9,19 +9,6 @@
 import Foundation
 
 
-//extension Date
-//{
-//    
-//    init(dateFromMDY: String) {
-//        let dateStringFormatter = DateFormatter()
-//        dateStringFormatter.dateFormat = "MM-dd-yyyy"
-//        dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale!
-//        let d = dateStringFormatter.date(from: dateFromMDY)!
-//        self(timeInterval:0, since:d)
-//    }
-//    
-//}
-
 func dateFromMoDyYr (dateString: String) -> Date
 {
         let dateStringFormatter = DateFormatter()
@@ -31,6 +18,65 @@ func dateFromMoDyYr (dateString: String) -> Date
 }
 
 
+struct DateTimeDuration {
+    var year: Int
+    var month: Int
+    var day: Int
+    var hour: Int
+    var minute: Int
+    var duration: Int
+    
+    var startdatetime:Date!
+    
+    var timeRangeDescription:String!        // 1-3pm
+    var monthAbbreviation:String!
+    var dayOfWeek:String!
+
+    //init(yr:Int, mo:Int, dy:Int)
+    //{
+    //    self.init(yr: yr, mo: mo, dy:dy, hr: 0, min: 0, durationMin:0)
+    //}
+
+    init(yr:Int, mo:Int, dy:Int, hr: Int, min: Int, durationMin: Int)
+    {
+        year = yr
+        month = mo
+        day = dy
+        hour = hr
+        minute = min
+        duration = durationMin
+        
+        let startcomponents = DateComponents(calendar: nil,
+                                        timeZone: nil,
+                                        era: nil,
+                                        year: yr,
+                                        month: mo,
+                                        day: dy,
+                                        hour: hr,
+                                        minute: min,
+                                        second: nil,
+                                        nanosecond: nil,
+                                        weekday: nil,
+                                        weekdayOrdinal: nil,
+                                        quarter: nil,
+                                        weekOfMonth: nil,
+                                        weekOfYear: nil,
+                                        yearForWeekOfYear: nil)
+
+        self.startdatetime = Calendar.current.date(from: startcomponents)
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM"
+        let monthAbbr = dateFormatter.string(from: self.startdatetime)
+        self.monthAbbreviation = monthAbbr.uppercased()
+        
+        dateFormatter.dateFormat = "EEE"
+        let dayOfWk = dateFormatter.string(from: self.startdatetime)
+        self.dayOfWeek = dayOfWk.uppercased()
+
+        self.timeRangeDescription = "1-3pm"
+}
+}
 
 //func militaryToAmPm (hours: Int, minutes: Int) -> String {
 //    var startTime: String

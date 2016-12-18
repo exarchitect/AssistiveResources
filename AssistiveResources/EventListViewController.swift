@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EventListViewControllerResponseProtocol {
-    func selectedEvent (evt: EntityDescriptor)
+    func eventSelected (evt: EntityDescriptor)
     func backButtonTapped ()
 }
 
@@ -19,7 +19,6 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var tableView: UITableView!
     
-    //private var tableAdaptor:EventListTableAdaptor!
     private var selectorDelegate:EventListViewControllerResponseProtocol!
     private var resourcesModelController:ResourcesModelController!
     private var filterViewController:EventFilterViewController?
@@ -60,16 +59,16 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     }
     
     
-    
     //MARK: delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-        self.selectorDelegate.selectedEvent(evt: EntityDescriptor("",0,0))
+        self.selectorDelegate.eventSelected(evt: EntityDescriptor("",EntityType.Event,0))
     }
     
     func notifyFilterSelected() {
         self.filterViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController
         self.filterViewController?.dependencies(resources: self.resourcesModelController, selectorDelegate: self)
+
         //guard
         self.present(self.filterViewController!, animated: true, completion: nil)
 

@@ -50,9 +50,10 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
         let _ = navCtrller.popViewController(animated: true)
     }
     
+    
     // EventListViewControllerResponseProtocol
     
-    func selectedEvent (evt: EntityDescriptor) {
+    func eventSelected (evt: EntityDescriptor) {
         self.eventDelegate.notifyShowEventDetail(evt: evt)
     }
 

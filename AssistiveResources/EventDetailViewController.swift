@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol EventDetailViewControllerResponseProtocol {
-    func selectedEvent (evt: EntityDescriptor)
+    func eventSelected (evt: EntityDescriptor)
     func backButtonTapped ()
 }
 

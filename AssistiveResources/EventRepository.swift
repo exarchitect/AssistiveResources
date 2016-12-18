@@ -34,31 +34,22 @@ class EventRepository: NSObject {
     
 
     private func dummyEvents() {
-        events.append(PublicEvent(event: ("Best Buddies Spring Gala",0,0),
-                                  organization: ("Best Buddies",0,0),
-                                  facility: ("Grand Ballroom, Pacific Hotel",0,0),
-                                  eventDate: dateFromMoDyYr(dateString: "05-10-2016"),
-                                  eventStartHour: 20,
-                                  eventStartMin: 30,
-                                  durationMin: 210,
+        events.append(PublicEvent(event: ("Best Buddies Spring Gala",EntityType.Event,0),
+                                  organization: ("Best Buddies",EntityType.Organization,0),
+                                  facility: ("Grand Ballroom, Pacific Hotel",EntityType.Facility,0),
+                                  eventDate: DateTimeDuration(yr:2016, mo:5, dy:10, hr:10, min:0, durationMin:120),
                                   eventDetail: "Come to the event of the season - our spring gala celebration.  This is a grand opportunity to socialize and make friends, party, and generally have a great time."))
         
-        events.append(PublicEvent(event: ("Challenger Baseball Field of Dreams",1,1),
-                                  organization: ("Athletes In Action",0,0),
-                                  facility: ("Atherton High School, 222 Dundee Rd.",0,0),
-                                  eventDate: dateFromMoDyYr(dateString: "06-11-2016"),
-                                  eventStartHour: 11,
-                                  eventStartMin: 30,
-                                  durationMin: 120,
+        events.append(PublicEvent(event: ("Challenger Baseball Field of Dreams",EntityType.Event,1),
+                                  organization: ("Athletes In Action",EntityType.Organization,0),
+                                  facility: ("Atherton High School, 222 Dundee Rd.",EntityType.Facility,0),
+                                  eventDate: DateTimeDuration(yr:2016, mo:6, dy:11, hr:11, min:30, durationMin:120),
                                   eventDetail: "Come join us Saturday after lunch for fun on the baseball diamond. If you like to play ball, get ready for a good time. Bring a glove, or just show up ready to play.  It's time to PLAY BALL!"))
         
-        events.append(PublicEvent(event: ("Special Olympics",1,1),
-                                  organization: ("Athletes In Action",0,0),
-                                  facility: ("Freedom Hall",0,0),
-                                  eventDate: dateFromMoDyYr(dateString: "07-12-2016"),
-                                  eventStartHour: 12,
-                                  eventStartMin: 0,
-                                  durationMin: 0,
+        events.append(PublicEvent(event: ("Special Olympics",EntityType.Event,1),
+                                  organization: ("Athletes In Action",EntityType.Organization,0),
+                                  facility: ("Freedom Hall",EntityType.Facility,0),
+                                  eventDate: DateTimeDuration(yr:2016, mo:7, dy:12, hr:12, min:0, durationMin:0),
                                   eventDetail: "The 74th annual Special Olympics will be held this coming June here in Louisville Ky, at historic Freedom Hall. Tickets will go on sale 4 weeks before the event - don't miss it!"))
     }
 }

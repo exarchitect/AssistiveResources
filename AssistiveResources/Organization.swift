@@ -32,8 +32,8 @@ class Chapter {
     var created: NSDate?
     var updated: NSDate?
     
-    var chapter: EntityDescriptor = EntityDescriptor("",0,0)
-    var parentOrganization: EntityDescriptor = EntityDescriptor("",0,0)
+    var chapter: EntityDescriptor = EntityDescriptor("",EntityType.Chapter,0)
+    var parentOrganization: EntityDescriptor = EntityDescriptor("",EntityType.Organization,0)
     var location: LocationProfile = LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: "")
     
     init(chapter:EntityDescriptor, parentOrganization:EntityDescriptor, location:LocationProfile) {
@@ -70,7 +70,7 @@ class Organization {
     var created: NSDate?
     var updated: NSDate?
     
-    var organization: EntityDescriptor = EntityDescriptor("",0,0)
+    var organization: EntityDescriptor = EntityDescriptor("",EntityType.Organization,0)
     var location: LocationProfile = LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: "")
     
     var organizationalStructure: OrganizationalStructure = OrganizationalStructure.MainOfficeWithChapters

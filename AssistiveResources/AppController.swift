@@ -35,7 +35,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     func setupApplicationWindow() -> UIWindow {
         let window = UIWindow(frame: UIScreen.main.bounds)
         
-        // create a root view controller as a backdrop for all other view controllers
+        // create a root view controller
         self.rootViewController = instantiateViewController(storyboardName: "Main", storyboardID: "RootViewController") as! RootViewController
         self.navController = UINavigationController(rootViewController: self.rootViewController)
         self.navController.setNavigationBarHidden(true, animated: false)

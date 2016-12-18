@@ -53,9 +53,9 @@ class EventListTableViewCell: UITableViewCell {
         locationLabel.text = event.facilityName
         dateTimeLabel.text = event.whenDescription
         
-        monthLabel.text = event.monthAbbreviation
-        dayOfMonthLabel.text = "\(event.dayOfMonth)"
-        dayOfWeekLabel.text = event.dayOfWeek
+        monthLabel.text = event.eventDate.monthAbbreviation
+        dayOfMonthLabel.text = "\(event.eventDate.day)"
+        dayOfWeekLabel.text = event.eventDate.dayOfWeek
         
         self.selectionStyle = UITableViewCellSelectionStyle.none
         

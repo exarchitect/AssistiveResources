@@ -21,6 +21,10 @@ enum Diagnosis : Int {
     case NoDiagnosis, AutismDiagnosis, CPDiagnosis, SpinaBifidaDiagnosis, XDiagnosis, YDiagnosis, ZDiagnosis
 }
 
+enum EntityType : Int {
+    case Organization, Chapter, Event, Facility
+}
+
 
 struct NeedsProfile {
     var mobilityLimitation: MobilityLimitation

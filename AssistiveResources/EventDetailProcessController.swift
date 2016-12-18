@@ -51,7 +51,7 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     
     // EventDetailViewControllerResponseProtocol
     
-    func selectedEvent (evt: EntityDescriptor) {
+    func eventSelected (evt: EntityDescriptor) {
         self.eventDetailDelegate.notifyShowOrganizationDetail(org: evt)
     }
     

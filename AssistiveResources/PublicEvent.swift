@@ -9,7 +9,7 @@
 import UIKit
 
 
-typealias EntityDescriptor = (entityName:String, entityType:Int, entityID:Int)
+typealias EntityDescriptor = (entityName:String, entityType:EntityType, entityID:Int)
 
 
 class PublicEvent: NSObject {
@@ -20,21 +20,22 @@ class PublicEvent: NSObject {
     var updated: Date?
     
     var eventTitle: String = ""
-    var eventType: Int = 0
+    var eventType: EntityType = EntityType.Event
     var eventID: Int = 0
     
     var organizationName: String = ""
-    var organizationType: Int = 0
+    var organizationType: EntityType = EntityType.Organization
     var organizationID: Int = 0
     
     var facilityName: String = ""
-    var facilityType: Int = 0
+    var facilityType: EntityType = EntityType.Facility
     var facilityID: Int = 0
     
-    var startDate: Date!
-    var timeOfDayHours: Int = 0    // military
-    var timeOfDayMinutes: Int = 0
-    var durationMinutes: Int = 0
+    var eventDate: DateTimeDuration
+//    var startDate: Date!
+//    var timeOfDayHours: Int = 0    // military
+//    var timeOfDayMinutes: Int = 0
+//    var durationMinutes: Int = 0
     
     var address: String = ""
     var directions: String = ""
@@ -42,11 +43,11 @@ class PublicEvent: NSObject {
     var eventDescriptionVerbose: String = ""
     var eventDescriptionBrief: String = ""
     
-    private(set) var year: Int = 0
-    private(set) var month: Int = 0
-    private(set) var dayOfMonth: Int = 0
-    private(set) var dayOfWeek: String = ""
-    private(set) var monthAbbreviation: String = ""
+//    private(set) var year: Int = 0
+//    private(set) var month: Int = 0
+//    private(set) var dayOfMonth: Int = 0
+//    private(set) var dayOfWeek: String = ""
+//    private(set) var monthAbbreviation: String = ""
     
     var whenDescription: String {
 //        let startTime = militaryToAmPm(hours: timeOfDayHours, minutes: timeOfDayMinutes)
@@ -56,34 +57,31 @@ class PublicEvent: NSObject {
 //            let endTime = militaryToAmPm(hours: timeOfDayHours, minutes: timeOfDayMinutes + durationMinutes)
 //            return startTime + "-" + endTime
 //        }
-        return "0.00-0.00"
+        return eventDate.timeRangeDescription
     }
     
     
-    init(event:EntityDescriptor, organization:EntityDescriptor, facility:EntityDescriptor, eventDate:Date, eventStartHour:Int, eventStartMin:Int, durationMin:Int, eventDetail:String) {
-        eventTitle = event.entityName
-        eventType = event.entityType
-        eventID = event.entityID
+    init(event:EntityDescriptor, organization:EntityDescriptor, facility:EntityDescriptor, eventDate:DateTimeDuration, eventDetail:String) {
+        self.eventTitle = event.entityName
+        self.eventType = event.entityType
+        self.eventID = event.entityID
         
-        organizationName = organization.entityName
-        organizationType = organization.entityType
-        organizationID = organization.entityID
+        self.organizationName = organization.entityName
+        self.organizationType = organization.entityType
+        self.organizationID = organization.entityID
         
-        facilityName = facility.entityName
-        facilityType = facility.entityType
-        facilityID = facility.entityID
+        self.facilityName = facility.entityName
+        self.facilityType = facility.entityType
+        self.facilityID = facility.entityID
         
-        startDate = eventDate
-        timeOfDayHours = eventStartHour
-        timeOfDayMinutes = eventStartMin
-        durationMinutes = durationMin
+        self.eventDate = eventDate
         
         //address = ""
         //directions = ""
         
         eventDescriptionVerbose = eventDetail
         eventDescriptionBrief = ""
-        
+/*
         let calendar = NSCalendar.current
         let dateComponents = calendar.dateComponents(
             Set<Calendar.Component>([Calendar.Component.year, Calendar.Component.month, Calendar.Component.day,
@@ -101,6 +99,7 @@ class PublicEvent: NSObject {
         dateFormatter.dateFormat = "EEE"
         let dayOfWk = dateFormatter.string(from: eventDate as Date)
         dayOfWeek = dayOfWk.uppercased()
+ */
     }
     
 }
