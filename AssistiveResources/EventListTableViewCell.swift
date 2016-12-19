@@ -51,7 +51,7 @@ class EventListTableViewCell: UITableViewCell {
         eventDetailLabel.text = event.eventDescriptionVerbose
         sponsorLabel.text = "Sponsored by " + event.organizationName
         locationLabel.text = event.facilityName
-        dateTimeLabel.text = event.whenDescription
+        dateTimeLabel.text = event.eventDate.whenDescription
         
         monthLabel.text = event.eventDate.monthAbbreviation
         dayOfMonthLabel.text = "\(event.eventDate.day)"

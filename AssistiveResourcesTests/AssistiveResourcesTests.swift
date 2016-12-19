@@ -21,10 +21,19 @@ class AssistiveResourcesTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+    func testDateTimeDuration() {
+        let eventDate = DateTimeDuration(yr: 2016, mo: 5, dy: 10, hr: 13, min: 0, durationMin: 30)
+        XCTAssert(eventDate.whenDescription == "1pm-1:30pm")
+        XCTAssert(eventDate.dayOfWeek == "TUE")
+        XCTAssert(eventDate.monthAbbreviation == "MAY")
+        XCTAssert(eventDate.day == 10)
+
+        let eventDate2 = DateTimeDuration(yr: 1958, mo: 6, dy: 7, hr: 11, min: 30, durationMin: 120)
+        XCTAssert(eventDate2.whenDescription == "11:30am-1:30pm")
+        XCTAssert(eventDate2.dayOfWeek == "SAT")
+        XCTAssert(eventDate2.monthAbbreviation == "JUN")
+        XCTAssert(eventDate2.day == 7)
+}
     
     func testPerformanceExample() {
         // This is an example of a performance test case.

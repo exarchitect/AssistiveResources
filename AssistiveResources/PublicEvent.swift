@@ -32,35 +32,13 @@ class PublicEvent: NSObject {
     var facilityID: Int = 0
     
     var eventDate: DateTimeDuration
-//    var startDate: Date!
-//    var timeOfDayHours: Int = 0    // military
-//    var timeOfDayMinutes: Int = 0
-//    var durationMinutes: Int = 0
     
     var address: String = ""
     var directions: String = ""
     
     var eventDescriptionVerbose: String = ""
     var eventDescriptionBrief: String = ""
-    
-//    private(set) var year: Int = 0
-//    private(set) var month: Int = 0
-//    private(set) var dayOfMonth: Int = 0
-//    private(set) var dayOfWeek: String = ""
-//    private(set) var monthAbbreviation: String = ""
-    
-    var whenDescription: String {
-//        let startTime = militaryToAmPm(hours: timeOfDayHours, minutes: timeOfDayMinutes)
-//        if durationMinutes == 0 {
-//            return "Starts at " + startTime
-//        } else {
-//            let endTime = militaryToAmPm(hours: timeOfDayHours, minutes: timeOfDayMinutes + durationMinutes)
-//            return startTime + "-" + endTime
-//        }
-        return eventDate.timeRangeDescription
-    }
-    
-    
+        
     init(event:EntityDescriptor, organization:EntityDescriptor, facility:EntityDescriptor, eventDate:DateTimeDuration, eventDetail:String) {
         self.eventTitle = event.entityName
         self.eventType = event.entityType

@@ -9,15 +9,6 @@
 import Foundation
 
 
-func dateFromMoDyYr (dateString: String) -> Date
-{
-        let dateStringFormatter = DateFormatter()
-        dateStringFormatter.dateFormat = "MM-dd-yyyy"
-        dateStringFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX") as Locale!
-        return dateStringFormatter.date(from: dateString)! 
-}
-
-
 struct DateTimeDuration {
     var year: Int
     var month: Int
@@ -28,14 +19,10 @@ struct DateTimeDuration {
     
     var startdatetime:Date!
     
-    var timeRangeDescription:String!        // 1-3pm
+    var whenDescription:String!        // 1pm-3pm
+    private var startTimeDescription:String!        // 1pm
     var monthAbbreviation:String!
     var dayOfWeek:String!
-
-    //init(yr:Int, mo:Int, dy:Int)
-    //{
-    //    self.init(yr: yr, mo: mo, dy:dy, hr: 0, min: 0, durationMin:0)
-    //}
 
     init(yr:Int, mo:Int, dy:Int, hr: Int, min: Int, durationMin: Int)
     {
@@ -74,40 +61,47 @@ struct DateTimeDuration {
         let dayOfWk = dateFormatter.string(from: self.startdatetime)
         self.dayOfWeek = dayOfWk.uppercased()
 
-        self.timeRangeDescription = "1-3pm"
-}
+        self.startTimeDescription = createTimeString(hours: hour, minutes: minute)
+        if (durationMin == 0) {
+            self.whenDescription = "Starts at " + self.startTimeDescription
+        } else {
+            let endTime =  createTimeString(hours: hour, minutes: (minute+durationMin))
+            self.whenDescription = self.startTimeDescription + "-" + endTime
+        }
+    }
 }
 
-//func militaryToAmPm (hours: Int, minutes: Int) -> String {
-//    var startTime: String
-//    var totalMinutes = hours*60 + minutes
-//    let actualMinutes = totalMinutes % 60
-//    var actualHours = (totalMinutes - actualMinutes) / 60
-//    
-//    if (totalMinutes == (12*60)) {
-//        return "Noon"
-//    }
-//    if (totalMinutes == (24*60)) {
-//        return "Midnight"
-//    }
-//    
-//    if (totalMinutes > (24*60)) {
-//        totalMinutes = totalMinutes % (24*60)
-//        actualHours = actualHours % 24
-//    }
-//    
-//    if (totalMinutes < (12*60)) {
-//        if actualMinutes == 0 {
-//            startTime = "\(actualHours)am"
-//        } else {
-//            startTime = "\(actualHours):\(actualMinutes)am"
-//        }
-//    } else {
-//        if actualMinutes == 0 {
-//            startTime = "\(actualHours-12)pm"
-//        } else {
-//            startTime = "\(actualHours-12):\(actualMinutes)pm"
-//        }
-//    }
-//    return startTime
-//}
+func createTimeString (hours: Int, minutes: Int) -> String {
+    var startTime: String
+    var totalMinutes = hours*60 + minutes
+    let actualMinutes = totalMinutes % 60
+    var actualHours = (totalMinutes - actualMinutes) / 60
+
+    if (totalMinutes == (12*60)) {
+        return "Noon"
+    }
+    if (totalMinutes == (24*60)) {
+        return "Midnight"
+    }
+
+    if (totalMinutes > (24*60)) {
+        totalMinutes = totalMinutes % (24*60)
+        actualHours = actualHours % 24
+    }
+
+    if (totalMinutes < (12*60)) {
+        if actualMinutes == 0 {
+            startTime = "\(actualHours)am"
+        } else {
+            startTime = "\(actualHours):\(actualMinutes)am"
+        }
+    } else {
+        if actualMinutes == 0 {
+            startTime = "\(actualHours-12)pm"
+        } else {
+            startTime = "\(actualHours-12):\(actualMinutes)pm"
+        }
+    }
+    return startTime
+}
+
