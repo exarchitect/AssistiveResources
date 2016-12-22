@@ -98,7 +98,7 @@ class NavigationContent: NSObject {
                 imageName = "sports"
             case Destination.Facilities:
                 title = "Accessibility"
-                placeholderSubtitle = "Find restrooms and other family-friendly facilities near you"
+                placeholderSubtitle = "Find restrooms and other family-friendly facilities"
                 imageName = "venues"
             case Destination.Travel:
                 title = Destination.Travel.rawValue
@@ -110,7 +110,7 @@ class NavigationContent: NSObject {
                 imageName = "inbox"
             case Destination.Profile:
                 title = Destination.Profile.rawValue
-                placeholderSubtitle = "Tell us about yourself so we can recommend resources"
+                placeholderSubtitle = "Tell us about yourself so we can help"
                 imageName = "favourite2"
             case Destination.News:
                 title = Destination.News.rawValue

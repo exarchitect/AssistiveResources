@@ -118,7 +118,12 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
                 let _ = 7
                 
             case Destination.Profile:
-                let _ = 7
+                // temp for testing
+                self.usrModelController.logout()
+                let success = self.self.pushAuthenticationProcessController()
+                if (!success) {
+                    
+                }
             }
 
     }

@@ -20,6 +20,8 @@ class EventDetailViewController: UIViewController {
     private var resourcesModelController: ResourcesModelController!
     private var completionProtocol: EventDetailViewControllerResponseProtocol!
 
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     func dependencies(resources: ResourcesModelController, selectorDelegate: EventDetailViewControllerResponseProtocol) {
         self.completionProtocol = selectorDelegate
         self.resourcesModelController = resources
@@ -31,7 +33,9 @@ class EventDetailViewController: UIViewController {
         precondition(self.resourcesModelController != nil)
         precondition(self.completionProtocol != nil)
         
-        
+        //self.scrollView.autoresizingMask = UIViewAutoresizing.flexibleHeight
+        //self.scrollView.showsVerticalScrollIndicator = true
+        //self.scrollView.showsHorizontalScrollIndicator = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,7 +43,7 @@ class EventDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func evtDetailBackButtonAction(_ sender: Any) {
+    @IBAction func evntDetailBackButtonAction(_ sender: Any) {
         self.completionProtocol.backButtonTapped()
     }
 
