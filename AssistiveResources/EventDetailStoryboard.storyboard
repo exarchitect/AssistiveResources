@@ -73,44 +73,61 @@
                                                     <constraint firstAttribute="height" constant="2" id="8Oc-gz-bRX"/>
                                                 </constraints>
                                             </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tuesday Jan 17th, from 6pm to 9pm" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxD-Vn-clO">
+                                                <rect key="frame" x="20" y="500" width="334" height="23"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ye-0l-jjo">
+                                                <rect key="frame" x="20" y="529" width="334" height="85"/>
+                                                <string key="text">Grand BallroomMariott Grandview Hotel2625 E. Haverford WayPeoria, IL</string>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXY-qt-T3C">
                                                 <rect key="frame" x="22" y="443" width="319" height="43"/>
                                                 <state key="normal" title="Learn more about Best Buddies"/>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxD-Vn-clO">
-                                                <rect key="frame" x="20" y="497" width="334" height="236"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="236" id="0sa-8U-8bR"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6F-62-zeW">
+                                                <rect key="frame" x="20" y="620" width="336" height="105"/>
+                                                <string key="text">The Grand Ballroom is a large, open space with wide aisles and easily accessible space.  It is on the second floor of the Mariott and reachable by 2 sets of elevators.</string>
+                                                <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="I6F-62-zeW" secondAttribute="bottom" constant="12" id="4Qv-b5-cLN"/>
+                                            <constraint firstItem="zxD-Vn-clO" firstAttribute="top" secondItem="heE-iN-1sR" secondAttribute="bottom" constant="9" id="5fk-ri-RFd"/>
                                             <constraint firstAttribute="trailing" secondItem="heE-iN-1sR" secondAttribute="trailing" constant="21" id="94E-xo-VLy"/>
+                                            <constraint firstItem="I6F-62-zeW" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="20" id="9FS-rE-Z3a"/>
                                             <constraint firstItem="d2L-Q0-QY8" firstAttribute="top" secondItem="y7o-Br-46p" secondAttribute="bottom" constant="1" id="AZa-G3-Xal"/>
                                             <constraint firstItem="heE-iN-1sR" firstAttribute="top" secondItem="QXY-qt-T3C" secondAttribute="bottom" constant="3" id="E4N-VU-XvZ"/>
-                                            <constraint firstItem="zxD-Vn-clO" firstAttribute="top" secondItem="heE-iN-1sR" secondAttribute="bottom" constant="6" id="Fr7-3n-l4P"/>
+                                            <constraint firstItem="zxD-Vn-clO" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="20" id="HHj-vL-qMD"/>
+                                            <constraint firstItem="I6F-62-zeW" firstAttribute="top" secondItem="2ye-0l-jjo" secondAttribute="bottom" constant="6" id="Hx6-Eh-BDN"/>
                                             <constraint firstItem="Rw0-F3-iIW" firstAttribute="top" secondItem="hWn-Dv-7zN" secondAttribute="top" constant="11" id="IYN-dd-8Qe"/>
-                                            <constraint firstAttribute="bottom" secondItem="zxD-Vn-clO" secondAttribute="bottom" constant="16" id="Iqg-kU-diH"/>
                                             <constraint firstAttribute="trailing" secondItem="Rw0-F3-iIW" secondAttribute="trailing" constant="34" id="LDd-FO-bui"/>
                                             <constraint firstItem="JCX-5e-CtA" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="22" id="Ll1-qu-3Au"/>
+                                            <constraint firstAttribute="trailing" secondItem="zxD-Vn-clO" secondAttribute="trailing" constant="21" id="LzL-x5-IQo"/>
+                                            <constraint firstItem="2ye-0l-jjo" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="20" id="MbZ-xr-kPU"/>
                                             <constraint firstAttribute="trailing" secondItem="kaw-UR-vS6" secondAttribute="trailing" constant="19" id="Pxf-Yc-7qA"/>
-                                            <constraint firstAttribute="trailing" secondItem="zxD-Vn-clO" secondAttribute="trailing" constant="21" id="Py6-41-WXZ"/>
                                             <constraint firstItem="d2L-Q0-QY8" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="22" id="ROf-YK-EUo"/>
+                                            <constraint firstItem="2ye-0l-jjo" firstAttribute="top" secondItem="zxD-Vn-clO" secondAttribute="bottom" constant="6" id="Ra1-ef-0GV"/>
                                             <constraint firstItem="y7o-Br-46p" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="22" id="TZ6-g4-GHx"/>
                                             <constraint firstItem="j2Y-Cj-zUY" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="20" id="UAc-Mw-rhX"/>
                                             <constraint firstItem="heE-iN-1sR" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="20" id="X2P-dy-8oh"/>
                                             <constraint firstAttribute="trailing" secondItem="QXY-qt-T3C" secondAttribute="trailing" constant="34" id="X2o-Zv-8Vf"/>
                                             <constraint firstItem="y7o-Br-46p" firstAttribute="top" secondItem="j2Y-Cj-zUY" secondAttribute="bottom" constant="9" id="ZfF-Me-Hvy"/>
+                                            <constraint firstAttribute="trailing" secondItem="2ye-0l-jjo" secondAttribute="trailing" constant="21" id="Zjg-zV-aBJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="I6F-62-zeW" secondAttribute="trailing" constant="19" id="agL-kO-YSc"/>
                                             <constraint firstItem="kaw-UR-vS6" firstAttribute="top" secondItem="hWn-Dv-7zN" secondAttribute="top" constant="111" id="azM-eb-Z3A"/>
                                             <constraint firstAttribute="trailing" secondItem="y7o-Br-46p" secondAttribute="trailing" constant="34" id="cvE-jA-vWb"/>
                                             <constraint firstItem="Rw0-F3-iIW" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="22" id="esz-eC-wa1"/>
                                             <constraint firstAttribute="trailing" secondItem="JCX-5e-CtA" secondAttribute="trailing" constant="21" id="jXb-mK-yuN"/>
                                             <constraint firstAttribute="trailing" secondItem="d2L-Q0-QY8" secondAttribute="trailing" constant="34" id="kOz-9u-jOP"/>
                                             <constraint firstItem="JCX-5e-CtA" firstAttribute="top" secondItem="d2L-Q0-QY8" secondAttribute="bottom" constant="8" id="o9k-Mw-ZQk"/>
-                                            <constraint firstItem="zxD-Vn-clO" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="20" id="riz-pS-wdU"/>
                                             <constraint firstItem="kaw-UR-vS6" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="22" id="ryM-xa-8z2"/>
                                             <constraint firstItem="QXY-qt-T3C" firstAttribute="top" secondItem="JCX-5e-CtA" secondAttribute="bottom" constant="-1" id="s6Q-04-8Qi"/>
                                             <constraint firstAttribute="trailing" secondItem="j2Y-Cj-zUY" secondAttribute="trailing" constant="21" id="sEz-gs-8v3"/>
