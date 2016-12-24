@@ -18,17 +18,17 @@
                         <viewControllerLayoutGuide type="bottom" id="LjP-4c-59a"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pO2-1n-9RY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="921"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AGB-3g-yhc">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="847"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hWn-Dv-7zN" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="8" width="375" height="749"/>
+                                        <rect key="frame" x="0.0" y="8" width="375" height="859"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaw-UR-vS6">
-                                                <rect key="frame" x="22" y="111" width="334" height="186"/>
+                                                <rect key="frame" x="22" y="100" width="334" height="186"/>
                                                 <string key="text">    Come to the event of the season - our spring gala celebration.  This is a grand opportunity to socialize and make friends, party, and generally have a great time.      The event wgr gw gwr wg gw gwr wgr wrh qh etq q3 herefe gqerq hrq3q3 5hq3 eqh ghg htr erh dsf sfeg ere h hs es sfh dsfh.  Tfd fh fhe wf wf wfh fg fwhw df vyd reg wdb fshgrye sfgw rhw dhh wgh.
    The event wgr gw gwr wg gw gwr wgr wrh qh etq q3 herefe gqerq hrq3q3 5hq3 eqh.  Tfd fh fhe wf wf wfh fg fwhw df vyd reg wdb fshgrye sfgw rhw dhh wgh.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -36,51 +36,51 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Age(s) 6-12" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7o-Br-46p">
-                                                <rect key="frame" x="22" y="323" width="319" height="23"/>
+                                                <rect key="frame" x="22" y="312" width="319" height="23"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sponsored by: Best Buddies Best Buddies Best" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JCX-5e-CtA">
-                                                <rect key="frame" x="22" y="400" width="332" height="44"/>
+                                                <rect key="frame" x="22" y="389" width="332" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Best Buddies Spring Gala" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rw0-F3-iIW">
-                                                <rect key="frame" x="22" y="11" width="319" height="92"/>
+                                                <rect key="frame" x="22" y="0.0" width="319" height="92"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="36"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Suitable for youth with physical or developmental disabilities" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2L-Q0-QY8">
-                                                <rect key="frame" x="22" y="347" width="319" height="45"/>
+                                                <rect key="frame" x="22" y="336" width="319" height="45"/>
                                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j2Y-Cj-zUY">
-                                                <rect key="frame" x="20" y="312" width="334" height="2"/>
+                                                <rect key="frame" x="20" y="301" width="334" height="2"/>
                                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="2" id="eGt-1h-B1j"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="heE-iN-1sR">
-                                                <rect key="frame" x="20" y="489" width="334" height="2"/>
+                                                <rect key="frame" x="20" y="478" width="334" height="2"/>
                                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="2" id="8Oc-gz-bRX"/>
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tuesday Jan 17th, from 6pm to 9pm" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxD-Vn-clO">
-                                                <rect key="frame" x="20" y="500" width="334" height="23"/>
+                                                <rect key="frame" x="20" y="489" width="334" height="23"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ye-0l-jjo">
-                                                <rect key="frame" x="20" y="529" width="334" height="85"/>
+                                                <rect key="frame" x="20" y="518" width="334" height="85"/>
                                                 <string key="text">Grand Ballroom
 Mariott Grandview Hotel
 2625 E. Haverford Way
@@ -90,28 +90,43 @@ Peoria, IL</string>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QXY-qt-T3C">
-                                                <rect key="frame" x="22" y="443" width="319" height="43"/>
+                                                <rect key="frame" x="22" y="432" width="319" height="43"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="Learn more about Best Buddies"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I6F-62-zeW">
-                                                <rect key="frame" x="20" y="620" width="336" height="105"/>
+                                                <rect key="frame" x="20" y="609" width="336" height="105"/>
                                                 <string key="text">The Grand Ballroom is a large, open space with wide aisles and easily accessible space.  It is on the second floor of the Mariott and reachable by 2 sets of elevators.</string>
                                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Registration" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sLx-fU-IFp">
+                                                <rect key="frame" x="20" y="725" width="303" height="27"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Please call (800) 333-4456 to register for this event.  There is a $10 registration fee per person." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46s-1F-NRd">
+                                                <rect key="frame" x="22" y="757" width="334" height="62"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="I6F-62-zeW" secondAttribute="bottom" constant="12" id="4Qv-b5-cLN"/>
+                                            <constraint firstItem="46s-1F-NRd" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="22" id="0gC-uI-qv6"/>
                                             <constraint firstItem="zxD-Vn-clO" firstAttribute="top" secondItem="heE-iN-1sR" secondAttribute="bottom" constant="9" id="5fk-ri-RFd"/>
+                                            <constraint firstItem="46s-1F-NRd" firstAttribute="top" secondItem="sLx-fU-IFp" secondAttribute="bottom" constant="5" id="67e-F4-ASj"/>
+                                            <constraint firstItem="sLx-fU-IFp" firstAttribute="top" secondItem="I6F-62-zeW" secondAttribute="bottom" constant="11" id="6j5-FC-yKA"/>
                                             <constraint firstAttribute="trailing" secondItem="heE-iN-1sR" secondAttribute="trailing" constant="21" id="94E-xo-VLy"/>
                                             <constraint firstItem="I6F-62-zeW" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="20" id="9FS-rE-Z3a"/>
                                             <constraint firstItem="d2L-Q0-QY8" firstAttribute="top" secondItem="y7o-Br-46p" secondAttribute="bottom" constant="1" id="AZa-G3-Xal"/>
+                                            <constraint firstAttribute="bottom" secondItem="46s-1F-NRd" secondAttribute="bottom" constant="40" id="BdJ-xi-2sU"/>
                                             <constraint firstItem="heE-iN-1sR" firstAttribute="top" secondItem="QXY-qt-T3C" secondAttribute="bottom" constant="3" id="E4N-VU-XvZ"/>
                                             <constraint firstItem="zxD-Vn-clO" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="20" id="HHj-vL-qMD"/>
                                             <constraint firstItem="I6F-62-zeW" firstAttribute="top" secondItem="2ye-0l-jjo" secondAttribute="bottom" constant="6" id="Hx6-Eh-BDN"/>
-                                            <constraint firstItem="Rw0-F3-iIW" firstAttribute="top" secondItem="hWn-Dv-7zN" secondAttribute="top" constant="11" id="IYN-dd-8Qe"/>
+                                            <constraint firstItem="Rw0-F3-iIW" firstAttribute="top" secondItem="hWn-Dv-7zN" secondAttribute="top" id="IYN-dd-8Qe"/>
                                             <constraint firstAttribute="trailing" secondItem="Rw0-F3-iIW" secondAttribute="trailing" constant="34" id="LDd-FO-bui"/>
                                             <constraint firstItem="JCX-5e-CtA" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="22" id="Ll1-qu-3Au"/>
                                             <constraint firstAttribute="trailing" secondItem="zxD-Vn-clO" secondAttribute="trailing" constant="21" id="LzL-x5-IQo"/>
@@ -126,11 +141,14 @@ Peoria, IL</string>
                                             <constraint firstItem="y7o-Br-46p" firstAttribute="top" secondItem="j2Y-Cj-zUY" secondAttribute="bottom" constant="9" id="ZfF-Me-Hvy"/>
                                             <constraint firstAttribute="trailing" secondItem="2ye-0l-jjo" secondAttribute="trailing" constant="21" id="Zjg-zV-aBJ"/>
                                             <constraint firstAttribute="trailing" secondItem="I6F-62-zeW" secondAttribute="trailing" constant="19" id="agL-kO-YSc"/>
-                                            <constraint firstItem="kaw-UR-vS6" firstAttribute="top" secondItem="hWn-Dv-7zN" secondAttribute="top" constant="111" id="azM-eb-Z3A"/>
+                                            <constraint firstItem="kaw-UR-vS6" firstAttribute="top" secondItem="hWn-Dv-7zN" secondAttribute="top" constant="100" id="azM-eb-Z3A"/>
                                             <constraint firstAttribute="trailing" secondItem="y7o-Br-46p" secondAttribute="trailing" constant="34" id="cvE-jA-vWb"/>
                                             <constraint firstItem="Rw0-F3-iIW" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="22" id="esz-eC-wa1"/>
+                                            <constraint firstItem="sLx-fU-IFp" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="20" id="feK-Uu-QGC"/>
                                             <constraint firstAttribute="trailing" secondItem="JCX-5e-CtA" secondAttribute="trailing" constant="21" id="jXb-mK-yuN"/>
+                                            <constraint firstAttribute="trailing" secondItem="46s-1F-NRd" secondAttribute="trailing" constant="19" id="kOT-92-4eS"/>
                                             <constraint firstAttribute="trailing" secondItem="d2L-Q0-QY8" secondAttribute="trailing" constant="34" id="kOz-9u-jOP"/>
+                                            <constraint firstAttribute="trailing" secondItem="sLx-fU-IFp" secondAttribute="trailing" constant="52" id="lW3-TO-Kb2"/>
                                             <constraint firstItem="JCX-5e-CtA" firstAttribute="top" secondItem="d2L-Q0-QY8" secondAttribute="bottom" constant="8" id="o9k-Mw-ZQk"/>
                                             <constraint firstItem="kaw-UR-vS6" firstAttribute="leading" secondItem="hWn-Dv-7zN" secondAttribute="leading" constant="22" id="ryM-xa-8z2"/>
                                             <constraint firstItem="QXY-qt-T3C" firstAttribute="top" secondItem="JCX-5e-CtA" secondAttribute="bottom" constant="-1" id="s6Q-04-8Qi"/>
@@ -144,11 +162,11 @@ Peoria, IL</string>
                                     <constraint firstItem="hWn-Dv-7zN" firstAttribute="top" secondItem="AGB-3g-yhc" secondAttribute="top" constant="8" id="RaV-RM-pve"/>
                                     <constraint firstItem="hWn-Dv-7zN" firstAttribute="leading" secondItem="AGB-3g-yhc" secondAttribute="leading" id="Uts-8u-wp9"/>
                                     <constraint firstAttribute="trailing" secondItem="hWn-Dv-7zN" secondAttribute="trailing" id="bQO-2X-ZKz"/>
-                                    <constraint firstAttribute="bottom" secondItem="hWn-Dv-7zN" secondAttribute="bottom" constant="8" id="nev-cc-CQk"/>
+                                    <constraint firstAttribute="bottom" secondItem="hWn-Dv-7zN" secondAttribute="bottom" constant="-20" id="nev-cc-CQk"/>
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8j-8f-SVl" userLabel="FooterView">
-                                <rect key="frame" x="0.0" y="758" width="375" height="54"/>
+                                <rect key="frame" x="0.0" y="867" width="375" height="54"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5IR-pJ-Hbo">
                                         <rect key="frame" x="0.0" y="0.0" width="102" height="54"/>
@@ -173,7 +191,7 @@ Peoria, IL</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="AGB-3g-yhc" firstAttribute="top" secondItem="pO2-1n-9RY" secondAttribute="top" id="3Ca-AT-KTm"/>
+                            <constraint firstItem="AGB-3g-yhc" firstAttribute="top" secondItem="pO2-1n-9RY" secondAttribute="top" constant="20" id="3Ca-AT-KTm"/>
                             <constraint firstItem="AGB-3g-yhc" firstAttribute="leading" secondItem="pO2-1n-9RY" secondAttribute="leading" id="9zv-P1-cb9"/>
                             <constraint firstItem="LjP-4c-59a" firstAttribute="top" secondItem="AGB-3g-yhc" secondAttribute="bottom" constant="54" id="L86-zB-asl"/>
                             <constraint firstAttribute="trailing" secondItem="AGB-3g-yhc" secondAttribute="trailing" id="Tkk-gS-RwC"/>
@@ -184,14 +202,14 @@ Peoria, IL</string>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="375" height="812"/>
+                    <size key="freeformSize" width="375" height="921"/>
                     <connections>
                         <outlet property="scrollView" destination="AGB-3g-yhc" id="3an-Az-A2v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2K3-ch-biW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-26.399999999999999" y="143.02848575712144"/>
+            <point key="canvasLocation" x="-26.399999999999999" y="142.57871064467767"/>
         </scene>
     </scenes>
 </document>

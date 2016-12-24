@@ -10,15 +10,15 @@ import UIKit
 
 class ResourcesModelController: NSObject {
     
-    var organizationRepo : OrganizationRepository!
-    var eventRepo : EventRepository!
+    var organizations : OrganizationRepository!
+    var events : EventRepository!
 
     override init()
     {
         super.init()
         
-        organizationRepo = OrganizationRepository()
-        eventRepo = EventRepository()
+        organizations = OrganizationRepository()
+        events = EventRepository()
     }
     
     func loadResources() {
@@ -27,8 +27,8 @@ class ResourcesModelController: NSObject {
     }
     
     private func loadLocalResources() {
-        self.eventRepo.loadData()
-        self.organizationRepo.loadData()
+        self.events.loadData()
+        self.organizations.loadData()
     }
     
     private func loadRemoteResources() {
