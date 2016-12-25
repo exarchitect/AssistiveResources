@@ -32,10 +32,6 @@ class EventDetailViewController: UIViewController {
         
         precondition(self.resourcesModelController != nil)
         precondition(self.completionProtocol != nil)
-        
-        //self.scrollView.autoresizingMask = UIViewAutoresizing.flexibleHeight
-        //self.scrollView.showsVerticalScrollIndicator = true
-        //self.scrollView.showsHorizontalScrollIndicator = false
     }
 
     override func didReceiveMemoryWarning() {

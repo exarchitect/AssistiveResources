@@ -52,6 +52,15 @@ struct LocationProfile {
     var cityName: String
     var zipCode: String
     
+    init(zip:String)
+    {
+        countryCode = ISOCountryCode.USA
+        cityName = ""
+        regionName = ""
+        zipCode = zip
+        coordinates = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+    }
+
     init(latitude:Double, longitude:Double, city:String, state:String, zip:String, country:ISOCountryCode = ISOCountryCode.USA)
     {
         countryCode = country

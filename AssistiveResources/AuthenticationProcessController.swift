@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol AuthenticationProcessControllerResponseProtocol: ProcessControllerProtocol {
-
+    func loginComplete ()
 }
 
 
@@ -56,6 +56,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     //LoginViewControllerCompletionProtocol
 
     func loginAction (username: String, password: String) {
+        self.responseProtocol.loginComplete()
         self.responseProtocol.dismissProcessController(controller: self)
     }
     

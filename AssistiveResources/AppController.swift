@@ -49,7 +49,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     
     func start()  {
         self.loadUserModelController()
-        self.loadResourceModelController()
+//        self.loadResourceModelController()        // moved to after login
 
         //self.usrModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
         //self.usrModelController?.storeUserCredentials(username: "", password: "")
@@ -89,6 +89,12 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         return self.navController
     }
     
+    
+    // MARK: - AuthenticationProcessControllerResponseProtocol
+    func loginComplete() {
+        self.loadResourceModelController(atLocation:LocationProfile(zip: "40205"))
+        
+    }
     
 
     // MARK: - NavListProcessControllerResponseProtocol
@@ -203,10 +209,10 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         }
     }
     
-    private func loadResourceModelController () {
+    private func loadResourceModelController (atLocation: LocationProfile) {
         if (self.resourcesModelController == nil) {
             self.resourcesModelController = ResourcesModelController()
-            self.resourcesModelController.loadResources()
+            self.resourcesModelController.initiateLoading()
         }
     }
     

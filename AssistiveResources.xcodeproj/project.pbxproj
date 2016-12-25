@@ -208,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				D24E4DAF1DE3EB6F008A11FB /* UserModelController.swift */,
+				D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -230,7 +231,6 @@
 				D24E4DC51DE74066008A11FB /* Organization.swift */,
 				D209FABF1DFFAB100099BD46 /* EventRepository.swift */,
 				D24E4DC71DE74167008A11FB /* PublicEvent.swift */,
-				D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */,
 			);
 			name = Resources;
 			sourceTree = "<group>";

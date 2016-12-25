@@ -21,9 +21,14 @@ class ResourcesModelController: NSObject {
         events = EventRepository()
     }
     
-    func loadResources() {
-        self.loadLocalResources()
-        self.loadRemoteResources()
+    func initiateLoading() {
+        // if local data available for current location
+            // load local
+            self.loadLocalResources()
+        // else
+            // delete local data
+            // load data from remote
+        
     }
     
     private func loadLocalResources() {
