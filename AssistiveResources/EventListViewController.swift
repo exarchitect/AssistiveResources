@@ -20,7 +20,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     @IBOutlet weak var tableView: UITableView!
     
     private var selectorDelegate:EventListViewControllerResponseProtocol!
-    private var resourcesModelController:ResourcesModelController!
+    weak private var resourcesModelController:ResourcesModelController?
     private var filterViewController:EventFilterViewController?
     
     func dependencies(resources: ResourcesModelController, selectorDelegate: EventListViewControllerResponseProtocol) {
@@ -47,7 +47,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
         var containerViewController: EventContainerViewController?
         if segue.identifier == "EventContainerSegueID" {
             containerViewController = segue.destination as? EventContainerViewController
-            containerViewController?.dependencies(rsrcModelController: resourcesModelController, delegate: self)
+            containerViewController?.dependencies(rsrcModelController: resourcesModelController!, delegate: self)
         }
 
     }
@@ -67,7 +67,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     
     func notifyFilterSelected() {
         self.filterViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController
-        self.filterViewController?.dependencies(resources: self.resourcesModelController, selectorDelegate: self)
+        self.filterViewController?.dependencies(resources: self.resourcesModelController!, selectorDelegate: self)
 
         //guard
         self.present(self.filterViewController!, animated: true, completion: nil)

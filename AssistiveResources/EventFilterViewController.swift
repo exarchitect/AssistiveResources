@@ -20,7 +20,7 @@ protocol EventFilterViewControllerResponseProtocol {
 class EventFilterViewController: UIViewController {
 
     private var selectorDelegate:EventFilterViewControllerResponseProtocol!
-    private var resourcesModelController:ResourcesModelController!
+    weak private var resourcesModelController:ResourcesModelController?
 
     func dependencies(resources: ResourcesModelController, selectorDelegate: EventFilterViewControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate

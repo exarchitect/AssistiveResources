@@ -24,7 +24,11 @@ class EventRepository: NSObject {
         return events[pos]
     }
     
-    func loadData() {
+    func loadLocalData() {
+
+    }
+    
+    func loadTestData() {
         self.dummyEvents()
     }
     

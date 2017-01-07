@@ -10,14 +10,14 @@ import UIKit
 
 
 protocol EventDetailViewControllerResponseProtocol {
-    func eventSelected (evt: EntityDescriptor)
+    func organizationSelected (evt: EntityDescriptor)
     func backButtonTapped ()
 }
 
 
 class EventDetailViewController: UIViewController {
 
-    private var resourcesModelController: ResourcesModelController!
+    weak private var resourcesModelController: ResourcesModelController?
     private var completionProtocol: EventDetailViewControllerResponseProtocol!
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -39,18 +39,16 @@ class EventDetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    deinit {
+        print("deallocating eventdetailVC")
+    }
+    
     @IBAction func evntDetailBackButtonAction(_ sender: Any) {
         self.completionProtocol.backButtonTapped()
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func orgSelectedButtonAction(_ sender: Any) {
+        self.completionProtocol.organizationSelected(evt: ("",EntityType.Organization,0))
     }
-    */
 
 }

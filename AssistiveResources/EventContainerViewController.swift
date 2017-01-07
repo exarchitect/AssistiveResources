@@ -21,9 +21,9 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var containerTableView: UITableView!
     
     //var tblView: UITableView!
-    var resources: ResourcesModelController!
-    var notificationDelegate:EventListContainerNotificationProtocol?
-    var expandedRowIndex = -1
+    weak private var resources: ResourcesModelController?
+    private var notificationDelegate:EventListContainerNotificationProtocol?
+    private var expandedRowIndex = -1
     
     //MARK: - inherited
 
@@ -93,7 +93,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resources.events.count
+        return resources!.events.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -102,7 +102,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         let cell:EventListTableViewCell = tableView.dequeueReusableCell(withIdentifier: kEventListCellID) as! EventListTableViewCell
         
-        let event:PublicEvent = resources.events[indexPath.row]
+        let event:PublicEvent = resources!.events[indexPath.row]
         cell.configureCell(event: event, expand: expandedRowIndex == indexPath.row)
         
         return cell

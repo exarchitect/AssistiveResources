@@ -17,24 +17,30 @@ protocol EventDetailProcessControllerResponseProtocol: ProcessControllerProtocol
 class EventDetailProcessController: ProcessController, EventDetailViewControllerResponseProtocol {
 
     private var eventDetailDelegate: EventDetailProcessControllerResponseProtocol!
-    private var rsrcModelController: ResourcesModelController!
+    unowned private var rsrcModelController: ResourcesModelController
     private var eventDetailViewController: EventDetailViewController!
     
-    override init() {
-        // init ?
-        super.init()
-    }
+//    override init() {
+//        // init ?
+//        super.init()
+//    }
     
-    func dependencies(rsrcsModelController: ResourcesModelController, eventDetailProcessMessageDelegate: EventDetailProcessControllerResponseProtocol) {
-        
+    init(rsrcsModelController: ResourcesModelController, eventDetailProcessMessageDelegate: EventDetailProcessControllerResponseProtocol) {
         self.eventDetailDelegate = eventDetailProcessMessageDelegate
         self.rsrcModelController = rsrcsModelController
     }
+    
+//    func dependencies(rsrcsModelController: ResourcesModelController, eventDetailProcessMessageDelegate: EventDetailProcessControllerResponseProtocol) {
+//        
+//        self.eventDetailDelegate = eventDetailProcessMessageDelegate
+//        //self.rsrcModelController = rsrcsModelController
+//    }
     
     func launch() -> Bool {
         
         self.eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
         self.eventDetailViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
+        //self.eventDetailViewController.dependencies(selectorDelegate: self)
         
         let navCtrller = self.eventDetailDelegate.navigationController()
         navCtrller.pushViewController(self.eventDetailViewController, animated: true)
@@ -47,11 +53,16 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
 
         let navCtrller = self.eventDetailDelegate.navigationController()
         let _ = navCtrller.popViewController(animated: true)
+        self.eventDetailViewController = nil
+    }
+    
+    deinit {
+        print("deallocating eventdetailPC")
     }
     
     // EventDetailViewControllerResponseProtocol
     
-    func eventSelected (evt: EntityDescriptor) {
+    func organizationSelected (evt: EntityDescriptor) {
         self.eventDetailDelegate.notifyShowOrganizationDetail(org: evt)
     }
     

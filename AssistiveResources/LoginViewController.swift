@@ -17,7 +17,7 @@ protocol LoginViewControllerCompletionProtocol {
 
 class LoginViewController: UIViewController {
 
-    private var usrModelController: UserModelController!
+    weak private var usrModelController: UserModelController?
     private var completionProtocol: LoginViewControllerCompletionProtocol!
     @IBOutlet weak var selectLoginType: UISegmentedControl!
     @IBOutlet weak var emailTextField: UITextField!

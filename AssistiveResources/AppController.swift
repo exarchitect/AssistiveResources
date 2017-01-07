@@ -148,7 +148,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     // MARK: - EventDetailProcessControllerResponseProtocol
 
     func notifyShowOrganizationDetail (org: EntityDescriptor) {
-        
+        let _ = 4
     }
 
     
@@ -188,12 +188,13 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         freeTerminatedProcessControllers()
         
         precondition(self.resourcesModelController != nil)
-        self.evtDetailProcessController = EventDetailProcessController()
-        self.evtDetailProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventDetailProcessMessageDelegate: self)
+        self.evtDetailProcessController = EventDetailProcessController(rsrcsModelController: self.resourcesModelController, eventDetailProcessMessageDelegate: self)
+        //self.evtDetailProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventDetailProcessMessageDelegate: self)
         
         return self.evtDetailProcessController.launch()
     }
     
+
     func freeTerminatedProcessControllers () {
         if (self.authProcessController != nil && !self.authProcessController.inUse) {
             self.authProcessController = nil
@@ -224,7 +225,8 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     
 }
 
-//MARK: helper functions
+
+//MARK: - functions
 
 func freeMemory() {
     NotificationCenter.default.post(name: memoryWarningNotificationKeyName, object: nil)

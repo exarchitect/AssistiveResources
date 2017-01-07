@@ -9,7 +9,7 @@
 import Foundation
 
 
-let updateNotificationKeyName = NSNotification.Name(rawValue: "notify_navigation_content_changed")
+let updateNotificationKeyName = NSNotification.Name(rawValue: "key_notify_navigation_content_changed")
 
 
 enum Destination : String {
@@ -20,6 +20,7 @@ enum Destination : String {
 class NavigationContent: NSObject {
     
     private var navigationArray:[DestinationDescriptor] = []
+    //private var usrModelController : UserModelController? = nil
     var count: Int {
         return navigationArray.count
     }
@@ -44,6 +45,10 @@ class NavigationContent: NSObject {
         navigationArray.append(DestinationDescriptor(dest: Destination.Profile))
     }
     
+//    func dependencies(userModelController: UserModelController) {
+//        self.usrModelController = userModelController
+//    }
+    
     func updateSubtitles() {
         var index = 0
         for item in navigationArray {
@@ -53,7 +58,9 @@ class NavigationContent: NSObject {
                 //navigationArray[index].subtitle = "Hi MOM!"
                 
             case Destination.Events:
-                navigationArray[index].subtitle = "Regional and national events in your area"
+                //if self.usrModelController != nil {
+                    navigationArray[index].subtitle = "Regional and national events in your area"
+                //}
                 
             case Destination.Facilities:
                 let _ = 8
@@ -65,7 +72,9 @@ class NavigationContent: NSObject {
                 let _ = 8
                 
             case Destination.Inbox:
-                navigationArray[index].subtitle = "You have 3 unread messages"
+                //if self.usrModelController != nil {
+                    navigationArray[index].subtitle = "You have 3 unread messages"
+                //}
                 
             case Destination.Profile:
                 let _ = 8

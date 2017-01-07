@@ -20,7 +20,7 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
     
     var tableView: UITableView!
     private var navigationData: NavigationContent!
-    //var repository: EventOfInterestRepository!
+    //weak var repository: EventOfInterestRepository?
     //var navigationArray:[DestinationDescriptor] = []
     var selectorCallback: DestinationSelector!
     
