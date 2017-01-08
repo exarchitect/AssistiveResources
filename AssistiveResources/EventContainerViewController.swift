@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol EventListContainerNotificationProtocol {
+protocol EventListContainerNotificationProtocol: class {
     func notifyRowDetailSelected(rowIndex: Int)
     func notifyFilterSelected()
 }
@@ -20,9 +20,8 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 
     @IBOutlet weak var containerTableView: UITableView!
     
-    //var tblView: UITableView!
     weak private var resources: ResourcesModelController?
-    private var notificationDelegate:EventListContainerNotificationProtocol?
+    weak private var notificationDelegate:EventListContainerNotificationProtocol?
     private var expandedRowIndex = -1
     
     //MARK: - inherited
@@ -33,8 +32,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         self.notificationDelegate = delegate
     }
     
+    deinit {
+        print("deallocating EventContainerVC")
+    }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -93,7 +94,8 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resources!.events.count
+        //return resources!.events.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

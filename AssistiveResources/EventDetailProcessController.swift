@@ -51,8 +51,9 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     override func terminate () {
         super.terminate()
 
-        let navCtrller = self.eventDetailDelegate.navigationController()
-        let _ = navCtrller.popViewController(animated: true)
+//        let navCtrller = self.eventDetailDelegate.navigationController()
+//        let _ = navCtrller.popViewController(animated: true)
+        let _ = self.eventDetailDelegate.navigationController().popViewController(animated: true)
         self.eventDetailViewController = nil
     }
     

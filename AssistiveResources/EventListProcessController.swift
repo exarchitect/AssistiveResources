@@ -17,20 +17,24 @@ protocol EventListProcessControllerResponseProtocol: ProcessControllerProtocol {
 class EventListProcessController: ProcessController, EventListViewControllerResponseProtocol {
     
     private var eventDelegate: EventListProcessControllerResponseProtocol!
-    private var rsrcModelController: ResourcesModelController!
-    
+    unowned private var rsrcModelController: ResourcesModelController
     private var eventListViewController: EventListViewController!
     
-    override init() {
-        // init ?
-        super.init()
-    }
+//    override init() {
+//        // init ?
+//        super.init()
+//    }
     
-    func dependencies(rsrcsModelController: ResourcesModelController, eventProcessMessageDelegate: EventListProcessControllerResponseProtocol) {
-        
+    init(rsrcsModelController: ResourcesModelController, eventProcessMessageDelegate: EventListProcessControllerResponseProtocol) {
         self.eventDelegate = eventProcessMessageDelegate
         self.rsrcModelController = rsrcsModelController
     }
+
+//    func dependencies(rsrcsModelController: ResourcesModelController, eventProcessMessageDelegate: EventListProcessControllerResponseProtocol) {
+//        
+//        self.eventDelegate = eventProcessMessageDelegate
+//        self.rsrcModelController = rsrcsModelController
+//    }
     
     func launch() -> Bool {
         
@@ -39,6 +43,7 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
         
         let navCtrller = self.eventDelegate.navigationController()
         navCtrller.pushViewController(self.eventListViewController, animated: true)
+//        self.eventDelegate.navigationController().pushViewController(self.eventListViewController, animated: true)
         
         return (self.eventListViewController != nil)
     }
@@ -48,8 +53,15 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
 
         let navCtrller = self.eventDelegate.navigationController()
         let _ = navCtrller.popViewController(animated: true)
+
+        self.eventListViewController = nil
     }
     
+    
+    //MARK: debug
+    deinit {
+        print("deallocating EventListPC")
+    }
     
     // EventListViewControllerResponseProtocol
     

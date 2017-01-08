@@ -73,12 +73,19 @@ class NavListViewController: UIViewController {
         }
     }
     
+    //MARK: debug
+    deinit {
+        print("deallocating NavListViewController")
+    }
+    
 }
 
 //MARK: helper functions
 
 func requestMainNavigationRefresh() {
     NotificationCenter.default.post(name: updateNotificationKeyName, object: nil)
+
+
 }
 
 

@@ -178,8 +178,8 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         freeTerminatedProcessControllers()
         
         precondition(self.usrModelController != nil)
-        self.evtListProcessController = EventListProcessController()
-        self.evtListProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventProcessMessageDelegate: self)
+        self.evtListProcessController = EventListProcessController(rsrcsModelController: self.resourcesModelController, eventProcessMessageDelegate: self)
+        //self.evtListProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventProcessMessageDelegate: self)
         
         return self.evtListProcessController.launch()
     }

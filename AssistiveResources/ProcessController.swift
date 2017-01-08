@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol ProcessControllerProtocol {
+protocol ProcessControllerProtocol: class {
     func navigationController () -> UINavigationController
     func dismissProcessController (controller: ProcessController)
 }

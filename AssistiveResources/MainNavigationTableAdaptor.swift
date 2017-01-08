@@ -19,7 +19,7 @@ typealias DestinationSelector = (_ destination:Destination) -> Void
 class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     var tableView: UITableView!
-    private var navigationData: NavigationContent!
+    weak private var navigationData: NavigationContent!
     //weak var repository: EventOfInterestRepository?
     //var navigationArray:[DestinationDescriptor] = []
     var selectorCallback: DestinationSelector!
@@ -99,6 +99,13 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
 //            notificationDelegate?.notifyRowDeleted(indexPath.row)
 //        }
 //    }
+
+    
+    // debug
+    deinit {
+        print("deallocating MainNavigationTableAdaptor")
+    }
+    
 }
 
 

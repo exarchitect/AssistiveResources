@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol EventListViewControllerResponseProtocol {
+protocol EventListViewControllerResponseProtocol: class {
     func eventSelected (evt: EntityDescriptor)
     func backButtonTapped ()
 }
@@ -19,9 +19,9 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     @IBOutlet weak var headerView: HeaderView!
     @IBOutlet weak var tableView: UITableView!
     
-    private var selectorDelegate:EventListViewControllerResponseProtocol!
+    weak private var selectorDelegate:EventListViewControllerResponseProtocol!
     weak private var resourcesModelController:ResourcesModelController?
-    private var filterViewController:EventFilterViewController?
+    //private var filterViewController:EventFilterViewController?
     
     func dependencies(resources: ResourcesModelController, selectorDelegate: EventListViewControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
@@ -44,12 +44,13 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var containerViewController: EventContainerViewController?
+        weak var containerViewController: EventContainerViewController?
+        
         if segue.identifier == "EventContainerSegueID" {
             containerViewController = segue.destination as? EventContainerViewController
             containerViewController?.dependencies(rsrcModelController: resourcesModelController!, delegate: self)
         }
-
+        
     }
 
     //MARK: @IBAction
@@ -66,20 +67,31 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     }
     
     func notifyFilterSelected() {
-        self.filterViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController
-        self.filterViewController?.dependencies(resources: self.resourcesModelController!, selectorDelegate: self)
+        unowned var filterViewController:EventFilterViewController
+//        self.filterViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController
+//        self.filterViewController?.dependencies(resources: self.resourcesModelController!, selectorDelegate: self)
+//        self.present(self.filterViewController!, animated: true, completion: nil)
 
-        //guard
-        self.present(self.filterViewController!, animated: true, completion: nil)
-
+        filterViewController = (instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController)!
+        filterViewController.dependencies(resources: self.resourcesModelController!, selectorDelegate: self)
+        
+        //guard?
+        present(filterViewController, animated: true, completion: nil)
     }
     
     func okFilterButtonAction() {
         self.dismiss(animated: true, completion: nil)
+        //self.filterViewController = nil
     }
     
     func cancelFilterButtonAction() {
         self.dismiss(animated: true, completion: nil)
+        //self.filterViewController = nil
+    }
+    
+    //MARK: debug
+    deinit {
+        print("deallocating EventListVC")
     }
     
 }
