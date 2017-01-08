@@ -20,13 +20,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     private var usrModelController: UserModelController!
     private var loginViewController: LoginViewController!
 
-    override init() {
-        // init ?
-        
-        super.init()
-    }
-    
-    func dependencies(userModelController: UserModelController, authenticationResponseDelegate: AuthenticationProcessControllerResponseProtocol) {
+    init(userModelController: UserModelController, authenticationResponseDelegate: AuthenticationProcessControllerResponseProtocol) {
         
         self.responseProtocol = authenticationResponseDelegate
         self.usrModelController = userModelController

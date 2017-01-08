@@ -16,25 +16,14 @@ protocol EventDetailProcessControllerResponseProtocol: ProcessControllerProtocol
 
 class EventDetailProcessController: ProcessController, EventDetailViewControllerResponseProtocol {
 
-    private var eventDetailDelegate: EventDetailProcessControllerResponseProtocol!
+    weak private var eventDetailDelegate: EventDetailProcessControllerResponseProtocol!
     unowned private var rsrcModelController: ResourcesModelController
     private var eventDetailViewController: EventDetailViewController!
-    
-//    override init() {
-//        // init ?
-//        super.init()
-//    }
     
     init(rsrcsModelController: ResourcesModelController, eventDetailProcessMessageDelegate: EventDetailProcessControllerResponseProtocol) {
         self.eventDetailDelegate = eventDetailProcessMessageDelegate
         self.rsrcModelController = rsrcsModelController
     }
-    
-//    func dependencies(rsrcsModelController: ResourcesModelController, eventDetailProcessMessageDelegate: EventDetailProcessControllerResponseProtocol) {
-//        
-//        self.eventDetailDelegate = eventDetailProcessMessageDelegate
-//        //self.rsrcModelController = rsrcsModelController
-//    }
     
     func launch() -> Bool {
         
@@ -51,9 +40,8 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     override func terminate () {
         super.terminate()
 
-//        let navCtrller = self.eventDetailDelegate.navigationController()
-//        let _ = navCtrller.popViewController(animated: true)
-        let _ = self.eventDetailDelegate.navigationController().popViewController(animated: true)
+        let navCtrller = self.eventDetailDelegate.navigationController()
+        let _ = navCtrller.popViewController(animated: true)
         self.eventDetailViewController = nil
     }
     

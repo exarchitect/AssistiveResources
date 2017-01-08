@@ -23,12 +23,7 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
 
     private var navListViewController: NavListViewController!
     
-    override init() {
-        // init ?
-        super.init()
-    }
-    
-    func dependencies(userModelController: UserModelController, navDelegate: NavListProcessControllerResponseProtocol) {
+    init (userModelController: UserModelController, navDelegate: NavListProcessControllerResponseProtocol) {
         
         self.navigationDelegate = navDelegate
         self.usrModelController = userModelController

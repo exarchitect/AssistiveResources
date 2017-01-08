@@ -158,8 +158,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         freeTerminatedProcessControllers()
         
         precondition(self.usrModelController != nil)
-        self.authProcessController = AuthenticationProcessController()
-        self.authProcessController.dependencies(userModelController: self.usrModelController, authenticationResponseDelegate:self)
+        self.authProcessController = AuthenticationProcessController(userModelController: self.usrModelController, authenticationResponseDelegate:self)
         
         return self.authProcessController.launch()
     }
@@ -168,8 +167,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         freeTerminatedProcessControllers()
         
         precondition(self.usrModelController != nil)
-        self.navListProcessController = NavListProcessController()
-        self.navListProcessController.dependencies(userModelController: self.usrModelController, navDelegate: self)
+        self.navListProcessController = NavListProcessController(userModelController: self.usrModelController, navDelegate: self)
         
         return self.navListProcessController.launch()
     }
@@ -179,7 +177,6 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         
         precondition(self.usrModelController != nil)
         self.evtListProcessController = EventListProcessController(rsrcsModelController: self.resourcesModelController, eventProcessMessageDelegate: self)
-        //self.evtListProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventProcessMessageDelegate: self)
         
         return self.evtListProcessController.launch()
     }
@@ -189,7 +186,6 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         
         precondition(self.resourcesModelController != nil)
         self.evtDetailProcessController = EventDetailProcessController(rsrcsModelController: self.resourcesModelController, eventDetailProcessMessageDelegate: self)
-        //self.evtDetailProcessController.dependencies(rsrcsModelController: self.resourcesModelController, eventDetailProcessMessageDelegate: self)
         
         return self.evtDetailProcessController.launch()
     }

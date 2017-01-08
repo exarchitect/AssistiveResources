@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol EventFilterViewControllerResponseProtocol {
+protocol EventFilterViewControllerResponseProtocol: class {
     //func selectedEvent (selection: Int)
     func okFilterButtonAction ()
     func cancelFilterButtonAction ()
@@ -19,12 +19,16 @@ protocol EventFilterViewControllerResponseProtocol {
 
 class EventFilterViewController: UIViewController {
 
-    private var selectorDelegate:EventFilterViewControllerResponseProtocol!
+    weak private var selectorDelegate:EventFilterViewControllerResponseProtocol!
     weak private var resourcesModelController:ResourcesModelController?
 
     func dependencies(resources: ResourcesModelController, selectorDelegate: EventFilterViewControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
+    }
+    
+    deinit {
+        print("deallocating EventFilterVC")
     }
     
     override func viewDidLoad() {
