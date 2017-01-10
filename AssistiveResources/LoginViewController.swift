@@ -17,7 +17,7 @@ protocol LoginViewControllerCompletionProtocol {
 
 class LoginViewController: UIViewController {
 
-    weak private var usrModelController: UserModelController?
+    weak private var user: UserModelController?
     private var completionProtocol: LoginViewControllerCompletionProtocol!
     @IBOutlet weak var selectLoginType: UISegmentedControl!
     @IBOutlet weak var emailTextField: UITextField!
@@ -28,14 +28,14 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var tryoutSubtextLabel: UILabel!
     
     func dependencies(userModelController: UserModelController, completionProtocol: LoginViewControllerCompletionProtocol) {
-        self.usrModelController = userModelController
+        self.user = userModelController
         self.completionProtocol = completionProtocol
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        precondition(self.usrModelController != nil)
+        precondition(self.user != nil)
         precondition(self.completionProtocol != nil)
     }
 

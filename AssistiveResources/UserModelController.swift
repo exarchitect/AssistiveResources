@@ -20,7 +20,9 @@ typealias AsyncCompletionHandlerType = (_ success: Bool) -> Void
 final class UserModelController: NSObject {
     
     var isUserAuthenticated: Bool
-    var rememberMe: Bool
+    var location: LocationProfile
+    
+    private var rememberMe: Bool
     
     private var completionClosure: AsyncCompletionHandlerType?
     private var username: String = ""
@@ -36,9 +38,11 @@ final class UserModelController: NSObject {
         
         let props = PropertySettings.sharedInstance
         props.read()
-        username = props.username
-        password = props.password
-        rememberMe = props.rememberMe
+        self.username = props.username
+        self.password = props.password
+        self.rememberMe = props.rememberMe
+        
+        self.location = LocationProfile(zip: "00000")
         
         super.init()
     }

@@ -92,7 +92,8 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     
     // MARK: - AuthenticationProcessControllerResponseProtocol
     func loginComplete() {
-        self.loadResourceModelController(atLocation:LocationProfile(zip: "40205"))
+        
+        self.loadRegionalResourceModelController(atLocation:self.user.location)
         
     }
     
@@ -206,7 +207,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         }
     }
     
-    private func loadResourceModelController (atLocation: LocationProfile) {
+    private func loadRegionalResourceModelController (atLocation: LocationProfile) {
         if (self.regionalResources == nil) {
             self.regionalResources = RegionalResourcesModelController()
             self.regionalResources.initiateLoading()

@@ -18,7 +18,7 @@ protocol NavListProcessControllerResponseProtocol: ProcessControllerProtocol {
 class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
     private var navigationDelegate: NavListProcessControllerResponseProtocol!
-    private var usrModelController: UserModelController!
+    private var user: UserModelController!
     private var navigationData: NavigationContent!
 
     private var navListViewController: NavListViewController!
@@ -26,13 +26,13 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     init (userModelController: UserModelController, navDelegate: NavListProcessControllerResponseProtocol) {
         
         self.navigationDelegate = navDelegate
-        self.usrModelController = userModelController
+        self.user = userModelController
     }
     
     func launch() -> Bool {
         
         precondition(self.navigationDelegate != nil)
-        precondition(self.usrModelController != nil)
+        precondition(self.user != nil)
         
         self.navigationData = NavigationContent()
         

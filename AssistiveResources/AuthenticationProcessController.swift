@@ -17,20 +17,20 @@ protocol AuthenticationProcessControllerResponseProtocol: ProcessControllerProto
 class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
     
     private var responseProtocol: AuthenticationProcessControllerResponseProtocol!
-    private var usrModelController: UserModelController!
+    private var user: UserModelController!
     private var loginViewController: LoginViewController!
 
     init(userModelController: UserModelController, authenticationResponseDelegate: AuthenticationProcessControllerResponseProtocol) {
         
         self.responseProtocol = authenticationResponseDelegate
-        self.usrModelController = userModelController
+        self.user = userModelController
     }
     
     func launch() -> Bool {
         
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
         self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
-        self.loginViewController.dependencies(userModelController: self.usrModelController, completionProtocol: self)
+        self.loginViewController.dependencies(userModelController: self.user, completionProtocol: self)
         
         let parentViewController = self.responseProtocol.navigationController().topViewController
         parentViewController?.present(self.loginViewController, animated: true, completion: nil)
