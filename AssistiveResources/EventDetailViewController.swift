@@ -17,12 +17,12 @@ protocol EventDetailViewControllerResponseProtocol {
 
 class EventDetailViewController: UIViewController {
 
-    weak private var resourcesModelController: ResourcesModelController?
+    weak private var resourcesModelController: RegionalResourcesModelController?
     private var completionProtocol: EventDetailViewControllerResponseProtocol!
 
     @IBOutlet weak var scrollView: UIScrollView!
     
-    func dependencies(resources: ResourcesModelController, selectorDelegate: EventDetailViewControllerResponseProtocol) {
+    func dependencies(resources: RegionalResourcesModelController, selectorDelegate: EventDetailViewControllerResponseProtocol) {
         self.completionProtocol = selectorDelegate
         self.resourcesModelController = resources
     }

@@ -20,10 +20,10 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     @IBOutlet weak var tableView: UITableView!
     
     weak private var selectorDelegate:EventListViewControllerResponseProtocol!
-    weak private var resourcesModelController:ResourcesModelController?
+    weak private var resourcesModelController:RegionalResourcesModelController?
     //private var filterViewController:EventFilterViewController?
     
-    func dependencies(resources: ResourcesModelController, selectorDelegate: EventListViewControllerResponseProtocol) {
+    func dependencies(resources: RegionalResourcesModelController, selectorDelegate: EventListViewControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
     }

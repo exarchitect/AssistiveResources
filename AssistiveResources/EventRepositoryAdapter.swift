@@ -1,17 +1,17 @@
 //
-//  EventRepository.swift
-//  SwiftNeed
+//  EventRepositoryAdapter.swift
+//  AssistiveResources
 //
-//  Created by Bill Johnson on 5/16/16.
-//  Copyright © 2016 SevenPlusTwo. All rights reserved.
+//  Created by Bill Johnson on 1/9/17.
+//  Copyright © 2017 SevenPlusTwo. All rights reserved.
 //
 
 import UIKit
 
-class EventRepository: Repository {
+class EventRepositoryAdapter: NSObject {
     
     private var events: [PublicEvent] = []
-
+    
     var count: Int {
         return events.count
     }
@@ -25,24 +25,10 @@ class EventRepository: Repository {
         return events[pos]
     }
     
-    func present(usingFilter: NeedsProfile) {
+    func retrieve(usingFilter: NeedsProfile) {
         self.dummyEvents()
     }
     
-    internal override func loadLocalStoreFromRemote() {
-        // load from remote to local db
-            // on completion...
-                self.present(usingFilter: NeedsProfile(mobility: MobilityLimitation.NoLimitation, delay: DevelopmentalDelay.NoDelay, dx: Diagnosis.NoDiagnosis))
-                self.loadingState = RepositoryState.Available
-
-        //super.loadLocalStoreFromRemote()
-    }
-    
-    internal override func localStorePath()-> String {
-
-        return "replace this with a path to the realm db"
-    }
-
     private func dummyEvents() {
         events.append(PublicEvent(event: ("Best Buddies Spring Gala",EntityType.Event,0),
                                   organization: ("Best Buddies",EntityType.Organization,0),

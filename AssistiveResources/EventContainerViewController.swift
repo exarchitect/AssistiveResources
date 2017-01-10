@@ -20,13 +20,13 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 
     @IBOutlet weak var containerTableView: UITableView!
     
-    weak private var resources: ResourcesModelController?
+    weak private var resources: RegionalResourcesModelController?
     weak private var notificationDelegate:EventListContainerNotificationProtocol?
     private var expandedRowIndex = -1
     
     //MARK: - inherited
 
-    func dependencies(rsrcModelController: ResourcesModelController, delegate: EventListContainerNotificationProtocol) {
+    func dependencies(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
     
         self.resources = rsrcModelController
         self.notificationDelegate = delegate

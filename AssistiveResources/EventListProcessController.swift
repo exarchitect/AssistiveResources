@@ -17,10 +17,10 @@ protocol EventListProcessControllerResponseProtocol: ProcessControllerProtocol {
 class EventListProcessController: ProcessController, EventListViewControllerResponseProtocol {
     
     private var eventDelegate: EventListProcessControllerResponseProtocol!
-    unowned private var rsrcModelController: ResourcesModelController
+    unowned private var rsrcModelController: RegionalResourcesModelController
     private var eventListViewController: EventListViewController!
     
-    init(rsrcsModelController: ResourcesModelController, eventProcessMessageDelegate: EventListProcessControllerResponseProtocol) {
+    init(rsrcsModelController: RegionalResourcesModelController, eventProcessMessageDelegate: EventListProcessControllerResponseProtocol) {
         self.eventDelegate = eventProcessMessageDelegate
         self.rsrcModelController = rsrcsModelController
     }

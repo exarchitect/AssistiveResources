@@ -37,10 +37,10 @@ class AssistiveResourcesTests: XCTestCase {
     
     func testPerformanceLoadResources() {
         // This is an example of a performance test case.
-        self.measure {
-            let rsrcController = ResourcesModelController()
-            rsrcController.loadResources()
-        }
+//        self.measure {
+//            let rsrcController = ResourcesModelController()
+//            rsrcController.loadResources()
+//        }
     }
     
 }

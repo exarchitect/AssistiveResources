@@ -26,36 +26,10 @@ class ResourcesModelController: NSObject {
     }
     
     func initiateLoading() {
-        // if local data available
-            // if local data is for current location
-                // load local
-                // start remote update
-                // when remote load complete refresh local
-            // else
-                // delete local data
-                // load data from remote
-                // when remote load complete refresh local
-        // else (no local database)
-            // load data from remote
-            // when remote load complete refresh local
-
-        self.loadTestResources()
-        
+        self.events.load()
+        self.organizations.load()
     }
     
-    private func loadTestResources() {
-        self.events.loadTestData()
-        self.organizations.loadTestData()
-    }
-    
-    private func loadLocalResources() {
-        self.events.loadLocalData()
-        self.organizations.loadLocalData()
-    }
-    
-    private func loadRemoteResources() {
-        
-    }
     
     // MARK: - Realm
 
@@ -82,14 +56,14 @@ class ResourcesModelController: NSObject {
 
 // MARK: - Backendless
 
-func initializeRemoteDatabase() {
-    let APP_ID = "A9F4E1E9-EE0E-C611-FF91-4B3E52A79900"     // SwiftNeed
-    let SECRET_KEY = "91933CE7-53FE-117C-FFC0-E9A8751F9800"
-    let VERSION_NUM = "v1"
-
-    let backendless = Backendless.sharedInstance()
-
-    backendless?.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM)
-    
-}
+//func initializeRemoteDatabase() {
+//    let APP_ID = "A9F4E1E9-EE0E-C611-FF91-4B3E52A79900"     // SwiftNeed
+//    let SECRET_KEY = "91933CE7-53FE-117C-FFC0-E9A8751F9800"
+//    let VERSION_NUM = "v1"
+//
+//    let backendless = Backendless.sharedInstance()
+//
+//    backendless?.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM)
+//    
+//}
 

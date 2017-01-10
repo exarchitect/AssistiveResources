@@ -22,7 +22,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     private var evtDetailProcessController: EventDetailProcessController!
     
     private var usrModelController: UserModelController!
-    private var resourcesModelController : ResourcesModelController!
+    private var resourcesModelController : RegionalResourcesModelController!
     
     
     override init() {
@@ -208,7 +208,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     
     private func loadResourceModelController (atLocation: LocationProfile) {
         if (self.resourcesModelController == nil) {
-            self.resourcesModelController = ResourcesModelController()
+            self.resourcesModelController = RegionalResourcesModelController()
             self.resourcesModelController.initiateLoading()
         }
     }

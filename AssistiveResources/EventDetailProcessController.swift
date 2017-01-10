@@ -17,10 +17,10 @@ protocol EventDetailProcessControllerResponseProtocol: ProcessControllerProtocol
 class EventDetailProcessController: ProcessController, EventDetailViewControllerResponseProtocol {
 
     weak private var eventDetailDelegate: EventDetailProcessControllerResponseProtocol!
-    unowned private var rsrcModelController: ResourcesModelController
+    unowned private var rsrcModelController: RegionalResourcesModelController
     private var eventDetailViewController: EventDetailViewController!
     
-    init(rsrcsModelController: ResourcesModelController, eventDetailProcessMessageDelegate: EventDetailProcessControllerResponseProtocol) {
+    init(rsrcsModelController: RegionalResourcesModelController, eventDetailProcessMessageDelegate: EventDetailProcessControllerResponseProtocol) {
         self.eventDetailDelegate = eventDetailProcessMessageDelegate
         self.rsrcModelController = rsrcsModelController
     }
