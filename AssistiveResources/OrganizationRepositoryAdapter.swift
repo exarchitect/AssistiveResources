@@ -10,14 +10,15 @@ import UIKit
 
 class OrganizationRepositoryAdapter: NSObject {
     
+    private var repo: Repository
     private var organizations: [Organization] = []
     var count: Int {
         return organizations.count
     }
     
-    override init() {
-        super.init()
+    init (repository: Repository) {
         
+        self.repo = repository
     }
     
     subscript(pos: Int) -> Organization {

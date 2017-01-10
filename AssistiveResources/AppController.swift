@@ -21,8 +21,8 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     private var evtListProcessController: EventListProcessController!
     private var evtDetailProcessController: EventDetailProcessController!
     
-    private var usrModelController: UserModelController!
-    private var resourcesModelController : RegionalResourcesModelController!
+    private var user: UserModelController!
+    private var regionalResources : RegionalResourcesModelController!
     
     
     override init() {
@@ -60,7 +60,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         
         startBackgroundActivityAlert(presentingController: self.navController.topViewController!, title: nil, message: "authenticating...")
 
-        self.usrModelController?.authorizeUser(completion: { (success) in
+        self.user?.authorizeUser(completion: { (success) in
             stopBackgroundActivityAlert(presentingController: self.navController.topViewController!)
             
             if (success) {
@@ -125,7 +125,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
                 
             case Destination.Profile:
                 // temp for testing
-                self.usrModelController.logout()
+                self.user.logout()
                 let success = self.self.pushAuthenticationProcessController()
                 if (!success) {
                     
@@ -157,8 +157,8 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     private func pushAuthenticationProcessController () -> Bool {
         freeTerminatedProcessControllers()
         
-        precondition(self.usrModelController != nil)
-        self.authProcessController = AuthenticationProcessController(userModelController: self.usrModelController, authenticationResponseDelegate:self)
+        precondition(self.user != nil)
+        self.authProcessController = AuthenticationProcessController(userModelController: self.user, authenticationResponseDelegate:self)
         
         return self.authProcessController.launch()
     }
@@ -166,8 +166,8 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     private func pushNavigationListProcessController () -> Bool {
         freeTerminatedProcessControllers()
         
-        precondition(self.usrModelController != nil)
-        self.navListProcessController = NavListProcessController(userModelController: self.usrModelController, navDelegate: self)
+        precondition(self.user != nil)
+        self.navListProcessController = NavListProcessController(userModelController: self.user, navDelegate: self)
         
         return self.navListProcessController.launch()
     }
@@ -175,8 +175,8 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     private func pushEventListProcessController () -> Bool {
         freeTerminatedProcessControllers()
         
-        precondition(self.usrModelController != nil)
-        self.evtListProcessController = EventListProcessController(rsrcsModelController: self.resourcesModelController, eventProcessMessageDelegate: self)
+        precondition(self.user != nil)
+        self.evtListProcessController = EventListProcessController(rsrcsModelController: self.regionalResources, eventProcessMessageDelegate: self)
         
         return self.evtListProcessController.launch()
     }
@@ -184,8 +184,8 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     private func pushEventDetailProcessController (evt: EntityDescriptor) -> Bool {
         freeTerminatedProcessControllers()
         
-        precondition(self.resourcesModelController != nil)
-        self.evtDetailProcessController = EventDetailProcessController(rsrcsModelController: self.resourcesModelController, eventDetailProcessMessageDelegate: self)
+        precondition(self.regionalResources != nil)
+        self.evtDetailProcessController = EventDetailProcessController(rsrcsModelController: self.regionalResources, eventDetailProcessMessageDelegate: self)
         
         return self.evtDetailProcessController.launch()
     }
@@ -207,15 +207,15 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     }
     
     private func loadResourceModelController (atLocation: LocationProfile) {
-        if (self.resourcesModelController == nil) {
-            self.resourcesModelController = RegionalResourcesModelController()
-            self.resourcesModelController.initiateLoading()
+        if (self.regionalResources == nil) {
+            self.regionalResources = RegionalResourcesModelController()
+            self.regionalResources.initiateLoading()
         }
     }
     
     private func loadUserModelController () {
-        if (self.usrModelController == nil) {
-            self.usrModelController = UserModelController()
+        if (self.user == nil) {
+            self.user = UserModelController()
         }
     }
     

@@ -10,17 +10,18 @@ import UIKit
 
 class EventRepositoryAdapter: NSObject {
     
+    private var repo: Repository
     private var events: [PublicEvent] = []
     
     var count: Int {
         return events.count
     }
     
-    override init() {
-        super.init()
-        // ?
+    init (repository: Repository) {
+        
+        self.repo = repository
     }
-    
+
     subscript(pos: Int) -> PublicEvent {
         return events[pos]
     }

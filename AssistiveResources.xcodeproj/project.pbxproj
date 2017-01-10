@@ -10,8 +10,6 @@
 		78BE6FBF8913BE5E60A80F72 /* Pods_AssistiveResourcesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB555A1779314481D6BFF3DC /* Pods_AssistiveResourcesUITests.framework */; };
 		82A2F78C360FA96106099AEF /* Pods_AssistiveResourcesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32905B721FA008F6AD1B3B6C /* Pods_AssistiveResourcesTests.framework */; };
 		C1F3E673E6BCF568D5BFCA60 /* Pods_AssistiveResources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EE8B2CD99623C42D941D32 /* Pods_AssistiveResources.framework */; };
-		D209FAC11DFFAB100099BD46 /* EventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209FABF1DFFAB100099BD46 /* EventRepository.swift */; };
-		D209FAC21DFFAB100099BD46 /* OrganizationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209FAC01DFFAB100099BD46 /* OrganizationRepository.swift */; };
 		D209FAC51E00CF030099BD46 /* EventDetailProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209FAC41E00CF030099BD46 /* EventDetailProcessController.swift */; };
 		D209FAC71E0245D00099BD46 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209FAC61E0245D00099BD46 /* EventDetailViewController.swift */; };
 		D209FAC91E0245EC0099BD46 /* EventDetailStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D209FAC81E0245EC0099BD46 /* EventDetailStoryboard.storyboard */; };
@@ -24,7 +22,6 @@
 		D24E4DBB1DE56ACF008A11FB /* AuthenticationProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DBA1DE56ACF008A11FB /* AuthenticationProcessController.swift */; };
 		D24E4DBE1DE56D6F008A11FB /* NavigationPlaybook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DBC1DE56D6F008A11FB /* NavigationPlaybook.swift */; };
 		D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */; };
-		D24E4DC21DE73AFA008A11FB /* ResourcesModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DC11DE73AFA008A11FB /* ResourcesModelController.swift */; };
 		D24E4DC61DE74066008A11FB /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DC51DE74066008A11FB /* Organization.swift */; };
 		D24E4DC81DE74167008A11FB /* PublicEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DC71DE74167008A11FB /* PublicEvent.swift */; };
 		D24E4DCA1DE741E4008A11FB /* DateUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DC91DE741E4008A11FB /* DateUtilities.swift */; };
@@ -37,6 +34,8 @@
 		D255504F1E24934F004FE72B /* RegionalResourcesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */; };
 		D25550511E249A6E004FE72B /* OrganizationRepositoryAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550501E249A6E004FE72B /* OrganizationRepositoryAdapter.swift */; };
 		D25550531E249B7C004FE72B /* EventRepositoryAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550521E249B7C004FE72B /* EventRepositoryAdapter.swift */; };
+		D25550551E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */; };
+		D25550571E24A68F004FE72B /* EventRepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */; };
 		D27440EF1DF6459C008E0476 /* UXUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27440EE1DF6459C008E0476 /* UXUtilities.swift */; };
 		D27440F11DF669A3008E0476 /* EventFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27440F01DF669A3008E0476 /* EventFilterViewController.swift */; };
 		D27440F31DF9009A008E0476 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D27440F21DF9009A008E0476 /* HeaderView.xib */; };
@@ -81,8 +80,6 @@
 		63147EA889513E185CD2ADEF /* Pods-AssistiveResourcesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AssistiveResourcesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AssistiveResourcesTests/Pods-AssistiveResourcesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6EF60E8FC5E67E799797B663 /* Pods-AssistiveResources.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AssistiveResources.release.xcconfig"; path = "Pods/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources.release.xcconfig"; sourceTree = "<group>"; };
 		AB555A1779314481D6BFF3DC /* Pods_AssistiveResourcesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AssistiveResourcesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D209FABF1DFFAB100099BD46 /* EventRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRepository.swift; sourceTree = "<group>"; };
-		D209FAC01DFFAB100099BD46 /* OrganizationRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationRepository.swift; sourceTree = "<group>"; };
 		D209FAC41E00CF030099BD46 /* EventDetailProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailProcessController.swift; sourceTree = "<group>"; };
 		D209FAC61E0245D00099BD46 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		D209FAC81E0245EC0099BD46 /* EventDetailStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EventDetailStoryboard.storyboard; sourceTree = "<group>"; };
@@ -95,7 +92,6 @@
 		D24E4DBA1DE56ACF008A11FB /* AuthenticationProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationProcessController.swift; sourceTree = "<group>"; };
 		D24E4DBC1DE56D6F008A11FB /* NavigationPlaybook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationPlaybook.swift; sourceTree = "<group>"; };
 		D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePlaybook.swift; sourceTree = "<group>"; };
-		D24E4DC11DE73AFA008A11FB /* ResourcesModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourcesModelController.swift; sourceTree = "<group>"; };
 		D24E4DC51DE74066008A11FB /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
 		D24E4DC71DE74167008A11FB /* PublicEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicEvent.swift; sourceTree = "<group>"; };
 		D24E4DC91DE741E4008A11FB /* DateUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateUtilities.swift; sourceTree = "<group>"; };
@@ -108,6 +104,8 @@
 		D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionalResourcesRepository.swift; sourceTree = "<group>"; };
 		D25550501E249A6E004FE72B /* OrganizationRepositoryAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationRepositoryAdapter.swift; sourceTree = "<group>"; };
 		D25550521E249B7C004FE72B /* EventRepositoryAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRepositoryAdapter.swift; sourceTree = "<group>"; };
+		D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationRepositoryAccessor.swift; sourceTree = "<group>"; };
+		D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRepositoryAccessor.swift; sourceTree = "<group>"; };
 		D27440EE1DF6459C008E0476 /* UXUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXUtilities.swift; sourceTree = "<group>"; };
 		D27440F01DF669A3008E0476 /* EventFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFilterViewController.swift; sourceTree = "<group>"; };
 		D27440F21DF9009A008E0476 /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
@@ -210,7 +208,6 @@
 			children = (
 				D25550491E234626004FE72B /* Repository.swift */,
 				D255504B1E249162004FE72B /* RegionalResources */,
-				D24E4DC01DE73AC2008A11FB /* Resources */,
 				D24E4DAE1DE3E86C008A11FB /* User */,
 			);
 			name = ModelControllers;
@@ -235,16 +232,6 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
-		D24E4DC01DE73AC2008A11FB /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				D24E4DC11DE73AFA008A11FB /* ResourcesModelController.swift */,
-				D209FAC01DFFAB100099BD46 /* OrganizationRepository.swift */,
-				D209FABF1DFFAB100099BD46 /* EventRepository.swift */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		D24E4DCD1DED1699008A11FB /* NavList */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,8 +251,10 @@
 				D255504C1E2491AA004FE72B /* RegionalResourcesModelController.swift */,
 				D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */,
 				D25550501E249A6E004FE72B /* OrganizationRepositoryAdapter.swift */,
+				D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */,
 				D24E4DC51DE74066008A11FB /* Organization.swift */,
 				D25550521E249B7C004FE72B /* EventRepositoryAdapter.swift */,
+				D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */,
 				D24E4DC71DE74167008A11FB /* PublicEvent.swift */,
 			);
 			name = RegionalResources;
@@ -663,7 +652,6 @@
 			files = (
 				D24E4DB91DE5637E008A11FB /* LoginViewController.swift in Sources */,
 				D27440EF1DF6459C008E0476 /* UXUtilities.swift in Sources */,
-				D209FAC21DFFAB100099BD46 /* OrganizationRepository.swift in Sources */,
 				D28C80D41DF0E8B6002D3940 /* EventListViewController.swift in Sources */,
 				D22768551DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift in Sources */,
 				D24E4DCC1DE74750008A11FB /* ProcessController.swift in Sources */,
@@ -673,20 +661,20 @@
 				D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */,
 				D28C80D11DF0E821002D3940 /* EventListProcessController.swift in Sources */,
 				D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */,
-				D24E4DC21DE73AFA008A11FB /* ResourcesModelController.swift in Sources */,
 				D24E4DB01DE3EB6F008A11FB /* UserModelController.swift in Sources */,
 				D24E4DD31DED2703008A11FB /* NavListViewController.swift in Sources */,
 				D25550511E249A6E004FE72B /* OrganizationRepositoryAdapter.swift in Sources */,
+				D25550571E24A68F004FE72B /* EventRepositoryAccessor.swift in Sources */,
 				D24E4DBB1DE56ACF008A11FB /* AuthenticationProcessController.swift in Sources */,
 				D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */,
 				D27440F51DF903B3008E0476 /* HeaderView.swift in Sources */,
 				D255504A1E234626004FE72B /* Repository.swift in Sources */,
 				D2C9AD731DE00A8D0028341D /* RootViewController.swift in Sources */,
 				D24E4DBE1DE56D6F008A11FB /* NavigationPlaybook.swift in Sources */,
-				D209FAC11DFFAB100099BD46 /* EventRepository.swift in Sources */,
 				D255504D1E2491AA004FE72B /* RegionalResourcesModelController.swift in Sources */,
 				D27440F11DF669A3008E0476 /* EventFilterViewController.swift in Sources */,
 				D209FAC51E00CF030099BD46 /* EventDetailProcessController.swift in Sources */,
+				D25550551E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift in Sources */,
 				D255504F1E24934F004FE72B /* RegionalResourcesRepository.swift in Sources */,
 				D209FAC71E0245D00099BD46 /* EventDetailViewController.swift in Sources */,
 				D24E4DC81DE74167008A11FB /* PublicEvent.swift in Sources */,

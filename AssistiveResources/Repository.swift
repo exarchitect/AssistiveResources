@@ -30,7 +30,7 @@ class Repository: NSObject {
         self.loadingState = RepositoryState.Available
         self.loadLocalStoreFromRemote()
         
-        precondition(!self.haveLocalStore)
+        precondition(!self.haveLocalStore, "load called when repo.haveLocalStore set to true")
         // if have local store?   @self.localStorePath()
             // self.updateRepository()
         // if no local store
@@ -40,7 +40,7 @@ class Repository: NSObject {
     
     func updateRepository() {
         
-        precondition(self.haveLocalStore)
+        precondition(self.haveLocalStore, "updateRepository called when repo.haveLocalStore set to false")
         // if local store location is current
             // is local store last update current (within 1 hour)
                 // if yes, set RepositoryState.Available

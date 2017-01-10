@@ -1,48 +1,35 @@
 //
-//  EventRepository.swift
-//  SwiftNeed
+//  EventRepositoryAccessor.swift
+//  AssistiveResources
 //
-//  Created by Bill Johnson on 5/16/16.
-//  Copyright © 2016 SevenPlusTwo. All rights reserved.
+//  Created by Bill Johnson on 1/9/17.
+//  Copyright © 2017 SevenPlusTwo. All rights reserved.
 //
 
 import UIKit
 
-class EventRepository: Repository {
+class EventRepositoryAccessor: NSObject {
     
+    private var repo: Repository
     private var events: [PublicEvent] = []
-
+    
     var count: Int {
         return events.count
     }
     
-    override init() {
-        super.init()
-        // ?
+    init (repository: Repository) {
+        
+        self.repo = repository
     }
     
     subscript(pos: Int) -> PublicEvent {
         return events[pos]
     }
     
-    func present(usingFilter: NeedsProfile) {
+    func retrieve(usingFilter: NeedsProfile) {
         self.dummyEvents()
     }
     
-    internal override func loadLocalStoreFromRemote() {
-        // load from remote to local db
-            // on completion...
-                self.present(usingFilter: NeedsProfile(mobility: MobilityLimitation.NoLimitation, delay: DevelopmentalDelay.NoDelay, dx: Diagnosis.NoDiagnosis))
-                self.loadingState = RepositoryState.Available
-
-        //super.loadLocalStoreFromRemote()
-    }
-    
-    internal override func localStorePath()-> String {
-
-        return "replace this with a path to the realm db"
-    }
-
     private func dummyEvents() {
         events.append(PublicEvent(event: ("Best Buddies Spring Gala",EntityType.Event,0),
                                   organization: ("Best Buddies",EntityType.Organization,0),
@@ -62,4 +49,5 @@ class EventRepository: Repository {
                                   eventDate: DateTimeDuration(yr:2016, mo:5, dy:15, hr:12, min:0, durationMin:0),
                                   eventDetail: "The 74th annual Special Olympics will be held this coming June here in Louisville Ky, at historic Freedom Hall. Tickets will go on sale 4 weeks before the event - don't miss it!"))
     }
+
 }
