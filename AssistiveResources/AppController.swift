@@ -48,8 +48,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     
     
     func start()  {
-        self.loadUserModelController()
-//        self.loadResourceModelController()        // moved to after login
+        self.loadUserModelController()      // loadResourceModelController() not called until after login
 
         //self.usrModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
         //self.usrModelController?.storeUserCredentials(username: "", password: "")

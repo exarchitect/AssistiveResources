@@ -23,13 +23,8 @@ class PublicEvent: NSObject {
     var eventType: EntityType = EntityType.Event
     var eventID: Int = 0
     
-    var organizationName: String = ""
-    var organizationType: EntityType = EntityType.Organization
-    var organizationID: Int = 0
-    
-    var facilityName: String = ""
-    var facilityType: EntityType = EntityType.Facility
-    var facilityID: Int = 0
+    var organizationDescriptor: EntityDescriptor
+    var facilityDescriptor: EntityDescriptor
     
     var eventDate: DateTimeDuration
     
@@ -44,13 +39,8 @@ class PublicEvent: NSObject {
         self.eventType = event.entityType
         self.eventID = event.entityID
         
-        self.organizationName = organization.entityName
-        self.organizationType = organization.entityType
-        self.organizationID = organization.entityID
-        
-        self.facilityName = facility.entityName
-        self.facilityType = facility.entityType
-        self.facilityID = facility.entityID
+        self.organizationDescriptor = organization
+        self.facilityDescriptor = facility
         
         self.eventDate = eventDate
         
@@ -59,25 +49,6 @@ class PublicEvent: NSObject {
         
         eventDescriptionVerbose = eventDetail
         eventDescriptionBrief = ""
-/*
-        let calendar = NSCalendar.current
-        let dateComponents = calendar.dateComponents(
-            Set<Calendar.Component>([Calendar.Component.year, Calendar.Component.month, Calendar.Component.day,
-                                     Calendar.Component.hour, Calendar.Component.minute]), from: eventDate)
-        
-        year = dateComponents.year!
-        month = dateComponents.month!
-        dayOfMonth = dateComponents.day!
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM"
-        let monthAbbr = dateFormatter.string(from: eventDate as Date)
-        monthAbbreviation = monthAbbr.uppercased()
-        
-        dateFormatter.dateFormat = "EEE"
-        let dayOfWk = dateFormatter.string(from: eventDate as Date)
-        dayOfWeek = dayOfWk.uppercased()
- */
     }
     
 }

@@ -30,27 +30,11 @@ class EventListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-//    func configureCell(title: String, subTitle: String, sponsor: String, dateTime: String, location: String, expand: Bool) {
-//        mainTitle.text = title
-//        eventDetailLabel.text = subTitle
-//        sponsorLabel.text = "Sponsored by " + sponsor
-//        locationLabel.text = location
-//        dateTimeLabel.text = dateTime
-//        
-//        self.selectionStyle = UITableViewCellSelectionStyle.None
-//        
-//        if expand {
-//            self.backgroundColor = UIColor.groupTableViewBackgroundColor()
-//        } else {
-//            self.backgroundColor = UIColor.whiteColor()
-//        }
-//    }
-
     func configureCell(event: PublicEvent, expand: Bool) {
         mainTitle.text = event.eventTitle
         eventDetailLabel.text = event.eventDescriptionVerbose
-        sponsorLabel.text = "Sponsored by " + event.organizationName
-        locationLabel.text = event.facilityName
+        sponsorLabel.text = "Sponsored by " + event.organizationDescriptor.entityName
+        locationLabel.text = event.facilityDescriptor.entityName
         dateTimeLabel.text = event.eventDate.whenDescription
         
         monthLabel.text = event.eventDate.monthAbbreviation

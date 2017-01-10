@@ -10,7 +10,7 @@ import UIKit
 
 class OrganizationRepositoryAccessor: NSObject {
     
-    private var repo: Repository
+    weak private var repo: Repository?
     private var organizations: [Organization] = []
     var count: Int {
         return organizations.count

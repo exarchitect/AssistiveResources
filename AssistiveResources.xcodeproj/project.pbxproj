@@ -32,8 +32,6 @@
 		D255504A1E234626004FE72B /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550491E234626004FE72B /* Repository.swift */; };
 		D255504D1E2491AA004FE72B /* RegionalResourcesModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D255504C1E2491AA004FE72B /* RegionalResourcesModelController.swift */; };
 		D255504F1E24934F004FE72B /* RegionalResourcesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */; };
-		D25550511E249A6E004FE72B /* OrganizationRepositoryAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550501E249A6E004FE72B /* OrganizationRepositoryAdapter.swift */; };
-		D25550531E249B7C004FE72B /* EventRepositoryAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550521E249B7C004FE72B /* EventRepositoryAdapter.swift */; };
 		D25550551E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */; };
 		D25550571E24A68F004FE72B /* EventRepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */; };
 		D27440EF1DF6459C008E0476 /* UXUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27440EE1DF6459C008E0476 /* UXUtilities.swift */; };
@@ -102,8 +100,6 @@
 		D25550491E234626004FE72B /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		D255504C1E2491AA004FE72B /* RegionalResourcesModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionalResourcesModelController.swift; sourceTree = "<group>"; };
 		D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionalResourcesRepository.swift; sourceTree = "<group>"; };
-		D25550501E249A6E004FE72B /* OrganizationRepositoryAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationRepositoryAdapter.swift; sourceTree = "<group>"; };
-		D25550521E249B7C004FE72B /* EventRepositoryAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRepositoryAdapter.swift; sourceTree = "<group>"; };
 		D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationRepositoryAccessor.swift; sourceTree = "<group>"; };
 		D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRepositoryAccessor.swift; sourceTree = "<group>"; };
 		D27440EE1DF6459C008E0476 /* UXUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXUtilities.swift; sourceTree = "<group>"; };
@@ -250,10 +246,8 @@
 			children = (
 				D255504C1E2491AA004FE72B /* RegionalResourcesModelController.swift */,
 				D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */,
-				D25550501E249A6E004FE72B /* OrganizationRepositoryAdapter.swift */,
 				D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */,
 				D24E4DC51DE74066008A11FB /* Organization.swift */,
-				D25550521E249B7C004FE72B /* EventRepositoryAdapter.swift */,
 				D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */,
 				D24E4DC71DE74167008A11FB /* PublicEvent.swift */,
 			);
@@ -655,7 +649,6 @@
 				D28C80D41DF0E8B6002D3940 /* EventListViewController.swift in Sources */,
 				D22768551DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift in Sources */,
 				D24E4DCC1DE74750008A11FB /* ProcessController.swift in Sources */,
-				D25550531E249B7C004FE72B /* EventRepositoryAdapter.swift in Sources */,
 				D28C80D81DF0E8DE002D3940 /* EventListTableViewCell.swift in Sources */,
 				D28C80DC1DF12B76002D3940 /* EventContainerViewController.swift in Sources */,
 				D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */,
@@ -663,7 +656,6 @@
 				D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */,
 				D24E4DB01DE3EB6F008A11FB /* UserModelController.swift in Sources */,
 				D24E4DD31DED2703008A11FB /* NavListViewController.swift in Sources */,
-				D25550511E249A6E004FE72B /* OrganizationRepositoryAdapter.swift in Sources */,
 				D25550571E24A68F004FE72B /* EventRepositoryAccessor.swift in Sources */,
 				D24E4DBB1DE56ACF008A11FB /* AuthenticationProcessController.swift in Sources */,
 				D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */,

@@ -10,7 +10,7 @@ import UIKit
 
 class EventRepositoryAccessor: NSObject {
     
-    private var repo: Repository
+    weak private var repo: Repository?
     private var events: [PublicEvent] = []
     
     var count: Int {
