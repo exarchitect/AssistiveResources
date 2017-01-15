@@ -9,11 +9,6 @@
 import UIKit
 
 
-//protocol AuthenticationProcessControllerResponseProtocol: ProcessControllerProtocol {
-//    func loginComplete ()
-//}
-
-
 class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
     
     private var responseDelegate: ProcessControllerProtocol!
@@ -47,12 +42,10 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         requestMainNavigationRefresh()
     }
     
-    //LoginViewControllerCompletionProtocol
 
+    // LoginViewControllerCompletionProtocol
+    
     func loginAction (username: String, password: String) {
-//        self.responseProtocol.loginComplete()
-//        self.responseProtocol.dismissProcessController(controller: self)
-
         self.responseDelegate.requestAction(command: Command(type: Command.CommandType.userLoginSuccessful))
         let cmd = Command(type: Command.CommandType.dismissCaller(controller: self))
         self.responseDelegate.requestAction(command: cmd)
