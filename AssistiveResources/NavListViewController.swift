@@ -60,7 +60,7 @@ class NavListViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-        freeMemory()
+        //freeMemory()
     }
     
     func refreshContent() {

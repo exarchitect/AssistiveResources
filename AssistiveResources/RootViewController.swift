@@ -28,7 +28,7 @@ class RootViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-        freeMemory()
+        //freeMemory()
     }
     
 }

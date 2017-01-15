@@ -12,11 +12,11 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var appController: AppController?
+    var appController: AssitiveAppController?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        self.appController = AppController()
+        self.appController = AssitiveAppController()
         self.window = self.appController?.setupApplicationWindow()
         
         // let the rootvc draw... then continue

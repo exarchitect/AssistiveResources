@@ -9,11 +9,6 @@
 import UIKit
 
 
-//protocol EventDetailProcessControllerResponseProtocol: ProcessControllerProtocol {
-//    func notifyShowOrganizationDetail (org: EntityDescriptor)
-//}
-
-
 class EventDetailProcessController: ProcessController, EventDetailViewControllerResponseProtocol {
 
     weak private var responseDelegate: ProcessControllerProtocol!
@@ -29,7 +24,6 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
         
         self.eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
         self.eventDetailViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
-        //self.eventDetailViewController.dependencies(selectorDelegate: self)
         
         let navCtrller = self.responseDelegate.navigationController()
         navCtrller.pushViewController(self.eventDetailViewController, animated: true)
@@ -52,14 +46,12 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     // EventDetailViewControllerResponseProtocol
     
     func organizationSelected (evt: EntityDescriptor) {
-        //self.eventDetailDelegate.notifyShowOrganizationDetail(org: evt)
         
         let cmd = Command(type: Command.CommandType.eventSelected(event: evt))
         self.responseDelegate.requestAction(command: cmd)
     }
     
     func backButtonTapped () {
-        //self.eventDetailDelegate.dismissProcessController(controller: self)
         
         let cmd = Command(type: Command.CommandType.dismissCaller(controller: self))
         self.responseDelegate.requestAction(command: cmd)

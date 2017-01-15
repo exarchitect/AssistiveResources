@@ -44,6 +44,7 @@
 		D28C80D81DF0E8DE002D3940 /* EventListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */; };
 		D28C80DA1DF0E908002D3940 /* EventList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D28C80D91DF0E908002D3940 /* EventList.storyboard */; };
 		D28C80DC1DF12B76002D3940 /* EventContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80DB1DF12B76002D3940 /* EventContainerViewController.swift */; };
+		D2B0284F1E2C20F80064B3D2 /* AssitiveAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B0284E1E2C20F80064B3D2 /* AssitiveAppController.swift */; };
 		D2C9AD711DDFF5120028341D /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD701DDFF5120028341D /* AppController.swift */; };
 		D2C9AD731DE00A8D0028341D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD721DE00A8D0028341D /* RootViewController.swift */; };
 		D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */; };
@@ -113,6 +114,7 @@
 		D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListTableViewCell.swift; sourceTree = "<group>"; };
 		D28C80D91DF0E908002D3940 /* EventList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EventList.storyboard; sourceTree = "<group>"; };
 		D28C80DB1DF12B76002D3940 /* EventContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventContainerViewController.swift; sourceTree = "<group>"; };
+		D2B0284E1E2C20F80064B3D2 /* AssitiveAppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssitiveAppController.swift; sourceTree = "<group>"; };
 		D2C9AD701DDFF5120028341D /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		D2C9AD721DE00A8D0028341D /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		D2F91E8C1DDFE5D20084F00E /* AssistiveResources.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssistiveResources.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -273,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				D2C9AD701DDFF5120028341D /* AppController.swift */,
+				D2B0284E1E2C20F80064B3D2 /* AssitiveAppController.swift */,
 				D2309DE61E2B481E0056A66C /* Command.swift */,
 				D2C9AD721DE00A8D0028341D /* RootViewController.swift */,
 				D2F91E931DDFE5D20084F00E /* Main.storyboard */,
@@ -671,6 +674,7 @@
 				D27440F11DF669A3008E0476 /* EventFilterViewController.swift in Sources */,
 				D209FAC51E00CF030099BD46 /* EventDetailProcessController.swift in Sources */,
 				D25550551E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift in Sources */,
+				D2B0284F1E2C20F80064B3D2 /* AssitiveAppController.swift in Sources */,
 				D255504F1E24934F004FE72B /* RegionalResourcesRepository.swift in Sources */,
 				D209FAC71E0245D00099BD46 /* EventDetailViewController.swift in Sources */,
 				D24E4DC81DE74167008A11FB /* PublicEvent.swift in Sources */,

@@ -8,11 +8,6 @@
 
 import UIKit
 
-//protocol EventListProcessControllerResponseProtocol: ProcessControllerProtocol {
-//    func notifyShowEventDetail (evt: EntityDescriptor)
-//}
-
-
 
 class EventListProcessController: ProcessController, EventListViewControllerResponseProtocol {
     
@@ -51,17 +46,16 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
         print("deallocating EventListPC")
     }
     
+    
     // EventListViewControllerResponseProtocol
     
     func eventSelected (evt: EntityDescriptor) {
-        //self.responseDelegate.notifyShowEventDetail(evt: evt)
         
         let cmd = Command(type: Command.CommandType.eventSelected(event: evt))
         self.responseDelegate.requestAction(command: cmd)
     }
 
     func backButtonTapped () {
-        //self.responseDelegate.dismissProcessController(controller: self)
 
         let cmd = Command(type: Command.CommandType.dismissCaller(controller: self))
         self.responseDelegate.requestAction(command: cmd)

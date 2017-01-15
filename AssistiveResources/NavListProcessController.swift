@@ -9,12 +9,6 @@
 import UIKit
 
 
-//protocol NavListProcessControllerResponseProtocol: ProcessControllerProtocol {
-//    func notifyNavigationItemSelected (selection: Destination)
-//}
-
-
-
 class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
     private var navigationDelegate: ProcessControllerProtocol!
@@ -23,9 +17,9 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
 
     private var navListViewController: NavListViewController!
     
-    init (userModelController: UserModelController, navDelegate: ProcessControllerProtocol) {
+    init (userModelController: UserModelController, responseDelegate: ProcessControllerProtocol) {
         
-        self.navigationDelegate = navDelegate
+        self.navigationDelegate = responseDelegate
         self.user = userModelController
     }
     
@@ -54,7 +48,6 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
     // NavigationSelectorProtocol
     func selectNavigationItem (selection: Destination) {
-        //self.navigationDelegate.notifyNavigationItemSelected(selection: selection)
         let cmd = Command(type: Command.CommandType.navigationItemSelected(selection: selection))
         self.navigationDelegate.requestAction(command: cmd)
     }

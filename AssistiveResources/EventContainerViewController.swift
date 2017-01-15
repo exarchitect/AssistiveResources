@@ -56,7 +56,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
 
-        freeMemory()
+        //freeMemory()
     }
     
     
