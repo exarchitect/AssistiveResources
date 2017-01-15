@@ -9,19 +9,19 @@
 import UIKit
 
 
-protocol EventDetailProcessControllerResponseProtocol: ProcessControllerProtocol {
-    func notifyShowOrganizationDetail (org: EntityDescriptor)
-}
+//protocol EventDetailProcessControllerResponseProtocol: ProcessControllerProtocol {
+//    func notifyShowOrganizationDetail (org: EntityDescriptor)
+//}
 
 
 class EventDetailProcessController: ProcessController, EventDetailViewControllerResponseProtocol {
 
-    weak private var eventDetailDelegate: EventDetailProcessControllerResponseProtocol!
+    weak private var responseDelegate: ProcessControllerProtocol!
     unowned private var rsrcModelController: RegionalResourcesModelController
     private var eventDetailViewController: EventDetailViewController!
     
-    init(rsrcsModelController: RegionalResourcesModelController, eventDetailProcessMessageDelegate: EventDetailProcessControllerResponseProtocol) {
-        self.eventDetailDelegate = eventDetailProcessMessageDelegate
+    init(rsrcsModelController: RegionalResourcesModelController, responseDelegate: ProcessControllerProtocol) {
+        self.responseDelegate = responseDelegate
         self.rsrcModelController = rsrcsModelController
     }
     
@@ -31,7 +31,7 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
         self.eventDetailViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
         //self.eventDetailViewController.dependencies(selectorDelegate: self)
         
-        let navCtrller = self.eventDetailDelegate.navigationController()
+        let navCtrller = self.responseDelegate.navigationController()
         navCtrller.pushViewController(self.eventDetailViewController, animated: true)
         
         return (self.eventDetailViewController != nil)
@@ -40,7 +40,7 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     override func terminate () {
         super.terminate()
 
-        let navCtrller = self.eventDetailDelegate.navigationController()
+        let navCtrller = self.responseDelegate.navigationController()
         let _ = navCtrller.popViewController(animated: true)
         self.eventDetailViewController = nil
     }
@@ -52,11 +52,17 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     // EventDetailViewControllerResponseProtocol
     
     func organizationSelected (evt: EntityDescriptor) {
-        self.eventDetailDelegate.notifyShowOrganizationDetail(org: evt)
+        //self.eventDetailDelegate.notifyShowOrganizationDetail(org: evt)
+        
+        let cmd = Command(type: Command.CommandType.eventSelected(event: evt))
+        self.responseDelegate.requestAction(command: cmd)
     }
     
     func backButtonTapped () {
-        self.eventDetailDelegate.dismissProcessController(controller: self)
+        //self.eventDetailDelegate.dismissProcessController(controller: self)
+        
+        let cmd = Command(type: Command.CommandType.dismissCaller(controller: self))
+        self.responseDelegate.requestAction(command: cmd)
     }
 
 }

@@ -11,7 +11,9 @@ import UIKit
 
 protocol ProcessControllerProtocol: class {
     func navigationController () -> UINavigationController
-    func dismissProcessController (controller: ProcessController)
+    func requestAction (command: Command)
+
+//    func dismissProcessController (controller: ProcessController)
 }
 
 

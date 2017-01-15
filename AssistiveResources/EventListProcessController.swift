@@ -8,20 +8,20 @@
 
 import UIKit
 
-protocol EventListProcessControllerResponseProtocol: ProcessControllerProtocol {
-    func notifyShowEventDetail (evt: EntityDescriptor)
-}
+//protocol EventListProcessControllerResponseProtocol: ProcessControllerProtocol {
+//    func notifyShowEventDetail (evt: EntityDescriptor)
+//}
 
 
 
 class EventListProcessController: ProcessController, EventListViewControllerResponseProtocol {
     
-    private var eventDelegate: EventListProcessControllerResponseProtocol!
+    private var responseDelegate: ProcessControllerProtocol!
     unowned private var rsrcModelController: RegionalResourcesModelController
     private var eventListViewController: EventListViewController!
     
-    init(rsrcsModelController: RegionalResourcesModelController, eventProcessMessageDelegate: EventListProcessControllerResponseProtocol) {
-        self.eventDelegate = eventProcessMessageDelegate
+    init(rsrcsModelController: RegionalResourcesModelController, responseDelegate: ProcessControllerProtocol) {
+        self.responseDelegate = responseDelegate
         self.rsrcModelController = rsrcsModelController
     }
 
@@ -30,7 +30,7 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
         self.eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
         self.eventListViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
         
-        let navCtrller = self.eventDelegate.navigationController()
+        let navCtrller = self.responseDelegate.navigationController()
         navCtrller.pushViewController(self.eventListViewController, animated: true)
         
         return (self.eventListViewController != nil)
@@ -39,7 +39,7 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     override func terminate () {
         super.terminate()
 
-        let navCtrller = self.eventDelegate.navigationController()
+        let navCtrller = self.responseDelegate.navigationController()
         let _ = navCtrller.popViewController(animated: true)
 
         self.eventListViewController = nil
@@ -54,11 +54,17 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     // EventListViewControllerResponseProtocol
     
     func eventSelected (evt: EntityDescriptor) {
-        self.eventDelegate.notifyShowEventDetail(evt: evt)
+        //self.responseDelegate.notifyShowEventDetail(evt: evt)
+        
+        let cmd = Command(type: Command.CommandType.eventSelected(event: evt))
+        self.responseDelegate.requestAction(command: cmd)
     }
 
     func backButtonTapped () {
-        self.eventDelegate.dismissProcessController(controller: self)
+        //self.responseDelegate.dismissProcessController(controller: self)
+
+        let cmd = Command(type: Command.CommandType.dismissCaller(controller: self))
+        self.responseDelegate.requestAction(command: cmd)
     }
 
 }

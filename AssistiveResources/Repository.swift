@@ -12,12 +12,12 @@ import UIKit
 typealias RepositoryUpdateCompletionHandlerType = () -> Void
 
 enum RepositoryState : Int {
-    case Unknown = 0, Available = 1, Loading = 2, OutOfDate = 3
+    case Uninitialized = 0, Available = 1, Loading = 2, OutOfDate = 3
 }
 
 class Repository: NSObject {
     
-    var loadingState = RepositoryState.Unknown
+    var loadingState = RepositoryState.Uninitialized
     private var haveLocalStore = false
     
     override init() {
@@ -30,8 +30,9 @@ class Repository: NSObject {
         self.loadingState = RepositoryState.Available
         self.loadLocalStoreFromRemote()
         
-        precondition(!self.haveLocalStore, "load called when repo.haveLocalStore set to true")
+        precondition(!self.haveLocalStore, "error - load called when repo.haveLocalStore set to true")
         // if have local store?   @self.localStorePath()
+            self.haveLocalStore = true
             // self.updateRepository()
         // if no local store
             // self.createAndLoadLocalStore()
@@ -40,7 +41,7 @@ class Repository: NSObject {
     
     func updateRepository() {
         
-        precondition(self.haveLocalStore, "updateRepository called when repo.haveLocalStore set to false")
+        precondition(self.haveLocalStore, "error - updateRepository called when repo.haveLocalStore set to false")
         // if local store location is current
             // is local store last update current (within 1 hour)
                 // if yes, set RepositoryState.Available

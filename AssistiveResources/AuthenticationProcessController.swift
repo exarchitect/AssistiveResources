@@ -9,20 +9,20 @@
 import UIKit
 
 
-protocol AuthenticationProcessControllerResponseProtocol: ProcessControllerProtocol {
-    func loginComplete ()
-}
+//protocol AuthenticationProcessControllerResponseProtocol: ProcessControllerProtocol {
+//    func loginComplete ()
+//}
 
 
 class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
     
-    private var responseProtocol: AuthenticationProcessControllerResponseProtocol!
+    private var responseDelegate: ProcessControllerProtocol!
     private var user: UserModelController!
     private var loginViewController: LoginViewController!
 
-    init(userModelController: UserModelController, authenticationResponseDelegate: AuthenticationProcessControllerResponseProtocol) {
+    init(userModelController: UserModelController, responseDelegate: ProcessControllerProtocol) {
         
-        self.responseProtocol = authenticationResponseDelegate
+        self.responseDelegate = responseDelegate
         self.user = userModelController
     }
     
@@ -32,7 +32,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
         self.loginViewController.dependencies(userModelController: self.user, completionProtocol: self)
         
-        let parentViewController = self.responseProtocol.navigationController().topViewController
+        let parentViewController = self.responseDelegate.navigationController().topViewController
         parentViewController?.present(self.loginViewController, animated: true, completion: nil)
         
         return (authenticationStoryboard != nil && self.loginViewController != nil)
@@ -41,7 +41,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     override func terminate () {
         super.terminate()
 
-        let parentViewController = self.responseProtocol.navigationController().topViewController
+        let parentViewController = self.responseDelegate.navigationController().topViewController
         parentViewController?.dismiss(animated: true, completion: nil)
         
         requestMainNavigationRefresh()
@@ -50,8 +50,13 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     //LoginViewControllerCompletionProtocol
 
     func loginAction (username: String, password: String) {
-        self.responseProtocol.loginComplete()
-        self.responseProtocol.dismissProcessController(controller: self)
+//        self.responseProtocol.loginComplete()
+//        self.responseProtocol.dismissProcessController(controller: self)
+
+        self.responseDelegate.requestAction(command: Command(type: Command.CommandType.userLoginSuccessful))
+        let cmd = Command(type: Command.CommandType.dismissCaller(controller: self))
+        self.responseDelegate.requestAction(command: cmd)
+
     }
     
 }

@@ -11,7 +11,7 @@ import UIKit
 let memoryWarningNotificationKeyName = NSNotification.Name(rawValue: "notify_did_receive_memory_warning")
 
 
-class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, NavListProcessControllerResponseProtocol, EventListProcessControllerResponseProtocol, EventDetailProcessControllerResponseProtocol {
+class AppController: NSObject, ProcessControllerProtocol {
 
     private var rootViewController: RootViewController!
     private var navController: UINavigationController!
@@ -79,22 +79,44 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     
     // MARK: - ProcessControllerProtocol
 
-    func dismissProcessController (controller: ProcessController) {
-        controller.terminate()
-        
-    }
+//    func dismissProcessController (controller: ProcessController) {
+//        
+//        controller.terminate()
+//    }
 
     func navigationController () -> UINavigationController {
         return self.navController
     }
     
+    func requestAction(command: Command) {
+        
+        switch command.type {
+        case .dismissCaller(let controller):
+            controller.terminate()
+            
+        case .userLoginSuccessful:
+            self.loadRegionalResourceModelController(atLocation:self.user.location)
+
+        case .navigationItemSelected(let destination):
+            self.notifyNavigationItemSelected(selection: destination)
+            
+        case .eventSelected(let event):
+            let success = self.pushEventDetailProcessController(evt: event)
+            if (!success) {
+                
+            }
+
+        case .organizationSelected(let organization):
+            let _ = 3
+        }
+    }
     
     // MARK: - AuthenticationProcessControllerResponseProtocol
-    func loginComplete() {
-        
-        self.loadRegionalResourceModelController(atLocation:self.user.location)
-        
-    }
+//    func loginComplete() {
+//        
+//        self.loadRegionalResourceModelController(atLocation:self.user.location)
+//        
+//    }
     
 
     // MARK: - NavListProcessControllerResponseProtocol
@@ -137,19 +159,19 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
     
     // MARK: - EventListProcessControllerResponseProtocol
     
-    func notifyShowEventDetail (evt: EntityDescriptor) {
-        let success = self.pushEventDetailProcessController(evt: evt)
-        if (!success) {
-            
-        }
-    }
+//    func notifyShowEventDetail (evt: EntityDescriptor) {
+//        let success = self.pushEventDetailProcessController(evt: evt)
+//        if (!success) {
+//            
+//        }
+//    }
     
     
     // MARK: - EventDetailProcessControllerResponseProtocol
 
-    func notifyShowOrganizationDetail (org: EntityDescriptor) {
-        let _ = 4
-    }
+//    func notifyShowOrganizationDetail (org: EntityDescriptor) {
+//        let _ = 4
+//    }
 
     
     // MARK: - Utilities
@@ -158,7 +180,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         freeTerminatedProcessControllers()
         
         precondition(self.user != nil)
-        self.authProcessController = AuthenticationProcessController(userModelController: self.user, authenticationResponseDelegate:self)
+        self.authProcessController = AuthenticationProcessController(userModelController: self.user, responseDelegate:self)
         
         return self.authProcessController.launch()
     }
@@ -176,7 +198,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         freeTerminatedProcessControllers()
         
         precondition(self.user != nil)
-        self.evtListProcessController = EventListProcessController(rsrcsModelController: self.regionalResources, eventProcessMessageDelegate: self)
+        self.evtListProcessController = EventListProcessController(rsrcsModelController: self.regionalResources, responseDelegate: self)
         
         return self.evtListProcessController.launch()
     }
@@ -185,7 +207,7 @@ class AppController: NSObject, AuthenticationProcessControllerResponseProtocol, 
         freeTerminatedProcessControllers()
         
         precondition(self.regionalResources != nil)
-        self.evtDetailProcessController = EventDetailProcessController(rsrcsModelController: self.regionalResources, eventDetailProcessMessageDelegate: self)
+        self.evtDetailProcessController = EventDetailProcessController(rsrcsModelController: self.regionalResources, responseDelegate: self)
         
         return self.evtDetailProcessController.launch()
     }
