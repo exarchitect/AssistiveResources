@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol LoginViewControllerCompletionProtocol {
+protocol LoginViewControllerCompletionProtocol: class {
     func loginAction (username: String, password: String)
 }
 
@@ -18,7 +18,7 @@ protocol LoginViewControllerCompletionProtocol {
 class LoginViewController: UIViewController {
 
     weak private var user: UserModelController?
-    private var completionProtocol: LoginViewControllerCompletionProtocol!
+    weak private var completionProtocol: LoginViewControllerCompletionProtocol!
     @IBOutlet weak var selectLoginType: UISegmentedControl!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!

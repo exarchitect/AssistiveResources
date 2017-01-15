@@ -59,4 +59,9 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
 
     }
     
+    //MARK: debug
+    deinit {
+        print("deallocating AuthenticationProcessController")
+    }
+    
 }
