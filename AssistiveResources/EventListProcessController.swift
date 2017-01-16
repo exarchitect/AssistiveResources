@@ -20,7 +20,7 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
         self.rsrcModelController = rsrcsModelController
     }
 
-    func launch() -> Bool {
+    override func launch() -> Bool {
         
         self.eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
         self.eventListViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)

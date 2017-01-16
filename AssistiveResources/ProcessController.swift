@@ -30,7 +30,12 @@ class ProcessController: NSObject {
         self.inUse = false
     }
     
+    func launch() -> Bool {
+        return true
+    }
+    
 }
+
 
 func instantiateViewController(storyboardName: String, storyboardID: String) -> UIViewController {
     let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)

@@ -17,7 +17,7 @@ enum LoginType : Int {
 typealias AsyncCompletionHandlerType = (_ success: Bool) -> Void
 
 
-final class UserModelController: NSObject {
+final class UserModelController: ModelController {
     
     var isUserAuthenticated: Bool
     var location: LocationProfile

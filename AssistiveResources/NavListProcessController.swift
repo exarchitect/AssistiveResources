@@ -23,7 +23,7 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         self.user = userModelController
     }
     
-    func launch() -> Bool {
+    override func launch() -> Bool {
         
         precondition(self.navigationDelegate != nil)
         precondition(self.user != nil)

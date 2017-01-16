@@ -10,7 +10,7 @@ import UIKit
 import RealmSwift
 
 
-class RegionalResourcesModelController: NSObject {
+class RegionalResourcesModelController: ModelController {
     
     private var regionalRepository : RegionalResourcesRepository!
 

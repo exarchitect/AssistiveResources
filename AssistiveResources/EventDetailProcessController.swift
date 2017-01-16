@@ -20,7 +20,7 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
         self.rsrcModelController = rsrcsModelController
     }
     
-    func launch() -> Bool {
+    override func launch() -> Bool {
         
         self.eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
         self.eventDetailViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)

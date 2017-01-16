@@ -25,7 +25,8 @@ class AssitiveAppController: AppController {
             super.start()
             
             self.loadUserModelController()      // loadResourceModelController() not called until after login
-            
+            precondition(self.user != nil)
+           
             //self.usrModelController?.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
             //self.usrModelController?.storeUserCredentials(username: "", password: "")
             
@@ -79,7 +80,8 @@ class AssitiveAppController: AppController {
                 _ = organization.entityID
             }
         }
-        
+
+    
         func notifyNavigationItemSelected(selection:Destination) {
             
             switch selection {
@@ -115,64 +117,79 @@ class AssitiveAppController: AppController {
             }
             
         }
+    
         
+        // MARK: - launch process controllers
+    
+//    func pushProcessControllerWithModel<T: ProcessController>(processControllerType: T, model: ModelController?) -> Bool {
+//
+//        precondition(model != nil)
+//        //let pc = NavListProcessController(userModelController: self.user, responseDelegate: self)
+//        //let pc = ProcessController.instantiate(modelController: model!, responseDelegate: self)
+//
+//        //let pc = T.instantiate(modelController: model!, responseDelegate: self)
+//        let pc2 = T()
+//        pc2.instance(modelController: model!, responseDelegate: self)
+//        
+//        let success = pc2.launch()
+//        if success {
+//            self.processControllerStack.append(pc2)
+//        }
+//        return success
+//    }
+//  
+//    private func pushNavigationListProcessController () -> Bool {
+//        precondition(self.user != nil)
+//        
+//        return self.pushProcessControllerWithModel(processControllerType: NavListProcessController, model: self.user)
+//    }
+
+    
+    private func pushNavigationListProcessController () -> Bool {
         
-        // MARK: - Utilities
+        let navListPC = NavListProcessController(userModelController: self.user, responseDelegate: self)
+        return self.launchProcessController(processController: navListPC)
+    }
+    
+    private func pushAuthenticationProcessController () -> Bool {
         
-        private func pushNavigationListProcessController () -> Bool {
-            precondition(self.user != nil)
-            let navListPC = NavListProcessController(userModelController: self.user, responseDelegate: self)
-            
-            let success = navListPC.launch()
-            if success {
-                self.processControllerStack.append(navListPC)
-            }
-            return success
+        let authPC = AuthenticationProcessController(userModelController: self.user, responseDelegate:self)
+        return self.launchProcessController(processController: authPC)
+    }
+    
+    private func pushEventListProcessController () -> Bool {
+        
+        let eventListPC = EventListProcessController(rsrcsModelController: self.regionalResources, responseDelegate: self)
+        return self.launchProcessController(processController: eventListPC)
+    }
+    
+    private func pushEventDetailProcessController (evt: EntityDescriptor) -> Bool {
+        
+        let eventDetailPC = EventDetailProcessController(rsrcsModelController: self.regionalResources, responseDelegate: self)
+        return self.launchProcessController(processController: eventDetailPC)
+    }
+    
+
+    // MARK: - Utilities
+
+    private func launchProcessController (processController: ProcessController) -> Bool {
+        let success = processController.launch()
+        if success {
+            self.processControllerStack.append(processController)
         }
-        
-        private func pushAuthenticationProcessController () -> Bool {
-            precondition(self.user != nil)
-            let authPC = AuthenticationProcessController(userModelController: self.user, responseDelegate:self)
-            
-            let success = authPC.launch()
-            if success {
-                self.processControllerStack.append(authPC)
-            }
-            return success
+        return success
+    }
+    
+    private func loadRegionalResourceModelController (atLocation: LocationProfile) {
+        if (self.regionalResources == nil) {
+            self.regionalResources = RegionalResourcesModelController()
+            self.regionalResources.initiateLoading()
         }
-        
-        private func pushEventListProcessController () -> Bool {
-            precondition(self.user != nil)
-            let eventListPC = EventListProcessController(rsrcsModelController: self.regionalResources, responseDelegate: self)
-            
-            let success = eventListPC.launch()
-            if success {
-                self.processControllerStack.append(eventListPC)
-            }
-            return success
+    }
+    
+    private func loadUserModelController () {
+        if (self.user == nil) {
+            self.user = UserModelController()
         }
-        
-        private func pushEventDetailProcessController (evt: EntityDescriptor) -> Bool {
-            precondition(self.regionalResources != nil)
-            let eventDetailPC = EventDetailProcessController(rsrcsModelController: self.regionalResources, responseDelegate: self)
-            
-            let success = eventDetailPC.launch()
-            if success {
-                self.processControllerStack.append(eventDetailPC)
-            }
-            return success
-        }
-        
-        private func loadRegionalResourceModelController (atLocation: LocationProfile) {
-            if (self.regionalResources == nil) {
-                self.regionalResources = RegionalResourcesModelController()
-                self.regionalResources.initiateLoading()
-            }
-        }
-        
-        private func loadUserModelController () {
-            if (self.user == nil) {
-                self.user = UserModelController()
-            }
-        }
+    }
 }

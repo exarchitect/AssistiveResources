@@ -21,7 +21,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         self.user = userModelController
     }
     
-    func launch() -> Bool {
+    override func launch() -> Bool {
         
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
         self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
