@@ -196,7 +196,6 @@
 		D24E4DAC1DE3E581008A11FB /* ProcessControllers */ = {
 			isa = PBXGroup;
 			children = (
-				D24E4DCB1DE74750008A11FB /* ProcessController.swift */,
 				D24E4DCD1DED1699008A11FB /* NavList */,
 				D24E4DAB1DE3E553008A11FB /* Authentication */,
 				D28C80D21DF0E867002D3940 /* EventList */,
@@ -208,8 +207,6 @@
 		D24E4DAD1DE3E593008A11FB /* ModelControllers */ = {
 			isa = PBXGroup;
 			children = (
-				D2B028501E2C29530064B3D2 /* ModelController.swift */,
-				D25550491E234626004FE72B /* Repository.swift */,
 				D255504B1E249162004FE72B /* RegionalResources */,
 				D24E4DAE1DE3E86C008A11FB /* User */,
 			);
@@ -274,14 +271,24 @@
 			name = EventList;
 			sourceTree = "<group>";
 		};
-		D2C9AD6C1DDFF3800028341D /* AppController */ = {
+		D2B028521E2C71770064B3D2 /* Framework Classes */ = {
 			isa = PBXGroup;
 			children = (
 				D2C9AD701DDFF5120028341D /* AppController.swift */,
-				D2B0284E1E2C20F80064B3D2 /* AssitiveAppController.swift */,
-				D2309DE61E2B481E0056A66C /* Command.swift */,
 				D2C9AD721DE00A8D0028341D /* RootViewController.swift */,
 				D2F91E931DDFE5D20084F00E /* Main.storyboard */,
+				D24E4DCB1DE74750008A11FB /* ProcessController.swift */,
+				D2B028501E2C29530064B3D2 /* ModelController.swift */,
+				D25550491E234626004FE72B /* Repository.swift */,
+			);
+			name = "Framework Classes";
+			sourceTree = "<group>";
+		};
+		D2C9AD6C1DDFF3800028341D /* AppController */ = {
+			isa = PBXGroup;
+			children = (
+				D2B0284E1E2C20F80064B3D2 /* AssitiveAppController.swift */,
+				D2309DE61E2B481E0056A66C /* Command.swift */,
 			);
 			name = AppController;
 			sourceTree = "<group>";
@@ -324,6 +331,7 @@
 			children = (
 				D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */,
 				D2F91E9B1DDFE5D20084F00E /* Info.plist */,
+				D2B028521E2C71770064B3D2 /* Framework Classes */,
 				D2C9AD6C1DDFF3800028341D /* AppController */,
 				D24E4DAD1DE3E593008A11FB /* ModelControllers */,
 				D24E4DAC1DE3E581008A11FB /* ProcessControllers */,

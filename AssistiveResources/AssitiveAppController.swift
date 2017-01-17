@@ -119,31 +119,7 @@ class AssitiveAppController: AppController {
         }
     
         
-        // MARK: - launch process controllers
-    
-//    func pushProcessControllerWithModel<T: ProcessController>(processControllerType: T, model: ModelController?) -> Bool {
-//
-//        precondition(model != nil)
-//        //let pc = NavListProcessController(userModelController: self.user, responseDelegate: self)
-//        //let pc = ProcessController.instantiate(modelController: model!, responseDelegate: self)
-//
-//        //let pc = T.instantiate(modelController: model!, responseDelegate: self)
-//        let pc2 = T()
-//        pc2.instance(modelController: model!, responseDelegate: self)
-//        
-//        let success = pc2.launch()
-//        if success {
-//            self.processControllerStack.append(pc2)
-//        }
-//        return success
-//    }
-//  
-//    private func pushNavigationListProcessController () -> Bool {
-//        precondition(self.user != nil)
-//        
-//        return self.pushProcessControllerWithModel(processControllerType: NavListProcessController, model: self.user)
-//    }
-
+    // MARK: - launch process controllers
     
     private func pushNavigationListProcessController () -> Bool {
         

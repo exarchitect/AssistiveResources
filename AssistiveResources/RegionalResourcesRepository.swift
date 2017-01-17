@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class RegionalResourcesRepository: Repository {
     
     override init() {
@@ -15,18 +16,43 @@ class RegionalResourcesRepository: Repository {
         // ?
     }
     
-    internal override func loadLocalStoreFromRemote() {
+    override func loadLocalStoreFromRemote() {
         // load from remote to local db
         // on completion...
         // notify complete
-        self.loadingState = RepositoryState.Available
+        self.loadingState = RepositoryAvailability.Available
         
         //super.loadLocalStoreFromRemote()
     }
     
-    internal override func localStorePath()-> String {
+    override func createLocalStore() {
         
-        return "replace this with a path to the realm db"
+        super.createLocalStore()
+        
+        // create
+    }
+    
+    override func determineLocalStoreState()-> LocalStoreState {
+        //
+        return LocalStoreState.Current
+    }
+    
+    override func checkIfLocalStoreIsCurrent()-> LocalStoreState {
+        
+        // ONLY CHECK FOR LocalStoreState.OutOfDateUsable and LocalStoreState.OutOfDateUsable
+        return LocalStoreState.Current
+    }
+    
+    override func clearLocalStore() {
+        
+        // 
+        self.internalStoreState = LocalStoreState.EmptyStore
+    }
+    
+    override func updateLocalStore() {
+        
+        //
+        let _ = 4
     }
 
     // MARK: - Realm

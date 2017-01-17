@@ -43,6 +43,12 @@ class EventRepositoryAccessor: NSObject {
                                   eventDate: DateTimeDuration(yr:2016, mo:5, dy:12, hr:11, min:30, durationMin:120),
                                   eventDetail: "Come join us Saturday after lunch for fun on the baseball diamond. If you like to play ball, get ready for a good time. Bring a glove, or just show up ready to play.  It's time to PLAY BALL!"))
         
+        events.append(PublicEvent(event: ("Penguin Project \"Crazy For You\"",EntityType.Event,1),
+                                  organization: ("Penguin Project",EntityType.Organization,0),
+                                  facility: ("Peoria Heights High School, 1422 River Rd.",EntityType.Facility,0),
+                                  eventDate: DateTimeDuration(yr:2016, mo:5, dy:12, hr:19, min:00, durationMin:120),
+                                  eventDetail: "Come join us for an evening of mayhem, misadventure and mistaken identity.  A classic musical performed by our local youth. Prepare to be amazed and amused."))
+        
         events.append(PublicEvent(event: ("Special Olympics",EntityType.Event,1),
                                   organization: ("Athletes In Action",EntityType.Organization,0),
                                   facility: ("Freedom Hall",EntityType.Facility,0),

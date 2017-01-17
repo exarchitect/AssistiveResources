@@ -10,4 +10,6 @@ import UIKit
 
 class ModelController: NSObject {
 
+//    func initiateLoading() {
+//    }
 }

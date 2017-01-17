@@ -11,14 +11,18 @@ import UIKit
 
 typealias RepositoryUpdateCompletionHandlerType = () -> Void
 
-enum RepositoryState : Int {
-    case Uninitialized = 0, Available = 1, Loading = 2, OutOfDate = 3
+enum RepositoryAvailability : Int {
+    case NotAvailable = 0, Available = 1, Loading = 2, NeedsReload = 3
+}
+
+enum LocalStoreState : Int {
+    case NoStore = 0, Current = 1, OutOfDateUsable = 2, OutOfDateUnusable = 3, Updating = 4, EmptyStore = 5
 }
 
 class Repository: NSObject {
     
-    var loadingState = RepositoryState.Uninitialized
-    private var haveLocalStore = false
+    var loadingState = RepositoryAvailability.NotAvailable
+    var internalStoreState = LocalStoreState.NoStore
     
     override init() {
         // ?
@@ -27,51 +31,99 @@ class Repository: NSObject {
     
     func load() {
         // scaffolding
-        self.loadingState = RepositoryState.Available
-        self.loadLocalStoreFromRemote()
+        if (true) {
+            self.loadingState = RepositoryAvailability.Available
+            self.internalStoreState = LocalStoreState.Current
+            self.loadLocalStoreFromRemote()
+        } else {
         
-        precondition(!self.haveLocalStore, "error - load called when repo.haveLocalStore set to true")
-        // if have local store?   @self.localStorePath()
-            self.haveLocalStore = true
-            // self.updateRepository()
-        // if no local store
-            // self.createAndLoadLocalStore()
-        self.haveLocalStore = true
+            self.internalStoreState = self.determineLocalStoreState()
+            
+            self.updateStoreForInternalState()
+        }
     }
     
-    func updateRepository() {
+    func update() {
         
-        precondition(self.haveLocalStore, "error - updateRepository called when repo.haveLocalStore set to false")
-        // if local store location is current
-            // is local store last update current (within 1 hour)
-                // if yes, set RepositoryState.Available
-                // if no
-                    // set RepositoryState.OutOfDate
-                    // clear out local store   @self.localStorePath()
-                    // loadLocalStoreFromRemote()
-        // if local store location NOT current
-            // clear out local store   @self.localStorePath()
-            // loadLocalStoreFromRemote()
+        precondition(!(self.internalStoreState == LocalStoreState.NoStore), "error - repo.update called when no store exists")
+        guard !(self.internalStoreState == LocalStoreState.Updating) else {
+            print ("error - repo.update called when store is updating")
+            return
+        }
+
+        self.internalStoreState = self.checkIfLocalStoreIsCurrent()
+        
+        self.updateStoreForInternalState()
     }
     
-    internal func createAndLoadLocalStore() {
-        
-        // create local store   @self.localStorePath()
-        // call self.loadLocalStoreFromRemote()
+    
+    // MARK: - methods to override
+    
+    internal func createLocalStore() {
+
+        self.internalStoreState = LocalStoreState.EmptyStore
+
+        // must override and call super
     }
     
     internal func loadLocalStoreFromRemote() {
         
+        self.internalStoreState = LocalStoreState.Updating
+        loadingState = RepositoryAvailability.Loading
+        
         // subclass to initiate load
-        
-        loadingState = RepositoryState.Loading
+        // must override and call super
     }
     
-    internal func localStorePath()-> String {
-        
-        return ""
+    internal func determineLocalStoreState()-> LocalStoreState {
+        precondition(false, "must override this method - do not call super")
+        return LocalStoreState.Current
     }
     
+    internal func checkIfLocalStoreIsCurrent()-> LocalStoreState {
+        precondition(false, "must override this method - do not call super")
+        // ONLY CHECK FOR LocalStoreState.OutOfDateUsable and LocalStoreState.OutOfDateUsable
+        return LocalStoreState.Current
+    }
+    
+    internal func clearLocalStore() {
+        precondition(false, "must override this method - do not call super")
+    }
+    
+    internal func updateLocalStore() {
+        precondition(false, "must override this method - do not call super")
+    }
+  
+
+    // MARK: - Utilities
+
+    private func updateStoreForInternalState() {
+        
+        switch self.internalStoreState {
+            
+        case LocalStoreState.NoStore:
+            self.loadingState = RepositoryAvailability.NotAvailable
+            self.createLocalStore()
+            self.updateLocalStore()
+            
+        case LocalStoreState.Current:
+            self.loadingState = RepositoryAvailability.Available
+            
+        case LocalStoreState.OutOfDateUsable:
+            self.updateLocalStore()
+            
+        case LocalStoreState.OutOfDateUnusable:
+            self.updateLocalStore()
+            
+        case LocalStoreState.Updating:
+            // do not execute code if update in progress
+            self.loadingState = RepositoryAvailability.Loading  // redundant
+            
+        case LocalStoreState.EmptyStore:
+            self.updateLocalStore()
+            
+        }
+    }
 }
 
 // MARK: - Backendless

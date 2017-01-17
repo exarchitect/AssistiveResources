@@ -33,5 +33,8 @@ class RegionalResourcesModelController: ModelController {
             self.organizations.retrieve(usingFilter: NeedsProfile(mobility: MobilityLimitation.NoLimitation, delay: DevelopmentalDelay.NoDelay, dx: Diagnosis.NoDiagnosis))
     }
 
+    func checkRepositoryUpdate() {
+        self.regionalRepository.update()
+    }
 }
 
