@@ -21,16 +21,21 @@ class RegionalResourcesModelController: ModelController {
     {
         super.init()
         
-        self.regionalRepository = RegionalResourcesRepository()
+        self.regionalRepository = RegionalResourcesRepository(location: LocationProfile(zip: ""))
         self.organizations = OrganizationRepositoryAccessor(repository: self.regionalRepository)
         self.events = EventRepositoryAccessor(repository: self.regionalRepository)
     }
     
     func initiateLoading() {
-        self.regionalRepository.load()
-        // on completion
-            self.events.retrieve(usingFilter: NeedsProfile(mobility: MobilityLimitation.NoLimitation, delay: DevelopmentalDelay.NoDelay, dx: Diagnosis.NoDiagnosis))
-            self.organizations.retrieve(usingFilter: NeedsProfile(mobility: MobilityLimitation.NoLimitation, delay: DevelopmentalDelay.NoDelay, dx: Diagnosis.NoDiagnosis))
+
+        self.regionalRepository.asyncLoad { (success) in
+            if (success) {
+                self.events.retrieve(usingFilter: NeedsProfile(mobility: MobilityLimitation.NoLimitation, delay: DevelopmentalDelay.NoDelay, dx: Diagnosis.NoDiagnosis))
+                self.organizations.retrieve(usingFilter: NeedsProfile(mobility: MobilityLimitation.NoLimitation, delay: DevelopmentalDelay.NoDelay, dx: Diagnosis.NoDiagnosis))
+            } else {
+                print("loading failed")
+            }
+        }
     }
 
     func checkRepositoryUpdate() {

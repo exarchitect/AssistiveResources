@@ -35,9 +35,12 @@ class AppController: NSObject, ProcessControllerProtocol {
         return window
     }
     
-    
     func start() {
-        
+        // override in subclass
+    }
+    
+    func checkDatabaseRefresh() {
+        // override in subclass
     }
     
     

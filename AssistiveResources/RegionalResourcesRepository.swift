@@ -11,50 +11,60 @@ import UIKit
 
 class RegionalResourcesRepository: Repository {
     
-    override init() {
+    private var loc: LocationProfile?
+    
+//    override init() {
+//        super.init()
+//        // ?
+//    }
+    
+    init(location: LocationProfile)
+    {
         super.init()
-        // ?
+        
+        self.loc = location
+    }
+    
+    override func establishLocalStore() -> RepositoryState {
+
+        // check db existance, create if needed
+        
+        // ck internals, see if current or outdated
+        
+        // set flags
+        self.repositoryAvailable = false
+        self.repositoryCurrent = false
+        
+        return RepositoryState.Empty        // ?
     }
     
     override func loadLocalStoreFromRemote() {
         // load from remote to local db
         // on completion...
         // notify complete
-        self.loadingState = RepositoryAvailability.Available
         
-        //super.loadLocalStoreFromRemote()
+        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 1.1)) {
+            self.completionClosure?(true)
+            self.completionClosure = nil
+
+            self.repositoryAvailable = true
+            self.repositoryCurrent = true
+        }
     }
     
-    override func createLocalStore() {
+    override func checkRepositoryState() -> RepositoryState {
         
-        super.createLocalStore()
+        // check out of date (outdated)
+        // check location (invalid)
         
-        // create
-    }
-    
-    override func determineLocalStoreState()-> LocalStoreState {
-        //
-        return LocalStoreState.Current
-    }
-    
-    override func checkIfLocalStoreIsCurrent()-> LocalStoreState {
-        
-        // ONLY CHECK FOR LocalStoreState.OutOfDateUsable and LocalStoreState.OutOfDateUsable
-        return LocalStoreState.Current
+        return RepositoryState.Invalid
     }
     
     override func clearLocalStore() {
-        
-        // 
-        self.internalStoreState = LocalStoreState.EmptyStore
-    }
-    
-    override func updateLocalStore() {
-        
-        //
-        let _ = 4
+        // clear contents of invalid or outdated db
     }
 
+    
     // MARK: - Realm
     
     //    func haveResourcesLoaded(forZipcode: String) -> Bool {
