@@ -34,10 +34,11 @@ class AssitiveAppController: AppController {
         if (!success) {
         }
         
-        startBackgroundActivityAlert(presentingController: self.navController.topViewController!, title: nil, message: "authenticating...")
+        //startBackgroundActivityAlert(title: nil, message: "authenticating...")
         
         self.user?.authorizeUser(completion: { (success) in
-            stopBackgroundActivityAlert(presentingController: self.navController.topViewController!)
+
+            //stopBackgroundActivityAlert()
             
             if (success) {
                 print("logged in")

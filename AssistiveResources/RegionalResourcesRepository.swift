@@ -33,22 +33,20 @@ class RegionalResourcesRepository: Repository {
         
         // set flags
         self.repositoryAvailable = false
-        self.repositoryCurrent = false
         
         return RepositoryState.Empty        // ?
     }
     
     override func loadLocalStoreFromRemote() {
+        self.clearLocalStore()
         // load from remote to local db
-        // on completion...
-        // notify complete
+        // on completion...  call self.completionClosure
         
-        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 1.1)) {
+        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 2.2)) {
             self.completionClosure?(true)
             self.completionClosure = nil
 
             self.repositoryAvailable = true
-            self.repositoryCurrent = true
         }
     }
     

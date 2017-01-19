@@ -53,23 +53,33 @@ final class UserModelController: ModelController {
     
     func authorizeUser (completion: @escaping AsyncCompletionHandlerType) {
         completionClosure = completion
-        
+
+        startActivityIndicator(title: nil, message: "authenticating...")
+
+        let backend = Backendless.sharedInstance()
+
         if (self.haveCredentials()) {
-            let backend = Backendless.sharedInstance()
             
             backend?.userService.login(username, password: password, response: { (user: BackendlessUser?) in
                 self.backendlUser = user
                 self.isUserAuthenticated = true
+                
+                stopActivityIndicator()
+                
                 self.completionClosure?(true)
                 self.completionClosure = nil
             }, error: { (fault: Fault?) in
                 self.isUserAuthenticated = false
                 print (fault ?? "failed login")
+                
+                stopActivityIndicator()
+                
                 self.completionClosure?(false)
                 self.completionClosure = nil
             })
         } else {
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 1.1)) {
+                stopActivityIndicator()
                 self.completionClosure?(false)      // failed, since we dont have creds
             }
         }

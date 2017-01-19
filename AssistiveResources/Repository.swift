@@ -18,8 +18,7 @@ enum RepositoryState : Int {
 class Repository: NSObject {
     
     var repositoryAvailable = false
-    var repositoryCurrent = false
-    var completionClosure: RepositoryUpdateCompletionHandlerType?
+    var completionClosure: RepositoryUpdateCompletionHandlerType? = nil
     
     override init() {
         // ?
@@ -36,10 +35,8 @@ class Repository: NSObject {
         case .Current:
             let _ = 3       // do nothing
         case .Outdated:
-            self.clearLocalStore()
-            self.loadLocalStoreFromRemote()
+            let _ = 3       // do nothing here - after accessor is done, then update will be called
         case .Invalid:
-            self.clearLocalStore()
             self.loadLocalStoreFromRemote()
         case .Empty:
             self.loadLocalStoreFromRemote()
@@ -50,21 +47,18 @@ class Repository: NSObject {
     func load() {
         // scaffolding
             self.repositoryAvailable = true
-            self.repositoryCurrent = true
             self.loadLocalStoreFromRemote()
     }
     
-    func update() {
+    func backgroundUpdate() {
         let repoCurrentState = self.checkRepositoryState()
         
         switch repoCurrentState {
         case .Current:
             let _ = 3       // do nothing
         case .Outdated:
-            self.clearLocalStore()
             self.loadLocalStoreFromRemote()
         case .Invalid:
-            self.clearLocalStore()
             self.loadLocalStoreFromRemote()
         case .Empty:
             self.loadLocalStoreFromRemote()
