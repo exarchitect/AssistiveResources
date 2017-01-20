@@ -9,8 +9,6 @@
 import Foundation
 
 
-let updateNotificationKeyName = NSNotification.Name(rawValue: "key_notify_navigation_content_changed")
-
 
 enum Destination : String {
     case Organizations, Events, Facilities, Travel, Inbox, Profile, News

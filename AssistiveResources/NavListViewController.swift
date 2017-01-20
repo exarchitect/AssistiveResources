@@ -9,6 +9,9 @@
 import UIKit
 
 
+let updateNavigationNotificationKeyName = NSNotification.Name(rawValue: "key_notify_navigation_content_changed")
+
+
 protocol NavigationSelectorProtocol {
     func selectNavigationItem (selection: Destination)
 }
@@ -28,7 +31,7 @@ class NavListViewController: UIViewController {
         self.navVCDelegate = navDelegate
         self.navigationData = navItems
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateNotificationKeyName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateNavigationNotificationKeyName, object: nil)
     }
     
     override func viewDidLoad() {
@@ -63,6 +66,12 @@ class NavListViewController: UIViewController {
         //freeMemory()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        
+    }
+    
     func refreshContent() {
         self.navigationData.updateSubtitles()
         if (self.isCurrentlyVisible) {
@@ -83,9 +92,7 @@ class NavListViewController: UIViewController {
 //MARK: helper functions
 
 func requestMainNavigationRefresh() {
-    NotificationCenter.default.post(name: updateNotificationKeyName, object: nil)
-
-
+    NotificationCenter.default.post(name: updateNavigationNotificationKeyName, object: nil)
 }
 
 

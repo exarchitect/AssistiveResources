@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 protocol EventListViewControllerResponseProtocol: class {
     func eventSelected (evt: EntityDescriptor)
     func backButtonTapped ()
@@ -17,7 +18,7 @@ protocol EventListViewControllerResponseProtocol: class {
 class EventListViewController: UIViewController, EventListContainerNotificationProtocol, EventFilterViewControllerResponseProtocol {
 
     @IBOutlet weak var headerView: HeaderView!
-    @IBOutlet weak var tableView: UITableView!
+    //@IBOutlet weak var tableView: UITableView!
     
     weak private var selectorDelegate:EventListViewControllerResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
@@ -95,3 +96,4 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     }
     
 }
+

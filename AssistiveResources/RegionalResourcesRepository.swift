@@ -25,16 +25,24 @@ class RegionalResourcesRepository: Repository {
         self.loc = location
     }
     
-    override func establishLocalStore() -> RepositoryState {
+    override func checkRepositoryState() -> RepositoryState {
 
-        // check db existance, create if needed
+        var state: RepositoryState!
         
-        // ck internals, see if current or outdated
+        // if (have database)
+            // - if has UpdateProfile with name: "homebase", LocationProfile matches location, UpdateProfile.time has NOT expired, then:
+                state = RepositoryState.Current
+            // - if has UpdateProfile with name: "homebase", LocationProfile matches location, UpdateProfile.time HAS expired, then:   
+                state = RepositoryState.Outdated
+            // - if has UpdateProfile with name: "homebase", LocationProfile DOES NOT match location, then:   
+                state = RepositoryState.Invalid
+            // - if DOES NOT HAVE UpdateProfile with name: "homebase", then:   
+                state = RepositoryState.Empty
+        // if NO database
+            // create empty database, then:
+                state = RepositoryState.Empty
         
-        // set flags
-        self.repositoryAvailable = false
-        
-        return RepositoryState.Empty        // ?
+        return state
     }
     
     override func loadLocalStoreFromRemote() {
@@ -42,20 +50,12 @@ class RegionalResourcesRepository: Repository {
         // load from remote to local db
         // on completion...  call self.completionClosure
         
-        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 2.2)) {
+        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 4.0)) {
             self.completionClosure?(true)
             self.completionClosure = nil
 
             self.repositoryAvailable = true
         }
-    }
-    
-    override func checkRepositoryState() -> RepositoryState {
-        
-        // check out of date (outdated)
-        // check location (invalid)
-        
-        return RepositoryState.Invalid
     }
     
     override func clearLocalStore() {

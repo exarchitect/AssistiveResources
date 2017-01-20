@@ -15,6 +15,13 @@ enum RepositoryState : Int {
     case Current = 0, Outdated = 1, Invalid = 2, Empty = 3
 }
 
+struct UpdateProfile {
+    var lastUpdated = Date(timeIntervalSinceNow: 0)
+    var haveRecords = false
+}
+
+
+
 class Repository: NSObject {
     
     var repositoryAvailable = false
@@ -28,8 +35,7 @@ class Repository: NSObject {
     func asyncLoad (completion: @escaping RepositoryUpdateCompletionHandlerType) {
         self.completionClosure = completion
         
-        // ensure db exists
-        let repoStartupState = self.establishLocalStore()
+        let repoStartupState = self.checkRepositoryState()
         
         switch repoStartupState {
         case .Current:
@@ -68,10 +74,8 @@ class Repository: NSObject {
     
     // MARK: - methods to override
     
-    internal func establishLocalStore() -> RepositoryState {
+    internal func checkRepositoryState() -> RepositoryState {
         precondition(false, "must override this method - do not call super")
-        // check db existance, create if needed
-        // ck internals, see if current or outdated
         return RepositoryState.Invalid
     }
     
@@ -81,11 +85,6 @@ class Repository: NSObject {
     
     internal func clearLocalStore() {
         precondition(false, "must override this method - do not call super")
-    }
-    
-    internal func checkRepositoryState() -> RepositoryState {
-        precondition(false, "must override this method - do not call super")
-        return RepositoryState.Invalid
     }
     
 

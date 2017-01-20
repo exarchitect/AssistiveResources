@@ -9,6 +9,9 @@
 import UIKit
 
 
+let updateEventListNotificationKey = NSNotification.Name(rawValue: "key_notify_event_list_changed")
+
+
 protocol EventListContainerNotificationProtocol: class {
     func notifyRowDetailSelected(rowIndex: Int)
     func notifyFilterSelected()
@@ -30,6 +33,8 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
         self.resources = rsrcModelController
         self.notificationDelegate = delegate
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateEventListNotificationKey, object: nil)
     }
     
     deinit {
@@ -61,6 +66,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
     
     //MARK: - utils
+    
+    func refreshContent() {
+        self.containerTableView.reloadData()
+    }
     
     private func expandCollapseRow(row: Int)
     {
@@ -150,6 +159,10 @@ func getRowFrom(_ cellItem: UIView, _ fromTable: UITableView) -> Int {
         returnRow = row
     }
     return returnRow
+}
+
+func requestEventListRefresh() {
+    NotificationCenter.default.post(name: updateEventListNotificationKey, object: nil)
 }
 
 

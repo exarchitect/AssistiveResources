@@ -34,19 +34,15 @@ class AssitiveAppController: AppController {
         if (!success) {
         }
         
-        //startBackgroundActivityAlert(title: nil, message: "authenticating...")
-        
         self.user?.authorizeUser(completion: { (success) in
 
-            //stopBackgroundActivityAlert()
-            
             if (success) {
                 print("logged in")
                 
             } else {
                 print("NOT logged in")
                 
-                let success = self.self.pushAuthenticationProcessController()
+                let success = self.pushAuthenticationProcessController()
                 if (!success) {
                     
                 }
@@ -70,7 +66,7 @@ class AssitiveAppController: AppController {
             self.freeTopProcessController()
             
         case .userLoginSuccessful:
-            self.loadRegionalResourceModelController(atLocation:self.user.location)
+            self.loadRegionalResourceModelController()
             
         case .navigationItemSelected(let destination):
             self.notifyNavigationItemSelected(selection: destination)
@@ -163,9 +159,9 @@ class AssitiveAppController: AppController {
         return success
     }
     
-    private func loadRegionalResourceModelController (atLocation: LocationProfile) {
+    private func loadRegionalResourceModelController () {
         if (self.regionalResources == nil) {
-            self.regionalResources = RegionalResourcesModelController()
+            self.regionalResources = RegionalResourcesModelController(atLocation: self.user.location)
             self.regionalResources?.initiateLoading()
         }
     }

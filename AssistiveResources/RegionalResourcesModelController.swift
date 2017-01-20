@@ -17,28 +17,30 @@ class RegionalResourcesModelController: ModelController {
     var organizations : OrganizationRepositoryAccessor!
     var events : EventRepositoryAccessor!
     
-    override init()
+    init(atLocation: LocationProfile)
     {
         super.init()
         
-        self.regionalRepository = RegionalResourcesRepository(location: LocationProfile(zip: ""))
+        self.regionalRepository = RegionalResourcesRepository(location: atLocation)
         self.organizations = OrganizationRepositoryAccessor(repository: self.regionalRepository)
         self.events = EventRepositoryAccessor(repository: self.regionalRepository)
     }
     
     func initiateLoading() {
 
-        startActivityIndicator(title: nil, message: "searching for resources close to you...")    // progress indicator
+        //startActivityIndicator(title: nil, message: "loading resources...")    // progress indicator
 
         self.regionalRepository.asyncLoad { (success) in
             if (success) {
                 self.events.retrieve(usingFilter: NeedsProfile(mobility: MobilityLimitation.NoLimitation, delay: DevelopmentalDelay.NoDelay, dx: Diagnosis.NoDiagnosis))
+                requestEventListRefresh()
+                
                 self.organizations.retrieve(usingFilter: NeedsProfile(mobility: MobilityLimitation.NoLimitation, delay: DevelopmentalDelay.NoDelay, dx: Diagnosis.NoDiagnosis))
             } else {
                 print("loading failed")
             }
             // take down progress
-            stopActivityIndicator()
+            //stopActivityIndicator()
         }
     }
 
