@@ -18,7 +18,6 @@ protocol EventListContainerNotificationProtocol: class {
 }
 
 
-
 class EventContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var containerTableView: UITableView!
@@ -33,6 +32,11 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
         self.resources = rsrcModelController
         self.notificationDelegate = delegate
+        
+        let loadingEvents = self.resources?.events.isLoading()
+        if (loadingEvents)! {
+            
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateEventListNotificationKey, object: nil)
     }

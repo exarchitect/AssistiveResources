@@ -124,12 +124,14 @@ class AssitiveAppController: AppController {
     
     private func pushNavigationListProcessController () -> Bool {
         
+        precondition(self.user != nil)
         let navListPC = NavListProcessController(userModelController: self.user, responseDelegate: self)
         return self.launchProcessController(processController: navListPC)
     }
     
     private func pushAuthenticationProcessController () -> Bool {
         
+        precondition(self.user != nil)
         let authPC = AuthenticationProcessController(userModelController: self.user, responseDelegate:self)
         return self.launchProcessController(processController: authPC)
     }

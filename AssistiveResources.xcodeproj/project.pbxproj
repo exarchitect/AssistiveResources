@@ -35,6 +35,7 @@
 		D255504F1E24934F004FE72B /* RegionalResourcesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */; };
 		D25550551E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */; };
 		D25550571E24A68F004FE72B /* EventRepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */; };
+		D268AD311E31DA450027C8BA /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D268AD301E31DA450027C8BA /* Protocols.swift */; };
 		D27440EF1DF6459C008E0476 /* UXUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27440EE1DF6459C008E0476 /* UXUtilities.swift */; };
 		D27440F11DF669A3008E0476 /* EventFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27440F01DF669A3008E0476 /* EventFilterViewController.swift */; };
 		D27440F31DF9009A008E0476 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D27440F21DF9009A008E0476 /* HeaderView.xib */; };
@@ -106,6 +107,7 @@
 		D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionalResourcesRepository.swift; sourceTree = "<group>"; };
 		D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationRepositoryAccessor.swift; sourceTree = "<group>"; };
 		D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRepositoryAccessor.swift; sourceTree = "<group>"; };
+		D268AD301E31DA450027C8BA /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		D27440EE1DF6459C008E0476 /* UXUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXUtilities.swift; sourceTree = "<group>"; };
 		D27440F01DF669A3008E0476 /* EventFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFilterViewController.swift; sourceTree = "<group>"; };
 		D27440F21DF9009A008E0476 /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				D24E4DCB1DE74750008A11FB /* ProcessController.swift */,
 				D2B028501E2C29530064B3D2 /* ModelController.swift */,
 				D25550491E234626004FE72B /* Repository.swift */,
+				D268AD301E31DA450027C8BA /* Protocols.swift */,
 			);
 			name = "Framework Classes";
 			sourceTree = "<group>";
@@ -691,6 +694,7 @@
 				D209FAC71E0245D00099BD46 /* EventDetailViewController.swift in Sources */,
 				D24E4DC81DE74167008A11FB /* PublicEvent.swift in Sources */,
 				D24E4DC61DE74066008A11FB /* Organization.swift in Sources */,
+				D268AD311E31DA450027C8BA /* Protocols.swift in Sources */,
 				D22768561DEFBB4D00C1917A /* MainNavTableViewCell.swift in Sources */,
 				D2C9AD711DDFF5120028341D /* AppController.swift in Sources */,
 				D24E4DCA1DE741E4008A11FB /* DateUtilities.swift in Sources */,

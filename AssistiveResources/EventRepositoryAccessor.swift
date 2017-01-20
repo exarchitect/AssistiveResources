@@ -8,10 +8,11 @@
 
 import UIKit
 
-class EventRepositoryAccessor: NSObject {
+class EventRepositoryAccessor: NSObject, RepositoryAccessorProtocol {
     
     weak private var repo: Repository?
     private var events: [PublicEvent] = []
+    var loaded: Bool = false
     
     var count: Int {
         return events.count
@@ -28,6 +29,7 @@ class EventRepositoryAccessor: NSObject {
     
     func retrieve(usingFilter: NeedsProfile) {
         self.dummyEvents()
+        self.loaded = true
     }
     
     private func dummyEvents() {
@@ -56,4 +58,10 @@ class EventRepositoryAccessor: NSObject {
                                   eventDetail: "The 74th annual Special Olympics will be held this coming June here in Louisville Ky, at historic Freedom Hall. Tickets will go on sale 4 weeks before the event - don't miss it!"))
     }
 
+    // RepositoryAccessorProtocol
+    
+    func isLoading() -> Bool {
+        return !self.loaded
+    }
+    
 }

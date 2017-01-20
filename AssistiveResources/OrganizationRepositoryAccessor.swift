@@ -8,10 +8,12 @@
 
 import UIKit
 
-class OrganizationRepositoryAccessor: NSObject {
+class OrganizationRepositoryAccessor: NSObject, RepositoryAccessorProtocol {
     
     weak private var repo: Repository?
     private var organizations: [Organization] = []
+    var loaded: Bool = false
+    
     var count: Int {
         return organizations.count
     }
@@ -27,6 +29,7 @@ class OrganizationRepositoryAccessor: NSObject {
     
     func retrieve(usingFilter: NeedsProfile) {
         self.dummyOrganizations()
+        self.loaded = true
     }
     
     private func dummyOrganizations() {
@@ -38,5 +41,11 @@ class OrganizationRepositoryAccessor: NSObject {
         
         organizations.append(Organization(entity: ("United Way",EntityType.Organization,0), tagline: "", mission: "", target: "", structure: OrganizationalStructure.MainOfficeWithChapters, scope: GeographicScope.National, location:LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: ""), url: ""))
     }
-
+    
+    // RepositoryAccessorProtocol
+    
+    func isLoading() -> Bool {
+        return !self.loaded
+    }
+    
 }
