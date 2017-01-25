@@ -28,8 +28,6 @@ class RegionalResourcesModelController: ModelController {
     
     func initiateLoading() {
 
-        //startActivityIndicator(title: nil, message: "loading resources...")    // progress indicator
-
         self.regionalRepository.asyncLoad { (success) in
             if (success) {
                 self.events.retrieve(usingFilter: NeedsProfile(mobility: MobilityLimitation.NoLimitation, delay: DevelopmentalDelay.NoDelay, dx: Diagnosis.NoDiagnosis))
@@ -39,8 +37,6 @@ class RegionalResourcesModelController: ModelController {
             } else {
                 print("loading failed")
             }
-            // take down progress
-            //stopActivityIndicator()
         }
     }
 
