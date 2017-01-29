@@ -64,7 +64,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     //MARK: delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-        self.selectorDelegate.eventSelected(evt: EntityDescriptor("",EntityType.Event,0))
+        self.selectorDelegate.eventSelected(evt: EntityDescriptor("",0))
     }
     
     func notifyFilterSelected() {

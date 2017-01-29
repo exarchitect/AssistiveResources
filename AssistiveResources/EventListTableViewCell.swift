@@ -30,16 +30,16 @@ class EventListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(event: PublicEvent, expand: Bool) {
+    func configureCell(event: StoredEvent, expand: Bool) {
         mainTitle.text = event.eventTitle
-        eventDetailLabel.text = event.eventDescriptionVerbose
-        sponsorLabel.text = "Sponsored by " + event.organizationDescriptor.entityName
-        locationLabel.text = event.facilityDescriptor.entityName
-        dateTimeLabel.text = event.eventDate.whenDescription
+        eventDetailLabel.text = event.eventDescriptionBrief
+        sponsorLabel.text = "Sponsored by " + event.organizationTitle
+        locationLabel.text = event.facilityTitle
+        dateTimeLabel.text = event.eventDescriptor!.whenDescription
         
-        monthLabel.text = event.eventDate.monthAbbreviation
-        dayOfMonthLabel.text = "\(event.eventDate.day)"
-        dayOfWeekLabel.text = event.eventDate.dayOfWeek
+        monthLabel.text = event.eventDescriptor!.monthAbbreviation
+        dayOfMonthLabel.text = "\(event.eventDescriptor!.day)"
+        dayOfWeekLabel.text = event.eventDescriptor!.dayOfWeek
         
         self.selectionStyle = UITableViewCellSelectionStyle.none
         

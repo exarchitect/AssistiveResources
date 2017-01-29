@@ -25,6 +25,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     weak private var resources: RegionalResourcesModelController?
     weak private var notificationDelegate:EventListContainerNotificationProtocol?
     private var expandedRowIndex = -1
+    private var showLoadingIndicatorAtStartup: Bool?
     
     //MARK: - inherited
 
@@ -32,11 +33,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
         self.resources = rsrcModelController
         self.notificationDelegate = delegate
-        
-        let loadingEvents = self.resources?.events.isLoading()
-        if (loadingEvents)! {
-            
-        }
+        self.showLoadingIndicatorAtStartup = self.resources!.events.isLoading()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateEventListNotificationKey, object: nil)
     }
@@ -60,6 +57,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         //tableView.allowsSelection = false
         containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
+        
+        if (self.showLoadingIndicatorAtStartup!) {
+            startActivityIndicator(title: nil, message: "loading...")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,6 +73,11 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     //MARK: - utils
     
     func refreshContent() {
+        if (self.showLoadingIndicatorAtStartup!) {
+            self.showLoadingIndicatorAtStartup = false
+            stopActivityIndicator()
+        }
+        
         self.containerTableView.reloadData()
     }
     
@@ -116,7 +122,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         let cell:EventListTableViewCell = tableView.dequeueReusableCell(withIdentifier: kEventListCellID) as! EventListTableViewCell
         
-        let event:PublicEvent = resources!.events[indexPath.row]
+        let event:StoredEvent = resources!.events[indexPath.row]
         cell.configureCell(event: event, expand: expandedRowIndex == indexPath.row)
         
         return cell

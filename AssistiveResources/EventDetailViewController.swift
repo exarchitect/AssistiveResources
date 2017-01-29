@@ -48,7 +48,7 @@ class EventDetailViewController: UIViewController {
     }
 
     @IBAction func orgSelectedButtonAction(_ sender: Any) {
-        self.completionProtocol.organizationSelected(evt: ("",EntityType.Organization,0))
+        self.completionProtocol.organizationSelected(evt: ("",0))
     }
 
 }
