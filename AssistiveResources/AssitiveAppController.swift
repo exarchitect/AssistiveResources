@@ -163,7 +163,7 @@ class AssitiveAppController: AppController {
     
     private func loadRegionalResourceModelController () {
         if (self.regionalResources == nil) {
-            self.regionalResources = RegionalResourcesModelController(atLocation: self.user.location)
+            self.regionalResources = RegionalResourcesModelController(atLocation: self.user.locationProfile)
             self.regionalResources?.initiateLoading()
         }
     }

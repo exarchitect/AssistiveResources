@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 
 class RegionalResourcesRepository: Repository {
@@ -28,19 +29,42 @@ class RegionalResourcesRepository: Repository {
     override func checkRepositoryState() -> RepositoryState {
 
         var state: RepositoryState!
+        var haveLocalDatabase = false
+
+        let uiRealm = try! Realm()
+        let profilesFound = uiRealm.objects(RepositoryProfile.self)
+        haveLocalDatabase = !profilesFound.isEmpty
         
-        // if (have database)
-            // - if has UpdateProfile with name: "homebase", LocationProfile matches location, UpdateProfile.time has NOT expired, then:
+        if (haveLocalDatabase) {
+
+            let profile = profilesFound[0]
+            let locationMatch: Bool = (profile.location == self.loc?.zipCode)
+            let expiredate = profile.lastUpdated.addingTimeInterval(TimeInterval(kExpirationSeconds))
+            let now = Date()
+            let dateCompare = now.compare(expiredate)
+            let expired: Bool = (dateCompare == ComparisonResult.orderedDescending)
+
+            if (locationMatch && !expired) {
                 state = RepositoryState.Current
-            // - if has UpdateProfile with name: "homebase", LocationProfile matches location, UpdateProfile.time HAS expired, then:   
+                
+            } else if (locationMatch && expired) {
                 state = RepositoryState.Outdated
-            // - if has UpdateProfile with name: "homebase", LocationProfile DOES NOT match location, then:   
+
+            } else if (!locationMatch) {
                 state = RepositoryState.Invalid
-            // - if DOES NOT HAVE UpdateProfile with name: "homebase", then:   
-                state = RepositoryState.Empty
-        // if NO database
-            // create empty database, then:
-                state = RepositoryState.Empty
+            }
+            
+            // - if DOES NOT HAVE UpdateProfile then:
+            //    state = RepositoryState.Empty
+
+        } else {        // if NO database
+            // create empty database
+            
+            let dbProfile = RepositoryProfile()
+            dbProfile.save()
+            
+            state = RepositoryState.Empty
+        }
         
         return state
     }

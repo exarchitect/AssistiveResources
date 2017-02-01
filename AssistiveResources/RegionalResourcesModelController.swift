@@ -28,7 +28,7 @@ class RegionalResourcesModelController: ModelController {
     
     func initiateLoading() {
 
-        self.regionalRepository.asyncLoad { (success) in
+        self.regionalRepository.loadAsync { (success) in
             if (success) {
                 self.events.retrieve(usingFilter: NeedsProfile(mobility: MobilityLimitation.NoLimitation, delay: DevelopmentalDelay.NoDelay, dx: Diagnosis.NoDiagnosis))
                 requestEventListRefresh()

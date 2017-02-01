@@ -20,7 +20,8 @@ typealias AsyncCompletionHandlerType = (_ success: Bool) -> Void
 final class UserModelController: ModelController {
     
     var isUserAuthenticated: Bool
-    var location: LocationProfile
+    var locationProfile: LocationProfile
+    var locationZip: String = ""
     
     private var rememberMe: Bool
     
@@ -42,7 +43,8 @@ final class UserModelController: ModelController {
         self.password = props.password
         self.rememberMe = props.rememberMe
         
-        self.location = LocationProfile(zip: "00000")
+        self.locationZip = props.zipcode
+        self.locationProfile = LocationProfile(zip: self.locationZip)
         
         super.init()
     }

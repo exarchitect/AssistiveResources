@@ -14,6 +14,7 @@ enum UserPropertyKeys {
     static let User_Name = "needs.email"
     static let User_Password = "needs.password"
     static let Remember_Me = "needs.rememberme"
+    static let Location_Zipcode = "needs.zipcode"
 }
 
 
@@ -22,6 +23,7 @@ final class PropertySettings: NSObject {
     var rememberMe: Bool
     var username: String!
     var password: String!
+    var zipcode: String!
     
     static let sharedInstance = PropertySettings()     // singleton
     
@@ -29,6 +31,7 @@ final class PropertySettings: NSObject {
         username = ""
         password = ""
         rememberMe = true
+        zipcode = "00000"
         
         super.init()
     }
@@ -42,6 +45,9 @@ final class PropertySettings: NSObject {
             password = pswd
         }
         rememberMe =  (usrDefaults.bool(forKey: UserPropertyKeys.Remember_Me))
+        if let zip = usrDefaults.string(forKey: UserPropertyKeys.Location_Zipcode) {
+            password = zip
+        }
     }
     
     func write () {
@@ -49,6 +55,7 @@ final class PropertySettings: NSObject {
         usrDefaults.set(username, forKey: UserPropertyKeys.User_Name)
         usrDefaults.set(password, forKey: UserPropertyKeys.User_Password)
         usrDefaults.set(rememberMe, forKey: UserPropertyKeys.Remember_Me)
+        usrDefaults.set(zipcode, forKey: UserPropertyKeys.Location_Zipcode)
         
         usrDefaults.synchronize()
     }

@@ -9,15 +9,14 @@
 import UIKit
 
 
+let kExpirationSeconds = 60 * 60 * 24       // 24 hours
+
+
 typealias RepositoryUpdateCompletionHandlerType = (_ success: Bool) -> Void
+
 
 enum RepositoryState : Int {
     case Current = 0, Outdated = 1, Invalid = 2, Empty = 3
-}
-
-struct UpdateProfile {
-    var lastUpdated = Date(timeIntervalSinceNow: 0)
-    var haveRecords = false
 }
 
 
@@ -32,7 +31,7 @@ class Repository: NSObject {
         super.init()
     }
     
-    func asyncLoad (completion: @escaping RepositoryUpdateCompletionHandlerType) {
+    func loadAsync (completion: @escaping RepositoryUpdateCompletionHandlerType) {
         self.completionClosure = completion
         
         let repoStartupState = self.checkRepositoryState()
