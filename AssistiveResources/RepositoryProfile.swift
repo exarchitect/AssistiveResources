@@ -11,10 +11,15 @@ import RealmSwift
 import Realm
 
 
+struct Constants {
+    static let localStoreVersion = "v1.0.0.0"
+}
+
 class RepositoryProfile: Object {
     
     dynamic var lastUpdated: Date = Date()
     dynamic var location: String = "00000"
+    dynamic var dbVersion: String = Constants.localStoreVersion
     dynamic var haveRecords: Bool = false
     
     required init() {

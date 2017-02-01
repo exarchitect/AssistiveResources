@@ -38,9 +38,14 @@ class Repository: NSObject {
         
         switch repoStartupState {
         case .Current:
-            let _ = 3       // do nothing
-        case .Outdated:
-            let _ = 3       // do nothing here - after accessor is done, then update will be called
+            self.completionClosure?(true)
+            self.completionClosure = nil
+            self.repositoryAvailable = true
+        case .Outdated:      // do nothing here - after accessor is done, then update will be called
+            self.completionClosure?(true)
+            self.completionClosure = nil
+            self.repositoryAvailable = true
+
         case .Invalid:
             self.loadLocalStoreFromRemote()
         case .Empty:

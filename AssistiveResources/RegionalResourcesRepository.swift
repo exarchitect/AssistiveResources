@@ -32,6 +32,8 @@ class RegionalResourcesRepository: Repository {
         var haveLocalDatabase = false
 
         let uiRealm = try! Realm()
+        // TODO - if try fails, then the db format has changed - invalidate the database & delete
+        
         let profilesFound = uiRealm.objects(RepositoryProfile.self)
         haveLocalDatabase = !profilesFound.isEmpty
         
@@ -39,9 +41,9 @@ class RegionalResourcesRepository: Repository {
 
             let profile = profilesFound[0]
             let locationMatch: Bool = (profile.location == self.loc?.zipCode)
-            let expiredate = profile.lastUpdated.addingTimeInterval(TimeInterval(kExpirationSeconds))
+            let expireDate = profile.lastUpdated.addingTimeInterval(TimeInterval(kExpirationSeconds))
             let now = Date()
-            let dateCompare = now.compare(expiredate)
+            let dateCompare = now.compare(expireDate)
             let expired: Bool = (dateCompare == ComparisonResult.orderedDescending)
 
             if (locationMatch && !expired) {
@@ -73,6 +75,12 @@ class RegionalResourcesRepository: Repository {
         self.clearLocalStore()
         // load from remote to local db
         // on completion...  call self.completionClosure
+        
+        // TEMP
+        let eventList: [StoredEvent] = testEvents()
+        for evt in eventList {
+            evt.save()
+        }
         
         DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 4.0)) {
             self.completionClosure?(true)

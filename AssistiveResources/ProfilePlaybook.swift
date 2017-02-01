@@ -10,15 +10,15 @@ import Foundation
 
 
 enum MobilityLimitation : Int {
-    case NoLimitation, WalkingWithBrace, WalkingWithCane, Wheelchair, Bedridden
+    case NoLimitation, AnyLimitation, WalkingWithBrace, WalkingWithCane, Wheelchair, Bedridden
 }
 
 enum DevelopmentalDelay : Int {
-    case NoDelay, XDelay, YDelay, ZDelay
+    case NoDelay, AnyDelay, XDelay, YDelay, ZDelay
 }
 
 enum Diagnosis : Int {
-    case NoDiagnosis, AutismDiagnosis, CPDiagnosis, SpinaBifidaDiagnosis, XDiagnosis, YDiagnosis, ZDiagnosis
+    case NoDiagnosis, AnyDiagnosis, AutismDiagnosis, CPDiagnosis, SpinaBifidaDiagnosis, XDiagnosis, YDiagnosis, ZDiagnosis
 }
 
 enum EntityType : Int {
