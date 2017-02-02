@@ -37,10 +37,12 @@ class Repository: NSObject {
         let repoStartupState = self.checkRepositoryState()
         
         switch repoStartupState {
+            
         case .Current:
             self.completionClosure?(true)
             self.completionClosure = nil
             self.repositoryAvailable = true
+            
         case .Outdated:      // do nothing here - after accessor is done, then update will be called
             self.completionClosure?(true)
             self.completionClosure = nil
@@ -48,18 +50,12 @@ class Repository: NSObject {
 
         case .Invalid:
             self.loadLocalStoreFromRemote()
+            
         case .Empty:
             self.loadLocalStoreFromRemote()
         }
     }
 
-    
-    func load() {
-        // scaffolding
-            self.repositoryAvailable = true
-            self.loadLocalStoreFromRemote()
-    }
-    
     func backgroundUpdate() {
         let repoCurrentState = self.checkRepositoryState()
         

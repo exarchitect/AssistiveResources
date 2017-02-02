@@ -47,10 +47,10 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     
     func loginAction (username: String, password: String) {
 
-        let cmd = Command(type: Command.CommandType.dismissCaller(controller: self))
+        let cmd = Command(type: .dismissCaller(controller: self))
         self.responseDelegate.requestAction(command: cmd)
 
-        self.responseDelegate.requestAction(command: Command(type: Command.CommandType.userLoginSuccessful))
+        self.responseDelegate.requestAction(command: Command(type: .userLoginSuccessful))
     }
     
     //MARK: debug

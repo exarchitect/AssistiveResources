@@ -30,17 +30,22 @@ class EventRepositoryAccessor: NSObject, RepositoryAccessorProtocol {
     }
     
     func retrieve(usingFilter: NeedsProfile) {
-        //self.dummyEvents()
         
-        let uiRealm = try! Realm()
-        // TODO - if try fails, then ... ?
-        
-        let eventsFound = uiRealm.objects(StoredEvent.self)
-        for evt in eventsFound {
-            self.addEvent(event: evt)
-        }
+        do {
+            let uiRealm = try Realm()
+            let eventsFound = uiRealm.objects(StoredEvent.self)
+            for evt in eventsFound {
+                self.addEvent(event: evt)
+            }
+            self.loaded = true
+            
+        } catch let error as NSError {
+            // handle error
 
-        self.loaded = true
+            let _ = error
+            self.loaded = false
+        }
+        
     }
     
     func addEvent(event: StoredEvent) {
@@ -83,11 +88,18 @@ func testEvents() -> [StoredEvent] {
                               eventDetail: "Come join us for an evening of mayhem, misadventure and mistaken identity.  A classic musical performed by our local youth. Prepare to be amazed and amused."))
     
     returnevents.append(StoredEvent(event: ("Special Olympics",1),
-                              organization: ("Athletes In Action",0),
-                              facility: ("Freedom Hall",0),
-                              eventStart: Date.dateFromComponents(yr:2016, mo:5, dy:15, hr:12, min:0)!,
-                              durationInMinutes: 0,
-                              eventDetail: "The 74th annual Special Olympics will be held this coming June here in Louisville Ky, at historic Freedom Hall. Tickets will go on sale 4 weeks before the event - don't miss it!"))
-
+                                    organization: ("Athletes In Action",0),
+                                    facility: ("Freedom Hall",0),
+                                    eventStart: Date.dateFromComponents(yr:2016, mo:5, dy:15, hr:12, min:0)!,
+                                    durationInMinutes: 0,
+                                    eventDetail: "The 74th annual Special Olympics will be held this coming June here in Louisville Ky, at historic Freedom Hall. Tickets will go on sale 4 weeks before the event - don't miss it!"))
+    
+    returnevents.append(StoredEvent(event: ("Easter Seals Open House",1),
+                                    organization: ("Easter Seals of Central Illinois",0),
+                                    facility: ("Decker Center",0),
+                                    eventStart: Date.dateFromComponents(yr:2017, mo:2, dy:7, hr:10, min:0)!,
+                                    durationInMinutes: 8*60,
+                                    eventDetail: "Your local Easter Seals chapter is hosting an Open House with our OSF partners.  Come join us for donuts and coffee, and find out who we are and how we can help you and your family."))
+    
     return returnevents
 }

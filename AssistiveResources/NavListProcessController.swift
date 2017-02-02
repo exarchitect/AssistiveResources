@@ -48,7 +48,7 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
     // NavigationSelectorProtocol
     func selectNavigationItem (selection: Destination) {
-        let cmd = Command(type: Command.CommandType.navigationItemSelected(selection: selection))
+        let cmd = Command(type: .navigationItemSelected(selection: selection))
         self.navigationDelegate.requestAction(command: cmd)
     }
     
