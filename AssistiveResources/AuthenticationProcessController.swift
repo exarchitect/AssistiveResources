@@ -47,10 +47,24 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     
     func loginAction (username: String, password: String) {
 
-        let cmd = Command(type: .dismissCaller(controller: self))
-        self.responseDelegate.requestAction(command: cmd)
+        self.user.storeUserCredentials(username: username, password: password)
+        //self.user.storeUserCredentials(username: "fail", password: password)
+        self.user.authorizeUser(completion: { (success) in
+            
+            if (success) {
+                print("logged in")
+                
+                let cmd = Command(type: .dismissCaller(controller: self))
+                self.responseDelegate.requestAction(command: cmd)
+                
+                self.responseDelegate.requestAction(command: Command(type: .userLoginSuccessful))
+            } else {
+                print("NOT logged in")
+                
+                // TODO - warn user of bad credentials
+            }
+        })
 
-        self.responseDelegate.requestAction(command: Command(type: .userLoginSuccessful))
     }
     
     //MARK: debug

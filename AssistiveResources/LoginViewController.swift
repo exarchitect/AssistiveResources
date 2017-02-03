@@ -49,8 +49,8 @@ class LoginViewController: UIViewController {
     
     // button actions
     @IBAction func loginButtonAction(_ sender: Any) {
-        self.completionProtocol?.loginAction(username: "", password: "")
-        
+        // TODO
+        self.completionProtocol?.loginAction(username: "exarchitect@gmail.com", password: "serveme1")
     }
 
     @IBAction func segmentedControlAction(_ sender: Any) {
