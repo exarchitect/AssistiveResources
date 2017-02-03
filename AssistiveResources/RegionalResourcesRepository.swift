@@ -94,6 +94,12 @@ class RegionalResourcesRepository: Repository {
             evt.save()
         }
         
+        // TEMP
+        let orgList: [Organization] = testOrganizations()
+        for org in orgList {
+            org.save()
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 4.0)) {
             self.completionClosure?(true)
             self.completionClosure = nil

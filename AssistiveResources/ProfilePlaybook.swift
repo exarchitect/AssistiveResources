@@ -41,12 +41,12 @@ struct NeedsProfile {
 
 
 enum ISOCountryCode : String {      // only support USA initially
-    case USA, GBR
+    case USA = "USA", GBR = "GBR"
 }
 
 
 struct LocationProfile {
-    var coordinates: CLLocationCoordinate2D?
+    var coordinates: CLLocationCoordinate2D!
     var countryCode: ISOCountryCode
     var regionName: String
     var cityName: String
