@@ -79,7 +79,7 @@ class Organization: Object {
     
     dynamic var tagline: String = ""
     dynamic var mission: String = ""
-    dynamic var targetPopulation: String = ""
+    dynamic var geographicScope: String = ""
     dynamic var website: String = ""
     
     dynamic var countryCodeISO: String = "USA"     // default
@@ -91,10 +91,10 @@ class Organization: Object {
 //    var chapterList:[Chapter] = []
 //    var serviceList:[Service] = []
 
-    convenience required init(entity:EntityDescriptor, tagline:String, mission:String, target:String, location:LocationProfile, url:String) {
+    convenience required init(entity:EntityDescriptor, tagline:String, mission:String, scope:String, location:LocationProfile, url:String) {
         self.init()
         
-        self.organizationTitle = ""
+        self.organizationTitle = entity.entityName
         self.organizationID = 0
         self.hqLatitude = location.coordinates.latitude
         self.hqLongitude = location.coordinates.longitude
@@ -102,7 +102,7 @@ class Organization: Object {
         
         self.tagline = tagline
         self.mission = mission
-        self.targetPopulation = target
+        self.geographicScope = scope
         self.website = url
     }
     

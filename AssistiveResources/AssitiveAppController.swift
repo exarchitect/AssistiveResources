@@ -51,10 +51,6 @@ class AssitiveAppController: AppController {
         })
     }
     
-    override func checkDatabaseRefresh() {
-        self.regionalResources?.checkRepositoryUpdate()
-    }
-    
     
     // MARK: - ProcessControllerProtocol
     
@@ -88,7 +84,10 @@ class AssitiveAppController: AppController {
         
         switch selection {
         case Destination.Organizations:
-            let _ = 7
+            let success = self.pushOrganizationListProcessController()
+            if (!success) {
+                
+            }
             
         case Destination.Events:
             let success = self.pushEventListProcessController()
@@ -151,6 +150,13 @@ class AssitiveAppController: AppController {
         return self.launchProcessController(processController: eventDetailPC)
     }
     
+    private func pushOrganizationListProcessController () -> Bool {
+        
+        precondition(self.regionalResources != nil)
+        let orgListPC = OrganizationListProcessController(rsrcsModelController: self.regionalResources!, responseDelegate: self)
+        return self.launchProcessController(processController: orgListPC)
+    }
+    
 
     // MARK: - Utilities
 
@@ -174,4 +180,9 @@ class AssitiveAppController: AppController {
             self.user = UserModelController()
         }
     }
+    
+    override func checkDatabaseRefresh() {
+        self.regionalResources?.checkRepositoryUpdate()
+    }
+    
 }
