@@ -22,7 +22,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
 
     @IBOutlet weak var containerTableView: UITableView!
 
-    weak private var resources: RegionalResourcesModelController?
+    weak private var resources: RegionalResourcesModelController!
     weak private var notificationDelegate:OrganizationListContainerNotificationProtocol?
     private var expandedRowIndex = -1
     private var showLoadingIndicatorAtStartup: Bool?
@@ -35,7 +35,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
         self.notificationDelegate = delegate
         self.showLoadingIndicatorAtStartup = self.resources!.organizations.isLoading()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateOrgListNotificationKey, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshOrgContent), name: updateOrgListNotificationKey, object: nil)
     }
     
     deinit {
@@ -83,7 +83,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //return resources!.organizations.count
-        return 3
+        return self.resources.organizations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -110,7 +110,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     
     //MARK: - utils
     
-    func refreshContent() {
+    func refreshOrgContent() {
         if (self.showLoadingIndicatorAtStartup!) {
             self.showLoadingIndicatorAtStartup = false
             stopActivityIndicator()
@@ -132,5 +132,10 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
         notificationDelegate?.notifyFilterSelected()
     }
     
-
 }
+
+func requestOrgListRefresh() {
+    NotificationCenter.default.post(name: updateOrgListNotificationKey, object: nil)
+}
+
+

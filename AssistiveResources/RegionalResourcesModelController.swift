@@ -34,6 +34,7 @@ class RegionalResourcesModelController: ModelController {
                 requestEventListRefresh()
                 
                 self.organizations.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
+                requestOrgListRefresh()
             } else {
                 print("loading failed")
             }
