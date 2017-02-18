@@ -68,9 +68,9 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     }
     
     func notifyFilterSelected() {
-        if (self.resourcesModelController?.events.isLoading())! {
-            return
-        }
+//        if (self.resourcesModelController?.events.isLoading())! {
+//            return
+//        }
         unowned var filterViewController:EventFilterViewController
 
         filterViewController = (instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController)!

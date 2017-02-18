@@ -9,7 +9,8 @@
 import UIKit
 
 
-let updateEventListNotificationKey = NSNotification.Name(rawValue: "key_notify_event_list_changed")
+//let updateEventListNotificationKey = NSNotification.Name(rawValue: "key_notify_event_list_changed")
+let updateEventListNotificationKey = "key_notify_event_list_changed"
 
 
 protocol EventListContainerNotificationProtocol: class {
@@ -18,34 +19,40 @@ protocol EventListContainerNotificationProtocol: class {
 }
 
 
-class EventContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class EventContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, RepositoryAccessorProtocol {
 
     @IBOutlet weak var containerTableView: UITableView!
     
-    weak private var resources: RegionalResourcesModelController?
+//    weak private var resources: RegionalResourcesModelController!
     weak private var notificationDelegate:EventListContainerNotificationProtocol?
     private var expandedRowIndex = -1
-    private var showLoadingIndicatorAtStartup: Bool?
+    private var showLoadingIndicator: Bool = false
+    private var eventAccessor: EventRepositoryAccessor!
     
     //MARK: - inherited
 
     func dependencies(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
     
-        self.resources = rsrcModelController
+//        self.resources = rsrcModelController
         self.notificationDelegate = delegate
-        self.showLoadingIndicatorAtStartup = self.resources!.events.isLoading()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateEventListNotificationKey, object: nil)
+//        self.showLoadingIndicator = self.resources!.events.isLoading()
+      
+        self.eventAccessor = rsrcModelController.createEventAccessor(delegate: self)
+        guard self.eventAccessor != nil else {
+            return
+        }
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: NSNotification.Name(rawValue: updateEventListNotificationKey), object: nil)
     }
     
     deinit {
         print("deallocating EventContainerVC")
+//        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        precondition(self.resources != nil)
+//        precondition(self.resources != nil)
         precondition(self.notificationDelegate != nil)
         
         containerTableView.delegate = self
@@ -55,12 +62,18 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         containerTableView.separatorColor = UIColor.blue
         containerTableView.backgroundColor = UIColor.white
         
-        //tableView.allowsSelection = false
         containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
         
-        if (self.showLoadingIndicatorAtStartup!) {
+        
+        self.eventAccessor.requestData(filteredBy: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
+        if (self.eventAccessor.state == .Loading) {
+            self.showLoadingIndicator = true
             startActivityIndicator(title: nil, message: "loading...")
         }
+        
+//        if (self.showLoadingIndicator) {
+//            startActivityIndicator(title: nil, message: "loading...")
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,16 +83,27 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     
-    //MARK: - utils
+    //MARK: - RepositoryAccessorProtocol
     
-    func refreshContent() {
-        if (self.showLoadingIndicatorAtStartup!) {
-            self.showLoadingIndicatorAtStartup = false
+    func dataUpdateNotification() {
+        if (self.showLoadingIndicator) {
+            self.showLoadingIndicator = false
             stopActivityIndicator()
         }
         
         self.containerTableView.reloadData()
     }
+
+    //MARK: - utils
+    
+//    func refreshContent() {
+//        if (self.showLoadingIndicator) {
+//            self.showLoadingIndicator = false
+//            stopActivityIndicator()
+//        }
+//        
+//        self.containerTableView.reloadData()
+//    }
     
     private func expandCollapseRow(row: Int)
     {
@@ -113,7 +137,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resources!.events.count
+        return self.eventAccessor.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -122,7 +146,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         let cell:EventListTableViewCell = tableView.dequeueReusableCell(withIdentifier: kEventListCellID) as! EventListTableViewCell
         
-        let event:StoredEvent = resources!.events[indexPath.row]
+        let event:StoredEvent = self.eventAccessor[indexPath.row]
         cell.configureCell(event: event, expand: expandedRowIndex == indexPath.row)
         
         return cell
@@ -171,8 +195,8 @@ func getRowFrom(_ cellItem: UIView, _ fromTable: UITableView) -> Int {
     return returnRow
 }
 
-func requestEventListRefresh() {
-    NotificationCenter.default.post(name: updateEventListNotificationKey, object: nil)
-}
+//func requestEventListRefresh() {
+//    NotificationCenter.default.post(name: NSNotification.Name(rawValue: updateEventListNotificationKey), object: nil)
+//}
 
 

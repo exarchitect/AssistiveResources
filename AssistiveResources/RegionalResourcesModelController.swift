@@ -15,7 +15,7 @@ class RegionalResourcesModelController: ModelController {
     private var regionalRepository : RegionalResourcesRepository!
 
     var organizations : OrganizationRepositoryAccessor!
-    var events : EventRepositoryAccessor!
+    //var events : EventRepositoryAccessor!
     
     init(atLocation: LocationProfile)
     {
@@ -23,15 +23,17 @@ class RegionalResourcesModelController: ModelController {
         
         self.regionalRepository = RegionalResourcesRepository(location: atLocation)
         self.organizations = OrganizationRepositoryAccessor(repository: self.regionalRepository)
-        self.events = EventRepositoryAccessor(repository: self.regionalRepository)
+        //self.events = EventRepositoryAccessor(repository: self.regionalRepository)
     }
     
     func initiateLoading() {
 
         self.regionalRepository.loadAsync { (success) in
             if (success) {
-                self.events.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
-                requestEventListRefresh()
+                //self.events.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
+                //requestEventListRefresh()
+                let notificationkey = self.regionalRepository.repositoryUpdateNotificationKey()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationkey), object: nil)
                 
                 self.organizations.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
                 requestOrgListRefresh()
@@ -41,6 +43,11 @@ class RegionalResourcesModelController: ModelController {
         }
     }
 
+    func createEventAccessor(delegate: RepositoryAccessorProtocol) -> EventRepositoryAccessor {
+        
+        return EventRepositoryAccessor(repository: self.regionalRepository, delegate: delegate)
+    }
+    
     func checkRepositoryUpdate() {
         self.regionalRepository.backgroundUpdate()
     }

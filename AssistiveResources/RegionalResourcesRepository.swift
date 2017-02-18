@@ -9,6 +9,8 @@
 import UIKit
 import RealmSwift
 
+let updateRepositoryNotificationKey = "key_notify_resource_repository_changed"
+
 
 class RegionalResourcesRepository: Repository {
     
@@ -40,53 +42,10 @@ class RegionalResourcesRepository: Repository {
         }
     }
     
-//    func old_checkRepositoryState() -> RepositoryState {
-//        
-//        var state: RepositoryState!
-//        var haveLocalDatabase = false
-//        
-//        let uiRealm = try! Realm()
-//        let profilesFound = uiRealm.objects(RepositoryProfile.self)
-//        haveLocalDatabase = !profilesFound.isEmpty
-//        
-//        if (haveLocalDatabase) {
-//            
-//            let profile = profilesFound[0]
-//            let locationMatch: Bool = (profile.location == self.loc?.zipCode)
-//            let expireDate = profile.lastUpdated.addingTimeInterval(TimeInterval(kExpirationSeconds))
-//            let now = Date()
-//            let dateCompare = now.compare(expireDate)
-//            let expired: Bool = (dateCompare == ComparisonResult.orderedDescending)
-//            
-//            if (locationMatch && !expired) {
-//                state = RepositoryState.Current
-//                
-//            } else if (locationMatch && expired) {
-//                state = RepositoryState.Outdated
-//                
-//            } else if (!locationMatch) {
-//                state = RepositoryState.Invalid
-//            }
-//            
-//            // - if DOES NOT HAVE UpdateProfile then:
-//            //    state = RepositoryState.Empty
-//            
-//        } else {        // if NO database
-//            // create empty database
-//            
-//            let dbProfile = RepositoryProfile()
-//            dbProfile.save()
-//            
-//            state = RepositoryState.Empty
-//        }
-//        
-//        return state
-//    }
-    
     override func loadLocalStoreFromRemote() {
+
+        self.beginRepositoryUpdate()
         self.clearLocalStore()
-        // load from remote to local db
-        // on completion...  call self.completionClosure
         
         // TEMP
         let eventList: [StoredEvent] = testEvents()
@@ -104,7 +63,8 @@ class RegionalResourcesRepository: Repository {
             self.completionClosure?(true)
             self.completionClosure = nil
 
-            self.repositoryAvailable = true
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: updateRepositoryNotificationKey), object: nil)
+            self.endRepositoryUpdate()
         }
     }
     
@@ -154,6 +114,12 @@ class RegionalResourcesRepository: Repository {
         
         return state
     }
+    
+    override func repositoryUpdateNotificationKey () -> String {
+        return updateRepositoryNotificationKey
+    }
+    
+
 
     // MARK: - Realm
     

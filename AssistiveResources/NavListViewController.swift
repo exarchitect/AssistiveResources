@@ -85,6 +85,7 @@ class NavListViewController: UIViewController {
     //MARK: debug
     deinit {
         print("deallocating NavListViewController")
+        NotificationCenter.default.removeObserver(self)
     }
     
 }

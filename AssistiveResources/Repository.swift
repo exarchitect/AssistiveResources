@@ -87,8 +87,23 @@ class Repository: NSObject {
         precondition(false, "must override this method - do not call super")
     }
     
+    internal func repositoryUpdateNotificationKey () -> String {
+        precondition(false, "must override this method - do not call super")
+        return ""
+    }
+    
 
-    // MARK: - Utilities
+    // MARK: - methods for subclass use
+    
+    internal func beginRepositoryUpdate() {
+        self.repositoryAvailable = false
+    }
+    
+    internal func endRepositoryUpdate() {
+        self.repositoryAvailable = true
+        
+        // check to see if there are any pending requests for data accessors and service them
+    }
 
 }
 

@@ -40,6 +40,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     
     deinit {
         print("deallocating OrganizationContainerVC")
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {

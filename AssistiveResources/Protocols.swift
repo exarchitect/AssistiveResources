@@ -10,7 +10,8 @@ import Foundation
 
 
 protocol RepositoryAccessorProtocol: class {
-    func isLoading() -> Bool
+    //func isLoading() -> Bool
+    func dataUpdateNotification()
 }
 
 
