@@ -10,30 +10,42 @@ import UIKit
 import RealmSwift
 
 
-class OrganizationRepositoryAccessor: NSObject {
+class OrganizationRepositoryAccessor: RepositoryAccessor {
     
-    weak private var repo: Repository?
+    //weak private var repo: Repository?
     private var organizations: [Organization] = []
-    var loaded: Bool = false
+    //var loaded: Bool = false
     
     var count: Int {
         return organizations.count
     }
     
-    init (repository: Repository) {
-        
-        self.repo = repository
-    }
+//    init (repository: Repository) {
+//        
+//        self.repo = repository
+//    }
     
     subscript(pos: Int) -> Organization {
         return organizations[pos]
     }
     
-//    func retrieve(usingFilter: NeedsProfile) {
-//        self.dummyOrganizations()
-//        self.loaded = true
-//    }
+    func requestData(filteredBy: NeedsProfile){
+        if (self.repo.repositoryAvailable) {
+            self.retrieve(usingFilter: filteredBy)
+            self.state = .Loaded
+        } else {
+            self.state = .NotLoaded
+            // when we get an update for the repository, we will retrieve the data and call the delegate
+        }
+    }
+    
+    override func repositoryUpdateNotification() {
+        self.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
+        self.delegate?.updateNotification()
+    }
 
+    // MARK: - PRIVATE
+    
     func retrieve(usingFilter: NeedsProfile) {
         
         do {
@@ -42,13 +54,13 @@ class OrganizationRepositoryAccessor: NSObject {
             for org in orgsFound {
                 self.addOrganization(org: org)
             }
-            self.loaded = true
-            
+            self.state = .Loaded
+           
         } catch let error as NSError {
             // handle error
             
             let _ = error
-            self.loaded = false
+            self.state = .NotLoaded
         }
         
     }
@@ -58,23 +70,10 @@ class OrganizationRepositoryAccessor: NSObject {
         self.organizations.append(newOrg)
     }
     
-//    private func dummyOrganizations() {
-//        
-//        organizations.append(Organization(entity: ("Best Buddies International",0), tagline: "Friendship, Jobs and Leadership Development", mission: "We are the world's largest organization dedicated to ending the social, physical and economic isolation of the 200 million people with intellectual and developmental disabilities (IDD).", scope: "Best Buddies programs engage participants in each of the 50 United States, and in over 50 countries around the world", location:LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: ""), url: ""))
-//        
-//        organizations.append(Organization(entity: ("Easter Seals",0), tagline: "Taking on disability together", mission: "Easterseals provides exceptional services, education, outreach, and advocacy so that people living with autism and other disabilities can live, learn, work and play in our communities. ", scope: "Easter Seals is a national organization with over 75 affiliates and local service centers in the US", location:LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: ""), url: ""))
-//        
-//        organizations.append(Organization(entity: ("The Penguin Project",0), tagline: "Empowering children with special needs through theater", mission: "Provide an opportunity for children with special needs to develop creative skills related to the theater arts, and participate in a community theater experience", scope: "The Penguin Project has 18 Projects across the US in 11 different states", location:LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: ""), url: ""))
-//    }
-    
-    // RepositoryAccessorProtocol
-    
-    func isLoading() -> Bool {
-        return !self.loaded
-    }
-    
 }
 
+
+// MARK: - TESTING
 
 func testOrganizations() -> [Organization] {
     var returnOrganizations: [Organization] = []

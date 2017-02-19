@@ -22,7 +22,7 @@ class RegionalResourcesModelController: ModelController {
         super.init()
         
         self.regionalRepository = RegionalResourcesRepository(location: atLocation)
-        self.organizations = OrganizationRepositoryAccessor(repository: self.regionalRepository)
+        //self.organizations = OrganizationRepositoryAccessor(repository: self.regionalRepository)
         //self.events = EventRepositoryAccessor(repository: self.regionalRepository)
     }
     
@@ -35,8 +35,8 @@ class RegionalResourcesModelController: ModelController {
                 //let notificationkey = self.regionalRepository.repositoryUpdateNotificationKey()
                 //NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationkey), object: nil)
                 
-                self.organizations.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
-                requestOrgListRefresh()
+                //self.organizations.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
+                //requestOrgListRefresh()
             } else {
                 print("loading failed")
             }
@@ -46,6 +46,11 @@ class RegionalResourcesModelController: ModelController {
     func createEventAccessor(delegate: RepositoryAccessorProtocol) -> EventRepositoryAccessor {
         
         return EventRepositoryAccessor(repository: self.regionalRepository, delegate: delegate)
+    }
+    
+    func createOrganizationAccessor(delegate: RepositoryAccessorProtocol) -> OrganizationRepositoryAccessor {
+        
+        return OrganizationRepositoryAccessor(repository: self.regionalRepository, delegate: delegate)
     }
     
     func checkRepositoryUpdate() {

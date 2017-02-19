@@ -57,8 +57,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         containerTableView.backgroundColor = UIColor.white
         
         containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
-        
-        
+
         self.eventAccessor.requestData(filteredBy: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
         if (self.eventAccessor.state == .NotLoaded) {
             self.showLoadingIndicator = true
@@ -75,7 +74,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
     //MARK: - RepositoryAccessorProtocol
     
-    func accessorUpdateNotification() {
+    func updateNotification() {
         if (self.showLoadingIndicator) {
             self.showLoadingIndicator = false
             stopActivityIndicator()

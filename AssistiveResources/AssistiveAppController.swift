@@ -1,15 +1,15 @@
 //
-//  AssitiveAppController.swift
+//  AssistiveAppController.swift
 //  AssistiveResources
 //
-//  Created by Bill Johnson on 1/15/17.
+//  Created by Bill Johnson on 2/18/17.
 //  Copyright © 2017 SevenPlusTwo. All rights reserved.
 //
 
 import UIKit
 
 
-class AssitiveAppController: AppController {
+class AssistiveAppController: AppController {
     
     private var user: UserModelController!
     private var regionalResources : RegionalResourcesModelController?
@@ -27,16 +27,16 @@ class AssitiveAppController: AppController {
         self.loadUserModelController()      // loadResourceModelController() not called until after login
         precondition(self.user != nil)
         
-        //self.user.storeUserCredentials(username: "exarchitect@gmail.com", password: "serveme1")
         // temp override to fail login for testing
         self.user.storeUserCredentials(username: "", password: "")
         
         let success = self.pushNavigationListProcessController()
         if (!success) {
+            // TODO
         }
         
         self.user!.authorizeUser(completion: { (success) in
-
+            
             if (success) {
                 print("logged in")
                 
@@ -45,7 +45,7 @@ class AssitiveAppController: AppController {
                 
                 let success = self.pushAuthenticationProcessController()
                 if (!success) {
-                    
+                    // TODO
                 }
             }
         })
@@ -71,7 +71,7 @@ class AssitiveAppController: AppController {
         case .eventSelected(let event):
             let success = self.pushEventDetailProcessController(evt: event)
             if (!success) {
-                
+                // TODO
             }
             
         case .organizationSelected(let organization):
@@ -86,18 +86,17 @@ class AssitiveAppController: AppController {
         case Destination.Organizations:
             let success = self.pushOrganizationListProcessController()
             if (!success) {
-                
+                // TODO
             }
             
         case Destination.Events:
             let success = self.pushEventListProcessController()
             if (!success) {
-                
+                // TODO
             }
             
         case Destination.Facilities:
             let _ = 7
-            //freeMemory()
             
         case Destination.Travel:
             let _ = 7
@@ -124,42 +123,37 @@ class AssitiveAppController: AppController {
     
     private func pushNavigationListProcessController () -> Bool {
         
-        precondition(self.user != nil)
         let navListPC = NavListProcessController(userModelController: self.user, responseDelegate: self)
         return self.launchProcessController(processController: navListPC)
     }
     
     private func pushAuthenticationProcessController () -> Bool {
         
-        precondition(self.user != nil)
         let authPC = AuthenticationProcessController(userModelController: self.user, responseDelegate:self)
         return self.launchProcessController(processController: authPC)
     }
     
     private func pushEventListProcessController () -> Bool {
         
-        precondition(self.regionalResources != nil)
         let eventListPC = EventListProcessController(rsrcsModelController: self.regionalResources!, responseDelegate: self)
         return self.launchProcessController(processController: eventListPC)
     }
     
     private func pushEventDetailProcessController (evt: EntityDescriptor) -> Bool {
         
-        precondition(self.regionalResources != nil)
         let eventDetailPC = EventDetailProcessController(rsrcsModelController: self.regionalResources!, responseDelegate: self)
         return self.launchProcessController(processController: eventDetailPC)
     }
     
     private func pushOrganizationListProcessController () -> Bool {
         
-        precondition(self.regionalResources != nil)
         let orgListPC = OrganizationListProcessController(rsrcsModelController: self.regionalResources!, responseDelegate: self)
         return self.launchProcessController(processController: orgListPC)
     }
     
-
+    
     // MARK: - Utilities
-
+    
     private func launchProcessController (processController: ProcessController) -> Bool {
         let success = processController.launch()
         if success {

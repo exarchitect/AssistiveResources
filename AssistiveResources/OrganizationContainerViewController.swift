@@ -9,8 +9,6 @@
 import UIKit
 
 
-let updateOrgListNotificationKey = NSNotification.Name(rawValue: "key_notify_organization_list_changed")
-
 
 protocol OrganizationListContainerNotificationProtocol: class {
     func notifyRowDetailSelected(rowIndex: Int)
@@ -18,35 +16,35 @@ protocol OrganizationListContainerNotificationProtocol: class {
 }
 
 
-class OrganizationContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class OrganizationContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, RepositoryAccessorProtocol {
 
     @IBOutlet weak var containerTableView: UITableView!
 
-    weak private var resources: RegionalResourcesModelController!
     weak private var notificationDelegate:OrganizationListContainerNotificationProtocol?
     private var expandedRowIndex = -1
-    private var showLoadingIndicatorAtStartup: Bool?
+    private var showLoadingIndicator: Bool = false
+    private var organizationAccessor: OrganizationRepositoryAccessor!
     
-    //MARK: - inherited
+    //MARK: - INHERITED
     
     func dependencies(rsrcModelController: RegionalResourcesModelController, delegate: OrganizationListContainerNotificationProtocol) {
         
-        self.resources = rsrcModelController
         self.notificationDelegate = delegate
-        self.showLoadingIndicatorAtStartup = self.resources!.organizations.isLoading()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshOrgContent), name: updateOrgListNotificationKey, object: nil)
+
+        self.organizationAccessor = rsrcModelController.createOrganizationAccessor(delegate: self)
+        guard self.organizationAccessor != nil else {
+            return
+        }
     }
     
     deinit {
         print("deallocating OrganizationContainerVC")
-        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        precondition(self.resources != nil)
+        //precondition(self.resources != nil)
         precondition(self.notificationDelegate != nil)
         
         self.containerTableView.delegate = self
@@ -59,12 +57,15 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
         //tableView.allowsSelection = false
         self.containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
         
-        if (self.showLoadingIndicatorAtStartup!) {
+        self.containerTableView.rowHeight = UITableViewAutomaticDimension
+        self.containerTableView.estimatedRowHeight = 140
+
+        self.organizationAccessor.requestData(filteredBy: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
+        if (self.organizationAccessor.state == .NotLoaded) {
+            self.showLoadingIndicator = true
             startActivityIndicator(title: nil, message: "loading...")
         }
-
-        self.containerTableView.rowHeight = UITableViewAutomaticDimension
-        self.containerTableView.estimatedRowHeight = 140}
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -72,19 +73,22 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
         //freeMemory()
     }
     
-
-
-    //MARK: - tableView delegates
+    // MARK: - REPOSITORY ACCESSOR PROTOCOL
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        //return (expandedRowIndex == indexPath.row) ? 286.0 : 100
-//        //return 286.0
-//        return 0.0
-//    }
+    func updateNotification() {
+        if (self.showLoadingIndicator) {
+            self.showLoadingIndicator = false
+            stopActivityIndicator()
+        }
+        
+        self.containerTableView.reloadData()
+    }
+
+
+    // MARK: - TABLE VIEW DELEGATES
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return resources!.organizations.count
-        return self.resources.organizations.count
+        return self.organizationAccessor.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -93,7 +97,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
         
         let cell:OrganizationListTableViewCell = tableView.dequeueReusableCell(withIdentifier: kOrganizationListCellID) as! OrganizationListTableViewCell
         
-        let organiz:Organization = resources!.organizations[indexPath.row]
+        let organiz:Organization = self.organizationAccessor[indexPath.row]
         cell.configureCell(org: organiz, expand: expandedRowIndex == indexPath.row)
         
         return cell
@@ -109,11 +113,11 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     }
     
     
-    //MARK: - utils
+    // MARK: - UTILITIES
     
     func refreshOrgContent() {
-        if (self.showLoadingIndicatorAtStartup!) {
-            self.showLoadingIndicatorAtStartup = false
+        if (self.showLoadingIndicator) {
+            self.showLoadingIndicator = false
             stopActivityIndicator()
         }
         
@@ -134,9 +138,4 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     }
     
 }
-
-func requestOrgListRefresh() {
-    NotificationCenter.default.post(name: updateOrgListNotificationKey, object: nil)
-}
-
 

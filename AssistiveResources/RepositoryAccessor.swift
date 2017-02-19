@@ -13,8 +13,7 @@ enum AccessorState : Int {
 }
 
 protocol RepositoryAccessorProtocol: class {
-    //func isLoading() -> Bool
-    func accessorUpdateNotification()
+    func updateNotification()
 }
 
 

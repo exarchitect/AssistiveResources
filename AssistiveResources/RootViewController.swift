@@ -8,9 +8,9 @@
 
 import UIKit
 
-class RootViewController: UIViewController {
+// currently does nothing
 
-//    var appController: AppController!
+class RootViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

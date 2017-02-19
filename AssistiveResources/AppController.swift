@@ -68,12 +68,3 @@ class AppController: NSObject, ProcessControllerProtocol {
 }
 
 
-//MARK: - functions
-
-//let memoryWarningNotificationKeyName = NSNotification.Name(rawValue: "notify_did_receive_memory_warning")
-
-//func freeMemory() {
-//    NotificationCenter.default.post(name: memoryWarningNotificationKeyName, object: nil)
-//}
-
-
