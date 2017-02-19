@@ -32,8 +32,8 @@ class RegionalResourcesModelController: ModelController {
             if (success) {
                 //self.events.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
                 //requestEventListRefresh()
-                let notificationkey = self.regionalRepository.repositoryUpdateNotificationKey()
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationkey), object: nil)
+                //let notificationkey = self.regionalRepository.repositoryUpdateNotificationKey()
+                //NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationkey), object: nil)
                 
                 self.organizations.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
                 requestOrgListRefresh()

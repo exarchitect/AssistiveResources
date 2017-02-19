@@ -23,7 +23,6 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 
     @IBOutlet weak var containerTableView: UITableView!
     
-//    weak private var resources: RegionalResourcesModelController!
     weak private var notificationDelegate:EventListContainerNotificationProtocol?
     private var expandedRowIndex = -1
     private var showLoadingIndicator: Bool = false
@@ -33,26 +32,21 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 
     func dependencies(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
     
-//        self.resources = rsrcModelController
         self.notificationDelegate = delegate
-//        self.showLoadingIndicator = self.resources!.events.isLoading()
       
         self.eventAccessor = rsrcModelController.createEventAccessor(delegate: self)
         guard self.eventAccessor != nil else {
             return
         }
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: NSNotification.Name(rawValue: updateEventListNotificationKey), object: nil)
     }
     
     deinit {
         print("deallocating EventContainerVC")
-//        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        precondition(self.resources != nil)
         precondition(self.notificationDelegate != nil)
         
         containerTableView.delegate = self
@@ -66,14 +60,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         
         self.eventAccessor.requestData(filteredBy: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
-        if (self.eventAccessor.state == .Loading) {
+        if (self.eventAccessor.state == .NotLoaded) {
             self.showLoadingIndicator = true
             startActivityIndicator(title: nil, message: "loading...")
         }
-        
-//        if (self.showLoadingIndicator) {
-//            startActivityIndicator(title: nil, message: "loading...")
-//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -85,7 +75,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
     //MARK: - RepositoryAccessorProtocol
     
-    func dataUpdateNotification() {
+    func accessorUpdateNotification() {
         if (self.showLoadingIndicator) {
             self.showLoadingIndicator = false
             stopActivityIndicator()
@@ -95,15 +85,6 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     }
 
     //MARK: - utils
-    
-//    func refreshContent() {
-//        if (self.showLoadingIndicator) {
-//            self.showLoadingIndicator = false
-//            stopActivityIndicator()
-//        }
-//        
-//        self.containerTableView.reloadData()
-//    }
     
     private func expandCollapseRow(row: Int)
     {
@@ -171,7 +152,9 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {
-        notificationDelegate?.notifyFilterSelected()
+        if (!self.showLoadingIndicator) {
+            notificationDelegate?.notifyFilterSelected()
+        }
     }
 
 }
@@ -194,9 +177,4 @@ func getRowFrom(_ cellItem: UIView, _ fromTable: UITableView) -> Int {
     }
     return returnRow
 }
-
-//func requestEventListRefresh() {
-//    NotificationCenter.default.post(name: NSNotification.Name(rawValue: updateEventListNotificationKey), object: nil)
-//}
-
 

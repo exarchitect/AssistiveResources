@@ -102,7 +102,8 @@ class Repository: NSObject {
     internal func endRepositoryUpdate() {
         self.repositoryAvailable = true
         
-        // check to see if there are any pending requests for data accessors and service them
+        let notificationkey = self.repositoryUpdateNotificationKey()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationkey), object: nil)
     }
 
 }

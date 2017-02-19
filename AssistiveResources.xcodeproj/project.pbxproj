@@ -54,6 +54,7 @@
 		D2B7D14D1E46A58400E69D1E /* OrganizationFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D14C1E46A58400E69D1E /* OrganizationFilterViewController.swift */; };
 		D2B7D14F1E46A65E00E69D1E /* OrganizationList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2B7D14E1E46A65E00E69D1E /* OrganizationList.storyboard */; };
 		D2B7D1511E46A8E500E69D1E /* OrganizationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1501E46A8E500E69D1E /* OrganizationContainerViewController.swift */; };
+		D2B7D1561E59422D00E69D1E /* RepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */; };
 		D2C9AD711DDFF5120028341D /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD701DDFF5120028341D /* AppController.swift */; };
 		D2C9AD731DE00A8D0028341D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD721DE00A8D0028341D /* RootViewController.swift */; };
 		D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */; };
@@ -133,6 +134,7 @@
 		D2B7D14C1E46A58400E69D1E /* OrganizationFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationFilterViewController.swift; sourceTree = "<group>"; };
 		D2B7D14E1E46A65E00E69D1E /* OrganizationList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OrganizationList.storyboard; sourceTree = "<group>"; };
 		D2B7D1501E46A8E500E69D1E /* OrganizationContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationContainerViewController.swift; sourceTree = "<group>"; };
+		D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryAccessor.swift; sourceTree = "<group>"; };
 		D2C9AD701DDFF5120028341D /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		D2C9AD721DE00A8D0028341D /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		D2F91E8C1DDFE5D20084F00E /* AssistiveResources.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssistiveResources.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -298,6 +300,7 @@
 				D24E4DCB1DE74750008A11FB /* ProcessController.swift */,
 				D2B028501E2C29530064B3D2 /* ModelController.swift */,
 				D25550491E234626004FE72B /* Repository.swift */,
+				D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */,
 				D268AD301E31DA450027C8BA /* Protocols.swift */,
 			);
 			name = "Framework Classes";
@@ -722,6 +725,7 @@
 				D209FAC51E00CF030099BD46 /* EventDetailProcessController.swift in Sources */,
 				D2B7D1511E46A8E500E69D1E /* OrganizationContainerViewController.swift in Sources */,
 				D25550551E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift in Sources */,
+				D2B7D1561E59422D00E69D1E /* RepositoryAccessor.swift in Sources */,
 				D2B7D1491E46A50F00E69D1E /* OrganizationListTableViewCell.swift in Sources */,
 				D2B0284F1E2C20F80064B3D2 /* AssitiveAppController.swift in Sources */,
 				D2B028511E2C29530064B3D2 /* ModelController.swift in Sources */,

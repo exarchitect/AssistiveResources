@@ -9,17 +9,10 @@
 import UIKit
 import RealmSwift
 
-let updateRepositoryNotificationKey = "key_notify_resource_repository_changed"
-
 
 class RegionalResourcesRepository: Repository {
     
     private var loc: LocationProfile?
-    
-//    override init() {
-//        super.init()
-//        // ?
-//    }
     
     init(location: LocationProfile)
     {
@@ -63,7 +56,6 @@ class RegionalResourcesRepository: Repository {
             self.completionClosure?(true)
             self.completionClosure = nil
 
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: updateRepositoryNotificationKey), object: nil)
             self.endRepositoryUpdate()
         }
     }
@@ -116,20 +108,13 @@ class RegionalResourcesRepository: Repository {
     }
     
     override func repositoryUpdateNotificationKey () -> String {
-        return updateRepositoryNotificationKey
+        return "key_notify_resource_repository_changed"
     }
     
 
 
     // MARK: - Realm
-    
-    //    func haveResourcesLoaded(forZipcode: String) -> Bool {
-    //        let realm = try! Realm()
-    //        let results = realm.object(ofType: -T.Type, forPrimaryKey: -K)
-    //
-    //        return (results != .noErr);
-    //    }
-    
+        
     //    func setupDatabasePath() {
     //        let dbName:String = "resources_v1.realm";
     //        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]

@@ -11,46 +11,30 @@ import RealmSwift
 
 
 enum AccessorState : Int {
-    case Loaded = 0, Loading = 1
+    case NotLoaded = 0, Loaded = 1
 }
-
-typealias CompletionNotificationSignature = () -> ()
 
 
 class EventRepositoryAccessor: NSObject {
     
-    var state: AccessorState = .Loading
+    var state: AccessorState = .NotLoaded
 
     weak private var repo: Repository!
     private var events: [StoredEvent] = []
-    private var loaded: Bool = false
-    //private var notification: CompletionNotificationSignature?
     private var delegate: RepositoryAccessorProtocol?
     
     var count: Int {
         return events.count
     }
     
-    init (repository: Repository) {
-        
-        self.repo = repository
-    }
-    
-//    init (repository: Repository, asyncCompletionNotification: @escaping () -> ()) {
-//        
-//        self.repo = repository
-//        self.notification = asyncCompletionNotification
-//    }
-    
     init (repository: Repository, delegate: RepositoryAccessorProtocol) {
         
         super.init()
         self.repo = repository
-//        self.notification = nil
         self.delegate = delegate
 
         let notificationkey = repository.repositoryUpdateNotificationKey()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.notifyRepositoryUpdated), name: NSNotification.Name(rawValue: notificationkey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.repositoryUpdateNotification), name: NSNotification.Name(rawValue: notificationkey), object: nil)
     }
     
     
@@ -67,14 +51,20 @@ class EventRepositoryAccessor: NSObject {
             self.retrieve(usingFilter: filteredBy)
             self.state = .Loaded
         } else {
-            // ???????
+            self.state = .NotLoaded
+            // when we get an update for the repository, we will retrieve the data and call the delegate
         }
     }
     
+    func repositoryUpdateNotification() {
+        self.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
+        self.delegate?.accessorUpdateNotification()
+    }
     
-    // internal
+    
+    // MARK: - PRIVATE
 
-    func retrieve(usingFilter: NeedsProfile) {
+    private func retrieve(usingFilter: NeedsProfile) {
         
         do {
             let uiRealm = try Realm()
@@ -82,20 +72,15 @@ class EventRepositoryAccessor: NSObject {
             for evt in eventsFound {
                 self.addEvent(event: evt)
             }
-            self.loaded = true
+            self.state = .Loaded
             
         } catch let error as NSError {
             // handle error
 
             let _ = error
-            self.loaded = false
+            self.state = .NotLoaded
         }
         
-    }
-    
-    func notifyRepositoryUpdated() {
-        self.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
-        self.delegate?.dataUpdateNotification()
     }
     
     private func addEvent(event: StoredEvent) {
@@ -103,15 +88,10 @@ class EventRepositoryAccessor: NSObject {
         events.append(newEvent)
     }
     
-    
-    // RepositoryAccessorProtocol
-    
-//    func isLoading() -> Bool {
-//        return !self.loaded
-//    }
-    
 }
 
+
+// MARK: - TESTING
 
 func testEvents() -> [StoredEvent] {
     var returnevents: [StoredEvent] = []

@@ -11,7 +11,7 @@ import Foundation
 
 protocol RepositoryAccessorProtocol: class {
     //func isLoading() -> Bool
-    func dataUpdateNotification()
+    func accessorUpdateNotification()
 }
 
 
