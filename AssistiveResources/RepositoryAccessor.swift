@@ -8,6 +8,39 @@
 
 import UIKit
 
+enum AccessorState : Int {
+    case NotLoaded = 0, Loaded = 1
+}
+
+protocol RepositoryAccessorProtocol: class {
+    //func isLoading() -> Bool
+    func accessorUpdateNotification()
+}
+
+
+
 class RepositoryAccessor: NSObject {
+
+    var state: AccessorState = .NotLoaded
+    weak var repo: Repository!
+    weak var delegate: RepositoryAccessorProtocol?
+    
+    init (repository: Repository, delegate: RepositoryAccessorProtocol) {
+        
+        super.init()
+        self.repo = repository
+        self.delegate = delegate
+        
+        let notificationkey = repository.repositoryUpdateNotificationKey()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.repositoryUpdateNotification), name: NSNotification.Name(rawValue: notificationkey), object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    func repositoryUpdateNotification() {
+        precondition(false, "must override this method - do not call super")
+    }
 
 }

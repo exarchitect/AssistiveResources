@@ -10,36 +10,12 @@ import UIKit
 import RealmSwift
 
 
-enum AccessorState : Int {
-    case NotLoaded = 0, Loaded = 1
-}
-
-
-class EventRepositoryAccessor: NSObject {
+class EventRepositoryAccessor: RepositoryAccessor {
     
-    var state: AccessorState = .NotLoaded
-
-    weak private var repo: Repository!
     private var events: [StoredEvent] = []
-    private var delegate: RepositoryAccessorProtocol?
     
     var count: Int {
         return events.count
-    }
-    
-    init (repository: Repository, delegate: RepositoryAccessorProtocol) {
-        
-        super.init()
-        self.repo = repository
-        self.delegate = delegate
-
-        let notificationkey = repository.repositoryUpdateNotificationKey()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.repositoryUpdateNotification), name: NSNotification.Name(rawValue: notificationkey), object: nil)
-    }
-    
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     subscript(pos: Int) -> StoredEvent {
@@ -56,7 +32,7 @@ class EventRepositoryAccessor: NSObject {
         }
     }
     
-    func repositoryUpdateNotification() {
+    override func repositoryUpdateNotification() {
         self.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
         self.delegate?.accessorUpdateNotification()
     }
