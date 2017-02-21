@@ -14,7 +14,7 @@ class RegionalResourcesModelController: ModelController {
     
     private var regionalRepository : RegionalResourcesRepository!
 
-    var organizations : OrganizationRepositoryAccessor!
+    //var organizations : OrganizationRepositoryAccessor!
     //var events : EventRepositoryAccessor!
     
     init(atLocation: LocationProfile)

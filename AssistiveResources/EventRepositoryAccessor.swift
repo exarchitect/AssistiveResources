@@ -28,7 +28,7 @@ class EventRepositoryAccessor: RepositoryAccessor {
             self.state = .Loaded
         } else {
             self.state = .NotLoaded
-            // when we get an update for the repository, we will retrieve the data and call the delegate
+            // when we get an update from the repository, we will retrieve the data and call the delegate
         }
     }
     
