@@ -27,13 +27,13 @@ class AssistiveAppController: AppController {
         self.loadUserModelController()      // loadResourceModelController() not called until after login
         precondition(self.user != nil)
         
-        // temp override to fail login for testing
-        self.user.storeUserCredentials(username: "", password: "")
-        
         let success = self.pushNavigationListProcessController()
         if (!success) {
             // TODO
         }
+        
+        // temp override to fail login for testing
+        self.user.storeUserCredentials(username: "", password: "")
         
         self.user!.authorizeUser(completion: { (success) in
             
