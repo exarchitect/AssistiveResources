@@ -11,21 +11,26 @@ import UIKit
 
 class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
-    private var navigationDelegate: ProcessControllerProtocol!
-    private var user: UserModelController!
+    //private var navigationDelegate: ProcessControllerProtocol!
+    weak private var user: UserModelController!
     private var navigationData: NavigationContent!
 
     private var navListViewController: NavListViewController!
     
-    init (userModelController: UserModelController, responseDelegate: ProcessControllerProtocol) {
+    func modelDependency (userModelController: UserModelController) {
         
-        self.navigationDelegate = responseDelegate
         self.user = userModelController
     }
     
+//    init (userModelController: UserModelController, responseDelegate: ProcessControllerProtocol) {
+//        
+//        self.navigationDelegate = responseDelegate
+//        self.user = userModelController
+//    }
+    
     override func launch() -> Bool {
         
-        precondition(self.navigationDelegate != nil)
+        precondition(self.responseDelegate != nil)
         precondition(self.user != nil)
         
         self.navigationData = NavigationContent()
@@ -33,7 +38,7 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         self.navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
         self.navListViewController.dependencies(navItems: self.navigationData, navDelegate: self)
         
-        let navCtrller = self.navigationDelegate.navigationController()
+        let navCtrller = self.responseDelegate.navigationController()
         navCtrller.pushViewController(self.navListViewController, animated: false)
         
         return (self.navListViewController != nil)
@@ -42,14 +47,14 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     override func terminate () {
         super.terminate()
 
-        let navCtrller = self.navigationDelegate.navigationController()
+        let navCtrller = self.responseDelegate.navigationController()
         let _ = navCtrller.popViewController(animated: true)
     }
     
     // NavigationSelectorProtocol
     func selectNavigationItem (selection: Destination) {
         let cmd = Command(type: .navigationItemSelected(selection: selection))
-        self.navigationDelegate.requestAction(command: cmd)
+        self.responseDelegate.requestAction(command: cmd)
     }
     
 }

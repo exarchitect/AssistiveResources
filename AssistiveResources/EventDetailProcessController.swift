@@ -11,12 +11,15 @@ import UIKit
 
 class EventDetailProcessController: ProcessController, EventDetailViewControllerResponseProtocol {
 
-    weak private var responseDelegate: ProcessControllerProtocol!
-    unowned private var rsrcModelController: RegionalResourcesModelController
+    //weak private var responseDelegate: ProcessControllerProtocol!
+    weak private var rsrcModelController: RegionalResourcesModelController!
     private var eventDetailViewController: EventDetailViewController!
     
-    init(rsrcsModelController: RegionalResourcesModelController, responseDelegate: ProcessControllerProtocol) {
-        self.responseDelegate = responseDelegate
+//    override init(responseDelegate: ProcessControllerProtocol) {
+//        super.init(responseDelegate: responseDelegate)
+//    }
+    
+    func modelDependency(rsrcsModelController: RegionalResourcesModelController) {
         self.rsrcModelController = rsrcsModelController
     }
     

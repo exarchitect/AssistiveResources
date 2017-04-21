@@ -11,15 +11,19 @@ import UIKit
 
 class EventListProcessController: ProcessController, EventListViewControllerResponseProtocol {
     
-    private var responseDelegate: ProcessControllerProtocol!
-    unowned private var rsrcModelController: RegionalResourcesModelController
+    //private var responseDelegate: ProcessControllerProtocol!
+    weak private var rsrcModelController: RegionalResourcesModelController!
     private var eventListViewController: EventListViewController!
     
-    init(rsrcsModelController: RegionalResourcesModelController, responseDelegate: ProcessControllerProtocol) {
+//    override init(responseDelegate: ProcessControllerProtocol) {
+//        super.init(responseDelegate: responseDelegate)
+//    }
+    
+    func modelDependency (rsrcsModelController: RegionalResourcesModelController) {
         self.responseDelegate = responseDelegate
         self.rsrcModelController = rsrcsModelController
     }
-
+    
     override func launch() -> Bool {
         
         self.eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController

@@ -11,13 +11,18 @@ import UIKit
 
 class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
     
-    private var responseDelegate: ProcessControllerProtocol!
+    //private var responseDelegate: ProcessControllerProtocol!
     private var user: UserModelController!
     private var loginViewController: LoginViewController!
 
-    init(userModelController: UserModelController, responseDelegate: ProcessControllerProtocol) {
+//    init(userModelController: UserModelController, responseDelegate: ProcessControllerProtocol) {
+//        
+//        self.responseDelegate = responseDelegate
+//        self.user = userModelController
+//    }
+    
+    func modelDependency(userModelController: UserModelController) {
         
-        self.responseDelegate = responseDelegate
         self.user = userModelController
     }
     

@@ -10,12 +10,16 @@ import UIKit
 
 class OrganizationListProcessController: ProcessController, OrganizationListViewControllerResponseProtocol {
     
-    private var responseDelegate: ProcessControllerProtocol!
-    unowned private var rsrcModelController: RegionalResourcesModelController
+    //private var responseDelegate: ProcessControllerProtocol!
+    weak private var rsrcModelController: RegionalResourcesModelController!
     private var organizationListViewController: OrganizationListViewController!
     
-    init(rsrcsModelController: RegionalResourcesModelController, responseDelegate: ProcessControllerProtocol) {
-        self.responseDelegate = responseDelegate
+//    init(rsrcsModelController: RegionalResourcesModelController, responseDelegate: ProcessControllerProtocol) {
+//        self.responseDelegate = responseDelegate
+//        self.rsrcModelController = rsrcsModelController
+//    }
+
+    func modelDependency(rsrcsModelController: RegionalResourcesModelController) {
         self.rsrcModelController = rsrcsModelController
     }
     

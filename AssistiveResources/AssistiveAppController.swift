@@ -123,31 +123,37 @@ class AssistiveAppController: AppController {
     
     private func pushNavigationListProcessController () -> Bool {
         
-        let navListPC = NavListProcessController(userModelController: self.user, responseDelegate: self)
+//        let navListPC = NavListProcessController(userModelController: self.user, responseDelegate: self)
+        let navListPC = NavListProcessController(responseDelegate: self)
+        navListPC.modelDependency(userModelController: self.user)
         return self.launchProcessController(processController: navListPC)
     }
     
     private func pushAuthenticationProcessController () -> Bool {
         
-        let authPC = AuthenticationProcessController(userModelController: self.user, responseDelegate:self)
+        let authPC = AuthenticationProcessController(responseDelegate:self)
+        authPC.modelDependency(userModelController: self.user)
         return self.launchProcessController(processController: authPC)
     }
     
     private func pushEventListProcessController () -> Bool {
         
-        let eventListPC = EventListProcessController(rsrcsModelController: self.regionalResources!, responseDelegate: self)
+        let eventListPC = EventListProcessController(responseDelegate: self)
+        eventListPC.modelDependency(rsrcsModelController: self.regionalResources!)
         return self.launchProcessController(processController: eventListPC)
     }
     
     private func pushEventDetailProcessController (evt: EntityDescriptor) -> Bool {
         
-        let eventDetailPC = EventDetailProcessController(rsrcsModelController: self.regionalResources!, responseDelegate: self)
+        let eventDetailPC = EventDetailProcessController(responseDelegate: self)
+        eventDetailPC.modelDependency(rsrcsModelController: self.regionalResources!)
         return self.launchProcessController(processController: eventDetailPC)
     }
     
     private func pushOrganizationListProcessController () -> Bool {
         
-        let orgListPC = OrganizationListProcessController(rsrcsModelController: self.regionalResources!, responseDelegate: self)
+        let orgListPC = OrganizationListProcessController(responseDelegate: self)
+        orgListPC.modelDependency(rsrcsModelController: self.regionalResources!)
         return self.launchProcessController(processController: orgListPC)
     }
     

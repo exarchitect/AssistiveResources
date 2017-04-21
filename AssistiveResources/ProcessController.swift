@@ -20,11 +20,19 @@ protocol ProcessControllerProtocol: class {
 class ProcessController: NSObject {
     
     var inUse: Bool = false
+    weak var responseDelegate: ProcessControllerProtocol!
 
-    override init() {
+    init (responseDelegate: ProcessControllerProtocol) {
+        
+        self.responseDelegate = responseDelegate
         self.inUse = true
         super.init()
     }
+    
+//    override init() {
+//        self.inUse = true
+//        super.init()
+//    }
 
     func terminate () {
         self.inUse = false

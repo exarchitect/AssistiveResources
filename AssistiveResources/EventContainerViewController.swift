@@ -10,7 +10,7 @@ import UIKit
 
 
 //let updateEventListNotificationKey = NSNotification.Name(rawValue: "key_notify_event_list_changed")
-let updateEventListNotificationKey = "key_notify_event_list_changed"
+//let updateEventListNotificationKey = "key_notify_event_list_changed"
 
 
 protocol EventListContainerNotificationProtocol: class {

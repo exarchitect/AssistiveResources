@@ -13,7 +13,7 @@ class AppController: NSObject, ProcessControllerProtocol {
 
     var rootViewController: RootViewController!
     var navController: UINavigationController!
-    var processControllerStack = [ProcessController()]
+    var processControllerStack = [ProcessController]()
     
     
     override init() {

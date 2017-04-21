@@ -12,18 +12,11 @@ import RealmSwift
 
 class OrganizationRepositoryAccessor: RepositoryAccessor {
     
-    //weak private var repo: Repository?
     private var organizations: [Organization] = []
-    //var loaded: Bool = false
     
     var count: Int {
         return organizations.count
     }
-    
-//    init (repository: Repository) {
-//        
-//        self.repo = repository
-//    }
     
     subscript(pos: Int) -> Organization {
         return organizations[pos]
@@ -82,7 +75,7 @@ func testOrganizations() -> [Organization] {
     
     returnOrganizations.append(Organization(entity: ("Easter Seals",0), tagline: "Taking on disability together", mission: "Providing exceptional services, education, outreach, and advocacy so that people living with autism and other disabilities can live, learn, work and play in our communities.", scope: "Easter Seals is a national organization with over 75 affiliates and local service centers in the US", location:LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: ""), url: ""))
     
-    returnOrganizations.append(Organization(entity: ("The Penguin Project",0), tagline: "Empowering children with special needs through theater", mission: "Providing an opportunity for children with special needs to develop creative skills related to the theater arts, and participate in a community theater experience", scope: "The Penguin Project has 18 Projects across the US in 11 different states", location:LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: ""), url: ""))
+    returnOrganizations.append(Organization(entity: ("The Penguin Project",0), tagline: "Empowering children with special needs through theater", mission: "Providing an opportunity for children with special needs to develop creative skills related to the theater arts, and participate in a community theater experience", scope: "The Penguin Project is based in central Illinois and has 18 Projects across the US in 11 different states", location:LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: ""), url: ""))
     
     return returnOrganizations
 }
