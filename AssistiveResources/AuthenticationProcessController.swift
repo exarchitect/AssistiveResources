@@ -42,7 +42,9 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         super.terminate()
 
         let parentViewController = self.responseDelegate.navigationController().topViewController
-        parentViewController?.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.3)) {
+            parentViewController?.dismiss(animated: true, completion: nil)
+        }
         
         requestMainNavigationRefresh()
     }

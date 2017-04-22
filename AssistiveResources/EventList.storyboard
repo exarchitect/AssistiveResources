@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -120,7 +120,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="286"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YKt-6A-pvK" id="6WH-7I-CnE">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="285.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="285"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fDF-Uj-WtC">
@@ -226,14 +226,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FA9-cf-8fV">
-                                                    <rect key="frame" x="8" y="233" width="117" height="46"/>
+                                                    <rect key="frame" x="0.0" y="235" width="121" height="46"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="46" id="H53-g2-QKf"/>
-                                                        <constraint firstAttribute="width" constant="117" id="Yxy-Ia-qKu"/>
+                                                        <constraint firstAttribute="width" constant="121" id="Yxy-Ia-qKu"/>
                                                     </constraints>
-                                                    <state key="normal" title="Details" backgroundImage="blue_button">
-                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </state>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                    <state key="normal" title="Show Detail"/>
                                                     <connections>
                                                         <action selector="showRowDetailButtonAction:" destination="BO0-If-4BN" eventType="touchUpInside" id="Dih-JI-lFC"/>
                                                     </connections>
@@ -244,7 +243,7 @@
                                                 <constraint firstItem="arF-6r-xx8" firstAttribute="top" secondItem="6WH-7I-CnE" secondAttribute="topMargin" constant="63" id="7Xq-1l-Zut"/>
                                                 <constraint firstAttribute="trailing" secondItem="hif-yP-s4r" secondAttribute="trailing" constant="8" id="8IO-r8-uAZ"/>
                                                 <constraint firstAttribute="trailing" secondItem="INf-2a-NiK" secondAttribute="trailing" constant="8" id="Aem-v8-AXj"/>
-                                                <constraint firstItem="FA9-cf-8fV" firstAttribute="top" secondItem="6WH-7I-CnE" secondAttribute="top" constant="233" id="ENY-yl-7vB"/>
+                                                <constraint firstItem="FA9-cf-8fV" firstAttribute="top" secondItem="6WH-7I-CnE" secondAttribute="top" constant="235" id="ENY-yl-7vB"/>
                                                 <constraint firstItem="INf-2a-NiK" firstAttribute="top" secondItem="6WH-7I-CnE" secondAttribute="top" constant="211" id="IEX-5g-6PL"/>
                                                 <constraint firstItem="hif-yP-s4r" firstAttribute="leading" secondItem="6WH-7I-CnE" secondAttribute="leading" constant="8" id="IEc-AX-fsP"/>
                                                 <constraint firstAttribute="trailing" secondItem="4CF-Kx-I8V" secondAttribute="trailing" constant="8" id="KI0-7a-Odn"/>
@@ -253,7 +252,7 @@
                                                 <constraint firstItem="WfL-G4-5Q6" firstAttribute="top" secondItem="6WH-7I-CnE" secondAttribute="topMargin" constant="-2" id="Qcc-MO-JZh"/>
                                                 <constraint firstItem="fDF-Uj-WtC" firstAttribute="leading" secondItem="6WH-7I-CnE" secondAttribute="leadingMargin" id="VRF-Ox-keV"/>
                                                 <constraint firstItem="WfL-G4-5Q6" firstAttribute="trailing" secondItem="6WH-7I-CnE" secondAttribute="trailingMargin" id="VhV-H7-GeF"/>
-                                                <constraint firstItem="FA9-cf-8fV" firstAttribute="leading" secondItem="6WH-7I-CnE" secondAttribute="leading" constant="8" id="gAP-KG-EMV"/>
+                                                <constraint firstItem="FA9-cf-8fV" firstAttribute="leading" secondItem="6WH-7I-CnE" secondAttribute="leading" id="gAP-KG-EMV"/>
                                                 <constraint firstItem="fDF-Uj-WtC" firstAttribute="top" secondItem="6WH-7I-CnE" secondAttribute="topMargin" id="hAx-et-HN8"/>
                                                 <constraint firstItem="hif-yP-s4r" firstAttribute="top" secondItem="6WH-7I-CnE" secondAttribute="top" constant="185" id="hzB-6m-c1q"/>
                                                 <constraint firstItem="arF-6r-xx8" firstAttribute="leading" secondItem="6WH-7I-CnE" secondAttribute="leadingMargin" constant="78" id="iNd-RX-fB7"/>
@@ -292,7 +291,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nR6-f8-Nfg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2150" y="-108"/>
+            <point key="canvasLocation" x="2149.5999999999999" y="-108.39580209895054"/>
         </scene>
         <!--Event Filter View Controller-->
         <scene sceneID="eNS-PZ-75E">
@@ -332,7 +331,6 @@
     </scenes>
     <resources>
         <image name="404-200" width="200" height="200"/>
-        <image name="blue_button" width="252" height="104"/>
         <image name="settings" width="256" height="256"/>
     </resources>
 </document>
