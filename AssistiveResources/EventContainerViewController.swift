@@ -30,7 +30,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
     //MARK: - inherited
 
-    func dependencies(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
+    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
     
         self.notificationDelegate = delegate
       

@@ -27,7 +27,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     
     //MARK: - INHERITED
     
-    func dependencies(rsrcModelController: RegionalResourcesModelController, delegate: OrganizationListContainerNotificationProtocol) {
+    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: OrganizationListContainerNotificationProtocol) {
         
         self.notificationDelegate = delegate
 

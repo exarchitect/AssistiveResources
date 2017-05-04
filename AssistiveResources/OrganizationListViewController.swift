@@ -23,7 +23,7 @@ class OrganizationListViewController: UIViewController, OrganizationListContaine
     weak private var resourcesModelController:RegionalResourcesModelController?
     //private var filterViewController:OrganizationFilterViewController?
     
-    func dependencies(resources: RegionalResourcesModelController, selectorDelegate: OrganizationListViewControllerResponseProtocol) {
+    func configuration(resources: RegionalResourcesModelController, selectorDelegate: OrganizationListViewControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
     }
@@ -49,7 +49,7 @@ class OrganizationListViewController: UIViewController, OrganizationListContaine
         
         if segue.identifier == "OrganizationContainerSegueID" {
             containerViewController = segue.destination as? OrganizationContainerViewController
-            containerViewController?.dependencies(rsrcModelController: resourcesModelController!, delegate: self)
+            containerViewController?.configuration(rsrcModelController: resourcesModelController!, delegate: self)
         }
         
     }

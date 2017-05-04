@@ -22,7 +22,7 @@ class EventDetailViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
     
-    func dependencies(resources: RegionalResourcesModelController, selectorDelegate: EventDetailViewControllerResponseProtocol) {
+    func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventDetailViewControllerResponseProtocol) {
         self.completionProtocol = selectorDelegate
         self.resourcesModelController = resources
     }

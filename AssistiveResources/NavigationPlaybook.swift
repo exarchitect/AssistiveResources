@@ -43,10 +43,6 @@ class NavigationContent: NSObject {
         navigationArray.append(DestinationDescriptor(dest: Destination.Profile))
     }
     
-//    func dependencies(userModelController: UserModelController) {
-//        self.usrModelController = userModelController
-//    }
-    
     func updateSubtitles() {
         var index = 0
         for item in navigationArray {

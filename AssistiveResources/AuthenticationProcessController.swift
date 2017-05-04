@@ -13,7 +13,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     
     typealias Dependencies = UserProvider
     
-    let dependencies: Dependencies
+    private let dependencies: Dependencies
 
     //private var responseDelegate: ProcessControllerProtocol!
 //    private var user: UserModelController!
@@ -43,7 +43,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
         self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
 //        self.loginViewController.dependencies(userModelController: self.user, completionProtocol: self)
-        self.loginViewController.dependencies(userModelController: self.dependencies.userModelController, completionProtocol: self)
+        self.loginViewController.configuration(userModelController: self.dependencies.userModelController, completionProtocol: self)
         
         let parentViewController = self.responseDelegate.navigationController().topViewController
         parentViewController?.present(self.loginViewController, animated: true, completion: nil)

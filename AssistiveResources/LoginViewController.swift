@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var tryoutSubtextLabel: UILabel!
     
-    func dependencies(userModelController: UserModelController, completionProtocol: LoginViewControllerCompletionProtocol) {
+    func configuration(userModelController: UserModelController, completionProtocol: LoginViewControllerCompletionProtocol) {
         self.user = userModelController
         self.completionProtocol = completionProtocol
     }

@@ -24,11 +24,11 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     weak private var resourcesModelController:RegionalResourcesModelController?
     //private var filterViewController:EventFilterViewController?
     
-    func dependencies(resources: RegionalResourcesModelController, selectorDelegate: EventListViewControllerResponseProtocol) {
+    func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventListViewControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,7 +49,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
         
         if segue.identifier == "EventContainerSegueID" {
             containerViewController = segue.destination as? EventContainerViewController
-            containerViewController?.dependencies(rsrcModelController: resourcesModelController!, delegate: self)
+            containerViewController?.configuration(rsrcModelController: resourcesModelController!, delegate: self)
         }
         
     }
@@ -74,7 +74,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
         unowned var filterViewController:EventFilterViewController
 
         filterViewController = (instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController)!
-        filterViewController.dependencies(resources: self.resourcesModelController!, selectorDelegate: self)
+        filterViewController.configuration(resources: self.resourcesModelController!, selectorDelegate: self)
         
         //guard?
         present(filterViewController, animated: true, completion: nil)

@@ -22,7 +22,7 @@ class EventFilterViewController: UIViewController {
     weak private var selectorDelegate:EventFilterViewControllerResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
 
-    func dependencies(resources: RegionalResourcesModelController, selectorDelegate: EventFilterViewControllerResponseProtocol) {
+    func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventFilterViewControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
     }

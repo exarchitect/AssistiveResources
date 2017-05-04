@@ -13,7 +13,7 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
 
     typealias Dependencies = RegionalResourcesProvider // & UserProvider
     
-    let dependencies: Dependencies
+    private let dependencies: Dependencies
     
     //weak private var responseDelegate: ProcessControllerProtocol!
 //    weak private var rsrcModelController: RegionalResourcesModelController!
@@ -35,7 +35,7 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     override func launch() -> Bool {
         
         self.eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
-        self.eventDetailViewController.dependencies(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
+        self.eventDetailViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
         let navCtrller = self.responseDelegate.navigationController()
         navCtrller.pushViewController(self.eventDetailViewController, animated: true)

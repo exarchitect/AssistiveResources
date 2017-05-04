@@ -13,7 +13,7 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
     typealias Dependencies = UserProvider
     
-    let dependencies: Dependencies
+    private let dependencies: Dependencies
 
     //private var navigationDelegate: ProcessControllerProtocol!
 //    weak private var user: UserModelController!
@@ -45,7 +45,7 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         self.navigationData = NavigationContent()
         
         self.navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
-        self.navListViewController.dependencies(navItems: self.navigationData, navDelegate: self)
+        self.navListViewController.configuration(navItems: self.navigationData, navDelegate: self)
         
         let navCtrller = self.responseDelegate.navigationController()
         navCtrller.pushViewController(self.navListViewController, animated: false)

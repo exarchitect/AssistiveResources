@@ -27,7 +27,7 @@ class NavListViewController: UIViewController {
     @IBOutlet weak var navTable: UITableView!
     var tableAdaptor:MainNavigationTableAdaptor?
     
-    func dependencies(navItems: NavigationContent, navDelegate: NavigationSelectorProtocol) {
+    func configuration(navItems: NavigationContent, navDelegate: NavigationSelectorProtocol) {
         self.navVCDelegate = navDelegate
         self.navigationData = navItems
 

@@ -12,7 +12,7 @@ class OrganizationListProcessController: ProcessController, OrganizationListView
     
     typealias Dependencies = RegionalResourcesProvider
     
-    let dependencies: Dependencies
+    private let dependencies: Dependencies
     
     //private var responseDelegate: ProcessControllerProtocol!
 //    weak private var rsrcModelController: RegionalResourcesModelController!
@@ -35,7 +35,7 @@ class OrganizationListProcessController: ProcessController, OrganizationListView
     override func launch() -> Bool {
         
         self.organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
-        self.organizationListViewController.dependencies(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
+        self.organizationListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
         let navCtrller = self.responseDelegate.navigationController()
         navCtrller.pushViewController(self.organizationListViewController, animated: true)

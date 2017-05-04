@@ -13,7 +13,7 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     
     typealias Dependencies = RegionalResourcesProvider
     
-    let dependencies: Dependencies
+    private let dependencies: Dependencies
 
     //private var responseDelegate: ProcessControllerProtocol!
 //    weak private var rsrcModelController: RegionalResourcesModelController!
@@ -37,7 +37,7 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
         
         self.eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
 //        self.eventListViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
-        self.eventListViewController.dependencies(resources: self.dependencies.regionalResourcesModelController!, selectorDelegate: self)
+        self.eventListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
         let navCtrller = self.responseDelegate.navigationController()
         navCtrller.pushViewController(self.eventListViewController, animated: true)
