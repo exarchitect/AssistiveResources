@@ -10,6 +10,12 @@ import UIKit
 import RealmSwift
 
 
+
+protocol RegionalResourcesProviderProtocol: class {
+    func sharedRegionalResources () -> RegionalResourcesModelController
+}
+
+
 class RegionalResourcesModelController: ModelController {
     
     private var regionalRepository : RegionalResourcesRepository!

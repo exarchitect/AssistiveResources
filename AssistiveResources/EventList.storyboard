@@ -40,7 +40,7 @@
                                     <constraint firstAttribute="height" constant="55" id="9fG-tB-IZ6"/>
                                     <constraint firstAttribute="width" constant="72" id="9uz-9L-Lny"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                 <state key="normal" title="Back"/>
                                 <connections>
                                     <action selector="backButtonAction:" destination="2YK-Fd-pDb" eventType="touchUpInside" id="Gmt-z3-RBA"/>

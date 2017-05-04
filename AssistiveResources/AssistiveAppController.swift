@@ -9,7 +9,7 @@
 import UIKit
 
 
-class AssistiveAppController: AppController {
+class AssistiveAppController: AppController, RegionalResourcesProviderProtocol {
     
     private var user: UserModelController!
     private var regionalResources : RegionalResourcesModelController?
@@ -118,6 +118,14 @@ class AssistiveAppController: AppController {
         
     }
     
+    
+    // MARK: - RegionalResourcesProviderProtocol
+    
+    func sharedRegionalResources () -> RegionalResourcesModelController {
+        
+        return self.regionalResources!
+    }
+
     
     // MARK: - launch process controllers
     
