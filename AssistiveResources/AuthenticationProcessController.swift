@@ -14,35 +14,18 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     typealias Dependencies = UserProvider
     
     private let dependencies: Dependencies
-
-    //private var responseDelegate: ProcessControllerProtocol!
-//    private var user: UserModelController!
     private var loginViewController: LoginViewController!
 
-//    init(userModelController: UserModelController, responseDelegate: ProcessControllerProtocol) {
-//        
-//        self.responseDelegate = responseDelegate
-//        self.user = userModelController
-//    }
-    
     init(responseDelegate: ProcessControllerProtocol, dependencies: Dependencies) {
         self.dependencies = dependencies
         
-        // TEMP
-//        self.user = dependencies.userModelController
         super.init(responseDelegate: responseDelegate)
     }
-    
-//    func modelDependency(userModelController: UserModelController) {
-//        
-//        self.user = userModelController
-//    }
     
     override func launch() -> Bool {
         
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
         self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
-//        self.loginViewController.dependencies(userModelController: self.user, completionProtocol: self)
         self.loginViewController.configuration(userModelController: self.dependencies.userModelController, completionProtocol: self)
         
         let parentViewController = self.responseDelegate.navigationController().topViewController
@@ -68,7 +51,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     func loginAction (username: String, password: String) {
 
         self.dependencies.userModelController.storeUserCredentials(username: username, password: password)
-        //self.user.storeUserCredentials(username: "fail", password: password)
+
         self.dependencies.userModelController.authorizeUser(completion: { (success) in
             
             if (success) {

@@ -34,13 +34,6 @@ class RepositoryProfile: Object {
         super.init(value: value, schema: schema)
     }
     
-    //    convenience init(updateDate: Date) {
-    //        self.init()
-    //        self.lastUpdated = updateDate
-    //        self.location = "00000"
-    //        self.haveRecords = false
-    //    }
-    
     func save() {
         do {
             let realm = try Realm()

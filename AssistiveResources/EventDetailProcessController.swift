@@ -14,23 +14,12 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     typealias Dependencies = RegionalResourcesProvider // & UserProvider
     
     private let dependencies: Dependencies
-    
-    //weak private var responseDelegate: ProcessControllerProtocol!
-//    weak private var rsrcModelController: RegionalResourcesModelController!
     private var eventDetailViewController: EventDetailViewController!
-    
-//    override init(responseDelegate: ProcessControllerProtocol) {
-//        super.init(responseDelegate: responseDelegate)
-//    }
     
     init(responseDelegate: ProcessControllerProtocol, dependencies: Dependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate)
     }
-    
-//    func modelDependency(rsrcsModelController: RegionalResourcesModelController) {
-//        self.rsrcModelController = rsrcsModelController
-//    }
     
     override func launch() -> Bool {
         

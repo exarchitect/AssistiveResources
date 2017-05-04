@@ -14,9 +14,6 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     typealias Dependencies = UserProvider
     
     private let dependencies: Dependencies
-
-    //private var navigationDelegate: ProcessControllerProtocol!
-//    weak private var user: UserModelController!
     private var navigationData: NavigationContent!
 
     private var navListViewController: NavListViewController!
@@ -26,17 +23,6 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         super.init(responseDelegate: responseDelegate)
     }
 
-//    func modelDependency (userModelController: UserModelController) {
-//        
-//        self.user = userModelController
-//    }
-    
-//    init (userModelController: UserModelController, responseDelegate: ProcessControllerProtocol) {
-//        
-//        self.navigationDelegate = responseDelegate
-//        self.user = userModelController
-//    }
-    
     override func launch() -> Bool {
         
         precondition(self.responseDelegate != nil)

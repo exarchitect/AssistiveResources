@@ -14,16 +14,11 @@ struct SharedResources: RegionalResourcesProvider, UserProvider {
     var userModelController: UserModelController!
 }
 
-//class AssistiveAppController: AppController, RegionalResourcesProviderProtocol {
 class AssistiveAppController: AppController {
     
     var shared: SharedResources = SharedResources()
-//    private var user: UserModelController!
-//    private var regionalResources : RegionalResourcesModelController?
-    
     
     override init() {
-        //self.dependencies = SharedResources()
         super.init()
         initializeRemoteDatabase()
     }
@@ -117,7 +112,6 @@ class AssistiveAppController: AppController {
             
         case Destination.Profile:
             // temp for testing
-//            self.user.logout()
             self.shared.userModelController.logout()
             let success = self.pushAuthenticationProcessController()
             if (!success) {
@@ -128,48 +122,35 @@ class AssistiveAppController: AppController {
     }
     
     
-    // MARK: - RegionalResourcesProviderProtocol
-    
-//    func sharedRegionalResources () -> RegionalResourcesModelController {
-//        
-//        return self.regionalResources!
-//    }
-
-    
     // MARK: - launch process controllers
     
     private func pushNavigationListProcessController () -> Bool {
         
         let navListPC = NavListProcessController(responseDelegate: self, dependencies: self.shared)
-//        navListPC.modelDependency(userModelController: self.dependencies.userModelController)
         return self.launchProcessController(processController: navListPC)
     }
     
     private func pushAuthenticationProcessController () -> Bool {
         
         let authPC = AuthenticationProcessController(responseDelegate:self, dependencies: self.shared)
-//        authPC.modelDependency(userModelController: self.user)
         return self.launchProcessController(processController: authPC)
     }
     
     private func pushEventListProcessController () -> Bool {
         
         let eventListPC = EventListProcessController(responseDelegate: self, dependencies: self.shared)
-//        eventListPC.modelDependency(rsrcsModelController: self.regionalResources!)
         return self.launchProcessController(processController: eventListPC)
     }
     
     private func pushEventDetailProcessController (evt: EntityDescriptor) -> Bool {
         
         let eventDetailPC = EventDetailProcessController(responseDelegate: self, dependencies: self.shared)
-//        eventDetailPC.modelDependency(rsrcsModelController: self.regionalResources!)
         return self.launchProcessController(processController: eventDetailPC)
     }
     
     private func pushOrganizationListProcessController () -> Bool {
         
         let orgListPC = OrganizationListProcessController(responseDelegate: self, dependencies: self.shared)
-//        orgListPC.modelDependency(rsrcsModelController: self.shared.regionalResourcesModelController!)
         return self.launchProcessController(processController: orgListPC)
     }
     
@@ -184,13 +165,6 @@ class AssistiveAppController: AppController {
         return success
     }
     
-//    private func loadRegionalResourceModelController () {
-//        if (self.regionalResources == nil) {
-//            self.regionalResources = RegionalResourcesModelController(atLocation: self.user.locationProfile)
-//            self.regionalResources?.initiateLoading()
-//            self.dependencies.regionalResourcesModelController = self.regionalResources!
-//        }
-//    }
     private func loadRegionalResourceModelController () {
         if (self.shared.regionalResourcesModelController == nil) {
             self.shared.regionalResourcesModelController = RegionalResourcesModelController(atLocation: self.shared.userModelController.locationProfile)
@@ -198,12 +172,6 @@ class AssistiveAppController: AppController {
         }
     }
     
-//    private func loadUserModelController () {
-//        if (self.user == nil) {
-//            self.user = UserModelController()
-//            self.dependencies.userModelController = self.user!
-//        }
-//    }
     private func loadUserModelController () {
         if (self.shared.userModelController == nil) {
             self.shared.userModelController = UserModelController()

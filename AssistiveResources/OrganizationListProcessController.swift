@@ -13,19 +13,7 @@ class OrganizationListProcessController: ProcessController, OrganizationListView
     typealias Dependencies = RegionalResourcesProvider
     
     private let dependencies: Dependencies
-    
-    //private var responseDelegate: ProcessControllerProtocol!
-//    weak private var rsrcModelController: RegionalResourcesModelController!
     private var organizationListViewController: OrganizationListViewController!
-    
-//    init(rsrcsModelController: RegionalResourcesModelController, responseDelegate: ProcessControllerProtocol) {
-//        self.responseDelegate = responseDelegate
-//        self.rsrcModelController = rsrcsModelController
-//    }
-
-//    func modelDependency(rsrcsModelController: RegionalResourcesModelController) {
-//        self.rsrcModelController = rsrcsModelController
-//    }
     
     init(responseDelegate: ProcessControllerProtocol, dependencies: Dependencies) {
         self.dependencies = dependencies

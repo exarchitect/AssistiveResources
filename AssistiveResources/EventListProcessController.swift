@@ -14,29 +14,17 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     typealias Dependencies = RegionalResourcesProvider
     
     private let dependencies: Dependencies
-
-    //private var responseDelegate: ProcessControllerProtocol!
-//    weak private var rsrcModelController: RegionalResourcesModelController!
     private var eventListViewController: EventListViewController!
-    
-//    override init(responseDelegate: ProcessControllerProtocol) {
-//        super.init(responseDelegate: responseDelegate)
-//    }
     
     init(responseDelegate: ProcessControllerProtocol, dependencies: Dependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate)
     }
 
-//    func modelDependency (rsrcsModelController: RegionalResourcesModelController) {
-//        self.responseDelegate = responseDelegate
-//        self.rsrcModelController = rsrcsModelController
-//    }
-    
     override func launch() -> Bool {
         
         self.eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
-//        self.eventListViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
+
         self.eventListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
         let navCtrller = self.responseDelegate.navigationController()

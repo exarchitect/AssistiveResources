@@ -18,7 +18,6 @@ protocol EventListViewControllerResponseProtocol: class {
 class EventListViewController: UIViewController, EventListContainerNotificationProtocol, EventFilterViewControllerResponseProtocol {
 
     @IBOutlet weak var headerView: HeaderView!
-    //@IBOutlet weak var tableView: UITableView!
     
     weak private var selectorDelegate:EventListViewControllerResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
@@ -68,9 +67,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     }
     
     func notifyFilterSelected() {
-//        if (self.resourcesModelController?.events.isLoading())! {
-//            return
-//        }
+
         unowned var filterViewController:EventFilterViewController
 
         filterViewController = (instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController)!

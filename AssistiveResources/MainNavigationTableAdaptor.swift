@@ -43,19 +43,6 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
         tableView.backgroundColor = UIColor.white
     }
     
-    //MARK: utils
-    
-//    func setupNavigation() {
-//        
-//        navigationArray.append(DestinationDescriptor(dest: Destination.Organizations))
-//        navigationArray.append(DestinationDescriptor(dest: Destination.Events))
-//        navigationArray.append(DestinationDescriptor(dest: Destination.Facilities))
-//        navigationArray.append(DestinationDescriptor(dest: Destination.Travel))
-//        navigationArray.append(DestinationDescriptor(dest: Destination.News))
-//        navigationArray.append(DestinationDescriptor(dest: Destination.Inbox, subtitle: "You have 3 unread messages"))
-//        navigationArray.append(DestinationDescriptor(dest: Destination.Profile))
-//    }
-    
     
     //MARK: tableView delegate
     
@@ -72,9 +59,6 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
         
         let cell:MainNavTableViewCell = tableView.dequeueReusableCell(withIdentifier: kHomeNavCellID) as! MainNavTableViewCell
         
-//        let _title = navigationArray[indexPath.row].title
-//        let _subtitle = navigationArray[indexPath.row].subTitle
-//        let _image = navigationArray[indexPath.row].imageName
         let _title = navigationData[indexPath.row].title
         let _subtitle = navigationData[indexPath.row].subtitle
         let _image = navigationData[indexPath.row].imageName
@@ -86,7 +70,6 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView .deselectRow(at: indexPath as IndexPath, animated: true)
  
-//        self.selectorCallback?(navigationArray[indexPath.row].destination)
         self.selectorCallback?(navigationData[indexPath.row].destination)
     }
     
@@ -94,12 +77,6 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
         return false
     }
     
-//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        if editingStyle == UITableViewCellEditingStyle .Delete {
-//            notificationDelegate?.notifyRowDeleted(indexPath.row)
-//        }
-//    }
-
     
     // debug
     deinit {

@@ -10,11 +10,6 @@ import UIKit
 import RealmSwift
 
 
-
-//protocol RegionalResourcesProviderProtocol: class {
-//    func sharedRegionalResources () -> RegionalResourcesModelController
-//}
-
 protocol RegionalResourcesProvider {
     var regionalResourcesModelController: RegionalResourcesModelController! { get }
 }
@@ -23,30 +18,19 @@ protocol RegionalResourcesProvider {
 class RegionalResourcesModelController: ModelController {
     
     private var regionalRepository : RegionalResourcesRepository!
-
-    //var organizations : OrganizationRepositoryAccessor!
-    //var events : EventRepositoryAccessor!
     
     init(atLocation: LocationProfile)
     {
         super.init()
         
         self.regionalRepository = RegionalResourcesRepository(location: atLocation)
-        //self.organizations = OrganizationRepositoryAccessor(repository: self.regionalRepository)
-        //self.events = EventRepositoryAccessor(repository: self.regionalRepository)
     }
     
     func initiateLoading() {
 
         self.regionalRepository.loadAsync { (success) in
             if (success) {
-                //self.events.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
-                //requestEventListRefresh()
-                //let notificationkey = self.regionalRepository.repositoryUpdateNotificationKey()
-                //NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationkey), object: nil)
-                
-                //self.organizations.retrieve(usingFilter: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
-                //requestOrgListRefresh()
+                // data pulled by accessors
             } else {
                 print("loading failed")
             }

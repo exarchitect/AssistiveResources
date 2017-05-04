@@ -11,29 +11,8 @@
 import UIKit
 
 
-//func createActivityIndicator (view: UIView) -> UIActivityIndicatorView {
-//    let indicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
-//    indicator.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
-//    indicator.center = view.center
-//    view.addSubview(indicator)
-//    indicator.bringSubview(toFront: view)
-//    UIApplication.shared.isNetworkActivityIndicatorVisible = true
-//    
-//    return indicator
-//}
-//
-//func startActivityIndicator (indicator: UIActivityIndicatorView) {
-//    indicator.startAnimating()
-//}
-//
-//func stopActivityIndicator (indicator: UIActivityIndicatorView) {
-//    indicator.stopAnimating()
-//    UIApplication.shared.isNetworkActivityIndicatorVisible = false
-//}
-
-
 func startActivityIndicator(title: String?, message: String?) {
-    //func startBackgroundActivityAlert(presentingController: UIViewController, title: String?, message: String?) {
+
     let presentingController = UIApplication.topViewController()
     
     //create an alert controller
@@ -52,7 +31,7 @@ func startActivityIndicator(title: String?, message: String?) {
 }
 
 func stopActivityIndicator() {
-    //func stopBackgroundActivityAlert(presentingController: UIViewController) {
+    
     let presentingController = UIApplication.topViewController()
     presentingController?.dismiss(animated: true, completion: nil)
 }
@@ -77,11 +56,6 @@ extension UIApplication {
     }
 }
 
-
-// Usage of extension & enum
-// let greenScene = GreenVC.instantiate(fromAppStoryboard: .Main)
-// let greenScene = AppStoryboard.Main.viewController(viewControllerClass: GreenVC.self)
-// let greenScene = AppStoryboard.Main.instance.instantiateViewController(withIdentifier: GreenVC.storyboardID)
 
 enum AppStoryboard : String {
     case Main

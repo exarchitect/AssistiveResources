@@ -40,7 +40,6 @@
 		D27440F31DF9009A008E0476 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D27440F21DF9009A008E0476 /* HeaderView.xib */; };
 		D27440F51DF903B3008E0476 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27440F41DF903B3008E0476 /* HeaderView.swift */; };
 		D275718F1E415C3E0007CEF1 /* RepositoryProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D275718E1E415C3E0007CEF1 /* RepositoryProfile.swift */; };
-		D276B52B1EABF26500182357 /* AssistiveServiceProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = D276B52A1EABF26500182357 /* AssistiveServiceProviders.swift */; };
 		D28C80D11DF0E821002D3940 /* EventListProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D01DF0E821002D3940 /* EventListProcessController.swift */; };
 		D28C80D41DF0E8B6002D3940 /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D31DF0E8B6002D3940 /* EventListViewController.swift */; };
 		D28C80D81DF0E8DE002D3940 /* EventListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */; };
@@ -121,7 +120,6 @@
 		D27440F41DF903B3008E0476 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		D275718E1E415C3E0007CEF1 /* RepositoryProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryProfile.swift; sourceTree = "<group>"; };
 		D276B5291EABAEF600182357 /* AssistiveResources.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AssistiveResources.entitlements; sourceTree = "<group>"; };
-		D276B52A1EABF26500182357 /* AssistiveServiceProviders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistiveServiceProviders.swift; sourceTree = "<group>"; };
 		D28C80D01DF0E821002D3940 /* EventListProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListProcessController.swift; sourceTree = "<group>"; };
 		D28C80D31DF0E8B6002D3940 /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
 		D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListTableViewCell.swift; sourceTree = "<group>"; };
@@ -323,7 +321,6 @@
 			isa = PBXGroup;
 			children = (
 				D2B7D1571E594B8400E69D1E /* AssistiveAppController.swift */,
-				D276B52A1EABF26500182357 /* AssistiveServiceProviders.swift */,
 				D2309DE61E2B481E0056A66C /* Command.swift */,
 			);
 			name = AppController;
@@ -481,7 +478,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = SevenPlusTwo;
 				TargetAttributes = {
 					D2F91E8B1DDFE5D10084F00E = {
@@ -744,7 +741,6 @@
 				D2C9AD711DDFF5120028341D /* AppController.swift in Sources */,
 				D24E4DCA1DE741E4008A11FB /* DateUtilities.swift in Sources */,
 				D24E4DCF1DED173F008A11FB /* NavListProcessController.swift in Sources */,
-				D276B52B1EABF26500182357 /* AssistiveServiceProviders.swift in Sources */,
 				D2B7D1451E46A4A900E69D1E /* OrganizationListProcessController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -897,6 +893,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 50F05BA53F8E3FCB15D6203B /* Pods-AssistiveResources.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = EPRGW4NZ3Y;
 				INFOPLIST_FILE = AssistiveResources/Info.plist;
@@ -913,6 +910,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6EF60E8FC5E67E799797B663 /* Pods-AssistiveResources.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = EPRGW4NZ3Y;
 				INFOPLIST_FILE = AssistiveResources/Info.plist;

@@ -12,8 +12,6 @@ import UIKit
 protocol ProcessControllerProtocol: class {
     func navigationController () -> UINavigationController
     func requestAction (command: Command)
-
-//    func dismissProcessController (controller: ProcessController)
 }
 
 
@@ -29,11 +27,6 @@ class ProcessController: NSObject {
         super.init()
     }
     
-//    override init() {
-//        self.inUse = true
-//        super.init()
-//    }
-
     func terminate () {
         self.inUse = false
     }

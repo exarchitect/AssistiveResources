@@ -18,7 +18,7 @@ enum Destination : String {
 class NavigationContent: NSObject {
     
     private var navigationArray:[DestinationDescriptor] = []
-    //private var usrModelController : UserModelController? = nil
+
     var count: Int {
         return navigationArray.count
     }

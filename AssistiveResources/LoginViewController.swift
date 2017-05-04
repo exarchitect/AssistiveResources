@@ -73,6 +73,4 @@ class LoginViewController: UIViewController {
         }
     }
     
-    //Y
-    //
 }
