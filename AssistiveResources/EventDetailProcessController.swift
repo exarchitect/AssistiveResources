@@ -11,22 +11,31 @@ import UIKit
 
 class EventDetailProcessController: ProcessController, EventDetailViewControllerResponseProtocol {
 
+    typealias Dependencies = RegionalResourcesProvider // & UserProvider
+    
+    let dependencies: Dependencies
+    
     //weak private var responseDelegate: ProcessControllerProtocol!
-    weak private var rsrcModelController: RegionalResourcesModelController!
+//    weak private var rsrcModelController: RegionalResourcesModelController!
     private var eventDetailViewController: EventDetailViewController!
     
 //    override init(responseDelegate: ProcessControllerProtocol) {
 //        super.init(responseDelegate: responseDelegate)
 //    }
     
-    func modelDependency(rsrcsModelController: RegionalResourcesModelController) {
-        self.rsrcModelController = rsrcsModelController
+    init(responseDelegate: ProcessControllerProtocol, dependencies: Dependencies) {
+        self.dependencies = dependencies
+        super.init(responseDelegate: responseDelegate)
     }
+    
+//    func modelDependency(rsrcsModelController: RegionalResourcesModelController) {
+//        self.rsrcModelController = rsrcsModelController
+//    }
     
     override func launch() -> Bool {
         
         self.eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
-        self.eventDetailViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
+        self.eventDetailViewController.dependencies(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
         let navCtrller = self.responseDelegate.navigationController()
         navCtrller.pushViewController(self.eventDetailViewController, animated: true)

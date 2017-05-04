@@ -11,23 +11,33 @@ import UIKit
 
 class EventListProcessController: ProcessController, EventListViewControllerResponseProtocol {
     
+    typealias Dependencies = RegionalResourcesProvider
+    
+    let dependencies: Dependencies
+
     //private var responseDelegate: ProcessControllerProtocol!
-    weak private var rsrcModelController: RegionalResourcesModelController!
+//    weak private var rsrcModelController: RegionalResourcesModelController!
     private var eventListViewController: EventListViewController!
     
 //    override init(responseDelegate: ProcessControllerProtocol) {
 //        super.init(responseDelegate: responseDelegate)
 //    }
     
-    func modelDependency (rsrcsModelController: RegionalResourcesModelController) {
-        self.responseDelegate = responseDelegate
-        self.rsrcModelController = rsrcsModelController
+    init(responseDelegate: ProcessControllerProtocol, dependencies: Dependencies) {
+        self.dependencies = dependencies
+        super.init(responseDelegate: responseDelegate)
     }
+
+//    func modelDependency (rsrcsModelController: RegionalResourcesModelController) {
+//        self.responseDelegate = responseDelegate
+//        self.rsrcModelController = rsrcsModelController
+//    }
     
     override func launch() -> Bool {
         
         self.eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
-        self.eventListViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
+//        self.eventListViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
+        self.eventListViewController.dependencies(resources: self.dependencies.regionalResourcesModelController!, selectorDelegate: self)
         
         let navCtrller = self.responseDelegate.navigationController()
         navCtrller.pushViewController(self.eventListViewController, animated: true)

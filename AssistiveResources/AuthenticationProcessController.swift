@@ -11,8 +11,12 @@ import UIKit
 
 class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
     
+    typealias Dependencies = UserProvider
+    
+    let dependencies: Dependencies
+
     //private var responseDelegate: ProcessControllerProtocol!
-    private var user: UserModelController!
+//    private var user: UserModelController!
     private var loginViewController: LoginViewController!
 
 //    init(userModelController: UserModelController, responseDelegate: ProcessControllerProtocol) {
@@ -21,16 +25,25 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
 //        self.user = userModelController
 //    }
     
-    func modelDependency(userModelController: UserModelController) {
+    init(responseDelegate: ProcessControllerProtocol, dependencies: Dependencies) {
+        self.dependencies = dependencies
         
-        self.user = userModelController
+        // TEMP
+//        self.user = dependencies.userModelController
+        super.init(responseDelegate: responseDelegate)
     }
+    
+//    func modelDependency(userModelController: UserModelController) {
+//        
+//        self.user = userModelController
+//    }
     
     override func launch() -> Bool {
         
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
         self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
-        self.loginViewController.dependencies(userModelController: self.user, completionProtocol: self)
+//        self.loginViewController.dependencies(userModelController: self.user, completionProtocol: self)
+        self.loginViewController.dependencies(userModelController: self.dependencies.userModelController, completionProtocol: self)
         
         let parentViewController = self.responseDelegate.navigationController().topViewController
         parentViewController?.present(self.loginViewController, animated: true, completion: nil)
@@ -54,9 +67,9 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     
     func loginAction (username: String, password: String) {
 
-        self.user.storeUserCredentials(username: username, password: password)
+        self.dependencies.userModelController.storeUserCredentials(username: username, password: password)
         //self.user.storeUserCredentials(username: "fail", password: password)
-        self.user.authorizeUser(completion: { (success) in
+        self.dependencies.userModelController.authorizeUser(completion: { (success) in
             
             if (success) {
                 print("logged in")

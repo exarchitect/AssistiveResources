@@ -17,6 +17,11 @@ enum LoginType : Int {
 typealias AsyncCompletionHandlerType = (_ success: Bool) -> Void
 
 
+protocol UserProvider {
+    var userModelController: UserModelController! { get }
+}
+
+
 final class UserModelController: ModelController {
     
     var isUserAuthenticated: Bool

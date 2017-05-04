@@ -9,13 +9,21 @@
 import UIKit
 
 
-class AssistiveAppController: AppController, RegionalResourcesProviderProtocol {
+struct SharedResources: RegionalResourcesProvider, UserProvider {
+    var regionalResourcesModelController: RegionalResourcesModelController!
+    var userModelController: UserModelController!
+}
+
+//class AssistiveAppController: AppController, RegionalResourcesProviderProtocol {
+class AssistiveAppController: AppController {
     
-    private var user: UserModelController!
-    private var regionalResources : RegionalResourcesModelController?
+    var shared: SharedResources = SharedResources()
+//    private var user: UserModelController!
+//    private var regionalResources : RegionalResourcesModelController?
     
     
     override init() {
+        //self.dependencies = SharedResources()
         super.init()
         initializeRemoteDatabase()
     }
@@ -25,7 +33,7 @@ class AssistiveAppController: AppController, RegionalResourcesProviderProtocol {
         super.start()
         
         self.loadUserModelController()      // loadResourceModelController() not called until after login
-        precondition(self.user != nil)
+        precondition(self.shared.userModelController != nil)
         
         let success = self.pushNavigationListProcessController()
         if (!success) {
@@ -33,9 +41,9 @@ class AssistiveAppController: AppController, RegionalResourcesProviderProtocol {
         }
         
         // temp override to fail login for testing
-        self.user.storeUserCredentials(username: "", password: "")
+        self.shared.userModelController.storeUserCredentials(username: "", password: "")
         
-        self.user!.authorizeUser(completion: { (success) in
+        self.shared.userModelController.authorizeUser(completion: { (success) in
             
             if (success) {
                 print("logged in")
@@ -109,8 +117,9 @@ class AssistiveAppController: AppController, RegionalResourcesProviderProtocol {
             
         case Destination.Profile:
             // temp for testing
-            self.user.logout()
-            let success = self.self.pushAuthenticationProcessController()
+//            self.user.logout()
+            self.shared.userModelController.logout()
+            let success = self.pushAuthenticationProcessController()
             if (!success) {
                 
             }
@@ -121,47 +130,46 @@ class AssistiveAppController: AppController, RegionalResourcesProviderProtocol {
     
     // MARK: - RegionalResourcesProviderProtocol
     
-    func sharedRegionalResources () -> RegionalResourcesModelController {
-        
-        return self.regionalResources!
-    }
+//    func sharedRegionalResources () -> RegionalResourcesModelController {
+//        
+//        return self.regionalResources!
+//    }
 
     
     // MARK: - launch process controllers
     
     private func pushNavigationListProcessController () -> Bool {
         
-//        let navListPC = NavListProcessController(userModelController: self.user, responseDelegate: self)
-        let navListPC = NavListProcessController(responseDelegate: self)
-        navListPC.modelDependency(userModelController: self.user)
+        let navListPC = NavListProcessController(responseDelegate: self, dependencies: self.shared)
+//        navListPC.modelDependency(userModelController: self.dependencies.userModelController)
         return self.launchProcessController(processController: navListPC)
     }
     
     private func pushAuthenticationProcessController () -> Bool {
         
-        let authPC = AuthenticationProcessController(responseDelegate:self)
-        authPC.modelDependency(userModelController: self.user)
+        let authPC = AuthenticationProcessController(responseDelegate:self, dependencies: self.shared)
+//        authPC.modelDependency(userModelController: self.user)
         return self.launchProcessController(processController: authPC)
     }
     
     private func pushEventListProcessController () -> Bool {
         
-        let eventListPC = EventListProcessController(responseDelegate: self)
-        eventListPC.modelDependency(rsrcsModelController: self.regionalResources!)
+        let eventListPC = EventListProcessController(responseDelegate: self, dependencies: self.shared)
+//        eventListPC.modelDependency(rsrcsModelController: self.regionalResources!)
         return self.launchProcessController(processController: eventListPC)
     }
     
     private func pushEventDetailProcessController (evt: EntityDescriptor) -> Bool {
         
-        let eventDetailPC = EventDetailProcessController(responseDelegate: self)
-        eventDetailPC.modelDependency(rsrcsModelController: self.regionalResources!)
+        let eventDetailPC = EventDetailProcessController(responseDelegate: self, dependencies: self.shared)
+//        eventDetailPC.modelDependency(rsrcsModelController: self.regionalResources!)
         return self.launchProcessController(processController: eventDetailPC)
     }
     
     private func pushOrganizationListProcessController () -> Bool {
         
-        let orgListPC = OrganizationListProcessController(responseDelegate: self)
-        orgListPC.modelDependency(rsrcsModelController: self.regionalResources!)
+        let orgListPC = OrganizationListProcessController(responseDelegate: self, dependencies: self.shared)
+//        orgListPC.modelDependency(rsrcsModelController: self.shared.regionalResourcesModelController!)
         return self.launchProcessController(processController: orgListPC)
     }
     
@@ -176,21 +184,34 @@ class AssistiveAppController: AppController, RegionalResourcesProviderProtocol {
         return success
     }
     
+//    private func loadRegionalResourceModelController () {
+//        if (self.regionalResources == nil) {
+//            self.regionalResources = RegionalResourcesModelController(atLocation: self.user.locationProfile)
+//            self.regionalResources?.initiateLoading()
+//            self.dependencies.regionalResourcesModelController = self.regionalResources!
+//        }
+//    }
     private func loadRegionalResourceModelController () {
-        if (self.regionalResources == nil) {
-            self.regionalResources = RegionalResourcesModelController(atLocation: self.user.locationProfile)
-            self.regionalResources?.initiateLoading()
+        if (self.shared.regionalResourcesModelController == nil) {
+            self.shared.regionalResourcesModelController = RegionalResourcesModelController(atLocation: self.shared.userModelController.locationProfile)
+            self.shared.regionalResourcesModelController?.initiateLoading()
         }
     }
     
+//    private func loadUserModelController () {
+//        if (self.user == nil) {
+//            self.user = UserModelController()
+//            self.dependencies.userModelController = self.user!
+//        }
+//    }
     private func loadUserModelController () {
-        if (self.user == nil) {
-            self.user = UserModelController()
+        if (self.shared.userModelController == nil) {
+            self.shared.userModelController = UserModelController()
         }
     }
     
     override func checkDatabaseRefresh() {
-        self.regionalResources?.checkRepositoryUpdate()
+        self.shared.regionalResourcesModelController?.checkRepositoryUpdate()
     }
     
 }

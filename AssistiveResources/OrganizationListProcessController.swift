@@ -10,8 +10,12 @@ import UIKit
 
 class OrganizationListProcessController: ProcessController, OrganizationListViewControllerResponseProtocol {
     
+    typealias Dependencies = RegionalResourcesProvider
+    
+    let dependencies: Dependencies
+    
     //private var responseDelegate: ProcessControllerProtocol!
-    weak private var rsrcModelController: RegionalResourcesModelController!
+//    weak private var rsrcModelController: RegionalResourcesModelController!
     private var organizationListViewController: OrganizationListViewController!
     
 //    init(rsrcsModelController: RegionalResourcesModelController, responseDelegate: ProcessControllerProtocol) {
@@ -19,14 +23,19 @@ class OrganizationListProcessController: ProcessController, OrganizationListView
 //        self.rsrcModelController = rsrcsModelController
 //    }
 
-    func modelDependency(rsrcsModelController: RegionalResourcesModelController) {
-        self.rsrcModelController = rsrcsModelController
+//    func modelDependency(rsrcsModelController: RegionalResourcesModelController) {
+//        self.rsrcModelController = rsrcsModelController
+//    }
+    
+    init(responseDelegate: ProcessControllerProtocol, dependencies: Dependencies) {
+        self.dependencies = dependencies
+        super.init(responseDelegate: responseDelegate)
     }
     
     override func launch() -> Bool {
         
         self.organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
-        self.organizationListViewController.dependencies(resources: self.rsrcModelController, selectorDelegate: self)
+        self.organizationListViewController.dependencies(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
         let navCtrller = self.responseDelegate.navigationController()
         navCtrller.pushViewController(self.organizationListViewController, animated: true)
