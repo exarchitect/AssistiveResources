@@ -113,7 +113,7 @@ class NavigationContent: NSObject {
                 imageName = "inbox"
             case Destination.Profile:
                 title = Destination.Profile.rawValue
-                placeholderSubtitle = "Tell us about yourself so we can help"
+                placeholderSubtitle = "Tell us about yourself"
                 imageName = "favourite2"
             case Destination.News:
                 title = Destination.News.rawValue

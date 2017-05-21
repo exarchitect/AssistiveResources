@@ -36,7 +36,7 @@ class AssistiveAppController: AppController {
         }
         
         // temp override to fail login for testing
-        self.shared.userModelController.storeUserCredentials(username: "", password: "")
+        //self.shared.userModelController.storeUserCredentials(username: "", password: "")
         
         self.shared.userModelController.authorizeUser(completion: { (success) in
             
