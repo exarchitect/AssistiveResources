@@ -10,12 +10,12 @@ import UIKit
 
 class OrganizationListProcessController: ProcessController, OrganizationListViewControllerResponseProtocol {
     
-    typealias Dependencies = RegionalResourcesProvider
+    typealias ExternalDependencies = RegionalResourcesProvider
     
-    private let dependencies: Dependencies
+    private let dependencies: ExternalDependencies
     private var organizationListViewController: OrganizationListViewController!
     
-    init(responseDelegate: ProcessControllerProtocol, dependencies: Dependencies) {
+    init(responseDelegate: ProcessControllerProtocol, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate)
     }

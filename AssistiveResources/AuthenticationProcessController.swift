@@ -11,12 +11,12 @@ import UIKit
 
 class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
     
-    typealias Dependencies = UserProvider
+    typealias ExternalDependencies = UserProvider
     
-    private let dependencies: Dependencies
+    private let dependencies: ExternalDependencies
     private var loginViewController: LoginViewController!
 
-    init(responseDelegate: ProcessControllerProtocol, dependencies: Dependencies) {
+    init(responseDelegate: ProcessControllerProtocol, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         
         super.init(responseDelegate: responseDelegate)

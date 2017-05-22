@@ -21,7 +21,6 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
     var tableView: UITableView!
     weak private var navigationData: NavigationContent!
     //weak var repository: EventOfInterestRepository?
-    //var navigationArray:[DestinationDescriptor] = []
     var selectorCallback: DestinationSelector!
     
     init(table: UITableView, navItems: NavigationContent, selector: @escaping DestinationSelector) {
@@ -31,8 +30,6 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
         self.navigationData = navItems
         //repository = repo
         self.selectorCallback = selector
-        
-//        setupNavigation()
         
         // attach table
         tableView.delegate = self

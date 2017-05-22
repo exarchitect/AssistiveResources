@@ -29,11 +29,7 @@ class NavigationContent: NSObject {
     
     override init() {
         super.init()
-        self.initilizeNavigation()
-    }
-    
-    func initilizeNavigation() {
-        
+
         navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Organizations))
         navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Events))
         navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Facilities))

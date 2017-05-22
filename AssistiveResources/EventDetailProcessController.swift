@@ -11,12 +11,12 @@ import UIKit
 
 class EventDetailProcessController: ProcessController, EventDetailViewControllerResponseProtocol {
 
-    typealias Dependencies = RegionalResourcesProvider // & UserProvider
+    typealias ExternalDependencies = RegionalResourcesProvider & UserProvider
     
-    private let dependencies: Dependencies
+    private let dependencies: ExternalDependencies
     private var eventDetailViewController: EventDetailViewController!
     
-    init(responseDelegate: ProcessControllerProtocol, dependencies: Dependencies) {
+    init(responseDelegate: ProcessControllerProtocol, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate)
     }
