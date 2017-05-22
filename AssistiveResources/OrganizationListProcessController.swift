@@ -51,14 +51,12 @@ class OrganizationListProcessController: ProcessController, OrganizationListView
     
     func organizationSelected (org: EntityDescriptor) {
         
-        let cmd = Command(type: .organizationSelected(organization: (entityName: org.entityName, entityID: org.entityID)))
-        self.responseDelegate.requestAction(command: cmd)
+        self.responseDelegate.requestAction(command: Command(type: .organizationSelected(organization: org)))
     }
     
     func backButtonTapped () {
         
-        let cmd = Command(type: .dismissCaller(controller: self))
-        self.responseDelegate.requestAction(command: cmd)
+        self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
     }
     
 }

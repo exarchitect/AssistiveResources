@@ -54,7 +54,7 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     
     func backButtonTapped () {
         
-        let cmd = Command(type: .dismissCaller(controller: self))
+        let cmd = Command(type: .dismissProcessController(controller: self))
         self.responseDelegate.requestAction(command: cmd)
     }
 

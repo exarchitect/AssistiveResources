@@ -25,7 +25,6 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
 
     override func launch() -> Bool {
         
-        precondition(self.responseDelegate != nil)
         precondition(self.dependencies.userModelController != nil)
         
         self.navigationData = NavigationContent()

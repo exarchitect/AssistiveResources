@@ -18,7 +18,6 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
 
     init(responseDelegate: ProcessControllerProtocol, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
-        
         super.init(responseDelegate: responseDelegate)
     }
     
@@ -57,10 +56,9 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
             if (success) {
                 print("logged in")
                 
-                let cmd = Command(type: .dismissCaller(controller: self))
-                self.responseDelegate.requestAction(command: cmd)
-                
+                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
                 self.responseDelegate.requestAction(command: Command(type: .userLoginSuccessful))
+
             } else {
                 print("NOT logged in")
                 

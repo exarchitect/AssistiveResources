@@ -61,7 +61,7 @@ class AssistiveAppController: AppController {
         
         switch command.type {
             
-        case .dismissCaller(let controller):
+        case .dismissProcessController(let controller):
             controller.terminate()
             self.freeTopProcessController()
             

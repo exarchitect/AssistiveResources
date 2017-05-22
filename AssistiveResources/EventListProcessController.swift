@@ -54,12 +54,12 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     func eventSelected (evt: EntityDescriptor) {
         
         let cmd = Command(type: .eventSelected(event: evt))
-        self.responseDelegate.requestAction(command: cmd)
+        self.responseDelegate.requestAction(command: Command(type: .eventSelected(event: evt)))
     }
 
     func backButtonTapped () {
 
-        let cmd = Command(type: .dismissCaller(controller: self))
+        let cmd = Command(type: .dismissProcessController(controller: self))
         self.responseDelegate.requestAction(command: cmd)
     }
 

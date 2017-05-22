@@ -11,7 +11,7 @@ import Foundation
 
 struct Command {
     enum CommandType {
-        case dismissCaller(controller: ProcessController)
+        case dismissProcessController(controller: ProcessController)
         case userLoginSuccessful
         case navigationItemSelected(selection:NavigationCategory)
         case eventSelected(event: EntityDescriptor)
