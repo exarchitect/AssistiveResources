@@ -13,7 +13,7 @@ let updateNavigationNotificationKeyName = NSNotification.Name(rawValue: "key_not
 
 
 protocol NavigationSelectorProtocol {
-    func selectNavigationItem (selection: Destination)
+    func selectNavigationItem (selection: NavigationCategory)
 }
 
 
@@ -40,7 +40,7 @@ class NavListViewController: UIViewController {
         precondition(self.navVCDelegate != nil)
         precondition(self.navigationData != nil)
 
-        self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:Destination) -> Void in
+        self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:NavigationCategory) -> Void in
             
             self.navVCDelegate?.selectNavigationItem(selection: destination)
         })

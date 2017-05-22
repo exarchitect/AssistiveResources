@@ -10,7 +10,7 @@ import Foundation
 
 
 
-enum Destination : String {
+enum NavigationCategory : String {
     case Organizations, Events, Facilities, Travel, Inbox, Profile, News
 }
 
@@ -34,43 +34,43 @@ class NavigationContent: NSObject {
     
     func initilizeNavigation() {
         
-        navigationArray.append(DestinationDescriptor(dest: Destination.Organizations))
-        navigationArray.append(DestinationDescriptor(dest: Destination.Events))
-        navigationArray.append(DestinationDescriptor(dest: Destination.Facilities))
-        navigationArray.append(DestinationDescriptor(dest: Destination.Travel))
-        navigationArray.append(DestinationDescriptor(dest: Destination.News))
-        navigationArray.append(DestinationDescriptor(dest: Destination.Inbox))
-        navigationArray.append(DestinationDescriptor(dest: Destination.Profile))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Organizations))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Events))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Facilities))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Travel))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.News))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Inbox))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Profile))
     }
     
     func updateSubtitles() {
         var index = 0
         for item in navigationArray {
             switch item.destination {
-            case Destination.Organizations:
+            case NavigationCategory.Organizations:
                 let _ = 8
                 //navigationArray[index].subtitle = "Hi MOM!"
                 
-            case Destination.Events:
+            case NavigationCategory.Events:
                 //if self.usrModelController != nil {
                     navigationArray[index].subtitle = "Regional and national events in your area"
                 //}
                 
-            case Destination.Facilities:
+            case NavigationCategory.Facilities:
                 let _ = 8
                 
-            case Destination.Travel:
+            case NavigationCategory.Travel:
                 let _ = 8
                 
-            case Destination.News:
+            case NavigationCategory.News:
                 let _ = 8
                 
-            case Destination.Inbox:
+            case NavigationCategory.Inbox:
                 //if self.usrModelController != nil {
                     navigationArray[index].subtitle = "You have 3 unread messages"
                 //}
                 
-            case Destination.Profile:
+            case NavigationCategory.Profile:
                 let _ = 8
             }
             
@@ -80,43 +80,43 @@ class NavigationContent: NSObject {
 }
     
     struct DestinationDescriptor {
-        var destination: Destination
+        var destination: NavigationCategory
         var title: String
         var subtitle: String
         var imageName: String
         
-        init(dest: Destination,subtitle:String?=nil)
+        init(dest: NavigationCategory,subtitle:String?=nil)
         {
             destination = dest
             var placeholderSubtitle:String
             
             switch dest {
-            case Destination.Organizations:
+            case NavigationCategory.Organizations:
                 title = "Organizations/Services"
                 placeholderSubtitle = "Locate services and groups for your needs"
                 imageName = "organization"
-            case Destination.Events:
-                title = Destination.Events.rawValue
+            case NavigationCategory.Events:
+                title = NavigationCategory.Events.rawValue
                 placeholderSubtitle = "Regional and national events"
                 imageName = "sports"
-            case Destination.Facilities:
+            case NavigationCategory.Facilities:
                 title = "Accessibility"
                 placeholderSubtitle = "Find restrooms and other family-friendly facilities"
                 imageName = "venues"
-            case Destination.Travel:
-                title = Destination.Travel.rawValue
+            case NavigationCategory.Travel:
+                title = NavigationCategory.Travel.rawValue
                 placeholderSubtitle = "Resources for vacations and travel within the US"
                 imageName = "travel"
-            case Destination.Inbox:
-                title = Destination.Inbox.rawValue
+            case NavigationCategory.Inbox:
+                title = NavigationCategory.Inbox.rawValue
                 placeholderSubtitle = "Your messages"
                 imageName = "inbox"
-            case Destination.Profile:
-                title = Destination.Profile.rawValue
+            case NavigationCategory.Profile:
+                title = NavigationCategory.Profile.rawValue
                 placeholderSubtitle = "Tell us about yourself"
                 imageName = "favourite2"
-            case Destination.News:
-                title = Destination.News.rawValue
+            case NavigationCategory.News:
+                title = NavigationCategory.News.rawValue
                 placeholderSubtitle = "Online articles and news"
                 imageName = "rss"
             }

@@ -13,7 +13,7 @@ struct Command {
     enum CommandType {
         case dismissCaller(controller: ProcessController)
         case userLoginSuccessful
-        case navigationItemSelected(selection:Destination)
+        case navigationItemSelected(selection:NavigationCategory)
         case eventSelected(event: EntityDescriptor)
         case organizationSelected(organization: EntityDescriptor)
     }

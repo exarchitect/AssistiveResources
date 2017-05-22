@@ -83,34 +83,34 @@ class AssistiveAppController: AppController {
     }
     
     
-    func notifyNavigationItemSelected(selection:Destination) {
+    func notifyNavigationItemSelected(selection:NavigationCategory) {
         
         switch selection {
-        case Destination.Organizations:
+        case NavigationCategory.Organizations:
             let success = self.pushOrganizationListProcessController()
             if (!success) {
                 // TODO
             }
             
-        case Destination.Events:
+        case NavigationCategory.Events:
             let success = self.pushEventListProcessController()
             if (!success) {
                 // TODO
             }
             
-        case Destination.Facilities:
+        case NavigationCategory.Facilities:
             let _ = 7
             
-        case Destination.Travel:
+        case NavigationCategory.Travel:
             let _ = 7
             
-        case Destination.News:
+        case NavigationCategory.News:
             let _ = 7
             
-        case Destination.Inbox:
+        case NavigationCategory.Inbox:
             let _ = 7
             
-        case Destination.Profile:
+        case NavigationCategory.Profile:
             // temp for testing
             self.shared.userModelController.logout()
             let success = self.pushAuthenticationProcessController()

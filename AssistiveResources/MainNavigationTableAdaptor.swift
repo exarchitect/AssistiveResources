@@ -12,7 +12,7 @@ import UIKit
 let kHomeNavCellID = "HomeNavigationCellIdentifier"
 let kHomeNavCellHeight: CGFloat = 90.0
 
-typealias DestinationSelector = (_ destination:Destination) -> Void
+typealias DestinationSelector = (_ destination:NavigationCategory) -> Void
 
 
 
