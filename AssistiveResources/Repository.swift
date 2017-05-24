@@ -75,21 +75,19 @@ class Repository: NSObject {
     // MARK: - methods to override
     
     internal func checkRepositoryState() -> RepositoryState {
-        precondition(false, "must override this method - do not call super")
-        return RepositoryState.Invalid
+        fatalError("override \(#function)")
     }
     
     internal func loadLocalStoreFromRemote() {
-        precondition(false, "must override this method - do not call super")
+        fatalError("override \(#function)")
     }
     
     internal func clearLocalStore() {
-        precondition(false, "must override this method - do not call super")
+        fatalError("override \(#function)")
     }
     
     internal func repositoryUpdateNotificationKey () -> String {
-        precondition(false, "must override this method - do not call super")
-        return ""
+        fatalError("override \(#function)")
     }
     
 

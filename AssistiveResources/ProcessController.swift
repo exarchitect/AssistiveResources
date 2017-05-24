@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol ProcessControllerProtocol: class {
+protocol ProcessControllerResponseHandler: class {
     func navigationController () -> UINavigationController
     func requestAction (command: Command)
 }
@@ -18,9 +18,9 @@ protocol ProcessControllerProtocol: class {
 class ProcessController: NSObject {
     
     var inUse: Bool = false
-    weak var responseDelegate: ProcessControllerProtocol!
+    weak var responseDelegate: ProcessControllerResponseHandler!
 
-    init (responseDelegate: ProcessControllerProtocol) {
+    init (responseDelegate: ProcessControllerResponseHandler) {
         
         self.responseDelegate = responseDelegate
         self.inUse = true

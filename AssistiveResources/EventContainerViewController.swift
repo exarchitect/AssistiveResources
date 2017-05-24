@@ -57,7 +57,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         self.eventAccessor.requestData(filteredBy: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
         if (self.eventAccessor.state == .NotLoaded) {
             self.showLoadingIndicator = true
-            startActivityIndicator(title: nil, message: "loading...")
+            DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
+                startActivityIndicator(title: nil, message: "loading...")
+            }
+            //startActivityIndicator(title: nil, message: "loading...")
         }
     }
 

@@ -39,7 +39,7 @@ class RepositoryAccessor: NSObject {
     }
 
     func repositoryUpdateNotification() {
-        precondition(false, "must override this method - do not call super")
+        fatalError("override \(#function)")
     }
 
 }

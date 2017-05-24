@@ -25,7 +25,6 @@ class AssistiveAppController: AppController {
     
     
     override func start()  {
-        super.start()
         
         self.loadUserModelController()      // loadResourceModelController() not called until after login
         precondition(self.shared.userModelController != nil)

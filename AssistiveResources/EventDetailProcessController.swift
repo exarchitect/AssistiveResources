@@ -16,7 +16,7 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     private let dependencies: ExternalDependencies
     private var eventDetailViewController: EventDetailViewController!
     
-    init(responseDelegate: ProcessControllerProtocol, dependencies: ExternalDependencies) {
+    init(responseDelegate: ProcessControllerResponseHandler, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate)
     }

@@ -18,7 +18,7 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
 
     private var navListViewController: NavListViewController!
     
-    init(responseDelegate: ProcessControllerProtocol, dependencies: ExternalDependencies) {
+    init(responseDelegate: ProcessControllerResponseHandler, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate)
     }

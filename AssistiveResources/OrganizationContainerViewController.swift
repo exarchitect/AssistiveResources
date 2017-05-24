@@ -63,7 +63,10 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
         self.organizationAccessor.requestData(filteredBy: NeedsProfile(mobility: .AnyLimitation, delay: .AnyDelay, dx: .AnyDiagnosis))
         if (self.organizationAccessor.state == .NotLoaded) {
             self.showLoadingIndicator = true
-            startActivityIndicator(title: nil, message: "loading...")
+            DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
+                startActivityIndicator(title: nil, message: "loading...")
+            }
+            //startActivityIndicator(title: nil, message: "loading...")
         }
     }
     

@@ -16,7 +16,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     private let dependencies: ExternalDependencies
     private var loginViewController: LoginViewController!
 
-    init(responseDelegate: ProcessControllerProtocol, dependencies: ExternalDependencies) {
+    init(responseDelegate: ProcessControllerResponseHandler, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate)
     }

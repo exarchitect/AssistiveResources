@@ -16,7 +16,7 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     private let dependencies: ExternalDependencies
     private var eventListViewController: EventListViewController!
     
-    init(responseDelegate: ProcessControllerProtocol, dependencies: ExternalDependencies) {
+    init(responseDelegate: ProcessControllerResponseHandler, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate)
     }
@@ -53,7 +53,7 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     
     func eventSelected (evt: EntityDescriptor) {
         
-        let cmd = Command(type: .eventSelected(event: evt))
+        //let cmd = Command(type: .eventSelected(event: evt))
         self.responseDelegate.requestAction(command: Command(type: .eventSelected(event: evt)))
     }
 

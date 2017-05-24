@@ -15,7 +15,7 @@ class OrganizationListProcessController: ProcessController, OrganizationListView
     private let dependencies: ExternalDependencies
     private var organizationListViewController: OrganizationListViewController!
     
-    init(responseDelegate: ProcessControllerProtocol, dependencies: ExternalDependencies) {
+    init(responseDelegate: ProcessControllerResponseHandler, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate)
     }

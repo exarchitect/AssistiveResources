@@ -61,7 +61,10 @@ final class UserModelController: ModelController {
     func authorizeUser (completion: @escaping AsyncCompletionHandlerType) {
         completionClosure = completion
 
-        startActivityIndicator(title: nil, message: "authenticating...")
+        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
+            startActivityIndicator(title: nil, message: "authenticating...")
+        }
+//        startActivityIndicator(title: nil, message: "authenticating...")
 
         let backend = Backendless.sharedInstance()
 

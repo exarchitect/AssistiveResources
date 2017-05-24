@@ -9,7 +9,7 @@
 import UIKit
 
 
-class AppController: NSObject, ProcessControllerProtocol {
+class AppController: NSObject, ProcessControllerResponseHandler {
 
     var rootViewController: RootViewController!
     var navController: UINavigationController!
@@ -36,22 +36,22 @@ class AppController: NSObject, ProcessControllerProtocol {
     }
     
     func start() {
-        // override in subclass
+        fatalError("override \(#function)")
     }
     
     func checkDatabaseRefresh() {
-        // override in subclass
+        fatalError("override \(#function)")
     }
     
     
-    // MARK: - ProcessControllerProtocol
+    // MARK: - ProcessControllerResponseHandler protocol
 
     func navigationController () -> UINavigationController {
         return self.navController
     }
     
     func requestAction(command: Command) {
-        
+        fatalError("override \(#function)")
     }
     
 
