@@ -73,7 +73,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
     //MARK: - RepositoryAccessorProtocol
     
-    func updateNotification() {
+    func notifyRepositoryWasUpdated() {
         if (self.showLoadingIndicator) {
             self.showLoadingIndicator = false
             stopActivityIndicator()

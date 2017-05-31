@@ -20,7 +20,6 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
     
     var tableView: UITableView!
     weak private var navigationData: NavigationContent!
-    //weak var repository: EventOfInterestRepository?
     var selectorCallback: DestinationSelector!
     
     init(table: UITableView, navItems: NavigationContent, selector: @escaping DestinationSelector) {
@@ -28,7 +27,6 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
         
         self.tableView = table
         self.navigationData = navItems
-        //repository = repo
         self.selectorCallback = selector
         
         // attach table
@@ -48,7 +46,6 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return (self.navigationArray.count)
         return (self.navigationData.count)
     }
     

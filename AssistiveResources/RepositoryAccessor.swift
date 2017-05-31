@@ -13,7 +13,7 @@ enum AccessorState : Int {
 }
 
 protocol RepositoryAccessorProtocol: class {
-    func updateNotification()
+    func notifyRepositoryWasUpdated()
 }
 
 

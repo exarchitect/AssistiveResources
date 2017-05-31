@@ -78,7 +78,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     
     // MARK: - REPOSITORY ACCESSOR PROTOCOL
     
-    func updateNotification() {
+    func notifyRepositoryWasUpdated() {
         if (self.showLoadingIndicator) {
             self.showLoadingIndicator = false
             stopActivityIndicator()

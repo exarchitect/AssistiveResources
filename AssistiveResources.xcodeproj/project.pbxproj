@@ -269,10 +269,10 @@
 				D255504C1E2491AA004FE72B /* RegionalResourcesModelController.swift */,
 				D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */,
 				D275718E1E415C3E0007CEF1 /* RepositoryProfile.swift */,
-				D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */,
-				D24E4DC51DE74066008A11FB /* Organization.swift */,
 				D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */,
 				D24E4DC71DE74167008A11FB /* PublicEvent.swift */,
+				D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */,
+				D24E4DC51DE74066008A11FB /* Organization.swift */,
 			);
 			name = RegionalResources;
 			sourceTree = "<group>";
