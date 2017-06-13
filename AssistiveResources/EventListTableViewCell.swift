@@ -33,7 +33,8 @@ class EventListTableViewCell: UITableViewCell {
     func configureCell(event: StoredEvent, expand: Bool) {
         mainTitle.text = event.eventTitle
         eventDetailLabel.text = event.eventDescriptionBrief
-        sponsorLabel.text = "Sponsored by " + event.organizationTitle
+        let sponsorPrefix = NSLocalizedString("Sponsored by ", comment: "Sponsored by....")
+        sponsorLabel.text = sponsorPrefix + event.organizationTitle
         locationLabel.text = event.facilityTitle
         dateTimeLabel.text = event.eventDescriptor!.whenDescription
         

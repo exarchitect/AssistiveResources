@@ -48,9 +48,7 @@ class NavigationContent: NSObject {
                 //navigationArray[index].subtitle = "Hi MOM!"
                 
             case NavigationCategory.Events:
-                //if self.usrModelController != nil {
-                    navigationArray[index].subtitle = "Regional and national events in your area"
-                //}
+                navigationArray[index].subtitle = NSLocalizedString("Regional and national events in your area", comment: "subtext for event nav item")
                 
             case NavigationCategory.Facilities:
                 let _ = 8
@@ -62,9 +60,14 @@ class NavigationContent: NSObject {
                 let _ = 8
                 
             case NavigationCategory.Inbox:
-                //if self.usrModelController != nil {
-                    navigationArray[index].subtitle = "You have 3 unread messages"
-                //}
+                let msgs = 3
+                var msgString = "no"
+                if (msgs > 0) {
+                    msgString = "\(msgs)"
+                }
+                let prefix = NSLocalizedString("You have ", comment: "You have....")
+                let suffix = NSLocalizedString(" unread messages", comment: "...unread messages")
+                navigationArray[index].subtitle = prefix + msgString + suffix
                 
             case NavigationCategory.Profile:
                 let _ = 8
