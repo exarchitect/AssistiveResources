@@ -60,7 +60,6 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
                 startActivityIndicator(title: nil, message: "loading...")
             }
-            //startActivityIndicator(title: nil, message: "loading...")
         }
     }
 

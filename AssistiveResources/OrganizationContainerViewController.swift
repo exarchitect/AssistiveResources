@@ -66,7 +66,6 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
                 startActivityIndicator(title: nil, message: "loading...")
             }
-            //startActivityIndicator(title: nil, message: "loading...")
         }
     }
     
