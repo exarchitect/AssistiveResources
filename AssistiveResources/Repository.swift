@@ -31,7 +31,7 @@ class Repository: NSObject {
         super.init()
     }
     
-    func loadAsync (completion: @escaping RepositoryUpdateCompletionHandlerType) {
+    func load (completion: @escaping RepositoryUpdateCompletionHandlerType) {
         self.completionClosure = completion
         
         let repoStartupState = self.checkRepositoryState()
@@ -109,14 +109,26 @@ class Repository: NSObject {
 // MARK: - Backendless
 
 func initializeRemoteDatabase() {
-    let APP_ID = "A9F4E1E9-EE0E-C611-FF91-4B3E52A79900"     // SwiftNeed
-    let SECRET_KEY = "91933CE7-53FE-117C-FFC0-E9A8751F9800"
-    let VERSION_NUM = "v1"
+    let APP_ID = "F817A756-BEB2-79AD-FF65-D49A4E97A800"     // AssistiveResources
+    let SECRET_KEY = "6F155BAE-91A6-0455-FFFD-30F4442B0A00"
+    //let VERSION_NUM = "v1"
     
     let backendless = Backendless.sharedInstance()
     
-    backendless?.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM)
+    //backendless?.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM)
+    backendless?.initApp(APP_ID, apiKey: SECRET_KEY)
     
 }
 
+//func initializeRemoteDatabase() {
+//    let APP_ID = "A9F4E1E9-EE0E-C611-FF91-4B3E52A79900"     // SwiftNeed
+//    let SECRET_KEY = "91933CE7-53FE-117C-FFC0-E9A8751F9800"
+//    let VERSION_NUM = "v1"
+//    
+//    let backendless = Backendless.sharedInstance()
+//    
+//    //backendless?.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM)
+//    backendless?.initApp(APP_ID, apiKey: SECRET_KEY)
+//    
+//}
 

@@ -51,19 +51,47 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
 
         self.dependencies.userModelController.storeUserCredentials(username: username, password: password)
 
-        self.dependencies.userModelController.authorizeUser(completion: { (success) in
-            
-            if (success) {
-                print("logged in")
+        self.dependencies.userModelController.authorizeUser(completion: { (loginResult) in
+         
+            switch loginResult {
                 
+            case .Anonymous:
+                print("Anonymous")
+                fallthrough
+                
+            case .ServiceOffline:
+                print("Service Offline")
+                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
+                self.responseDelegate.requestAction(command: Command(type: .userLoginServiceOffline))
+                
+            case .Authenticated:
+                print("authenticated")
                 self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
                 self.responseDelegate.requestAction(command: Command(type: .userLoginSuccessful))
-
-            } else {
-                print("NOT logged in")
                 
+            case .Uninitialized:
+                fallthrough
+                
+            case .NoCredentials:
+                fallthrough
+                
+            case .Rejected:
+                print("NOT logged in")
                 // TODO - warn user of bad credentials
+                
             }
+
+//            if (loginResult == LoginType.Authenticated) {
+//                print("logged in")
+//                
+//                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
+//                self.responseDelegate.requestAction(command: Command(type: .userLoginSuccessful))
+//
+//            } else {
+//                print("NOT logged in")
+//                
+//                // TODO - warn user of bad credentials
+//            }
         })
 
     }

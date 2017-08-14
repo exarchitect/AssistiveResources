@@ -46,7 +46,7 @@ final class PropertySettings: NSObject {
         }
         rememberMe =  (usrDefaults.bool(forKey: UserPropertyKeys.Remember_Me))
         if let zip = usrDefaults.string(forKey: UserPropertyKeys.Location_Zipcode) {
-            password = zip
+            zipcode = zip
         }
     }
     

@@ -10,11 +10,11 @@ import UIKit
 
 
 enum LoginType : Int {
-    case None = 0, Anonymous = 1, Authenticated = 2
+    case Uninitialized = 0, Anonymous = 1, Authenticated = 2, Rejected = 3, ServiceOffline = 4, NoCredentials = 5
 }
 
 
-typealias AsyncCompletionHandlerType = (_ success: Bool) -> Void
+typealias AsyncCompletionHandlerType = (_ loginResult: LoginType) -> Void
 
 
 protocol UserProvider {
@@ -24,7 +24,6 @@ protocol UserProvider {
 
 final class UserModelController: ModelController {
     
-    var isUserAuthenticated: Bool
     var locationProfile: LocationProfile
     var locationZip: String = ""
     
@@ -33,15 +32,13 @@ final class UserModelController: ModelController {
     private var completionClosure: AsyncCompletionHandlerType?
     private var username: String = ""
     private var password: String = ""
-    private var loginType: LoginType = LoginType.None
+    private var loginType: LoginType = LoginType.Uninitialized
     
     private var backendlUser: BackendlessUser? = nil
     
     static let sharedInstance = UserModelController()     // singleton
     
     override init() {
-        isUserAuthenticated = false
-        
         let props = PropertySettings.sharedInstance
         props.read()
         self.username = props.username
@@ -64,7 +61,6 @@ final class UserModelController: ModelController {
         DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
             startActivityIndicator(title: nil, message: "authenticating...")
         }
-//        startActivityIndicator(title: nil, message: "authenticating...")
 
         let backend = Backendless.sharedInstance()
 
@@ -72,25 +68,37 @@ final class UserModelController: ModelController {
             
             backend?.userService.login(username, password: password, response: { (user: BackendlessUser?) in
                 self.backendlUser = user
-                self.isUserAuthenticated = true
+                self.storeUserCredentials(username: self.username, password: self.password)
                 
                 stopActivityIndicator()
                 
-                self.completionClosure?(true)
+                self.loginType = LoginType.Authenticated
+                self.completionClosure?(self.loginType)
                 self.completionClosure = nil
+                
             }, error: { (fault: Fault?) in
-                self.isUserAuthenticated = false
                 print (fault ?? "failed login")
+                let err: String = fault!.faultCode
+                if err=="-1009" {
+                    self.loginType = LoginType.ServiceOffline
+                } else {
+                    self.loginType = LoginType.Rejected
+                }
                 
-                stopActivityIndicator()
+                DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.1)) {
+                    stopActivityIndicator()
+                    self.completionClosure?(self.loginType)
+                    self.completionClosure = nil
+                }
                 
-                self.completionClosure?(false)
-                self.completionClosure = nil
             })
         } else {
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 1.1)) {
                 stopActivityIndicator()
-                self.completionClosure?(false)      // failed, since we dont have creds
+                
+                self.loginType = LoginType.NoCredentials
+                self.completionClosure?(self.loginType)      // failed, since we dont have creds
+                self.completionClosure = nil
             }
         }
         

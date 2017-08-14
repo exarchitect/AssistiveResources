@@ -35,21 +35,54 @@ class AssistiveAppController: AppController {
         }
         
         // temp override to fail login for testing
-        //self.shared.userModelController.storeUserCredentials(username: "", password: "")
+        self.shared.userModelController.storeUserCredentials(username: "", password: "")
+        //self.shared.userModelController.storeUserCredentials(username: "exarchitect@gmail.com", password: "alongishpassword")
         
-        self.shared.userModelController.authorizeUser(completion: { (success) in
+        self.shared.userModelController.authorizeUser(completion: { (loginResult) in
             
-            if (success) {
-                print("logged in")
+            switch loginResult {
                 
-            } else {
+            case .Anonymous:
+                self.loadRegionalResourceModelController(online: true)
+                
+            case .Authenticated:
+                self.loadRegionalResourceModelController(online: true)
+                
+            case .Uninitialized:
+                fallthrough
+                
+            case .Rejected:
                 print("NOT logged in")
                 
                 let success = self.pushAuthenticationProcessController()
                 if (!success) {
                     // TODO
                 }
+                
+            case .ServiceOffline:
+                print("Service Offline")
+                self.loadRegionalResourceModelController(online: false)      // TODO: notify RRMC that we are offline
+                
+            case .NoCredentials:
+                print("NO credentials")
+                
+                let success = self.pushAuthenticationProcessController()
+                if (!success) {
+                    // TODO
+                }
             }
+            
+//            if (loginResult == LoginType.Authenticated) {
+//                print("logged in")
+//                
+//            } else {
+//                print("NOT logged in")
+//                
+//                let success = self.pushAuthenticationProcessController()
+//                if (!success) {
+//                    // TODO
+//                }
+//            }
         })
     }
     
@@ -65,7 +98,10 @@ class AssistiveAppController: AppController {
             self.freeTopProcessController()
             
         case .userLoginSuccessful:
-            self.loadRegionalResourceModelController()
+            self.loadRegionalResourceModelController(online: true)
+            
+        case .userLoginServiceOffline:
+            self.loadRegionalResourceModelController(online: false)
             
         case .navigationItemSelected(let destination):
             self.notifyNavigationItemSelected(selection: destination)
@@ -164,9 +200,9 @@ class AssistiveAppController: AppController {
         return success
     }
     
-    private func loadRegionalResourceModelController () {
+    private func loadRegionalResourceModelController (online: Bool) {
         if (self.shared.regionalResourcesModelController == nil) {
-            self.shared.regionalResourcesModelController = RegionalResourcesModelController(atLocation: self.shared.userModelController.locationProfile)
+            self.shared.regionalResourcesModelController = RegionalResourcesModelController(atLocation: self.shared.userModelController.locationProfile, isOnline: online)
             self.shared.regionalResourcesModelController?.initiateLoading()
         }
     }

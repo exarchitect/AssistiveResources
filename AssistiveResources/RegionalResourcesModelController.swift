@@ -18,17 +18,19 @@ protocol RegionalResourcesProvider {
 class RegionalResourcesModelController: ModelController {
     
     private var regionalRepository : RegionalResourcesRepository!
+    private var online : Bool!
     
-    init(atLocation: LocationProfile)
+    init(atLocation: LocationProfile, isOnline: Bool)
     {
         super.init()
         
+        self.online = isOnline
         self.regionalRepository = RegionalResourcesRepository(location: atLocation)
     }
     
     func initiateLoading() {
 
-        self.regionalRepository.loadAsync { (success) in
+        self.regionalRepository.load { (success) in
             if (success) {
                 // data pulled by accessors
             } else {
