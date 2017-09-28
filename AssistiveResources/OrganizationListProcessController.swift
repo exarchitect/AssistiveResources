@@ -20,23 +20,25 @@ class OrganizationListProcessController: ProcessController, OrganizationListView
         super.init(responseDelegate: responseDelegate)
     }
     
-    override func launch() -> Bool {
+    override func launch(navController: UINavigationController) -> Bool {
         
         self.organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
         self.organizationListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
-        let navCtrller = self.responseDelegate.navigationController()
-        navCtrller.pushViewController(self.organizationListViewController, animated: true)
-        
+//        let navCtrller = self.responseDelegate.navigationController()
+//        navCtrller.pushViewController(self.organizationListViewController, animated: true)
+        navController.pushViewController(self.organizationListViewController, animated: true)
+
         return (self.organizationListViewController != nil)
     }
     
-    override func terminate () {
-        super.terminate()
+    override func terminate (navController: UINavigationController) {
+        super.terminate(navController: navController)
         
-        let navCtrller = self.responseDelegate.navigationController()
-        let _ = navCtrller.popViewController(animated: true)
-        
+//        let navCtrller = self.responseDelegate.navigationController()
+//        let _ = navCtrller.popViewController(animated: true)
+        let _ = navController.popViewController(animated: true)
+
         self.organizationListViewController = nil
     }
     

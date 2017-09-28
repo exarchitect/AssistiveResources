@@ -46,9 +46,9 @@ class AppController: NSObject, ProcessControllerResponseHandler {
     
     // MARK: - ProcessControllerResponseHandler protocol
 
-    func navigationController () -> UINavigationController {
-        return self.navController
-    }
+//    func navigationController () -> UINavigationController {
+//        return self.navController
+//    }
     
     func requestAction(command: Command) {
         fatalError("override \(#function)")

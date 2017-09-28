@@ -26,8 +26,8 @@ class AssistiveAppController: AppController {
     
     override func start()  {
         
-        self.loadUserModelController()      // loadResourceModelController() not called until after login
-        precondition(self.shared.userModelController != nil)
+        self.loadUserModelController()
+        // loadResourceModelController() not called until after login
         
         let success = self.pushNavigationListProcessController()
         if (!success) {
@@ -83,7 +83,7 @@ class AssistiveAppController: AppController {
         switch command.type {
             
         case .dismissProcessController(let controller):
-            controller.terminate()
+            controller.terminate(navController: self.navController)
             self.freeTopProcessController()
             
         case .userLoginSuccessful:
@@ -182,7 +182,7 @@ class AssistiveAppController: AppController {
     // MARK: - Utilities
     
     private func launchProcessController (processController: ProcessController) -> Bool {
-        let success = processController.launch()
+        let success = processController.launch(navController: self.navController)
         if success {
             self.processControllerStack.append(processController)
         }
@@ -200,6 +200,7 @@ class AssistiveAppController: AppController {
         if (self.shared.userModelController == nil) {
             self.shared.userModelController = UserModelController()
         }
+        precondition(self.shared.userModelController != nil)
     }
     
     override func checkDatabaseRefresh() {

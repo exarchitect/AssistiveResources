@@ -23,7 +23,7 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         super.init(responseDelegate: responseDelegate)
     }
 
-    override func launch() -> Bool {
+    override func launch(navController: UINavigationController) -> Bool {
         
         precondition(self.dependencies.userModelController != nil)
         
@@ -32,17 +32,19 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         self.navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
         self.navListViewController.configuration(navItems: self.navigationData, navDelegate: self)
         
-        let navCtrller = self.responseDelegate.navigationController()
-        navCtrller.pushViewController(self.navListViewController, animated: false)
-        
+//        let navCtrller = self.responseDelegate.navigationController()
+//        navCtrller.pushViewController(self.navListViewController, animated: false)
+        navController.pushViewController(self.navListViewController, animated: false)
+
         return (self.navListViewController != nil)
     }
     
-    override func terminate () {
-        super.terminate()
+    override func terminate (navController: UINavigationController) {
+        super.terminate(navController: navController)
 
-        let navCtrller = self.responseDelegate.navigationController()
-        let _ = navCtrller.popViewController(animated: true)
+//        let navCtrller = self.responseDelegate.navigationController()
+//        let _ = navCtrller.popViewController(animated: true)
+        let _ = navController.popViewController(animated: true)
     }
     
     // NavigationSelectorProtocol

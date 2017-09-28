@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol ProcessControllerResponseHandler: class {
-    func navigationController () -> UINavigationController
+    //func navigationController () -> UINavigationController
     func requestAction (command: Command)
 }
 
@@ -27,11 +27,11 @@ class ProcessController: NSObject {
         super.init()
     }
     
-    func terminate () {
+    func terminate (navController: UINavigationController) {
         self.inUse = false
     }
     
-    func launch() -> Bool {
+    func launch(navController: UINavigationController) -> Bool {
         return true
     }
     

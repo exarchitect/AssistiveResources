@@ -21,26 +21,26 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         super.init(responseDelegate: responseDelegate)
     }
     
-    override func launch() -> Bool {
+    override func launch(navController: UINavigationController) -> Bool {
         
         let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
         self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
         self.loginViewController.configuration(userModelController: self.dependencies.userModelController, completionProtocol: self)
         
-        let parentViewController = self.responseDelegate.navigationController().topViewController
+//        let parentViewController = self.responseDelegate.navigationController().topViewController
+        let parentViewController = navController.topViewController
         parentViewController?.present(self.loginViewController, animated: true, completion: nil)
-        
+
         return (authenticationStoryboard != nil && self.loginViewController != nil)
     }
     
-    override func terminate () {
-        super.terminate()
+    override func terminate (navController: UINavigationController) {
+        super.terminate(navController: navController)
 
-        let parentViewController = self.responseDelegate.navigationController().topViewController
-        //DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.3)) {
-            parentViewController?.dismiss(animated: true, completion: nil)
-        //}
-        
+//        let parentViewController = self.responseDelegate.navigationController().topViewController
+        let parentViewController = navController.topViewController
+        parentViewController?.dismiss(animated: true, completion: nil)
+
         requestMainNavigationRefresh()
     }
     
