@@ -37,9 +37,9 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         super.terminate()
 
         let parentViewController = self.responseDelegate.navigationController().topViewController
-        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.3)) {
+        //DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.3)) {
             parentViewController?.dismiss(animated: true, completion: nil)
-        }
+        //}
         
         requestMainNavigationRefresh()
     }
@@ -61,13 +61,13 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
                 
             case .ServiceOffline:
                 print("Service Offline")
-                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
                 self.responseDelegate.requestAction(command: Command(type: .userLoginServiceOffline))
+                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
                 
             case .Authenticated:
                 print("authenticated")
-                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
                 self.responseDelegate.requestAction(command: Command(type: .userLoginSuccessful))
+                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
                 
             case .Uninitialized:
                 fallthrough
@@ -80,21 +80,9 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
                 // TODO - warn user of bad credentials
                 
             }
-
-//            if (loginResult == LoginType.Authenticated) {
-//                print("logged in")
-//                
-//                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
-//                self.responseDelegate.requestAction(command: Command(type: .userLoginSuccessful))
-//
-//            } else {
-//                print("NOT logged in")
-//                
-//                // TODO - warn user of bad credentials
-//            }
         })
-
     }
+    
     
     //MARK: debug
     deinit {

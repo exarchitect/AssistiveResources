@@ -290,7 +290,7 @@
 			name = EventList;
 			sourceTree = "<group>";
 		};
-		D2B028521E2C71770064B3D2 /* Superclasses */ = {
+		D2B028521E2C71770064B3D2 /* Common classes */ = {
 			isa = PBXGroup;
 			children = (
 				D2C9AD701DDFF5120028341D /* AppController.swift */,
@@ -301,7 +301,7 @@
 				D25550491E234626004FE72B /* Repository.swift */,
 				D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */,
 			);
-			name = Superclasses;
+			name = "Common classes";
 			sourceTree = "<group>";
 		};
 		D2B7D1431E46A40F00E69D1E /* OrganizationList */ = {
@@ -365,7 +365,7 @@
 				D276B5291EABAEF600182357 /* AssistiveResources.entitlements */,
 				D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */,
 				D2F91E9B1DDFE5D20084F00E /* Info.plist */,
-				D2B028521E2C71770064B3D2 /* Superclasses */,
+				D2B028521E2C71770064B3D2 /* Common classes */,
 				D2C9AD6C1DDFF3800028341D /* AppController */,
 				D24E4DAD1DE3E593008A11FB /* ModelControllers */,
 				D24E4DAC1DE3E581008A11FB /* ProcessControllers */,
@@ -487,7 +487,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -565,13 +565,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AssistiveResources-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		359CC3B96029C2BE1DE7A648 /* [CP] Copy Pods Resources */ = {
@@ -640,13 +643,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AssistiveResourcesTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		919C5E0D15C4124C72A1E256 /* [CP] Embed Pods Frameworks */ = {
@@ -655,9 +661,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/ReachabilitySwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReachabilitySwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -670,13 +683,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AssistiveResourcesUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FC28EF1F127E6506EE1C566D /* [CP] Copy Pods Resources */ = {
@@ -893,8 +909,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 50F05BA53F8E3FCB15D6203B /* Pods-AssistiveResources.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AssistiveResources/AssistiveResources.entitlements;
 				DEVELOPMENT_TEAM = EPRGW4NZ3Y;
 				INFOPLIST_FILE = AssistiveResources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -910,8 +927,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6EF60E8FC5E67E799797B663 /* Pods-AssistiveResources.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AssistiveResources/AssistiveResources.entitlements;
 				DEVELOPMENT_TEAM = EPRGW4NZ3Y;
 				INFOPLIST_FILE = AssistiveResources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;

@@ -61,7 +61,7 @@ class AssistiveAppController: AppController {
                 
             case .ServiceOffline:
                 print("Service Offline")
-                self.loadRegionalResourceModelController(online: false)      // TODO: notify RRMC that we are offline
+                self.loadRegionalResourceModelController(online: false)
                 
             case .NoCredentials:
                 print("NO credentials")
@@ -72,17 +72,6 @@ class AssistiveAppController: AppController {
                 }
             }
             
-//            if (loginResult == LoginType.Authenticated) {
-//                print("logged in")
-//                
-//            } else {
-//                print("NOT logged in")
-//                
-//                let success = self.pushAuthenticationProcessController()
-//                if (!success) {
-//                    // TODO
-//                }
-//            }
         })
     }
     
