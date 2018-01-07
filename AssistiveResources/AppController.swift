@@ -59,7 +59,7 @@ class AppController: NSObject, ProcessControllerResponseHandler {
     
     func freeTopProcessController () {
         if (self.processControllerStack.last != nil){
-            if (!self.processControllerStack.last!.inUse) {
+            if (self.processControllerStack.last!.inUse == false) {
                 let _ = self.processControllerStack.popLast()
             }
         }

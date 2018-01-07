@@ -12,6 +12,8 @@ import UIKit
 struct SharedResources: RegionalResourcesProvider, UserProvider {
     var regionalResourcesModelController: RegionalResourcesModelController!
     var userModelController: UserModelController!
+    //var connectivityService: ConnectivityService!
+    //var interactionService: InteractionService!
 }
 
 class AssistiveAppController: AppController {

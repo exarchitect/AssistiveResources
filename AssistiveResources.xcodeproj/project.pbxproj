@@ -290,7 +290,7 @@
 			name = EventList;
 			sourceTree = "<group>";
 		};
-		D2B028521E2C71770064B3D2 /* Common classes */ = {
+		D2B028521E2C71770064B3D2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				D2C9AD701DDFF5120028341D /* AppController.swift */,
@@ -301,7 +301,7 @@
 				D25550491E234626004FE72B /* Repository.swift */,
 				D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */,
 			);
-			name = "Common classes";
+			name = Common;
 			sourceTree = "<group>";
 		};
 		D2B7D1431E46A40F00E69D1E /* OrganizationList */ = {
@@ -365,7 +365,7 @@
 				D276B5291EABAEF600182357 /* AssistiveResources.entitlements */,
 				D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */,
 				D2F91E9B1DDFE5D20084F00E /* Info.plist */,
-				D2B028521E2C71770064B3D2 /* Common classes */,
+				D2B028521E2C71770064B3D2 /* Common */,
 				D2C9AD6C1DDFF3800028341D /* AppController */,
 				D24E4DAD1DE3E593008A11FB /* ModelControllers */,
 				D24E4DAC1DE3E581008A11FB /* ProcessControllers */,
