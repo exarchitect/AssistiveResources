@@ -16,25 +16,25 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     private let dependencies: ExternalDependencies
     private var eventDetailViewController: EventDetailViewController!
     
-    init(responseDelegate: ProcessControllerResponseHandler, dependencies: ExternalDependencies) {
+    init(responseDelegate: ProcessControllerResponseHandler, navController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
-        super.init(responseDelegate: responseDelegate)
+        super.init(responseDelegate: responseDelegate, navController: navController)
     }
     
-    override func launch(navController: UINavigationController) -> Bool {
+    override func launch() -> Bool {
         
         self.eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
         self.eventDetailViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
-        navController.pushViewController(self.eventDetailViewController, animated: true)
+        self.navigationController.pushViewController(self.eventDetailViewController, animated: true)
 
         return (self.eventDetailViewController != nil)
     }
     
-    override func terminate (navController: UINavigationController) {
-        super.terminate(navController: navController)
+    override func terminate () {
+        super.terminate()
 
-        let _ = navController.popViewController(animated: true)
+        let _ = self.navigationController.popViewController(animated: true)
  
         self.eventDetailViewController = nil
     }

@@ -16,25 +16,25 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     private let dependencies: ExternalDependencies
     private var eventListViewController: EventListViewController!
     
-    init(responseDelegate: ProcessControllerResponseHandler, dependencies: ExternalDependencies) {
+    init(responseDelegate: ProcessControllerResponseHandler, navigationController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
-        super.init(responseDelegate: responseDelegate)
+        super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
 
-    override func launch(navController: UINavigationController) -> Bool {
+    override func launch() -> Bool {
         
         self.eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
         self.eventListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
-        navController.pushViewController(self.eventListViewController, animated: true)
+        self.navigationController.pushViewController(self.eventListViewController, animated: true)
 
         return (self.eventListViewController != nil)
     }
     
-    override func terminate (navController: UINavigationController) {
-        super.terminate(navController: navController)
+    override func terminate () {
+        super.terminate()
 
-        let _ = navController.popViewController(animated: true)
+        let _ = self.navigationController.popViewController(animated: true)
 
         self.eventListViewController = nil
     }

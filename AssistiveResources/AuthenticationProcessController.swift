@@ -16,28 +16,31 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     private let dependencies: ExternalDependencies
     private var loginViewController: LoginViewController!
 
-    init(responseDelegate: ProcessControllerResponseHandler, dependencies: ExternalDependencies) {
+    init(responseDelegate: ProcessControllerResponseHandler, navigationController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
-        super.init(responseDelegate: responseDelegate)
+        super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
     
-    override func launch(navController: UINavigationController) -> Bool {
+    override func launch() -> Bool {
         
-        let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
-        self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
+//        let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
+//        self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
+        self.loginViewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID") as! LoginViewController
         self.loginViewController.configuration(userModelController: self.dependencies.userModelController, completionProtocol: self)
         
-        let parentViewController = navController.topViewController
-        parentViewController?.present(self.loginViewController, animated: true, completion: nil)
+//        let parentViewController = navController.topViewController
+//        parentViewController?.present(self.loginViewController, animated: true, completion: nil)
+        self.navigationController.pushViewController(self.loginViewController, animated: true)
 
-        return (authenticationStoryboard != nil && self.loginViewController != nil)
+        return (self.loginViewController != nil)
     }
     
-    override func terminate (navController: UINavigationController) {
-        super.terminate(navController: navController)
+    override func terminate () {
+        super.terminate()
 
-        let parentViewController = navController.topViewController
-        parentViewController?.dismiss(animated: true, completion: nil)
+//        let parentViewController = navController.topViewController
+//        parentViewController?.dismiss(animated: true, completion: nil)
+        let _ = self.navigationController.popViewController(animated: true)
 
         requestMainNavigationRefresh()
     }

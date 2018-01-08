@@ -15,25 +15,25 @@ class OrganizationListProcessController: ProcessController, OrganizationListView
     private let dependencies: ExternalDependencies
     private var organizationListViewController: OrganizationListViewController!
     
-    init(responseDelegate: ProcessControllerResponseHandler, dependencies: ExternalDependencies) {
+    init(responseDelegate: ProcessControllerResponseHandler, navigationController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
-        super.init(responseDelegate: responseDelegate)
+        super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
     
-    override func launch(navController: UINavigationController) -> Bool {
+    override func launch() -> Bool {
         
         self.organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
         self.organizationListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
-        navController.pushViewController(self.organizationListViewController, animated: true)
+        self.navigationController.pushViewController(self.organizationListViewController, animated: true)
 
         return (self.organizationListViewController != nil)
     }
     
-    override func terminate (navController: UINavigationController) {
-        super.terminate(navController: navController)
+    override func terminate () {
+        super.terminate()
         
-        let _ = navController.popViewController(animated: true)
+        let _ = self.navigationController.popViewController(animated: true)
 
         self.organizationListViewController = nil
     }

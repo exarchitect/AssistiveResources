@@ -38,7 +38,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
         }
         
         // temp override to fail login for testing
-        //self.shared.userModelController.storeUserCredentials(username: "", password: "")
+        self.shared.userModelController.storeUserCredentials(username: "", password: "")
         //self.shared.userModelController.storeUserCredentials(username: "exarchitect@gmail.com", password: "alongishpassword")
         
         self.shared.userModelController.authorizeUser(completion: { (loginResult) in
@@ -87,7 +87,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
         switch command.type {
             
         case .dismissProcessController(let controller):
-            controller.terminate(navController: self.navController)
+            controller.terminate()
             self.freeTopProcessController()
             
         case .userLoginSuccessful:
@@ -154,31 +154,31 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
     
     private func pushNavigationListProcessController () -> Bool {
         
-        let navListPC = NavListProcessController(responseDelegate: self, dependencies: self.shared)
+        let navListPC = NavListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
         return self.launchProcessController(processController: navListPC)
     }
     
     private func pushAuthenticationProcessController () -> Bool {
         
-        let authPC = AuthenticationProcessController(responseDelegate:self, dependencies: self.shared)
+        let authPC = AuthenticationProcessController(responseDelegate:self, navigationController: self.navController, dependencies: self.shared)
         return self.launchProcessController(processController: authPC)
     }
     
     private func pushEventListProcessController () -> Bool {
         
-        let eventListPC = EventListProcessController(responseDelegate: self, dependencies: self.shared)
+        let eventListPC = EventListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
         return self.launchProcessController(processController: eventListPC)
     }
     
     private func pushEventDetailProcessController (evt: EntityDescriptor) -> Bool {
         
-        let eventDetailPC = EventDetailProcessController(responseDelegate: self, dependencies: self.shared)
+        let eventDetailPC = EventDetailProcessController(responseDelegate: self, navController: self.navController, dependencies: self.shared)
         return self.launchProcessController(processController: eventDetailPC)
     }
     
     private func pushOrganizationListProcessController () -> Bool {
         
-        let orgListPC = OrganizationListProcessController(responseDelegate: self, dependencies: self.shared)
+        let orgListPC = OrganizationListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
         return self.launchProcessController(processController: orgListPC)
     }
     
@@ -186,7 +186,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
     // MARK: - Utilities
     
     private func launchProcessController (processController: ProcessController) -> Bool {
-        let success = processController.launch(navController: self.navController)
+        let success = processController.launch()
         if success {
             self.processControllerStack.append(processController)
         }
