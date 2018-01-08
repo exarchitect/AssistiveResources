@@ -32,8 +32,6 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         self.navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
         self.navListViewController.configuration(navItems: self.navigationData, navDelegate: self)
         
-//        let navCtrller = self.responseDelegate.navigationController()
-//        navCtrller.pushViewController(self.navListViewController, animated: false)
         navController.pushViewController(self.navListViewController, animated: false)
 
         return (self.navListViewController != nil)
@@ -42,8 +40,6 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     override func terminate (navController: UINavigationController) {
         super.terminate(navController: navController)
 
-//        let navCtrller = self.responseDelegate.navigationController()
-//        let _ = navCtrller.popViewController(animated: true)
         let _ = navController.popViewController(animated: true)
     }
     

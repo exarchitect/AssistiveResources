@@ -26,8 +26,6 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
         self.eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
         self.eventDetailViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
-//        let navCtrller = self.responseDelegate.navigationController()
-//        navCtrller.pushViewController(self.eventDetailViewController, animated: true)
         navController.pushViewController(self.eventDetailViewController, animated: true)
 
         return (self.eventDetailViewController != nil)
@@ -36,8 +34,6 @@ class EventDetailProcessController: ProcessController, EventDetailViewController
     override func terminate (navController: UINavigationController) {
         super.terminate(navController: navController)
 
-//        let navCtrller = self.responseDelegate.navigationController()
-//        let _ = navCtrller.popViewController(animated: true)
         let _ = navController.popViewController(animated: true)
  
         self.eventDetailViewController = nil

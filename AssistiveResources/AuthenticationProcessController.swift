@@ -27,7 +27,6 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
         self.loginViewController.configuration(userModelController: self.dependencies.userModelController, completionProtocol: self)
         
-//        let parentViewController = self.responseDelegate.navigationController().topViewController
         let parentViewController = navController.topViewController
         parentViewController?.present(self.loginViewController, animated: true, completion: nil)
 
@@ -37,7 +36,6 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     override func terminate (navController: UINavigationController) {
         super.terminate(navController: navController)
 
-//        let parentViewController = self.responseDelegate.navigationController().topViewController
         let parentViewController = navController.topViewController
         parentViewController?.dismiss(animated: true, completion: nil)
 

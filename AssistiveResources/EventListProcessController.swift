@@ -24,11 +24,8 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     override func launch(navController: UINavigationController) -> Bool {
         
         self.eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
-
         self.eventListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
-//        let navCtrller = self.responseDelegate.navigationController()
-//        navCtrller.pushViewController(self.eventListViewController, animated: true)
         navController.pushViewController(self.eventListViewController, animated: true)
 
         return (self.eventListViewController != nil)
@@ -37,8 +34,6 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     override func terminate (navController: UINavigationController) {
         super.terminate(navController: navController)
 
-//        let navCtrller = self.responseDelegate.navigationController()
-//        let _ = navCtrller.popViewController(animated: true)
         let _ = navController.popViewController(animated: true)
 
         self.eventListViewController = nil
@@ -55,7 +50,6 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     
     func eventSelected (evt: EntityDescriptor) {
         
-        //let cmd = Command(type: .eventSelected(event: evt))
         self.responseDelegate.requestAction(command: Command(type: .eventSelected(event: evt)))
     }
 
