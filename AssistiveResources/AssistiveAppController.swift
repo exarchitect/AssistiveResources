@@ -16,7 +16,8 @@ struct SharedResources: RegionalResourcesProvider, UserProvider {
     //var interactionService: InteractionService!
 }
 
-class AssistiveAppController: AppController {
+
+class AssistiveAppController: AppController, ProcessControllerResponseHandler {
     
     var shared: SharedResources = SharedResources()
     
@@ -26,8 +27,8 @@ class AssistiveAppController: AppController {
     }
     
     
-    override func start()  {
-        
+    override func internalStart() {
+
         self.loadUserModelController()
         // loadResourceModelController() not called until after login
         
@@ -37,7 +38,7 @@ class AssistiveAppController: AppController {
         }
         
         // temp override to fail login for testing
-        self.shared.userModelController.storeUserCredentials(username: "", password: "")
+        //self.shared.userModelController.storeUserCredentials(username: "", password: "")
         //self.shared.userModelController.storeUserCredentials(username: "exarchitect@gmail.com", password: "alongishpassword")
         
         self.shared.userModelController.authorizeUser(completion: { (loginResult) in
@@ -49,7 +50,8 @@ class AssistiveAppController: AppController {
                 
             case .Authenticated:
                 self.loadRegionalResourceModelController(online: true)
-                
+                requestMainNavigationRefresh()
+
             case .Uninitialized:
                 fallthrough
                 
@@ -80,7 +82,7 @@ class AssistiveAppController: AppController {
     
     // MARK: - ProcessControllerProtocol
     
-    override func requestAction(command: Command) {
+    func requestAction(command: Command) {
         
         switch command.type {
             

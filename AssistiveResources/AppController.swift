@@ -9,16 +9,16 @@
 import UIKit
 
 
-class AppController: NSObject, ProcessControllerResponseHandler {
+class AppController: NSObject {
 
     var rootViewController: RootViewController!
     var navController: UINavigationController!
     var processControllerStack = [ProcessController]()
     
     
-    override init() {
-        super.init()
-    }
+//    override init() {
+//        super.init()
+//    }
     
     
     func setupApplicationWindow() -> UIWindow {
@@ -36,6 +36,13 @@ class AppController: NSObject, ProcessControllerResponseHandler {
     }
     
     func start() {
+        // make sure the rootvc draws before startup
+        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.1)) {
+            self.internalStart()
+        }
+    }
+    
+    func internalStart() {
         fatalError("override \(#function)")
     }
     
@@ -44,17 +51,6 @@ class AppController: NSObject, ProcessControllerResponseHandler {
     }
     
     
-    // MARK: - ProcessControllerResponseHandler protocol
-
-//    func navigationController () -> UINavigationController {
-//        return self.navController
-//    }
-    
-    func requestAction(command: Command) {
-        fatalError("override \(#function)")
-    }
-    
-
     // MARK: - Utilities
     
     func freeTopProcessController () {
