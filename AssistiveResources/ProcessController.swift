@@ -10,7 +10,6 @@ import UIKit
 
 
 protocol ProcessControllerResponseHandler: class {
-    //func navigationController () -> UINavigationController
     func requestAction (command: Command)
 }
 

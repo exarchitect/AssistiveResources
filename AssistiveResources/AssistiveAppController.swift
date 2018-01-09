@@ -95,7 +95,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
             self.loadRegionalResourceModelController(online: false)
             
         case .navigationItemSelected(let destination):
-            self.notifyNavigationItemSelected(selection: destination)
+            self.respondToNavigationItemSelected(selection: destination)
             
         case .eventSelected(let event):
             self.pushEventDetailProcessController(evt: event)
@@ -106,7 +106,9 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
     }
     
     
-    func notifyNavigationItemSelected(selection:NavigationCategory) {
+    // MARK: - Utilities
+    
+    func respondToNavigationItemSelected(selection:NavigationCategory) {
         
         switch selection {
         case NavigationCategory.Organizations:
@@ -135,8 +137,6 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
         
     }
     
-    
-    // MARK: - launch process controllers
     
     private func pushNavigationListProcessController () {
         
@@ -168,8 +168,6 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
         self.launchProcessController(processController: orgListPC)
     }
     
-    
-    // MARK: - Utilities
     
     private func launchProcessController (processController: ProcessController) {
         processController.launch()

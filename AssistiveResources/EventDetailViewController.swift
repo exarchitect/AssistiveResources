@@ -9,20 +9,21 @@
 import UIKit
 
 
-protocol EventDetailViewControllerResponseProtocol {
-    func organizationSelected (evt: EntityDescriptor)
-    func backButtonTapped ()
-}
+//protocol EventDetailViewControllerResponseProtocol {
+//    func organizationSelected (evt: EntityDescriptor)
+//    func backButtonTapped ()
+//}
 
 
 class EventDetailViewController: UIViewController {
 
     weak private var resourcesModelController: RegionalResourcesModelController?
-    private var completionProtocol: EventDetailViewControllerResponseProtocol!
+//    private var completionProtocol: EventDetailViewControllerResponseProtocol!
+    private var completionProtocol: ProcessControllerResponseHandler!
 
     @IBOutlet weak var scrollView: UIScrollView!
     
-    func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventDetailViewControllerResponseProtocol) {
+    func configuration(resources: RegionalResourcesModelController, selectorDelegate: ProcessControllerResponseHandler) {
         self.completionProtocol = selectorDelegate
         self.resourcesModelController = resources
     }
@@ -44,11 +45,13 @@ class EventDetailViewController: UIViewController {
     }
     
     @IBAction func evntDetailBackButtonAction(_ sender: Any) {
-        self.completionProtocol.backButtonTapped()
+//        self.completionProtocol.backButtonTapped()
+        self.completionProtocol.requestAction(command: Command(type: .dismissTopProcessController))
     }
 
     @IBAction func orgSelectedButtonAction(_ sender: Any) {
-        self.completionProtocol.organizationSelected(evt: ("",0))
+//        self.completionProtocol.organizationSelected(evt: ("",0))
+        self.completionProtocol.requestAction(command: Command(type: .eventSelected(event: (entityName: "test", entityID: 1))))
     }
 
 }

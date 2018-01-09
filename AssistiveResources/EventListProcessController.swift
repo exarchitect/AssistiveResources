@@ -9,7 +9,7 @@
 import UIKit
 
 
-class EventListProcessController: ProcessController, EventListViewControllerResponseProtocol {
+class EventListProcessController: ProcessController {
     
     typealias ExternalDependencies = RegionalResourcesProvider
     
@@ -24,7 +24,7 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
         var eventListViewController: EventListViewController
         
         eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
-        eventListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
+        eventListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
         
         self.primaryViewController = eventListViewController
         super.launch()
@@ -37,18 +37,18 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     }
     
     
-    // EventListViewControllerResponseProtocol
-    
-    func eventSelected (evt: EntityDescriptor) {
-        
-        self.responseDelegate.requestAction(command: Command(type: .eventSelected(event: evt)))
-    }
-
-    func backButtonTapped () {
-
-//        let cmd = Command(type: .dismissProcessController(controller: self))
-//        self.responseDelegate.requestAction(command: cmd)
-        self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
-    }
+//    // EventListViewControllerResponseProtocol
+//    
+//    func eventSelected (evt: EntityDescriptor) {
+//        
+//        self.responseDelegate.requestAction(command: Command(type: .eventSelected(event: evt)))
+//    }
+//
+//    func backButtonTapped () {
+//
+////        let cmd = Command(type: .dismissProcessController(controller: self))
+////        self.responseDelegate.requestAction(command: cmd)
+//        self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
+//    }
 
 }

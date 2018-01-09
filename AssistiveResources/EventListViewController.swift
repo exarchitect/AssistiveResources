@@ -9,21 +9,21 @@
 import UIKit
 
 
-protocol EventListViewControllerResponseProtocol: class {
-    func eventSelected (evt: EntityDescriptor)
-    func backButtonTapped ()
-}
+//protocol EventListViewControllerResponseProtocol: class {
+//    func eventSelected (evt: EntityDescriptor)
+//    func backButtonTapped ()
+//}
 
 
 class EventListViewController: UIViewController, EventListContainerNotificationProtocol, EventFilterViewControllerResponseProtocol {
 
     @IBOutlet weak var headerView: HeaderView!
     
-    weak private var selectorDelegate:EventListViewControllerResponseProtocol!
+    weak private var selectorDelegate:ProcessControllerResponseHandler!
     weak private var resourcesModelController:RegionalResourcesModelController?
     //private var filterViewController:EventFilterViewController?
     
-    func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventListViewControllerResponseProtocol) {
+    func configuration(resources: RegionalResourcesModelController, selectorDelegate: ProcessControllerResponseHandler) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
     }
@@ -56,14 +56,16 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     //MARK: @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
-        self.selectorDelegate.backButtonTapped()
+//        self.selectorDelegate.backButtonTapped()
+        self.selectorDelegate.requestAction(command: Command(type: .dismissTopProcessController))
     }
     
     
-    //MARK: delegate
+    //MARK: - EventListContainerNotificationProtocol delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-        self.selectorDelegate.eventSelected(evt: EntityDescriptor("",0))
+//        self.selectorDelegate.eventSelected(evt: EntityDescriptor("",0))
+        self.selectorDelegate.requestAction(command: Command(type: .eventSelected(event: (entityName: "TestEvent", entityID: 3))))
     }
     
     func notifyFilterSelected() {
@@ -77,6 +79,8 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
         present(filterViewController, animated: true, completion: nil)
     }
     
+    //MARK: - EventFilterViewControllerResponseProtocol delegate
+
     func okFilterButtonAction() {
         self.dismiss(animated: true, completion: nil)
         //self.filterViewController = nil
@@ -87,7 +91,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
         //self.filterViewController = nil
     }
     
-    //MARK: debug
+    //MARK: - debug
     deinit {
         print("deallocating EventListVC")
     }

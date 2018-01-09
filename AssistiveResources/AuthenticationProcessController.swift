@@ -54,13 +54,11 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
             case .ServiceOffline:
                 print("Service Offline")
                 self.responseDelegate.requestAction(command: Command(type: .userLoginServiceOffline))
-//                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
                 self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
 
             case .Authenticated:
                 print("authenticated")
                 self.responseDelegate.requestAction(command: Command(type: .userLoginSuccessful))
-//                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
                 self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
 
             case .Uninitialized:

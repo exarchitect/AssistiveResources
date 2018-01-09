@@ -9,7 +9,7 @@
 import UIKit
 
 
-class NavListProcessController: ProcessController, NavigationSelectorProtocol {
+class NavListProcessController: ProcessController {
     
     typealias ExternalDependencies = UserProvider
     
@@ -28,17 +28,17 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
         self.navigationData = NavigationContent()
         
         navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
-        navListViewController.configuration(navItems: self.navigationData, navDelegate: self)
+        navListViewController.configuration(navItems: self.navigationData, navDelegate: self.responseDelegate)
         
         self.primaryViewController = navListViewController
         super.launch()
     }
     
-    //MARK:- NavigationSelectorProtocol
-    
-    func selectNavigationItem (selection: NavigationCategory) {
-        let cmd = Command(type: .navigationItemSelected(selection: selection))
-        self.responseDelegate.requestAction(command: cmd)
-    }
+//    // NavigationSelectorProtocol
+//    
+//    func selectNavigationItem (selection: NavigationCategory) {
+//        let cmd = Command(type: .navigationItemSelected(selection: selection))
+//        self.responseDelegate.requestAction(command: cmd)
+//    }
     
 }

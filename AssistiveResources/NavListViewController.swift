@@ -12,14 +12,14 @@ import UIKit
 let updateNavigationNotificationKeyName = NSNotification.Name(rawValue: "key_notify_navigation_content_changed")
 
 
-protocol NavigationSelectorProtocol {
-    func selectNavigationItem (selection: NavigationCategory)
-}
+//protocol NavigationSelectorProtocol {
+//    func selectNavigationItem (selection: NavigationCategory)
+//}
 
 
 class NavListViewController: UIViewController {
 
-    private var navVCDelegate: NavigationSelectorProtocol?
+    private var selectionDelegate: ProcessControllerResponseHandler?
     private var navigationData: NavigationContent!
     private var isCurrentlyVisible: Bool = false
     private var needContentRefresh: Bool = false
@@ -27,8 +27,8 @@ class NavListViewController: UIViewController {
     @IBOutlet weak var navTable: UITableView!
     var tableAdaptor:MainNavigationTableAdaptor?
     
-    func configuration(navItems: NavigationContent, navDelegate: NavigationSelectorProtocol) {
-        self.navVCDelegate = navDelegate
+    func configuration(navItems: NavigationContent, navDelegate: ProcessControllerResponseHandler) {
+        self.selectionDelegate = navDelegate
         self.navigationData = navItems
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateNavigationNotificationKeyName, object: nil)
@@ -37,12 +37,13 @@ class NavListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        precondition(self.navVCDelegate != nil)
+        precondition(self.selectionDelegate != nil)
         precondition(self.navigationData != nil)
 
         self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:NavigationCategory) -> Void in
             
-            self.navVCDelegate?.selectNavigationItem(selection: destination)
+//            self.selectionDelegate?.selectNavigationItem(selection: destination)
+            self.selectionDelegate?.requestAction(command: Command(type: .navigationItemSelected(selection: destination)))
         })
     }
     
@@ -82,7 +83,7 @@ class NavListViewController: UIViewController {
         }
     }
     
-    //MARK: debug
+    //MARK: - debug
     deinit {
         print("deallocating NavListViewController")
         NotificationCenter.default.removeObserver(self)
@@ -90,7 +91,7 @@ class NavListViewController: UIViewController {
     
 }
 
-//MARK: helper functions
+//MARK: - helper functions
 
 func requestMainNavigationRefresh() {
     NotificationCenter.default.post(name: updateNavigationNotificationKeyName, object: nil)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OrganizationListProcessController: ProcessController, OrganizationListViewControllerResponseProtocol {
+class OrganizationListProcessController: ProcessController {
     
     typealias ExternalDependencies = RegionalResourcesProvider
     
@@ -23,30 +23,29 @@ class OrganizationListProcessController: ProcessController, OrganizationListView
         var organizationListViewController: OrganizationListViewController
         
         organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
-        organizationListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
+        organizationListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
         
         self.primaryViewController = organizationListViewController
         super.launch()
     }
 
     
-    //MARK:- debug
+    //MARK: - debug
     deinit {
         print("deallocating OrganizationListPC")
     }
     
     
-    //MARK:- OrganizationListViewControllerResponseProtocol
-    
-    func organizationSelected (org: EntityDescriptor) {
-        
-        self.responseDelegate.requestAction(command: Command(type: .organizationSelected(organization: org)))
-    }
-    
-    func backButtonTapped () {
-        
-//        self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
-        self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
-    }
+//
+//    func organizationSelected (org: EntityDescriptor) {
+//
+//        self.responseDelegate.requestAction(command: Command(type: .organizationSelected(organization: org)))
+//    }
+//
+//    func backButtonTapped () {
+//
+////        self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
+//        self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
+//    }
     
 }

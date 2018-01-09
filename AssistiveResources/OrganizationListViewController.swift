@@ -9,21 +9,21 @@
 import UIKit
 
 
-protocol OrganizationListViewControllerResponseProtocol: class {
-    func organizationSelected (org: EntityDescriptor)
-    func backButtonTapped ()
-}
+//protocol OrganizationListViewControllerResponseProtocol: class {
+//    func organizationSelected (org: EntityDescriptor)
+//    func backButtonTapped ()
+//}
 
 
 class OrganizationListViewController: UIViewController, OrganizationListContainerNotificationProtocol {
 
     @IBOutlet weak var headerView: HeaderView!
     
-    weak private var selectorDelegate:OrganizationListViewControllerResponseProtocol!
+    weak private var selectorDelegate:ProcessControllerResponseHandler!
     weak private var resourcesModelController:RegionalResourcesModelController?
     //private var filterViewController:OrganizationFilterViewController?
     
-    func configuration(resources: RegionalResourcesModelController, selectorDelegate: OrganizationListViewControllerResponseProtocol) {
+    func configuration(resources: RegionalResourcesModelController, selectorDelegate: ProcessControllerResponseHandler) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
     }
@@ -57,7 +57,8 @@ class OrganizationListViewController: UIViewController, OrganizationListContaine
     //MARK: delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-        self.selectorDelegate.organizationSelected(org: EntityDescriptor("",0))
+//        self.selectorDelegate.organizationSelected(org: EntityDescriptor("",0))
+        self.selectorDelegate.requestAction(command: Command(type: .organizationSelected(organization: (entityName: "TestOrg", entityID: 2))))
     }
     
     func notifyFilterSelected() {
@@ -75,7 +76,8 @@ class OrganizationListViewController: UIViewController, OrganizationListContaine
     //MARK: @IBAction
     
     @IBAction func backButtonAction(_ sender: Any) {
-        self.selectorDelegate.backButtonTapped()
+//        self.selectorDelegate.backButtonTapped()
+        self.selectorDelegate.requestAction(command: Command(type: .dismissTopProcessController))
     }
     
 }
