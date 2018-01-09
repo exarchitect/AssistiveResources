@@ -15,7 +15,7 @@ class EventDetailProcessController: ProcessController {
     
     private let dependencies: ExternalDependencies
     
-    init(responseDelegate: ProcessControllerResponseHandler, navController: UINavigationController, dependencies: ExternalDependencies) {
+    init(responseDelegate: ProcessControllerResponseProtocol, navController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate, navController: navController)
     }

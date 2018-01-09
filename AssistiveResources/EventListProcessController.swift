@@ -15,7 +15,7 @@ class EventListProcessController: ProcessController {
     
     private let dependencies: ExternalDependencies
     
-    init(responseDelegate: ProcessControllerResponseHandler, navigationController: UINavigationController, dependencies: ExternalDependencies) {
+    init(responseDelegate: ProcessControllerResponseProtocol, navigationController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
@@ -31,7 +31,7 @@ class EventListProcessController: ProcessController {
     }
     
     
-    //MARK: debug
+    //MARK: - debug
     deinit {
         print("deallocating EventListPC")
     }

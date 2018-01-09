@@ -19,7 +19,7 @@ let updateNavigationNotificationKeyName = NSNotification.Name(rawValue: "key_not
 
 class NavListViewController: UIViewController {
 
-    private var selectionDelegate: ProcessControllerResponseHandler?
+    private var selectionDelegate: ProcessControllerResponseProtocol?
     private var navigationData: NavigationContent!
     private var isCurrentlyVisible: Bool = false
     private var needContentRefresh: Bool = false
@@ -27,7 +27,7 @@ class NavListViewController: UIViewController {
     @IBOutlet weak var navTable: UITableView!
     var tableAdaptor:MainNavigationTableAdaptor?
     
-    func configuration(navItems: NavigationContent, navDelegate: ProcessControllerResponseHandler) {
+    func configuration(navItems: NavigationContent, navDelegate: ProcessControllerResponseProtocol) {
         self.selectionDelegate = navDelegate
         self.navigationData = navItems
 

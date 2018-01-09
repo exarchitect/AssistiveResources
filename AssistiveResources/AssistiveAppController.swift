@@ -17,7 +17,7 @@ struct SharedResources: RegionalResourcesProvider, UserProvider {
 }
 
 
-class AssistiveAppController: AppController, ProcessControllerResponseHandler {
+class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     
     var shared: SharedResources = SharedResources()
     

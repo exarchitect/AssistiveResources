@@ -19,11 +19,11 @@ class OrganizationListViewController: UIViewController, OrganizationListContaine
 
     @IBOutlet weak var headerView: HeaderView!
     
-    weak private var selectorDelegate:ProcessControllerResponseHandler!
+    weak private var selectorDelegate:ProcessControllerResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
     //private var filterViewController:OrganizationFilterViewController?
     
-    func configuration(resources: RegionalResourcesModelController, selectorDelegate: ProcessControllerResponseHandler) {
+    func configuration(resources: RegionalResourcesModelController, selectorDelegate: ProcessControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
     }
