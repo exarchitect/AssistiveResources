@@ -19,23 +19,26 @@ class ProcessController: NSObject {
     
     var inUse: Bool = false
     weak var responseDelegate: ProcessControllerResponseHandler!
-    weak var primaryViewController: UIViewController? = nil
+    var primaryViewController: UIViewController? = nil
     weak var navigationController: UINavigationController!
 
     init (responseDelegate: ProcessControllerResponseHandler, navController: UINavigationController) {
-        
         self.responseDelegate = responseDelegate
         self.navigationController = navController
         self.inUse = true
         super.init()
     }
     
-    func launch() -> Bool {
-        return true
+    func launch() {
+        assert(self.primaryViewController != nil)
+        self.navigationController.pushViewController(self.primaryViewController!, animated: false)
     }
     
     func terminate () {
         self.inUse = false
+        
+        self.navigationController.popViewController(animated: true)
+        self.primaryViewController = nil;
     }
     
 }

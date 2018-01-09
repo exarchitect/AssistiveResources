@@ -15,37 +15,27 @@ class NavListProcessController: ProcessController, NavigationSelectorProtocol {
     
     private let dependencies: ExternalDependencies
     private var navigationData: NavigationContent!
-
-    private var navListViewController: NavListViewController!
     
     init(responseDelegate: ProcessControllerResponseHandler, navigationController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
 
-    override func launch() -> Bool {
+    override func launch() {
+        var navListViewController: NavListViewController
         
         precondition(self.dependencies.userModelController != nil)
-        
         self.navigationData = NavigationContent()
         
-        self.navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
-        self.navListViewController.configuration(navItems: self.navigationData, navDelegate: self)
+        navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
+        navListViewController.configuration(navItems: self.navigationData, navDelegate: self)
         
-        self.navigationController.pushViewController(self.navListViewController, animated: false)
-
-        return (self.navListViewController != nil)
+        self.primaryViewController = navListViewController
+        super.launch()
     }
     
-    override func terminate () {
-        super.terminate()
-
-        let _ = self.navigationController.popViewController(animated: true)
-        
-        self.navListViewController = nil
-    }
+    //MARK:- NavigationSelectorProtocol
     
-    // NavigationSelectorProtocol
     func selectNavigationItem (selection: NavigationCategory) {
         let cmd = Command(type: .navigationItemSelected(selection: selection))
         self.responseDelegate.requestAction(command: cmd)

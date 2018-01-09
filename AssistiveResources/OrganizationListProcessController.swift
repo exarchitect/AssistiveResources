@@ -13,39 +13,30 @@ class OrganizationListProcessController: ProcessController, OrganizationListView
     typealias ExternalDependencies = RegionalResourcesProvider
     
     private let dependencies: ExternalDependencies
-    private var organizationListViewController: OrganizationListViewController!
     
     init(responseDelegate: ProcessControllerResponseHandler, navigationController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
     
-    override func launch() -> Bool {
+    override func launch() {
+        var organizationListViewController: OrganizationListViewController
         
-        self.organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
-        self.organizationListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
+        organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
+        organizationListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
-        self.navigationController.pushViewController(self.organizationListViewController, animated: true)
-
-        return (self.organizationListViewController != nil)
+        self.primaryViewController = organizationListViewController
+        super.launch()
     }
-    
-    override func terminate () {
-        super.terminate()
-        
-        let _ = self.navigationController.popViewController(animated: true)
 
-        self.organizationListViewController = nil
-    }
     
-    
-    //MARK: debug
+    //MARK:- debug
     deinit {
         print("deallocating OrganizationListPC")
     }
     
     
-    // OrganizationListViewControllerResponseProtocol
+    //MARK:- OrganizationListViewControllerResponseProtocol
     
     func organizationSelected (org: EntityDescriptor) {
         
@@ -54,7 +45,8 @@ class OrganizationListProcessController: ProcessController, OrganizationListView
     
     func backButtonTapped () {
         
-        self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
+//        self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
+        self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
     }
     
 }

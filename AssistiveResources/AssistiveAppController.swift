@@ -32,10 +32,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
         self.loadUserModelController()
         // loadResourceModelController() not called until after login
         
-        let success = self.pushNavigationListProcessController()
-        if (!success) {
-            // TODO
-        }
+        self.pushNavigationListProcessController()
         
         // temp override to fail login for testing
         self.shared.userModelController.storeUserCredentials(username: "", password: "")
@@ -58,10 +55,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
             case .Rejected:
                 print("NOT logged in")
                 
-                let success = self.pushAuthenticationProcessController()
-                if (!success) {
-                    // TODO
-                }
+                self.pushAuthenticationProcessController()
                 
             case .ServiceOffline:
                 print("Service Offline")
@@ -70,10 +64,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
             case .NoCredentials:
                 print("NO credentials")
                 
-                let success = self.pushAuthenticationProcessController()
-                if (!success) {
-                    // TODO
-                }
+                self.pushAuthenticationProcessController()
             }
             
         })
@@ -90,6 +81,13 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
             controller.terminate()
             self.freeTopProcessController()
             
+        case .dismissTopProcessController():
+            let pController: ProcessController? = self.getTopProcessController()
+            if let pController = pController {
+                pController.terminate()
+                self.freeTopProcessController()
+            }
+
         case .userLoginSuccessful:
             self.loadRegionalResourceModelController(online: true)
             
@@ -100,10 +98,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
             self.notifyNavigationItemSelected(selection: destination)
             
         case .eventSelected(let event):
-            let success = self.pushEventDetailProcessController(evt: event)
-            if (!success) {
-                // TODO
-            }
+            self.pushEventDetailProcessController(evt: event)
             
         case .organizationSelected(let organization):
             _ = organization.entityID
@@ -115,16 +110,10 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
         
         switch selection {
         case NavigationCategory.Organizations:
-            let success = self.pushOrganizationListProcessController()
-            if (!success) {
-                // TODO
-            }
+            self.pushOrganizationListProcessController()
             
         case NavigationCategory.Events:
-            let success = self.pushEventListProcessController()
-            if (!success) {
-                // TODO
-            }
+            self.pushEventListProcessController()
             
         case NavigationCategory.Facilities:
             let _ = 7
@@ -141,10 +130,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
         case NavigationCategory.Profile:
             // temp for testing
             self.shared.userModelController.logout()
-            let success = self.pushAuthenticationProcessController()
-            if (!success) {
-                
-            }
+            self.pushAuthenticationProcessController()
         }
         
     }
@@ -152,45 +138,42 @@ class AssistiveAppController: AppController, ProcessControllerResponseHandler {
     
     // MARK: - launch process controllers
     
-    private func pushNavigationListProcessController () -> Bool {
+    private func pushNavigationListProcessController () {
         
         let navListPC = NavListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
-        return self.launchProcessController(processController: navListPC)
+        self.launchProcessController(processController: navListPC)
     }
     
-    private func pushAuthenticationProcessController () -> Bool {
+    private func pushAuthenticationProcessController () {
         
         let authPC = AuthenticationProcessController(responseDelegate:self, navigationController: self.navController, dependencies: self.shared)
-        return self.launchProcessController(processController: authPC)
+        self.launchProcessController(processController: authPC)
     }
     
-    private func pushEventListProcessController () -> Bool {
+    private func pushEventListProcessController () {
         
         let eventListPC = EventListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
-        return self.launchProcessController(processController: eventListPC)
+        self.launchProcessController(processController: eventListPC)
     }
     
-    private func pushEventDetailProcessController (evt: EntityDescriptor) -> Bool {
+    private func pushEventDetailProcessController (evt: EntityDescriptor) {
         
         let eventDetailPC = EventDetailProcessController(responseDelegate: self, navController: self.navController, dependencies: self.shared)
-        return self.launchProcessController(processController: eventDetailPC)
+        self.launchProcessController(processController: eventDetailPC)
     }
     
-    private func pushOrganizationListProcessController () -> Bool {
+    private func pushOrganizationListProcessController () {
         
         let orgListPC = OrganizationListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
-        return self.launchProcessController(processController: orgListPC)
+        self.launchProcessController(processController: orgListPC)
     }
     
     
     // MARK: - Utilities
     
-    private func launchProcessController (processController: ProcessController) -> Bool {
-        let success = processController.launch()
-        if success {
-            self.processControllerStack.append(processController)
-        }
-        return success
+    private func launchProcessController (processController: ProcessController) {
+        processController.launch()
+        self.processControllerStack.append(processController)
     }
     
     private func loadRegionalResourceModelController (online: Bool) {

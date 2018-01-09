@@ -14,33 +14,24 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     typealias ExternalDependencies = UserProvider
     
     private let dependencies: ExternalDependencies
-    private var loginViewController: LoginViewController!
 
     init(responseDelegate: ProcessControllerResponseHandler, navigationController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
     
-    override func launch() -> Bool {
+    override func launch() {
+        var loginViewController: LoginViewController
         
-//        let authenticationStoryboard: UIStoryboard? = UIStoryboard(name: "AuthenticationProcess", bundle: nil)
-//        self.loginViewController = authenticationStoryboard?.instantiateViewController(withIdentifier: "LoginStoryboardID") as! LoginViewController
-        self.loginViewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID") as! LoginViewController
-        self.loginViewController.configuration(userModelController: self.dependencies.userModelController, completionProtocol: self)
+        loginViewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID") as! LoginViewController
+        loginViewController.configuration(userModelController: self.dependencies.userModelController, completionProtocol: self)
         
-//        let parentViewController = navController.topViewController
-//        parentViewController?.present(self.loginViewController, animated: true, completion: nil)
-        self.navigationController.pushViewController(self.loginViewController, animated: true)
-
-        return (self.loginViewController != nil)
+        self.primaryViewController = loginViewController
+        super.launch()
     }
     
     override func terminate () {
         super.terminate()
-
-//        let parentViewController = navController.topViewController
-//        parentViewController?.dismiss(animated: true, completion: nil)
-        let _ = self.navigationController.popViewController(animated: true)
 
         requestMainNavigationRefresh()
     }
@@ -63,13 +54,15 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
             case .ServiceOffline:
                 print("Service Offline")
                 self.responseDelegate.requestAction(command: Command(type: .userLoginServiceOffline))
-                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
-                
+//                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
+                self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
+
             case .Authenticated:
                 print("authenticated")
                 self.responseDelegate.requestAction(command: Command(type: .userLoginSuccessful))
-                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
-                
+//                self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
+                self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
+
             case .Uninitialized:
                 fallthrough
                 

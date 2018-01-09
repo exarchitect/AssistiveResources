@@ -14,29 +14,20 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
     typealias ExternalDependencies = RegionalResourcesProvider
     
     private let dependencies: ExternalDependencies
-    private var eventListViewController: EventListViewController!
     
     init(responseDelegate: ProcessControllerResponseHandler, navigationController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
 
-    override func launch() -> Bool {
+    override func launch() {
+        var eventListViewController: EventListViewController
         
-        self.eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
-        self.eventListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
+        eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
+        eventListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self)
         
-        self.navigationController.pushViewController(self.eventListViewController, animated: true)
-
-        return (self.eventListViewController != nil)
-    }
-    
-    override func terminate () {
-        super.terminate()
-
-        let _ = self.navigationController.popViewController(animated: true)
-
-        self.eventListViewController = nil
+        self.primaryViewController = eventListViewController
+        super.launch()
     }
     
     
@@ -55,8 +46,9 @@ class EventListProcessController: ProcessController, EventListViewControllerResp
 
     func backButtonTapped () {
 
-        let cmd = Command(type: .dismissProcessController(controller: self))
-        self.responseDelegate.requestAction(command: cmd)
+//        let cmd = Command(type: .dismissProcessController(controller: self))
+//        self.responseDelegate.requestAction(command: cmd)
+        self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
     }
 
 }

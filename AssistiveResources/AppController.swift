@@ -53,6 +53,14 @@ class AppController: NSObject {
     
     // MARK: - Utilities
     
+    func getTopProcessController () -> ProcessController? {
+        if (self.processControllerStack.last != nil){
+            return (self.processControllerStack.last)
+        } else {
+            return nil
+        }
+    }
+    
     func freeTopProcessController () {
         if (self.processControllerStack.last != nil){
             if (self.processControllerStack.last!.inUse == false) {
