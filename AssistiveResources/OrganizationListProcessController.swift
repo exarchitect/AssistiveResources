@@ -20,16 +20,22 @@ class OrganizationListProcessController: ProcessController {
 //    }
 //    
     
-    override func createViewController() -> UIViewController {
-        var organizationListViewController: OrganizationListViewController
-        
-        organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
-        organizationListViewController.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
+//    override func createViewController() -> UIViewController? {
+//        var organizationListViewController: OrganizationListViewController
+//
+//        organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
+//        organizationListViewController.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
+//
+//        return organizationListViewController
+//    }
+    
+    override func createViewController() -> UIViewController? {
+        let organizationListViewController: OrganizationListViewController? = instantiateTypedViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID")
+        organizationListViewController?.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
         
         return organizationListViewController
     }
-    
-    
+
     //MARK: - debug
     deinit {
         print("deallocating OrganizationListPC")

@@ -140,7 +140,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
 
     private func pushNavigationListProcessController () {
         
-        let navListPC = NavListProcessController(responseDelegate: self, navigationController: self.navController, services: self.shared)
+        let navListPC = NavListProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
         navListPC.launch()
         self.processControllerStack.append(navListPC)
     }

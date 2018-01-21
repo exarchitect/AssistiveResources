@@ -20,15 +20,21 @@ class EventListProcessController: ProcessController {
 //        super.init(responseDelegate: responseDelegate, navController: navigationController, services: services)
 //    }
 
-    override func createViewController() -> UIViewController {
-        var eventListViewController: EventListViewController
-        
-        eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
-        eventListViewController.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
+//    override func createViewController() -> UIViewController? {
+//        var eventListViewController: EventListViewController
+//
+//        eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
+//        eventListViewController.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
+//
+//        return eventListViewController
+//    }
+    
+    override func createViewController() -> UIViewController? {
+        let eventListViewController: EventListViewController? = instantiateTypedViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID")
+        eventListViewController?.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
         
         return eventListViewController
     }
-    
 
     //MARK: - debug
     deinit {

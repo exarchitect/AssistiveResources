@@ -21,15 +21,22 @@ class EventDetailProcessController: ProcessController {
 //    }
     
     
-    override func createViewController() -> UIViewController {
-        var eventDetailViewController: EventDetailViewController
-        
-        eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
-        eventDetailViewController.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
+//    override func createViewController() -> UIViewController? {
+//        var eventDetailViewController: EventDetailViewController
+//
+//        eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
+//        eventDetailViewController.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
+//
+//        return eventDetailViewController
+//    }
+
+    override func createViewController() -> UIViewController? {
+        let eventDetailViewController: EventDetailViewController? = instantiateTypedViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")
+        eventDetailViewController?.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
         
         return eventDetailViewController
     }
-    
+
     deinit {
         print("deallocating eventdetailPC")
     }

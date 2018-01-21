@@ -22,9 +22,10 @@ class NavListViewController: UIViewController {
     @IBOutlet weak var navTable: UITableView!
     var tableAdaptor:MainNavigationTableAdaptor?
     
-    func configuration(navItems: NavigationContent, navDelegate: ProcessControllerResponseProtocol) {
+    func configuration(navDelegate: ProcessControllerResponseProtocol) {
         self.selectionDelegate = navDelegate
-        self.navigationData = navItems
+
+        self.navigationData = NavigationContent()
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateNavigationNotificationKeyName, object: nil)
     }
@@ -32,8 +33,10 @@ class NavListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationData = NavigationContent()
+        
         precondition(self.selectionDelegate != nil)
-        precondition(self.navigationData != nil)
+//        precondition(self.navigationData != nil)
 
         self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:NavigationCategory) -> Void in
             

@@ -16,7 +16,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     
     weak private var selectorDelegate:ProcessControllerResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
-    //private var filterViewController:EventFilterViewController?
+    var filterViewController:EventFilterViewController?
     
     func configuration(resources: RegionalResourcesModelController, selectorDelegate: ProcessControllerResponseProtocol) {
         self.selectorDelegate = selectorDelegate
@@ -48,7 +48,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
         
     }
 
-    //MARK: @IBAction
+    //MARK:- @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
 //        self.selectorDelegate.backButtonTapped()
@@ -65,25 +65,30 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     
     func notifyFilterSelected() {
 
-        unowned var filterViewController:EventFilterViewController
+//        unowned var filterViewController:EventFilterViewController
+//
+//        filterViewController = (instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController)!
+//        filterViewController.configuration(resources: self.resourcesModelController!, selectorDelegate: self)
 
-        filterViewController = (instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController)!
-        filterViewController.configuration(resources: self.resourcesModelController!, selectorDelegate: self)
-        
-        //guard?
-        present(filterViewController, animated: true, completion: nil)
+        let filterViewController:EventFilterViewController? = instantiateTypedViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
+        filterViewController?.configuration(resources: self.resourcesModelController!, selectorDelegate: self)
+
+        if let filterVC = filterViewController {
+            present(filterVC, animated: true, completion: nil)
+            self.filterViewController = filterVC
+        }
     }
     
     //MARK: - EventFilterViewControllerResponseProtocol delegate
 
     func okFilterButtonAction() {
         self.dismiss(animated: true, completion: nil)
-        //self.filterViewController = nil
+        self.filterViewController = nil
     }
     
     func cancelFilterButtonAction() {
         self.dismiss(animated: true, completion: nil)
-        //self.filterViewController = nil
+        self.filterViewController = nil
     }
     
     //MARK: - debug

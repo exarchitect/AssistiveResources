@@ -20,11 +20,18 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
 //        super.init(responseDelegate: responseDelegate, navController: navigationController, services: services)
 //    }
         
-    override func createViewController() -> UIViewController {
-        var loginViewController: LoginViewController
-        
-        loginViewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID") as! LoginViewController
-        loginViewController.configuration(userModelController: self.sharedServices.userModelController, completionProtocol: self)
+//    override func createViewController() -> UIViewController? {
+//        var loginViewController: LoginViewController
+//
+//        loginViewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID") as! LoginViewController
+//        loginViewController.configuration(userModelController: self.sharedServices.userModelController, completionProtocol: self)
+//
+//        return loginViewController
+//    }
+//
+    override func createViewController() -> UIViewController? {
+        let loginViewController: LoginViewController? = instantiateTypedViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
+        loginViewController?.configuration(userModelController: self.sharedServices.userModelController, completionProtocol: self)
         
         return loginViewController
     }
