@@ -11,20 +11,20 @@ import UIKit
 
 class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
     
-    typealias ExternalDependencies = UserProvider
-    
-    private let dependencies: ExternalDependencies
-
-    init(responseDelegate: ProcessControllerResponseProtocol, navigationController: UINavigationController, dependencies: ExternalDependencies) {
-        self.dependencies = dependencies
-        super.init(responseDelegate: responseDelegate, navController: navigationController)
-    }
+//    typealias ExternalDependencies = UserProvider
+//    
+//    private let dependencies: ExternalDependencies
+//
+//    init(responseDelegate: ProcessControllerResponseProtocol, navigationController: UINavigationController, services: SharedServices) {
+//        self.dependencies = dependencies
+//        super.init(responseDelegate: responseDelegate, navController: navigationController, services: services)
+//    }
         
     override func createViewController() -> UIViewController {
         var loginViewController: LoginViewController
         
         loginViewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID") as! LoginViewController
-        loginViewController.configuration(userModelController: self.dependencies.userModelController, completionProtocol: self)
+        loginViewController.configuration(userModelController: self.sharedServices.userModelController, completionProtocol: self)
         
         return loginViewController
     }
@@ -40,9 +40,9 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     
     func loginAction (username: String, password: String) {
 
-        self.dependencies.userModelController.storeUserCredentials(username: username, password: password)
+        self.sharedServices.userModelController.storeUserCredentials(username: username, password: password)
 
-        self.dependencies.userModelController.authorizeUser(completion: { (loginResult) in
+        self.sharedServices.userModelController.authorizeUser(completion: { (loginResult) in
          
             switch loginResult {
                 

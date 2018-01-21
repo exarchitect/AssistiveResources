@@ -43,7 +43,8 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
                 
             case .Anonymous:
                 self.loadRegionalResourceModelController(online: true)
-                
+                requestMainNavigationRefresh()
+
             case .Authenticated:
                 self.loadRegionalResourceModelController(online: true)
                 requestMainNavigationRefresh()
@@ -139,40 +140,35 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
 
     private func pushNavigationListProcessController () {
         
-        let navListPC = NavListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
-
+        let navListPC = NavListProcessController(responseDelegate: self, navigationController: self.navController, services: self.shared)
         navListPC.launch()
         self.processControllerStack.append(navListPC)
     }
     
     private func pushAuthenticationProcessController () {
         
-        let authPC = AuthenticationProcessController(responseDelegate:self, navigationController: self.navController, dependencies: self.shared)
-
+        let authPC = AuthenticationProcessController(responseDelegate:self, navController: self.navController, services: self.shared)
         authPC.launch()
         self.processControllerStack.append(authPC)
     }
     
     private func pushEventListProcessController () {
         
-        let eventListPC = EventListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
-
+        let eventListPC = EventListProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
         eventListPC.launch()
         self.processControllerStack.append(eventListPC)
     }
     
     private func pushEventDetailProcessController (evt: EntityDescriptor) {
         
-        let eventDetailPC = EventDetailProcessController(responseDelegate: self, navController: self.navController, dependencies: self.shared)
-
+        let eventDetailPC = EventDetailProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
         eventDetailPC.launch()
         self.processControllerStack.append(eventDetailPC)
     }
     
     private func pushOrganizationListProcessController () {
         
-        let orgListPC = OrganizationListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
-
+        let orgListPC = OrganizationListProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
         orgListPC.launch()
         self.processControllerStack.append(orgListPC)
     }

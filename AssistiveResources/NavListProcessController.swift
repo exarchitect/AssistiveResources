@@ -11,19 +11,19 @@ import UIKit
 
 class NavListProcessController: ProcessController {
     
-    typealias ExternalDependencies = UserProvider
-    
-    private let dependencies: ExternalDependencies
+//    typealias ExternalDependencies = UserProvider
+//
+//    private let dependencies: ExternalDependencies
     private var navigationData: NavigationContent!
     
     // ---------------------------------------------------------------
-    init(responseDelegate: ProcessControllerResponseProtocol, navigationController: UINavigationController, dependencies: ExternalDependencies) {
-        self.dependencies = dependencies
+    init(responseDelegate: ProcessControllerResponseProtocol, navigationController: UINavigationController, services: SharedServices) {
+        //self.dependencies = dependencies
 
-        precondition(dependencies.userModelController != nil)
+        //precondition(dependencies.userModelController != nil)
         self.navigationData = NavigationContent()
 
-        super.init(responseDelegate: responseDelegate, navController: navigationController)
+        super.init(responseDelegate: responseDelegate, navController: navigationController, services: services)
     }
 
     // ---------------------------------------------------------------
