@@ -20,17 +20,26 @@ class EventListProcessController: ProcessController {
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
 
-    override func launch() {
+    override func createViewController() -> UIViewController {
         var eventListViewController: EventListViewController
         
         eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
         eventListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
         
-        self.primaryViewController = eventListViewController
-        super.launch()
+        return eventListViewController
     }
     
+//    override func launch() {
+//        var eventListViewController: EventListViewController
+//        
+//        eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
+//        eventListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
+//        
+//        self.primaryViewController = eventListViewController
+//        super.launch()
+//    }
     
+
     //MARK: - debug
     deinit {
         print("deallocating EventListPC")

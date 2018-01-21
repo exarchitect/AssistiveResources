@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol ProcessControllerResponseProtocol: class {
-    func requestAction (command: Command)
+    func requestAction (command: AssistiveCommand)
 }
 
 
@@ -28,7 +28,12 @@ class ProcessController: NSObject {
         super.init()
     }
     
+    func createViewController() -> UIViewController {
+        fatalError("override \(#function)")
+    }
+    
     func launch() {
+        self.primaryViewController = self.createViewController()
         assert(self.primaryViewController != nil)
         self.navigationController.pushViewController(self.primaryViewController!, animated: false)
     }
@@ -42,6 +47,8 @@ class ProcessController: NSObject {
     
 }
 
+
+// MARK: - utilities
 
 func instantiateViewController(storyboardName: String, storyboardID: String) -> UIViewController {
     let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)

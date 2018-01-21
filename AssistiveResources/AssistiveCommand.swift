@@ -1,5 +1,5 @@
 //
-//  Command.swift
+//  AssistiveCommand.swift
 //  AssistiveResources
 //
 //  Created by Bill Johnson on 1/15/17.
@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct Command {
+struct AssistiveCommand {
     enum CommandType {
         case dismissProcessController(controller: ProcessController)
         case dismissTopProcessController

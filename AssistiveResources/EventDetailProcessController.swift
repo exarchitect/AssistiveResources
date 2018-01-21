@@ -20,14 +20,23 @@ class EventDetailProcessController: ProcessController {
         super.init(responseDelegate: responseDelegate, navController: navController)
     }
     
-    override func launch() {
+//    override func launch() {
+//        var eventDetailViewController: EventDetailViewController
+//        
+//        eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
+//        eventDetailViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
+//        
+//        self.primaryViewController = eventDetailViewController
+//        super.launch()
+//    }
+    
+    override func createViewController() -> UIViewController {
         var eventDetailViewController: EventDetailViewController
         
         eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
         eventDetailViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
         
-        self.primaryViewController = eventDetailViewController
-        super.launch()
+        return eventDetailViewController
     }
     
     deinit {

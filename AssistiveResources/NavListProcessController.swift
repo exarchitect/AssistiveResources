@@ -18,20 +18,30 @@ class NavListProcessController: ProcessController {
     
     init(responseDelegate: ProcessControllerResponseProtocol, navigationController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
+
+        precondition(dependencies.userModelController != nil)
+        self.navigationData = NavigationContent()
+
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
 
-    override func launch() {
+//    override func launch() {
+//        var navListViewController: NavListViewController
+//        
+//        navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
+//        navListViewController.configuration(navItems: self.navigationData, navDelegate: self.responseDelegate)
+//        
+//        self.primaryViewController = navListViewController
+//        super.launch()
+//    }
+    
+    override func createViewController() -> UIViewController {
         var navListViewController: NavListViewController
-        
-        precondition(self.dependencies.userModelController != nil)
-        self.navigationData = NavigationContent()
         
         navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
         navListViewController.configuration(navItems: self.navigationData, navDelegate: self.responseDelegate)
         
-        self.primaryViewController = navListViewController
-        super.launch()
+        return navListViewController
     }
     
 //    // NavigationSelectorProtocol

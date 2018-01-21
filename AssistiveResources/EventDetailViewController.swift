@@ -46,12 +46,12 @@ class EventDetailViewController: UIViewController {
     
     @IBAction func evntDetailBackButtonAction(_ sender: Any) {
 //        self.completionProtocol.backButtonTapped()
-        self.completionProtocol.requestAction(command: Command(type: .dismissTopProcessController))
+        self.completionProtocol.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
     }
 
     @IBAction func orgSelectedButtonAction(_ sender: Any) {
 //        self.completionProtocol.organizationSelected(evt: ("",0))
-        self.completionProtocol.requestAction(command: Command(type: .eventSelected(event: (entityName: "test", entityID: 1))))
+        self.completionProtocol.requestAction(command: AssistiveCommand(type: .eventSelected(event: (entityName: "test", entityID: 1))))
     }
 
 }

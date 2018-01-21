@@ -73,7 +73,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     
     // MARK: - ProcessControllerProtocol
     
-    func requestAction(command: Command) {
+    func requestAction(command: AssistiveCommand) {
         
         switch command.type {
             
@@ -106,8 +106,6 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     }
     
     
-    // MARK: - Utilities
-    
     func respondToNavigationItemSelected(selection:NavigationCategory) {
         
         switch selection {
@@ -138,42 +136,51 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     }
     
     
+    // MARK: - process controller Utilities
+
     private func pushNavigationListProcessController () {
         
         let navListPC = NavListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
-        self.launchProcessController(processController: navListPC)
+
+        navListPC.launch()
+        self.processControllerStack.append(navListPC)
     }
     
     private func pushAuthenticationProcessController () {
         
         let authPC = AuthenticationProcessController(responseDelegate:self, navigationController: self.navController, dependencies: self.shared)
-        self.launchProcessController(processController: authPC)
+
+        authPC.launch()
+        self.processControllerStack.append(authPC)
     }
     
     private func pushEventListProcessController () {
         
         let eventListPC = EventListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
-        self.launchProcessController(processController: eventListPC)
+
+        eventListPC.launch()
+        self.processControllerStack.append(eventListPC)
     }
     
     private func pushEventDetailProcessController (evt: EntityDescriptor) {
         
         let eventDetailPC = EventDetailProcessController(responseDelegate: self, navController: self.navController, dependencies: self.shared)
-        self.launchProcessController(processController: eventDetailPC)
+
+        eventDetailPC.launch()
+        self.processControllerStack.append(eventDetailPC)
     }
     
     private func pushOrganizationListProcessController () {
         
         let orgListPC = OrganizationListProcessController(responseDelegate: self, navigationController: self.navController, dependencies: self.shared)
-        self.launchProcessController(processController: orgListPC)
+
+        orgListPC.launch()
+        self.processControllerStack.append(orgListPC)
     }
     
     
-    private func launchProcessController (processController: ProcessController) {
-        processController.launch()
-        self.processControllerStack.append(processController)
-    }
-    
+    // MARK: - model controller Utilities
+
     private func loadRegionalResourceModelController (online: Bool) {
         if (self.shared.regionalResourcesModelController == nil) {
             self.shared.regionalResourcesModelController = RegionalResourcesModelController(atLocation: self.shared.userModelController.locationProfile, isOnline: online)
@@ -188,6 +195,9 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
         precondition(self.shared.userModelController != nil)
     }
     
+    
+    // MARK: - db Utilities
+
     override func checkDatabaseRefresh() {
         self.shared.regionalResourcesModelController?.checkRepositoryUpdate()
     }

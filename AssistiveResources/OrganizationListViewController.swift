@@ -58,7 +58,7 @@ class OrganizationListViewController: UIViewController, OrganizationListContaine
     
     func notifyRowDetailSelected(rowIndex: Int) {
 //        self.selectorDelegate.organizationSelected(org: EntityDescriptor("",0))
-        self.selectorDelegate.requestAction(command: Command(type: .organizationSelected(organization: (entityName: "TestOrg", entityID: 2))))
+        self.selectorDelegate.requestAction(command: AssistiveCommand(type: .organizationSelected(organization: (entityName: "TestOrg", entityID: 2))))
     }
     
     func notifyFilterSelected() {
@@ -77,7 +77,7 @@ class OrganizationListViewController: UIViewController, OrganizationListContaine
     
     @IBAction func backButtonAction(_ sender: Any) {
 //        self.selectorDelegate.backButtonTapped()
-        self.selectorDelegate.requestAction(command: Command(type: .dismissTopProcessController))
+        self.selectorDelegate.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
     }
     
 }

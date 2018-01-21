@@ -20,14 +20,23 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
     
-    override func launch() {
+//    override func launch() {
+//        var loginViewController: LoginViewController
+//        
+//        loginViewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID") as! LoginViewController
+//        loginViewController.configuration(userModelController: self.dependencies.userModelController, completionProtocol: self)
+//        
+//        self.primaryViewController = loginViewController
+//        super.launch()
+//    }
+    
+    override func createViewController() -> UIViewController {
         var loginViewController: LoginViewController
         
         loginViewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID") as! LoginViewController
         loginViewController.configuration(userModelController: self.dependencies.userModelController, completionProtocol: self)
         
-        self.primaryViewController = loginViewController
-        super.launch()
+        return loginViewController
     }
     
     override func terminate () {
@@ -53,13 +62,13 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
                 
             case .ServiceOffline:
                 print("Service Offline")
-                self.responseDelegate.requestAction(command: Command(type: .userLoginServiceOffline))
-                self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
+                self.responseDelegate.requestAction(command: AssistiveCommand(type: .userLoginServiceOffline))
+                self.responseDelegate.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
 
             case .Authenticated:
                 print("authenticated")
-                self.responseDelegate.requestAction(command: Command(type: .userLoginSuccessful))
-                self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
+                self.responseDelegate.requestAction(command: AssistiveCommand(type: .userLoginSuccessful))
+                self.responseDelegate.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
 
             case .Uninitialized:
                 fallthrough

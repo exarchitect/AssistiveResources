@@ -19,16 +19,25 @@ class OrganizationListProcessController: ProcessController {
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
     
-    override func launch() {
+//    override func launch() {
+//        var organizationListViewController: OrganizationListViewController
+//        
+//        organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
+//        organizationListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
+//        
+//        self.primaryViewController = organizationListViewController
+//        super.launch()
+//    }
+
+    override func createViewController() -> UIViewController {
         var organizationListViewController: OrganizationListViewController
         
         organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
         organizationListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
         
-        self.primaryViewController = organizationListViewController
-        super.launch()
+        return organizationListViewController
     }
-
+    
     
     //MARK: - debug
     deinit {

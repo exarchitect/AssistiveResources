@@ -57,7 +57,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
 
     @IBAction func backButtonAction(_ sender: Any) {
 //        self.selectorDelegate.backButtonTapped()
-        self.selectorDelegate.requestAction(command: Command(type: .dismissTopProcessController))
+        self.selectorDelegate.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
     }
     
     
@@ -65,7 +65,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     
     func notifyRowDetailSelected(rowIndex: Int) {
 //        self.selectorDelegate.eventSelected(evt: EntityDescriptor("",0))
-        self.selectorDelegate.requestAction(command: Command(type: .eventSelected(event: (entityName: "TestEvent", entityID: 3))))
+        self.selectorDelegate.requestAction(command: AssistiveCommand(type: .eventSelected(event: (entityName: "TestEvent", entityID: 3))))
     }
     
     func notifyFilterSelected() {

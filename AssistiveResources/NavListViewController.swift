@@ -43,7 +43,7 @@ class NavListViewController: UIViewController {
         self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:NavigationCategory) -> Void in
             
 //            self.selectionDelegate?.selectNavigationItem(selection: destination)
-            self.selectionDelegate?.requestAction(command: Command(type: .navigationItemSelected(selection: destination)))
+            self.selectionDelegate?.requestAction(command: AssistiveCommand(type: .navigationItemSelected(selection: destination)))
         })
     }
     
