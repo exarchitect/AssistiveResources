@@ -33,10 +33,7 @@ class NavListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationData = NavigationContent()
-        
         precondition(self.selectionDelegate != nil)
-//        precondition(self.navigationData != nil)
 
         self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:NavigationCategory) -> Void in
             

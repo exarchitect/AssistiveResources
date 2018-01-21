@@ -65,12 +65,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     
     func notifyFilterSelected() {
 
-//        unowned var filterViewController:EventFilterViewController
-//
-//        filterViewController = (instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController)!
-//        filterViewController.configuration(resources: self.resourcesModelController!, selectorDelegate: self)
-
-        let filterViewController:EventFilterViewController? = instantiateTypedViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
+        let filterViewController:EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
         filterViewController?.configuration(resources: self.resourcesModelController!, selectorDelegate: self)
 
         if let filterVC = filterViewController {
@@ -92,6 +87,7 @@ class EventListViewController: UIViewController, EventListContainerNotificationP
     }
     
     //MARK: - debug
+    
     deinit {
         print("deallocating EventListVC")
     }

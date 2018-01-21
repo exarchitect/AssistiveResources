@@ -11,26 +11,8 @@ import UIKit
 
 class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
     
-//    typealias ExternalDependencies = UserProvider
-//    
-//    private let dependencies: ExternalDependencies
-//
-//    init(responseDelegate: ProcessControllerResponseProtocol, navigationController: UINavigationController, services: SharedServices) {
-//        self.dependencies = dependencies
-//        super.init(responseDelegate: responseDelegate, navController: navigationController, services: services)
-//    }
-        
-//    override func createViewController() -> UIViewController? {
-//        var loginViewController: LoginViewController
-//
-//        loginViewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID") as! LoginViewController
-//        loginViewController.configuration(userModelController: self.sharedServices.userModelController, completionProtocol: self)
-//
-//        return loginViewController
-//    }
-//
     override func createViewController() -> UIViewController? {
-        let loginViewController: LoginViewController? = instantiateTypedViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
+        let loginViewController: LoginViewController? = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
         loginViewController?.configuration(userModelController: self.sharedServices.userModelController, completionProtocol: self)
         
         return loginViewController
@@ -43,7 +25,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     }
     
 
-    // LoginViewControllerCompletionProtocol
+    // MARK:- LoginViewControllerCompletionProtocol
     
     func loginAction (username: String, password: String) {
 
@@ -82,7 +64,8 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     }
     
     
-    //MARK: debug
+    //MARK:- debug
+    
     deinit {
         print("deallocating AuthenticationProcessController")
     }

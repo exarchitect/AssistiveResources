@@ -16,7 +16,6 @@ protocol ProcessControllerResponseProtocol: class {
 
 class ProcessController: NSObject {
     
-    //var inUse: Bool = false
     weak var responseDelegate: ProcessControllerResponseProtocol!
     var sharedServices: SharedServices!
     var primaryViewController: UIViewController? = nil
@@ -32,7 +31,6 @@ class ProcessController: NSObject {
         self.responseDelegate = responseDelegate
         self.navigationController = navController
         self.sharedServices = services
-        //self.inUse = true
         super.init()
     }
     
@@ -47,7 +45,6 @@ class ProcessController: NSObject {
     }
     
     func terminate () {
-        //self.inUse = false
         
         self.navigationController.popViewController(animated: true)
         self.primaryViewController = nil;
@@ -58,13 +55,7 @@ class ProcessController: NSObject {
 
 // MARK: - utilities
 
-//func instantiateViewController(storyboardName: String, storyboardID: String) -> UIViewController {
-//    let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
-//    let viewController = storyboard.instantiateViewController(withIdentifier: storyboardID)
-//    return viewController
-//}
-
-func instantiateTypedViewController<T>(storyboardName: String, storyboardID: String) -> T? {
+func instantiateViewController<T>(storyboardName: String, storyboardID: String) -> T? {
     let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
     let viewController = storyboard.instantiateViewController(withIdentifier: storyboardID)
     return viewController as? T

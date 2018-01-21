@@ -11,26 +11,8 @@ import UIKit
 
 class EventListProcessController: ProcessController {
     
-//    typealias ExternalDependencies = RegionalResourcesProvider
-//
-//    private let dependencies: ExternalDependencies
-    
-//    init(responseDelegate: ProcessControllerResponseProtocol, navigationController: UINavigationController, services: SharedServices) {
-////        self.dependencies = dependencies
-//        super.init(responseDelegate: responseDelegate, navController: navigationController, services: services)
-//    }
-
-//    override func createViewController() -> UIViewController? {
-//        var eventListViewController: EventListViewController
-//
-//        eventListViewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID") as! EventListViewController
-//        eventListViewController.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
-//
-//        return eventListViewController
-//    }
-    
     override func createViewController() -> UIViewController? {
-        let eventListViewController: EventListViewController? = instantiateTypedViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID")
+        let eventListViewController: EventListViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID")
         eventListViewController?.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
         
         return eventListViewController

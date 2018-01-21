@@ -15,17 +15,12 @@ class AppController: NSObject {
     var navController: UINavigationController!
     var processControllerStack = [ProcessController]()
     
-    
-//    override init() {
-//        super.init()
-//    }
-    
-    
+        
     func setupApplicationWindow() -> UIWindow {
         let window = UIWindow(frame: UIScreen.main.bounds)
         
         // create a root view controller
-        self.rootViewController = instantiateTypedViewController(storyboardName: "Main", storyboardID: "RootViewController")
+        self.rootViewController = instantiateViewController(storyboardName: "Main", storyboardID: "RootViewController")
         self.navController = UINavigationController(rootViewController: self.rootViewController)
         self.navController.setNavigationBarHidden(true, animated: false)
 

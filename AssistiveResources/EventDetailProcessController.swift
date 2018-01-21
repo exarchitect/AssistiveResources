@@ -11,27 +11,8 @@ import UIKit
 
 class EventDetailProcessController: ProcessController {
 
-//    typealias ExternalDependencies = RegionalResourcesProvider & UserProvider
-//    
-//    private let dependencies: ExternalDependencies
-//    
-//    init(responseDelegate: ProcessControllerResponseProtocol, navController: UINavigationController, dependencies: ExternalDependencies) {
-//        self.dependencies = dependencies
-//        super.init(responseDelegate: responseDelegate, navController: navController)
-//    }
-    
-    
-//    override func createViewController() -> UIViewController? {
-//        var eventDetailViewController: EventDetailViewController
-//
-//        eventDetailViewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID") as! EventDetailViewController
-//        eventDetailViewController.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
-//
-//        return eventDetailViewController
-//    }
-
     override func createViewController() -> UIViewController? {
-        let eventDetailViewController: EventDetailViewController? = instantiateTypedViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")
+        let eventDetailViewController: EventDetailViewController? = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")
         eventDetailViewController?.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
         
         return eventDetailViewController

@@ -90,31 +90,31 @@ class NavigationContent: NSObject {
             var placeholderSubtitle:String
             
             switch dest {
-            case NavigationCategory.Organizations:
+            case .Organizations:
                 title = "Organizations/Services"
                 placeholderSubtitle = "Locate services and groups for your needs"
                 imageName = "organization"
-            case NavigationCategory.Events:
+            case .Events:
                 title = NavigationCategory.Events.rawValue
                 placeholderSubtitle = "Regional and national events"
                 imageName = "sports"
-            case NavigationCategory.Facilities:
+            case .Facilities:
                 title = "Accessibility"
                 placeholderSubtitle = "Find restrooms and other family-friendly facilities"
                 imageName = "venues"
-            case NavigationCategory.Travel:
+            case .Travel:
                 title = NavigationCategory.Travel.rawValue
                 placeholderSubtitle = "Resources for vacations and travel within the US"
                 imageName = "travel"
-            case NavigationCategory.Inbox:
+            case .Inbox:
                 title = NavigationCategory.Inbox.rawValue
                 placeholderSubtitle = "Your messages"
                 imageName = "inbox"
-            case NavigationCategory.Profile:
+            case .Profile:
                 title = NavigationCategory.Profile.rawValue
                 placeholderSubtitle = "Tell us about yourself"
                 imageName = "favourite2"
-            case NavigationCategory.News:
+            case .News:
                 title = NavigationCategory.News.rawValue
                 placeholderSubtitle = "Online articles and news"
                 imageName = "rss"
