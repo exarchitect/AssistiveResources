@@ -9,16 +9,9 @@
 import UIKit
 
 
-//protocol EventDetailViewControllerResponseProtocol {
-//    func organizationSelected (evt: EntityDescriptor)
-//    func backButtonTapped ()
-//}
-
-
 class EventDetailViewController: UIViewController {
 
     weak private var resourcesModelController: RegionalResourcesModelController?
-//    private var completionProtocol: EventDetailViewControllerResponseProtocol!
     private var completionProtocol: ProcessControllerResponseProtocol!
 
     @IBOutlet weak var scrollView: UIScrollView!

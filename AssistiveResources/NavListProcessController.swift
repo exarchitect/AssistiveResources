@@ -16,6 +16,7 @@ class NavListProcessController: ProcessController {
     private let dependencies: ExternalDependencies
     private var navigationData: NavigationContent!
     
+    // ---------------------------------------------------------------
     init(responseDelegate: ProcessControllerResponseProtocol, navigationController: UINavigationController, dependencies: ExternalDependencies) {
         self.dependencies = dependencies
 
@@ -25,16 +26,7 @@ class NavListProcessController: ProcessController {
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
 
-//    override func launch() {
-//        var navListViewController: NavListViewController
-//        
-//        navListViewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID") as! NavListViewController
-//        navListViewController.configuration(navItems: self.navigationData, navDelegate: self.responseDelegate)
-//        
-//        self.primaryViewController = navListViewController
-//        super.launch()
-//    }
-    
+    // ---------------------------------------------------------------
     override func createViewController() -> UIViewController {
         var navListViewController: NavListViewController
         
@@ -43,12 +35,5 @@ class NavListProcessController: ProcessController {
         
         return navListViewController
     }
-    
-//    // NavigationSelectorProtocol
-//    
-//    func selectNavigationItem (selection: NavigationCategory) {
-//        let cmd = Command(type: .navigationItemSelected(selection: selection))
-//        self.responseDelegate.requestAction(command: cmd)
-//    }
     
 }

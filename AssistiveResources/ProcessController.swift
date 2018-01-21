@@ -18,12 +18,14 @@ class ProcessController: NSObject {
     
     var inUse: Bool = false
     weak var responseDelegate: ProcessControllerResponseProtocol!
+    //var sharedServices: SharedServices!
     var primaryViewController: UIViewController? = nil
     weak var navigationController: UINavigationController!
 
     init (responseDelegate: ProcessControllerResponseProtocol, navController: UINavigationController) {
         self.responseDelegate = responseDelegate
         self.navigationController = navController
+        //self.sharedServices = services
         self.inUse = true
         super.init()
     }

@@ -9,7 +9,7 @@
 import UIKit
 
 
-struct SharedResources: RegionalResourcesProvider, UserProvider {
+struct SharedServices: RegionalResourcesProvider, UserProvider {
     var regionalResourcesModelController: RegionalResourcesModelController!
     var userModelController: UserModelController!
     //var connectivityService: ConnectivityService!
@@ -19,7 +19,7 @@ struct SharedResources: RegionalResourcesProvider, UserProvider {
 
 class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     
-    var shared: SharedResources = SharedResources()
+    var shared: SharedServices = SharedServices()
     
     override init() {
         super.init()
@@ -29,8 +29,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     
     override func internalStart() {
 
-        self.loadUserModelController()
-        // loadResourceModelController() not called until after login
+        self.loadUserModelController()        // other model controllers not called until after login
         
         self.pushNavigationListProcessController()
         
@@ -71,7 +70,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     }
     
     
-    // MARK: - ProcessControllerProtocol
+    // MARK: - ProcessControllerResponseProtocol
     
     func requestAction(command: AssistiveCommand) {
         
@@ -136,7 +135,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     }
     
     
-    // MARK: - process controller Utilities
+    // MARK: - process controller handling
 
     private func pushNavigationListProcessController () {
         
@@ -179,7 +178,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     }
     
     
-    // MARK: - model controller Utilities
+    // MARK: - model controller handling
 
     private func loadRegionalResourceModelController (online: Bool) {
         if (self.shared.regionalResourcesModelController == nil) {

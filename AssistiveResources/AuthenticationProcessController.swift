@@ -19,17 +19,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
         self.dependencies = dependencies
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
-    
-//    override func launch() {
-//        var loginViewController: LoginViewController
-//        
-//        loginViewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID") as! LoginViewController
-//        loginViewController.configuration(userModelController: self.dependencies.userModelController, completionProtocol: self)
-//        
-//        self.primaryViewController = loginViewController
-//        super.launch()
-//    }
-    
+        
     override func createViewController() -> UIViewController {
         var loginViewController: LoginViewController
         

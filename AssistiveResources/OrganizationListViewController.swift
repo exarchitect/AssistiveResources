@@ -9,12 +9,6 @@
 import UIKit
 
 
-//protocol OrganizationListViewControllerResponseProtocol: class {
-//    func organizationSelected (org: EntityDescriptor)
-//    func backButtonTapped ()
-//}
-
-
 class OrganizationListViewController: UIViewController, OrganizationListContainerNotificationProtocol {
 
     @IBOutlet weak var headerView: HeaderView!
@@ -57,7 +51,6 @@ class OrganizationListViewController: UIViewController, OrganizationListContaine
     //MARK: delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-//        self.selectorDelegate.organizationSelected(org: EntityDescriptor("",0))
         self.selectorDelegate.requestAction(command: AssistiveCommand(type: .organizationSelected(organization: (entityName: "TestOrg", entityID: 2))))
     }
     
@@ -76,7 +69,6 @@ class OrganizationListViewController: UIViewController, OrganizationListContaine
     //MARK: @IBAction
     
     @IBAction func backButtonAction(_ sender: Any) {
-//        self.selectorDelegate.backButtonTapped()
         self.selectorDelegate.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
     }
     

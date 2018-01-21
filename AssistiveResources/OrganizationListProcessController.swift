@@ -19,16 +19,7 @@ class OrganizationListProcessController: ProcessController {
         super.init(responseDelegate: responseDelegate, navController: navigationController)
     }
     
-//    override func launch() {
-//        var organizationListViewController: OrganizationListViewController
-//        
-//        organizationListViewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID") as! OrganizationListViewController
-//        organizationListViewController.configuration(resources: self.dependencies.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
-//        
-//        self.primaryViewController = organizationListViewController
-//        super.launch()
-//    }
-
+    
     override func createViewController() -> UIViewController {
         var organizationListViewController: OrganizationListViewController
         
@@ -44,17 +35,5 @@ class OrganizationListProcessController: ProcessController {
         print("deallocating OrganizationListPC")
     }
     
-    
-//
-//    func organizationSelected (org: EntityDescriptor) {
-//
-//        self.responseDelegate.requestAction(command: Command(type: .organizationSelected(organization: org)))
-//    }
-//
-//    func backButtonTapped () {
-//
-////        self.responseDelegate.requestAction(command: Command(type: .dismissProcessController(controller: self)))
-//        self.responseDelegate.requestAction(command: Command(type: .dismissTopProcessController))
-//    }
-    
+
 }

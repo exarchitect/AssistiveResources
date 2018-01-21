@@ -9,11 +9,6 @@
 import UIKit
 
 
-//protocol EventListViewControllerResponseProtocol: class {
-//    func eventSelected (evt: EntityDescriptor)
-//    func backButtonTapped ()
-//}
-
 
 class EventListViewController: UIViewController, EventListContainerNotificationProtocol, EventFilterViewControllerResponseProtocol {
 

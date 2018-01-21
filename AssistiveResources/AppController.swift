@@ -35,7 +35,7 @@ class AppController: NSObject {
         return window
     }
     
-    func start() {
+    final func start() {
         // make sure the rootvc draws before startup
         DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.1)) {
             self.internalStart()

@@ -12,11 +12,6 @@ import UIKit
 let updateNavigationNotificationKeyName = NSNotification.Name(rawValue: "key_notify_navigation_content_changed")
 
 
-//protocol NavigationSelectorProtocol {
-//    func selectNavigationItem (selection: NavigationCategory)
-//}
-
-
 class NavListViewController: UIViewController {
 
     private var selectionDelegate: ProcessControllerResponseProtocol?
@@ -42,7 +37,6 @@ class NavListViewController: UIViewController {
 
         self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:NavigationCategory) -> Void in
             
-//            self.selectionDelegate?.selectNavigationItem(selection: destination)
             self.selectionDelegate?.requestAction(command: AssistiveCommand(type: .navigationItemSelected(selection: destination)))
         })
     }
@@ -65,12 +59,6 @@ class NavListViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
         //freeMemory()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        
     }
     
     func refreshContent() {
