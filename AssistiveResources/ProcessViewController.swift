@@ -10,7 +10,7 @@ import UIKit
 
 class ProcessViewController: UIViewController {
 
-    weak var commandDelegate:ProcessControllerResponseProtocol!
+    private weak var commandDelegate:ProcessControllerResponseProtocol!
 
     func setupDelegate(selectorDelegate: ProcessControllerResponseProtocol) {
         self.commandDelegate = selectorDelegate

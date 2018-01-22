@@ -16,7 +16,7 @@ protocol ProcessControllerResponseProtocol: class {
 
 class ProcessController: NSObject {
     
-    weak var responseDelegate: ProcessControllerResponseProtocol!
+    private weak var responseDelegate: ProcessControllerResponseProtocol!
     var sharedServices: SharedServices!
     var primaryViewController: ProcessViewController? = nil
     weak var navigationController: UINavigationController!
@@ -40,7 +40,8 @@ class ProcessController: NSObject {
     
     func launch() {
         self.primaryViewController = self.createViewController()
-        self.primaryViewController?.commandDelegate = self.responseDelegate
+        //self.primaryViewController?.commandDelegate = self.responseDelegate
+        self.primaryViewController?.setupDelegate(selectorDelegate: self.responseDelegate)
         assert(self.primaryViewController != nil)
         self.navigationController.pushViewController(self.primaryViewController!, animated: false)
     }
@@ -51,6 +52,9 @@ class ProcessController: NSObject {
         self.primaryViewController = nil;
     }
     
+    func requestAction (command: AssistiveCommand){
+        self.responseDelegate.requestAction(command: command)
+    }
 }
 
 
