@@ -10,35 +10,50 @@ import Foundation
 
 
 enum MobilityLimitation : Int {
-    case NoLimitation, AnyLimitation, WalkingWithBrace, WalkingWithCane, Wheelchair, Bedridden
+    case NoLimitationSpecified, NoLimitation, WalkWithAid, Wheelchair
 }
 
-enum DevelopmentalDelay : Int {
-    case NoDelay, AnyDelay, XDelay, YDelay, ZDelay
+enum DevelopmentalAge : Int {
+    case NoDevelopmentalAgeSpecified, InfantDevelopmentalAge, ToddlerDevelopmentalAge, PreschoolDevelopmentalAge, GradeschoolDevelopmentalAge, PreTeenDevelopmentalAge, TeenDevelopmentalAge, AdultDevelopmentalAge
+    // infant 1, toddler 2, preschool 3-5, gradeschool 6-9, pre-teen 10-12, teen 13-19, adult 20+
 }
 
 enum Diagnosis : Int {
-    case NoDiagnosis, AnyDiagnosis, AutismDiagnosis, CPDiagnosis, SpinaBifidaDiagnosis, XDiagnosis, YDiagnosis, ZDiagnosis
+    case NoDiagnosisSpecified, AutismDiagnosis, CPDiagnosis, SpinaBifidaDiagnosis, OtherDiagnosis
 }
 
 enum EntityType : Int {
     case Organization, Chapter, Event, Facility
 }
 
-
-struct NeedsProfile {
+struct IndividualNeedProfile {
     var mobilityLimitation: MobilityLimitation
-    var developmentalDelay: DevelopmentalDelay
-    var diagnosis: Diagnosis
-    
-    init(mobility:MobilityLimitation, delay:DevelopmentalDelay, dx:Diagnosis)
+    var developmentalAge: DevelopmentalAge
+    var actualAge: Int
+    var primaryDiagnosis: Diagnosis
+    var secondaryDiagnosis: Diagnosis
+
+    init(age: Int, mobility:MobilityLimitation, delay:DevelopmentalAge, primarydx:Diagnosis, secondarydx:Diagnosis)
     {
-        mobilityLimitation = mobility
-        developmentalDelay = delay
-        diagnosis = dx
+        self.mobilityLimitation = mobility
+        self.developmentalAge = delay
+        self.actualAge = age
+        self.primaryDiagnosis = primarydx
+        self.secondaryDiagnosis = secondarydx
     }
 }
 
+struct TargetNeedProfile {
+    var supportedMobility: [MobilityLimitation] = []
+    var supportedDevelopmentalAge: [DevelopmentalAge] = []
+    var actualAge: Int = 0
+    var diagnosis: [Diagnosis] = []
+    
+    func isMatch(for: IndividualNeedProfile) -> Bool {
+        
+        return true
+    }
+}
 
 enum ISOCountryCode : String {      // only support USA initially
     case USA = "USA", GBR = "GBR"
