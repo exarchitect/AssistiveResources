@@ -20,14 +20,14 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
     
     var tableView: UITableView!
     weak private var navigationData: NavigationContent!
-    var selectorCallback: DestinationSelector!
+    var callbackOnSelection: DestinationSelector!
     
     init(table: UITableView, navItems: NavigationContent, selector: @escaping DestinationSelector) {
         super.init()
         
         self.tableView = table
         self.navigationData = navItems
-        self.selectorCallback = selector
+        self.callbackOnSelection = selector
         
         // attach table
         tableView.delegate = self
@@ -64,7 +64,7 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView .deselectRow(at: indexPath as IndexPath, animated: true)
  
-        self.selectorCallback?(navigationData[indexPath.row].destination)
+        self.callbackOnSelection?(navigationData[indexPath.row].destination)
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

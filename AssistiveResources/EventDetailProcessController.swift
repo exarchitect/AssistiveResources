@@ -11,9 +11,9 @@ import UIKit
 
 class EventDetailProcessController: ProcessController {
 
-    override func createViewController() -> UIViewController? {
+    override func createViewController() -> ProcessViewController? {
         let eventDetailViewController: EventDetailViewController? = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")
-        eventDetailViewController?.configuration(resources: self.sharedServices.regionalResourcesModelController, selectorDelegate: self.responseDelegate)
+        eventDetailViewController?.configuration(resources: self.sharedServices.regionalResourcesModelController)
         
         return eventDetailViewController
     }

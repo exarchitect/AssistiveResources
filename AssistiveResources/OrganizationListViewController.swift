@@ -9,23 +9,20 @@
 import UIKit
 
 
-class OrganizationListViewController: UIViewController, OrganizationListContainerNotificationProtocol {
+class OrganizationListViewController: ProcessViewController, OrganizationListContainerNotificationProtocol {
 
     @IBOutlet weak var headerView: HeaderView!
     
-    weak private var selectorDelegate:ProcessControllerResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
     //private var filterViewController:OrganizationFilterViewController?
     
-    func configuration(resources: RegionalResourcesModelController, selectorDelegate: ProcessControllerResponseProtocol) {
-        self.selectorDelegate = selectorDelegate
+    func configuration(resources: RegionalResourcesModelController) {
         self.resourcesModelController = resources
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        precondition(self.selectorDelegate != nil)
         precondition(self.resourcesModelController != nil)
         self.headerView.titleLabel.text = "Organizations & Services"
     }
@@ -51,7 +48,7 @@ class OrganizationListViewController: UIViewController, OrganizationListContaine
     //MARK: delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-        self.selectorDelegate.requestAction(command: AssistiveCommand(type: .organizationSelected(organization: (entityName: "TestOrg", entityID: 2))))
+        self.requestAction(command: AssistiveCommand(type: .organizationSelected(organization: (entityName: "TestOrg", entityID: 2))))
     }
     
     func notifyFilterSelected() {
@@ -69,7 +66,7 @@ class OrganizationListViewController: UIViewController, OrganizationListContaine
     //MARK: @IBAction
     
     @IBAction func backButtonAction(_ sender: Any) {
-        self.selectorDelegate.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
+        self.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
     }
     
 }

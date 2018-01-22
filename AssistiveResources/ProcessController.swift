@@ -18,12 +18,12 @@ class ProcessController: NSObject {
     
     weak var responseDelegate: ProcessControllerResponseProtocol!
     var sharedServices: SharedServices!
-    var primaryViewController: UIViewController? = nil
+    var primaryViewController: ProcessViewController? = nil
     weak var navigationController: UINavigationController!
 
     var inUse: Bool {
         get {
-            return primaryViewController == nil
+            return primaryViewController != nil
         }
     }
 
@@ -34,12 +34,13 @@ class ProcessController: NSObject {
         super.init()
     }
     
-    func createViewController() -> UIViewController? {
+    func createViewController() -> ProcessViewController? {
         fatalError("override \(#function)")
     }
     
     func launch() {
         self.primaryViewController = self.createViewController()
+        self.primaryViewController?.commandDelegate = self.responseDelegate
         assert(self.primaryViewController != nil)
         self.navigationController.pushViewController(self.primaryViewController!, animated: false)
     }

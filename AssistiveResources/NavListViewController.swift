@@ -12,9 +12,8 @@ import UIKit
 let updateNavigationNotificationKeyName = NSNotification.Name(rawValue: "key_notify_navigation_content_changed")
 
 
-class NavListViewController: UIViewController {
+class NavListViewController: ProcessViewController {
 
-    private var selectionDelegate: ProcessControllerResponseProtocol?
     private var navigationData: NavigationContent!
     private var isCurrentlyVisible: Bool = false
     private var needContentRefresh: Bool = false
@@ -22,22 +21,17 @@ class NavListViewController: UIViewController {
     @IBOutlet weak var navTable: UITableView!
     var tableAdaptor:MainNavigationTableAdaptor?
     
-    func configuration(navDelegate: ProcessControllerResponseProtocol) {
-        self.selectionDelegate = navDelegate
+    func configuration() {
 
         self.navigationData = NavigationContent()
-
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateNavigationNotificationKeyName, object: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        precondition(self.selectionDelegate != nil)
-
         self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:NavigationCategory) -> Void in
-            
-            self.selectionDelegate?.requestAction(command: AssistiveCommand(type: .navigationItemSelected(selection: destination)))
+            self.requestAction(command: AssistiveCommand(type: .navigationItemSelected(selection: destination)))
         })
     }
     

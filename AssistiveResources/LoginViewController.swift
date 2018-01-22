@@ -14,7 +14,7 @@ protocol LoginViewControllerCompletionProtocol: class {
 }
 
 
-class LoginViewController: UIViewController {
+class LoginViewController: ProcessViewController {
 
     weak private var user: UserModelController?
     weak private var completionProtocol: LoginViewControllerCompletionProtocol!

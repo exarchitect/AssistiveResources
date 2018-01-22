@@ -9,15 +9,14 @@
 import UIKit
 
 
-class EventDetailViewController: UIViewController {
+class EventDetailViewController: ProcessViewController {
 
     weak private var resourcesModelController: RegionalResourcesModelController?
-    private var completionProtocol: ProcessControllerResponseProtocol!
+//    private var completionProtocol: ProcessControllerResponseProtocol!
 
     @IBOutlet weak var scrollView: UIScrollView!
     
-    func configuration(resources: RegionalResourcesModelController, selectorDelegate: ProcessControllerResponseProtocol) {
-        self.completionProtocol = selectorDelegate
+    func configuration(resources: RegionalResourcesModelController) {
         self.resourcesModelController = resources
     }
     
@@ -25,7 +24,6 @@ class EventDetailViewController: UIViewController {
         super.viewDidLoad()
         
         precondition(self.resourcesModelController != nil)
-        precondition(self.completionProtocol != nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,13 +36,11 @@ class EventDetailViewController: UIViewController {
     }
     
     @IBAction func evntDetailBackButtonAction(_ sender: Any) {
-//        self.completionProtocol.backButtonTapped()
-        self.completionProtocol.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
+        self.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
     }
 
     @IBAction func orgSelectedButtonAction(_ sender: Any) {
-//        self.completionProtocol.organizationSelected(evt: ("",0))
-        self.completionProtocol.requestAction(command: AssistiveCommand(type: .eventSelected(event: (entityName: "test", entityID: 1))))
+        self.requestAction(command: AssistiveCommand(type: .eventSelected(event: (entityName: "test", entityID: 1))))
     }
 
 }
