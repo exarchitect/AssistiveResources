@@ -14,7 +14,7 @@ protocol ProcessControllerResponseProtocol: class {
 }
 
 
-class ProcessController: NSObject {
+class ProcessController: NSObject, Navigable {
     
     private weak var responseDelegate: ProcessControllerResponseProtocol!
     var sharedServices: SharedServices!
@@ -27,11 +27,22 @@ class ProcessController: NSObject {
         }
     }
 
-    init (responseDelegate: ProcessControllerResponseProtocol, navController: UINavigationController, services: SharedServices) {
+    required override init(){
+        super.init()
+    }
+
+    
+//    required init (responseDelegate: ProcessControllerResponseProtocol, navController: UINavigationController, services: SharedServices) {
+//        self.responseDelegate = responseDelegate
+//        self.navigationController = navController
+//        self.sharedServices = services
+//        super.init()
+//    }
+
+    func initialize (responseDelegate: ProcessControllerResponseProtocol, navController: UINavigationController, services: SharedServices) {
         self.responseDelegate = responseDelegate
         self.navigationController = navController
         self.sharedServices = services
-        super.init()
     }
     
     func createViewController() -> ProcessViewController? {
@@ -65,4 +76,13 @@ func instantiateViewController<T>(storyboardName: String, storyboardID: String) 
     let viewController = storyboard.instantiateViewController(withIdentifier: storyboardID)
     return viewController as? T
 }
+
+
+protocol Navigable {
+    init()
+    func initialize (responseDelegate: ProcessControllerResponseProtocol, navController: UINavigationController, services: SharedServices)
+    func launch()
+    func terminate()
+}
+
 

@@ -31,8 +31,9 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
 
         self.loadUserModelController()        // other model controllers not called until after login
         
-        self.pushNavigationListProcessController()
-        
+        //self.pushNavigationListProcessController()
+        self.pushProcessController(type: NavListProcessController.self)
+
         // temp override to fail login for testing
         self.shared.userModelController.storeUserCredentials(username: "", password: "")
         //self.shared.userModelController.storeUserCredentials(username: "exarchitect@gmail.com", password: "alongishpassword")
@@ -55,8 +56,9 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
             case .Rejected:
                 print("NOT logged in")
                 
-                self.pushAuthenticationProcessController()
-                
+                //self.pushAuthenticationProcessController()
+                self.pushProcessController(type: AuthenticationProcessController.self)
+
             case .ServiceOffline:
                 print("Service Offline")
                 self.loadRegionalResourceModelController(online: false)
@@ -64,7 +66,8 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
             case .NoCredentials:
                 print("NO credentials")
                 
-                self.pushAuthenticationProcessController()
+                //self.pushAuthenticationProcessController()
+                self.pushProcessController(type: AuthenticationProcessController.self)
             }
             
         })
@@ -77,9 +80,9 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
         
         switch command.type {
             
-        case .dismissProcessController(let controller):
-            controller.terminate()
-            self.freeTopProcessController()
+//        case .dismissProcessController(let controller):
+//            controller.terminate()
+//            self.freeTopProcessController()
             
         case .dismissTopProcessController():
             let pController: ProcessController? = self.getTopProcessController()
@@ -98,8 +101,9 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
             self.respondToNavigationItemSelected(selection: destination)
             
         case .eventSelected(let event):
-            self.pushEventDetailProcessController(evt: event)
-            
+            //self.pushEventDetailProcessController(evt: event)
+            self.pushProcessController(type: EventDetailProcessController.self)
+
         case .organizationSelected(let organization):
             _ = organization.entityID
         }
@@ -110,11 +114,13 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
         
         switch selection {
         case NavigationCategory.Organizations:
-            self.pushOrganizationListProcessController()
-            
+            //self.pushOrganizationListProcessController()
+            self.pushProcessController(type: OrganizationListProcessController.self)
+
         case NavigationCategory.Events:
-            self.pushEventListProcessController()
-            
+            //self.pushEventListProcessController()
+            self.pushProcessController(type: EventListProcessController.self)
+
         case NavigationCategory.Facilities:
             let _ = 7
             
@@ -130,7 +136,8 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
         case NavigationCategory.Profile:
             // temp for testing
             self.shared.userModelController.logout()
-            self.pushAuthenticationProcessController()
+            //self.pushAuthenticationProcessController()
+            self.pushProcessController(type: AuthenticationProcessController.self)
         }
         
     }
@@ -138,42 +145,50 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     
     // MARK: - process controller handling
 
-    private func pushNavigationListProcessController () {
-        
-        let navListPC = NavListProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
-        navListPC.launch()
-        self.processControllerStack.append(navListPC)
+//    private func pushNavigationListProcessController () {
+//
+//        let navListPC = NavListProcessController(responseDelegate:self, navController: self.navController, services: self.shared)
+//        navListPC.launch()
+//        self.processControllerStack.append(navListPC)
+//    }
+//
+//    private func pushAuthenticationProcessController () {
+//
+//        let authPC = AuthenticationProcessController(responseDelegate:self, navController: self.navController, services: self.shared)
+//        authPC.launch()
+//        self.processControllerStack.append(authPC)
+//    }
+//
+//    private func pushEventListProcessController () {
+//
+//        let eventListPC = EventListProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
+//        eventListPC.launch()
+//        self.processControllerStack.append(eventListPC)
+//    }
+//
+//    private func pushEventDetailProcessController (evt: EntityDescriptor) {
+//
+//        let eventDetailPC = EventDetailProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
+//        eventDetailPC.launch()
+//        self.processControllerStack.append(eventDetailPC)
+//    }
+//
+//    private func pushOrganizationListProcessController () {
+//
+//        let orgListPC = OrganizationListProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
+//        orgListPC.launch()
+//        self.processControllerStack.append(orgListPC)
+//    }
+    
+    func pushProcessController<T> (type: T.Type) where T: ProcessController{
+
+        let processController = T.init()
+        processController.initialize(responseDelegate: self, navController: self.navController, services: self.shared)
+        processController.launch()
+        self.processControllerStack.append(processController as ProcessController)
     }
     
-    private func pushAuthenticationProcessController () {
-        
-        let authPC = AuthenticationProcessController(responseDelegate:self, navController: self.navController, services: self.shared)
-        authPC.launch()
-        self.processControllerStack.append(authPC)
-    }
-    
-    private func pushEventListProcessController () {
-        
-        let eventListPC = EventListProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
-        eventListPC.launch()
-        self.processControllerStack.append(eventListPC)
-    }
-    
-    private func pushEventDetailProcessController (evt: EntityDescriptor) {
-        
-        let eventDetailPC = EventDetailProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
-        eventDetailPC.launch()
-        self.processControllerStack.append(eventDetailPC)
-    }
-    
-    private func pushOrganizationListProcessController () {
-        
-        let orgListPC = OrganizationListProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
-        orgListPC.launch()
-        self.processControllerStack.append(orgListPC)
-    }
-    
-    
+
     // MARK: - model controller handling
 
     private func loadRegionalResourceModelController (online: Bool) {

@@ -11,7 +11,7 @@ import Foundation
 
 struct AssistiveCommand {
     enum CommandType {
-        case dismissProcessController(controller: ProcessController)
+        //case dismissProcessController(controller: ProcessController)
         case dismissTopProcessController
         case userLoginSuccessful
         case userLoginServiceOffline
