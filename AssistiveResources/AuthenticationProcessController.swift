@@ -11,7 +11,7 @@ import UIKit
 
 class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
     
-    override func createViewController() -> ProcessViewController? {
+    override func createPrimaryViewController() -> ProcessViewController? {
         let loginViewController: LoginViewController? = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
         loginViewController?.configuration(userModelController: self.sharedServices.userModelController, completionProtocol: self)
         

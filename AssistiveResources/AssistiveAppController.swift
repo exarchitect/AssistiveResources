@@ -17,7 +17,7 @@ struct SharedServices: RegionalResourcesProvider, UserProvider {
 }
 
 
-class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
+class AssistiveAppController: AppController, CommandActionProtocol {
     
     var shared: SharedServices = SharedServices()
     
@@ -74,7 +74,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     }
     
     
-    // MARK: - ProcessControllerResponseProtocol
+    // MARK: - CommandActionProtocol
     
     func requestAction(command: AssistiveCommand) {
         
@@ -183,7 +183,7 @@ class AssistiveAppController: AppController, ProcessControllerResponseProtocol {
     func pushProcessController<T> (type: T.Type) where T: ProcessController{
 
         let processController = T.init()
-        processController.initialize(responseDelegate: self, navController: self.navController, services: self.shared)
+        processController.setup(responseDelegate: self, navController: self.navController, services: self.shared)
         processController.launch()
         self.processControllerStack.append(processController as ProcessController)
     }

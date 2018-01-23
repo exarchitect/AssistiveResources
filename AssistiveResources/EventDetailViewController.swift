@@ -12,8 +12,6 @@ import UIKit
 class EventDetailViewController: ProcessViewController {
 
     weak private var resourcesModelController: RegionalResourcesModelController?
-//    private var completionProtocol: ProcessControllerResponseProtocol!
-
     @IBOutlet weak var scrollView: UIScrollView!
     
     func configuration(resources: RegionalResourcesModelController) {

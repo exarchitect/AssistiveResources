@@ -38,15 +38,13 @@ class LoginViewController: ProcessViewController {
         precondition(self.completionProtocol != nil)
     }
 
-    // overridden framework methods
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
         //freeMemory()
     }
     
+    //MARK:-  IBActions
     
-    // button actions
     @IBAction func loginButtonAction(_ sender: Any) {
         // TODO
         self.completionProtocol?.loginAction(username: "exarchitect@gmail.com", password: "alongishpassword")

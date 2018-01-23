@@ -9,21 +9,21 @@
 import UIKit
 
 
-protocol ProcessControllerResponseProtocol: class {
+protocol CommandActionProtocol: class {
     func requestAction (command: AssistiveCommand)
 }
 
 
-class ProcessController: NSObject, Navigable {
+class ProcessController: NSObject, Navigable, CommandActionProtocol {
     
-    private weak var responseDelegate: ProcessControllerResponseProtocol!
     var sharedServices: SharedServices!
-    var primaryViewController: ProcessViewController? = nil
-    weak var navigationController: UINavigationController!
+    private weak var responseDelegate: CommandActionProtocol!
+    private var primaryProcessViewController: ProcessViewController? = nil
+    private weak var navigationController: UINavigationController!
 
     var inUse: Bool {
         get {
-            return primaryViewController != nil
+            return primaryProcessViewController != nil
         }
     }
 
@@ -31,36 +31,27 @@ class ProcessController: NSObject, Navigable {
         super.init()
     }
 
-    
-//    required init (responseDelegate: ProcessControllerResponseProtocol, navController: UINavigationController, services: SharedServices) {
-//        self.responseDelegate = responseDelegate
-//        self.navigationController = navController
-//        self.sharedServices = services
-//        super.init()
-//    }
-
-    func initialize (responseDelegate: ProcessControllerResponseProtocol, navController: UINavigationController, services: SharedServices) {
+    func setup (responseDelegate: CommandActionProtocol, navController: UINavigationController, services: SharedServices) {
         self.responseDelegate = responseDelegate
         self.navigationController = navController
         self.sharedServices = services
     }
     
-    func createViewController() -> ProcessViewController? {
+    func createPrimaryViewController() -> ProcessViewController? {
         fatalError("override \(#function)")
     }
     
     func launch() {
-        self.primaryViewController = self.createViewController()
-        //self.primaryViewController?.commandDelegate = self.responseDelegate
-        self.primaryViewController?.setupDelegate(selectorDelegate: self.responseDelegate)
-        assert(self.primaryViewController != nil)
-        self.navigationController.pushViewController(self.primaryViewController!, animated: false)
+        self.primaryProcessViewController = self.createPrimaryViewController()
+        self.primaryProcessViewController?.setupDelegate(selectorDelegate: self.responseDelegate)
+        assert(self.primaryProcessViewController != nil)
+        self.navigationController.pushViewController(self.primaryProcessViewController!, animated: false)
     }
     
     func terminate () {
         
         self.navigationController.popViewController(animated: true)
-        self.primaryViewController = nil;
+        self.primaryProcessViewController = nil;
     }
     
     func requestAction (command: AssistiveCommand){
@@ -79,8 +70,7 @@ func instantiateViewController<T>(storyboardName: String, storyboardID: String) 
 
 
 protocol Navigable {
-    init()
-    func initialize (responseDelegate: ProcessControllerResponseProtocol, navController: UINavigationController, services: SharedServices)
+    func setup (responseDelegate: CommandActionProtocol, navController: UINavigationController, services: SharedServices)
     func launch()
     func terminate()
 }

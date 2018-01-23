@@ -11,7 +11,7 @@ import UIKit
 
 class EventListProcessController: ProcessController {
     
-    override func createViewController() -> ProcessViewController? {
+    override func createPrimaryViewController() -> ProcessViewController? {
         let eventListViewController: EventListViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID")
         eventListViewController?.configuration(resources: self.sharedServices.regionalResourcesModelController)
         
