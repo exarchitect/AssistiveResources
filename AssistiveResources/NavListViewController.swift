@@ -31,7 +31,7 @@ class NavListViewController: ProcessViewController {
         super.viewDidLoad()
 
         self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:NavigationCategory) -> Void in
-            self.requestAction(command: AssistiveCommand(type: .navigationItemSelected(selection: destination)))
+            self.requestAction(command: AssistiveCommand(type: .navigateTo(destination: destination)))
         })
     }
     

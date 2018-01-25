@@ -66,7 +66,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     //MARK: @IBAction
     
     @IBAction func backButtonAction(_ sender: Any) {
-        self.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
+        self.requestAction(command: AssistiveCommand(type: .dismissProcessController))
     }
     
 }

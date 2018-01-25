@@ -9,15 +9,15 @@
 import UIKit
 
 
-protocol CommandActionProtocol: class {
+protocol CommandResponseProtocol: class {
     func requestAction (command: AssistiveCommand)
 }
 
 
-class ProcessController: NSObject, Navigable, CommandActionProtocol {
+class ProcessController: NSObject, Navigable, CommandResponseProtocol {
     
     var sharedServices: SharedServices!
-    private weak var responseDelegate: CommandActionProtocol!
+    private weak var responseDelegate: CommandResponseProtocol!
     private var primaryProcessViewController: ProcessViewController? = nil
     private weak var navigationController: UINavigationController!
 
@@ -31,7 +31,7 @@ class ProcessController: NSObject, Navigable, CommandActionProtocol {
         super.init()
     }
 
-    func setup (responseDelegate: CommandActionProtocol, navController: UINavigationController, services: SharedServices) {
+    func setup (responseDelegate: CommandResponseProtocol, navController: UINavigationController, services: SharedServices) {
         self.responseDelegate = responseDelegate
         self.navigationController = navController
         self.sharedServices = services
@@ -54,7 +54,7 @@ class ProcessController: NSObject, Navigable, CommandActionProtocol {
         self.primaryProcessViewController = nil;
     }
     
-    func requestAction (command: AssistiveCommand){
+    final func requestAction (command: AssistiveCommand){
         self.responseDelegate.requestAction(command: command)
     }
 }
@@ -69,8 +69,10 @@ func instantiateViewController<T>(storyboardName: String, storyboardID: String) 
 }
 
 
+// MARK: - Navigable PROTOCOL
+
 protocol Navigable {
-    func setup (responseDelegate: CommandActionProtocol, navController: UINavigationController, services: SharedServices)
+    func setup (responseDelegate: CommandResponseProtocol, navController: UINavigationController, services: SharedServices)
     func launch()
     func terminate()
 }

@@ -17,10 +17,12 @@ struct SharedServices: RegionalResourcesProvider, UserProvider {
 }
 
 
-class AssistiveAppController: AppController, CommandActionProtocol {
+class AssistiveAppController: AppController, CommandResponseProtocol {
     
     var shared: SharedServices = SharedServices()
-    
+    //var commandStack = [AssistiveCommand]()
+    var commandLog = [AssistiveCommand]()
+
     override init() {
         super.init()
         initializeRemoteDatabase()
@@ -74,32 +76,57 @@ class AssistiveAppController: AppController, CommandActionProtocol {
     }
     
     
-    // MARK: - CommandActionProtocol
+    // MARK: - CommandResponseProtocol
     
     func requestAction(command: AssistiveCommand) {
         
         switch command.type {
             
-//        case .dismissProcessController(let controller):
-//            controller.terminate()
-//            self.freeTopProcessController()
-            
-        case .dismissTopProcessController():
+        case .dismissProcessController():
             let pController: ProcessController? = self.getTopProcessController()
             if let pController = pController {
                 pController.terminate()
                 self.freeTopProcessController()
             }
+            
+        case .identifyUser:
+            self.pushProcessController(type: AuthenticationProcessController.self)
 
-        case .userLoginSuccessful:
+        case .userIdentified:
             self.loadRegionalResourceModelController(online: true)
             
-        case .userLoginServiceOffline:
-            self.loadRegionalResourceModelController(online: false)
+        case .navigateTo(let destination):
+            //self.respondToNavigationItemSelected(selection: destination)
             
-        case .navigationItemSelected(let destination):
-            self.respondToNavigationItemSelected(selection: destination)
-            
+            switch destination {
+                
+            case .Organizations:
+                //self.pushOrganizationListProcessController()
+                self.pushProcessController(type: OrganizationListProcessController.self)
+                
+            case .Events:
+                //self.pushEventListProcessController()
+                self.pushProcessController(type: EventListProcessController.self)
+                
+            case .Facilities:
+                let _ = 7
+                
+            case .Travel:
+                let _ = 7
+                
+            case .News:
+                let _ = 7
+                
+            case .Inbox:
+                let _ = 7
+                
+            case .Profile:
+                // temp for testing
+                self.shared.userModelController.logout()
+                //self.pushAuthenticationProcessController()
+                self.pushProcessController(type: AuthenticationProcessController.self)
+            }
+
         case .eventSelected(let event):
             //self.pushEventDetailProcessController(evt: event)
             self.pushProcessController(type: EventDetailProcessController.self)
@@ -108,39 +135,7 @@ class AssistiveAppController: AppController, CommandActionProtocol {
             _ = organization.entityID
         }
     }
-    
-    
-    func respondToNavigationItemSelected(selection:NavigationCategory) {
-        
-        switch selection {
-        case NavigationCategory.Organizations:
-            //self.pushOrganizationListProcessController()
-            self.pushProcessController(type: OrganizationListProcessController.self)
 
-        case NavigationCategory.Events:
-            //self.pushEventListProcessController()
-            self.pushProcessController(type: EventListProcessController.self)
-
-        case NavigationCategory.Facilities:
-            let _ = 7
-            
-        case NavigationCategory.Travel:
-            let _ = 7
-            
-        case NavigationCategory.News:
-            let _ = 7
-            
-        case NavigationCategory.Inbox:
-            let _ = 7
-            
-        case NavigationCategory.Profile:
-            // temp for testing
-            self.shared.userModelController.logout()
-            //self.pushAuthenticationProcessController()
-            self.pushProcessController(type: AuthenticationProcessController.self)
-        }
-        
-    }
     
     
     // MARK: - process controller handling
@@ -180,7 +175,8 @@ class AssistiveAppController: AppController, CommandActionProtocol {
 //        self.processControllerStack.append(orgListPC)
 //    }
     
-    func pushProcessController<T> (type: T.Type) where T: ProcessController{
+    private func pushProcessController<T> (type: T.Type) where T: ProcessController{
+    //func pushProcessController<T> (type: T.Type, command: AssistiveCommand) where T: ProcessController{
 
         let processController = T.init()
         processController.setup(responseDelegate: self, navController: self.navController, services: self.shared)
@@ -196,6 +192,7 @@ class AssistiveAppController: AppController, CommandActionProtocol {
             self.shared.regionalResourcesModelController = RegionalResourcesModelController(atLocation: self.shared.userModelController.locationProfile, isOnline: online)
             self.shared.regionalResourcesModelController?.initiateLoading()
         }
+        precondition(self.shared.regionalResourcesModelController != nil)
     }
     
     private func loadUserModelController () {

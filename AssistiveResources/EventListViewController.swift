@@ -48,7 +48,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     //MARK:- @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
-        self.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
+        self.requestAction(command: AssistiveCommand(type: .dismissProcessController))
     }
     
     

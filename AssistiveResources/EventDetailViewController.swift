@@ -34,7 +34,7 @@ class EventDetailViewController: ProcessViewController {
     }
     
     @IBAction func evntDetailBackButtonAction(_ sender: Any) {
-        self.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
+        self.requestAction(command: AssistiveCommand(type: .dismissProcessController))
     }
 
     @IBAction func orgSelectedButtonAction(_ sender: Any) {
