@@ -17,7 +17,7 @@ class ProcessViewController: UIViewController {
     }
     
     func requestAction (command: AssistiveCommand){
-        self.commandDelegate.requestAction(command: command)
+        self.commandDelegate.invokeAction(command: command)
     }
 
 }

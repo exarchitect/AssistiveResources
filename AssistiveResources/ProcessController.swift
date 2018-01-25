@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol CommandResponseProtocol: class {
-    func requestAction (command: AssistiveCommand)
+    func invokeAction (command: AssistiveCommand)
 }
 
 
@@ -54,8 +54,8 @@ class ProcessController: NSObject, Navigable, CommandResponseProtocol {
         self.primaryProcessViewController = nil;
     }
     
-    final func requestAction (command: AssistiveCommand){
-        self.responseDelegate.requestAction(command: command)
+    final func invokeAction (command: AssistiveCommand){
+        self.responseDelegate.invokeAction(command: command)
     }
 }
 

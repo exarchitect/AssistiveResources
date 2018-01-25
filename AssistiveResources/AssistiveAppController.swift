@@ -12,7 +12,7 @@ import UIKit
 struct SharedServices: RegionalResourcesProvider, UserProvider {
     var regionalResourcesModelController: RegionalResourcesModelController!
     var userModelController: UserModelController!
-    //var connectivityService: ConnectivityService!
+    var connectivityService: ConnectivityService!
     //var interactionService: InteractionService!
 }
 
@@ -32,6 +32,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
     override func internalStart() {
 
         self.loadUserModelController()        // other model controllers not called until after login
+        self.loadConnectivityService()
         
         //self.pushNavigationListProcessController()
         self.pushProcessController(type: NavListProcessController.self)
@@ -45,41 +46,30 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
             switch loginResult {
                 
             case .Anonymous:
-                self.loadRegionalResourceModelController(online: true)
-                requestMainNavigationRefresh()
+                fallthrough
 
             case .Authenticated:
-                self.loadRegionalResourceModelController(online: true)
-                requestMainNavigationRefresh()
+                self.invokeAction(command: AssistiveCommand(type: .userIdentified))
 
             case .Uninitialized:
                 fallthrough
                 
             case .Rejected:
-                print("NOT logged in")
-                
-                //self.pushAuthenticationProcessController()
-                self.pushProcessController(type: AuthenticationProcessController.self)
-
-            case .ServiceOffline:
-                print("Service Offline")
-                self.loadRegionalResourceModelController(online: false)
+                fallthrough
                 
             case .NoCredentials:
-                print("NO credentials")
-                
-                //self.pushAuthenticationProcessController()
-                self.pushProcessController(type: AuthenticationProcessController.self)
+                self.invokeAction(command: AssistiveCommand(type: .identifyUser))
             }
-            
         })
     }
     
     
     // MARK: - CommandResponseProtocol
     
-    func requestAction(command: AssistiveCommand) {
+    func invokeAction(command: AssistiveCommand) {
         
+        print("-- invokeAction: \(command.type)")
+
         switch command.type {
             
         case .dismissProcessController():
@@ -94,10 +84,12 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
 
         case .userIdentified:
             self.loadRegionalResourceModelController(online: true)
-            
+            requestMainNavigationRefresh()
+
         case .navigateTo(let destination):
             //self.respondToNavigationItemSelected(selection: destination)
-            
+            print(" -- navigate to: \(destination.rawValue)")
+
             switch destination {
                 
             case .Organizations:
@@ -185,7 +177,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
     }
     
 
-    // MARK: - model controller handling
+    // MARK: - model controller & services handling
 
     private func loadRegionalResourceModelController (online: Bool) {
         if (self.shared.regionalResourcesModelController == nil) {
@@ -202,7 +194,14 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         precondition(self.shared.userModelController != nil)
     }
     
+    private func loadConnectivityService () {
+        if (self.shared.connectivityService == nil) {
+            self.shared.connectivityService = ConnectivityService()
+        }
+        precondition(self.shared.connectivityService != nil)
+    }
     
+
     // MARK: - db Utilities
 
     override func checkDatabaseRefresh() {

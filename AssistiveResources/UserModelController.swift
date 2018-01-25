@@ -10,7 +10,7 @@ import UIKit
 
 
 enum LoginType : Int {
-    case Uninitialized = 0, Anonymous = 1, Authenticated = 2, Rejected = 3, ServiceOffline = 4, NoCredentials = 5
+    case Uninitialized = 0, Anonymous = 1, Authenticated = 2, Rejected = 3, NoCredentials = 4//, ServiceOffline = 5
 }
 
 
@@ -80,7 +80,7 @@ final class UserModelController: ModelController {
                 print (fault ?? "failed login")
                 let err: String = fault!.faultCode
                 if err=="-1009" {
-                    self.loginType = LoginType.ServiceOffline
+                    self.loginType = LoginType.Anonymous        // TODO: if system comes back online, re-authorize user
                 } else {
                     self.loginType = LoginType.Rejected
                 }

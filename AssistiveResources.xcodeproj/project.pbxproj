@@ -57,6 +57,7 @@
 		D2C445B820154ADB0065099A /* ProcessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C445B720154ADB0065099A /* ProcessViewController.swift */; };
 		D2C9AD711DDFF5120028341D /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD701DDFF5120028341D /* AppController.swift */; };
 		D2C9AD731DE00A8D0028341D /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD721DE00A8D0028341D /* RootViewController.swift */; };
+		D2E868342019AC0400C68F66 /* ConnectivityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E868332019AC0400C68F66 /* ConnectivityService.swift */; };
 		D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */; };
 		D2F91E951DDFE5D20084F00E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2F91E931DDFE5D20084F00E /* Main.storyboard */; };
 		D2F91E971DDFE5D20084F00E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2F91E961DDFE5D20084F00E /* Assets.xcassets */; };
@@ -138,6 +139,7 @@
 		D2C445B720154ADB0065099A /* ProcessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessViewController.swift; sourceTree = "<group>"; };
 		D2C9AD701DDFF5120028341D /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		D2C9AD721DE00A8D0028341D /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		D2E868332019AC0400C68F66 /* ConnectivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityService.swift; sourceTree = "<group>"; };
 		D2F91E8C1DDFE5D20084F00E /* AssistiveResources.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AssistiveResources.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2F91E941DDFE5D20084F00E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -340,6 +342,14 @@
 			name = UIAssets;
 			sourceTree = "<group>";
 		};
+		D2E868322019ABBB00C68F66 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D2E868332019AC0400C68F66 /* ConnectivityService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		D2F91E831DDFE5D10084F00E = {
 			isa = PBXGroup;
 			children = (
@@ -372,6 +382,7 @@
 				D2C9AD6C1DDFF3800028341D /* AppController */,
 				D24E4DAD1DE3E593008A11FB /* ModelControllers */,
 				D24E4DAC1DE3E581008A11FB /* ProcessControllers */,
+				D2E868322019ABBB00C68F66 /* Services */,
 				D24E4DB31DE3F111008A11FB /* Utilities */,
 				D2C9AD6D1DDFF3C70028341D /* UIAssets */,
 			);
@@ -731,6 +742,7 @@
 				D2C445B820154ADB0065099A /* ProcessViewController.swift in Sources */,
 				D28C80D81DF0E8DE002D3940 /* EventListTableViewCell.swift in Sources */,
 				D28C80DC1DF12B76002D3940 /* EventContainerViewController.swift in Sources */,
+				D2E868342019AC0400C68F66 /* ConnectivityService.swift in Sources */,
 				D2309DE71E2B481E0056A66C /* AssistiveCommand.swift in Sources */,
 				D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */,
 				D28C80D11DF0E821002D3940 /* EventListProcessController.swift in Sources */,

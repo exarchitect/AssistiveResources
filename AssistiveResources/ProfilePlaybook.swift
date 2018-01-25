@@ -37,7 +37,7 @@ struct IndividualNeedProfile {
     {
         self.mobilityLimitation = mobility
         self.developmentalAge = delay
-        self.actualAge = age
+        self.actualAge = age        // -1 indicates age not specified
         self.primaryDiagnosis = primarydx
         self.secondaryDiagnosis = secondarydx
     }
@@ -46,7 +46,7 @@ struct IndividualNeedProfile {
 struct TargetNeedProfile {
     var supportedMobility: [MobilityLimitation] = []
     var supportedDevelopmentalAge: [DevelopmentalAge] = []
-    var actualAge: Int = 0
+    var actualAge: Int = -1
     var diagnosis: [Diagnosis] = []
     
     func isMatch(for: IndividualNeedProfile) -> Bool {
