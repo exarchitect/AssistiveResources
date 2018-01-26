@@ -20,10 +20,17 @@ enum GeographicScope : Int {
 }
 
 
-
 protocol OrganizationSearchProtocol {
     func matchOrganizationID (cityName: String, regionName: String, postalCode: String, countryCode: ISOCountryCode) -> Int     // regionName=State in US
 }
+
+
+//struct OrganizationFilter {
+//    var needProfile: TargetNeedProfile?
+//    var proximityRadius: Int = -1
+//    let entityType: EntityType = .Organization      // read-only
+//    var entityDescriptor: EntityDescriptor
+//}
 
 
 class Chapter {

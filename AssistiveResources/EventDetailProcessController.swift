@@ -11,13 +11,15 @@ import UIKit
 
 class EventDetailProcessController: ProcessController {
 
+    var filter:EntityDescriptor?
+    
     override func createPrimaryViewController() -> ProcessViewController? {
         let eventDetailViewController: EventDetailViewController? = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")
         eventDetailViewController?.configuration(resources: self.sharedServices.regionalResourcesModelController)
         
         return eventDetailViewController
     }
-
+    
     deinit {
         print("deallocating eventdetailPC")
     }

@@ -20,8 +20,7 @@ struct SharedServices: RegionalResourcesProvider, UserProvider {
 class AssistiveAppController: AppController, CommandResponseProtocol {
     
     var shared: SharedServices = SharedServices()
-    //var commandStack = [AssistiveCommand]()
-    var commandLog = [AssistiveCommand]()
+    //var commandLog = [AssistiveCommand]()
 
     override init() {
         super.init()
@@ -34,7 +33,6 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         self.loadUserModelController()        // other model controllers not called until after login
         self.loadConnectivityService()
         
-        //self.pushNavigationListProcessController()
         self.pushProcessController(type: NavListProcessController.self)
 
         // temp override to fail login for testing
@@ -87,17 +85,12 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
             requestMainNavigationRefresh()
 
         case .navigateTo(let destination):
-            //self.respondToNavigationItemSelected(selection: destination)
             print(" -- navigate to: \(destination.rawValue)")
-
             switch destination {
-                
             case .Organizations:
-                //self.pushOrganizationListProcessController()
                 self.pushProcessController(type: OrganizationListProcessController.self)
                 
             case .Events:
-                //self.pushEventListProcessController()
                 self.pushProcessController(type: EventListProcessController.self)
                 
             case .Facilities:
@@ -115,61 +108,25 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
             case .Profile:
                 // temp for testing
                 self.shared.userModelController.logout()
-                //self.pushAuthenticationProcessController()
                 self.pushProcessController(type: AuthenticationProcessController.self)
             }
 
         case .eventSelected(let event):
-            //self.pushEventDetailProcessController(evt: event)
-            self.pushProcessController(type: EventDetailProcessController.self)
-
+            let eventDetailProcessController = EventDetailProcessController()
+            eventDetailProcessController.setup(responseDelegate: self, navController: self.navController, services: self.shared)
+            eventDetailProcessController.filter = EntityDescriptor(event)
+            eventDetailProcessController.launch()
+            self.processControllerStack.append(eventDetailProcessController)
+            
         case .organizationSelected(let organization):
             _ = organization.entityID
         }
     }
 
     
-    
     // MARK: - process controller handling
-
-//    private func pushNavigationListProcessController () {
-//
-//        let navListPC = NavListProcessController(responseDelegate:self, navController: self.navController, services: self.shared)
-//        navListPC.launch()
-//        self.processControllerStack.append(navListPC)
-//    }
-//
-//    private func pushAuthenticationProcessController () {
-//
-//        let authPC = AuthenticationProcessController(responseDelegate:self, navController: self.navController, services: self.shared)
-//        authPC.launch()
-//        self.processControllerStack.append(authPC)
-//    }
-//
-//    private func pushEventListProcessController () {
-//
-//        let eventListPC = EventListProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
-//        eventListPC.launch()
-//        self.processControllerStack.append(eventListPC)
-//    }
-//
-//    private func pushEventDetailProcessController (evt: EntityDescriptor) {
-//
-//        let eventDetailPC = EventDetailProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
-//        eventDetailPC.launch()
-//        self.processControllerStack.append(eventDetailPC)
-//    }
-//
-//    private func pushOrganizationListProcessController () {
-//
-//        let orgListPC = OrganizationListProcessController(responseDelegate: self, navController: self.navController, services: self.shared)
-//        orgListPC.launch()
-//        self.processControllerStack.append(orgListPC)
-//    }
     
     private func pushProcessController<T> (type: T.Type) where T: ProcessController{
-    //func pushProcessController<T> (type: T.Type, command: AssistiveCommand) where T: ProcessController{
-
         let processController = T.init()
         processController.setup(responseDelegate: self, navController: self.navController, services: self.shared)
         processController.launch()
