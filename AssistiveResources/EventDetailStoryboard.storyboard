@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Event Detail View Controller-->
         <scene sceneID="Mcx-Dm-S2Q">
@@ -22,7 +27,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AGB-3g-yhc">
-                                <rect key="frame" x="0.0" y="20" width="375" height="847"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="857"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hWn-Dv-7zN" userLabel="ContentView">
                                         <rect key="frame" x="0.0" y="8" width="375" height="859"/>
@@ -165,29 +170,31 @@ Peoria, IL</string>
                                     <constraint firstItem="hWn-Dv-7zN" firstAttribute="top" secondItem="AGB-3g-yhc" secondAttribute="top" constant="8" id="RaV-RM-pve"/>
                                     <constraint firstItem="hWn-Dv-7zN" firstAttribute="leading" secondItem="AGB-3g-yhc" secondAttribute="leading" id="Uts-8u-wp9"/>
                                     <constraint firstAttribute="trailing" secondItem="hWn-Dv-7zN" secondAttribute="trailing" id="bQO-2X-ZKz"/>
-                                    <constraint firstAttribute="bottom" secondItem="hWn-Dv-7zN" secondAttribute="bottom" constant="-20" id="nev-cc-CQk"/>
+                                    <constraint firstAttribute="bottom" secondItem="hWn-Dv-7zN" secondAttribute="bottom" constant="-10" id="nev-cc-CQk"/>
                                 </constraints>
                             </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8j-8f-SVl" userLabel="FooterView">
-                                <rect key="frame" x="0.0" y="867" width="375" height="54"/>
+                                <rect key="frame" x="0.0" y="877" width="375" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5IR-pJ-Hbo">
-                                        <rect key="frame" x="0.0" y="0.0" width="102" height="54"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="78" height="44"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="54" id="WOe-yO-23L"/>
-                                            <constraint firstAttribute="width" constant="102" id="ye8-cL-408"/>
+                                            <constraint firstAttribute="height" constant="44" id="WOe-yO-23L"/>
+                                            <constraint firstAttribute="width" constant="78" id="ye8-cL-408"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="Dismiss"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                        <state key="normal" title="Back">
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        </state>
                                         <connections>
                                             <action selector="evntDetailBackButtonAction:" destination="QbQ-3a-7Mg" eventType="touchUpInside" id="KgM-wr-e7o"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.7459995317" green="0.82946075200000002" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.1136113203" green="0.25090198809999997" blue="0.54683757219999996" alpha="0.37657855309999999" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="5IR-pJ-Hbo" firstAttribute="leading" secondItem="P8j-8f-SVl" secondAttribute="leading" id="QZh-D4-xCU"/>
-                                    <constraint firstAttribute="height" constant="54" id="YEV-vY-oKe"/>
+                                    <constraint firstAttribute="height" constant="44" id="YEV-vY-oKe"/>
                                     <constraint firstItem="5IR-pJ-Hbo" firstAttribute="top" secondItem="P8j-8f-SVl" secondAttribute="top" id="rz0-jg-uvD"/>
                                 </constraints>
                             </view>
@@ -196,7 +203,7 @@ Peoria, IL</string>
                         <constraints>
                             <constraint firstItem="AGB-3g-yhc" firstAttribute="top" secondItem="pO2-1n-9RY" secondAttribute="top" constant="20" id="3Ca-AT-KTm"/>
                             <constraint firstItem="AGB-3g-yhc" firstAttribute="leading" secondItem="pO2-1n-9RY" secondAttribute="leading" id="9zv-P1-cb9"/>
-                            <constraint firstItem="LjP-4c-59a" firstAttribute="top" secondItem="AGB-3g-yhc" secondAttribute="bottom" constant="54" id="L86-zB-asl"/>
+                            <constraint firstItem="LjP-4c-59a" firstAttribute="top" secondItem="AGB-3g-yhc" secondAttribute="bottom" constant="44" id="L86-zB-asl"/>
                             <constraint firstAttribute="trailing" secondItem="AGB-3g-yhc" secondAttribute="trailing" id="Tkk-gS-RwC"/>
                             <constraint firstAttribute="trailing" secondItem="P8j-8f-SVl" secondAttribute="trailing" id="Vel-Pe-C0b"/>
                             <constraint firstItem="P8j-8f-SVl" firstAttribute="leading" secondItem="pO2-1n-9RY" secondAttribute="leading" id="cC3-8q-voh"/>

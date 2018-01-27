@@ -45,7 +45,7 @@ class EventListTableViewCell: UITableViewCell {
         self.selectionStyle = UITableViewCellSelectionStyle.none
         
         if expand {
-            self.backgroundColor = UIColor.groupTableViewBackground
+            self.backgroundColor = UIColor.lightText
         } else {
             self.backgroundColor = UIColor.white
         }
