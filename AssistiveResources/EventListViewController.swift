@@ -10,7 +10,7 @@ import UIKit
 
 
 
-class EventListViewController: ProcessViewController, EventListContainerNotificationProtocol, EventFilterViewControllerResponseProtocol {
+class EventListViewController: ProcessViewController, EventListContainerNotificationProtocol, EventFilterResponseProtocol {
 
     @IBOutlet weak var headerView: HeaderView!
     
@@ -69,7 +69,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
         }
     }
     
-    //MARK: - EventFilterViewControllerResponseProtocol delegate
+    //MARK: - EventFilterResponseProtocol delegate
 
     func okFilterButtonAction() {
         self.dismiss(animated: true, completion: nil)

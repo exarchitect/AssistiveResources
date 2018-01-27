@@ -49,7 +49,6 @@ class ProcessController: NSObject, Navigable, CommandResponseProtocol {
     }
     
     func terminate () {
-        
         self.navigationController.popViewController(animated: true)
         self.primaryProcessViewController = nil;
     }

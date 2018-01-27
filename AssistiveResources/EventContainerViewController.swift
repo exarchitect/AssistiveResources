@@ -19,16 +19,15 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 
     @IBOutlet weak var containerTableView: UITableView!
     
-    weak private var callbackOnSelection:EventListContainerNotificationProtocol?
+    weak private var notificationDelegate:EventListContainerNotificationProtocol?
     private var expandedRowIndex = -1
     private var showLoadingIndicator: Bool = false
     private var eventAccessor: EventRepositoryAccessor!
     
-    //MARK: - inherited
 
     func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
     
-        self.callbackOnSelection = delegate
+        self.notificationDelegate = delegate
       
         self.eventAccessor = rsrcModelController.createEventAccessor(delegate: self)
         guard self.eventAccessor != nil else {
@@ -36,14 +35,14 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+    //MARK: - overrides
+
     deinit {
         print("deallocating EventContainerVC")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        precondition(self.callbackOnSelection != nil)
         
         containerTableView.delegate = self
         containerTableView.dataSource = self
@@ -144,13 +143,13 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     @IBAction func showRowDetailButtonAction(_ sender: UIButton) {
         let row = getRowFrom(sender, self.containerTableView)
         if row > -1 {
-            callbackOnSelection?.notifyRowDetailSelected(rowIndex: row)
+            notificationDelegate?.notifyRowDetailSelected(rowIndex: row)
         }
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {
         if (!self.showLoadingIndicator) {
-            callbackOnSelection?.notifyFilterSelected()
+            notificationDelegate?.notifyFilterSelected()
         }
     }
 

@@ -183,7 +183,7 @@ Peoria, IL</string>
                                             <constraint firstAttribute="width" constant="78" id="ye8-cL-408"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                        <state key="normal" title="Back">
+                                        <state key="normal" title="&lt; Back">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
                                         <connections>

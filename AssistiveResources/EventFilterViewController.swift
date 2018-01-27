@@ -9,8 +9,7 @@
 import UIKit
 
 
-protocol EventFilterViewControllerResponseProtocol: class {
-    //func selectedEvent (selection: Int)
+protocol EventFilterResponseProtocol: class {
     func okFilterButtonAction ()
     func cancelFilterButtonAction ()
 }
@@ -19,10 +18,10 @@ protocol EventFilterViewControllerResponseProtocol: class {
 
 class EventFilterViewController: UIViewController {
 
-    weak private var selectorDelegate:EventFilterViewControllerResponseProtocol!
+    weak private var selectorDelegate:EventFilterResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
 
-    func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventFilterViewControllerResponseProtocol) {
+    func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventFilterResponseProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
     }
@@ -34,8 +33,7 @@ class EventFilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        precondition(self.selectorDelegate != nil)
-        precondition(self.resourcesModelController != nil)
+        // other layout
     }
 
     override func didReceiveMemoryWarning() {
