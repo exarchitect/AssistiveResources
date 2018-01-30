@@ -51,6 +51,9 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
         self.requestAction(command: AssistiveCommand(type: .dismissProcessController))
     }
     
+    @IBAction func filterButtonAction(_ sender: Any) {
+        self.notifyFilterSelected()
+    }
     
     //MARK: - EventListContainerNotificationProtocol delegate
     
