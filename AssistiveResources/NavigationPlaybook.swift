@@ -78,52 +78,53 @@ class NavigationContent: NSObject {
     }
 }
     
-    struct DestinationDescriptor {
-        var destination: NavigationCategory
-        var title: String
-        var subtitle: String
-        var imageName: String
+struct DestinationDescriptor {
+    var destination: NavigationCategory
+    var title: String
+    var subtitle: String
+    var imageName: String
+    
+    init(dest: NavigationCategory,subtitle:String?=nil)
+    {
+        destination = dest
+        var placeholderSubtitle:String
         
-        init(dest: NavigationCategory,subtitle:String?=nil)
-        {
-            destination = dest
-            var placeholderSubtitle:String
-            
-            switch dest {
-            case .Organizations:
-                title = "Organizations/Services"
-                placeholderSubtitle = "Locate services and groups for your needs"
-                imageName = "organization"
-            case .Events:
-                title = NavigationCategory.Events.rawValue
-                placeholderSubtitle = "Regional and national events"
-                imageName = "sports"
-            case .Facilities:
-                title = "Accessibility"
-                placeholderSubtitle = "Find restrooms and other family-friendly facilities"
-                imageName = "venues"
-            case .Travel:
-                title = NavigationCategory.Travel.rawValue
-                placeholderSubtitle = "Resources for vacations and travel within the US"
-                imageName = "travel"
-            case .Inbox:
-                title = NavigationCategory.Inbox.rawValue
-                placeholderSubtitle = "Your messages"
-                imageName = "inbox"
-            case .Profile:
-                title = NavigationCategory.Profile.rawValue
-                placeholderSubtitle = "Tell us about yourself"
-                imageName = "favourite2"
-            case .News:
-                title = NavigationCategory.News.rawValue
-                placeholderSubtitle = "Online articles and news"
-                imageName = "rss"
-            }
-            
-            if let _subtitle = subtitle {
-                self.subtitle = _subtitle
-            } else {
-                self.subtitle = placeholderSubtitle
-            }
+        switch dest {
+        case .Organizations:
+            title = "Organizations/Services"
+            placeholderSubtitle = "Locate services and groups for your needs"
+            imageName = "organization"
+        case .Events:
+            title = NavigationCategory.Events.rawValue
+            placeholderSubtitle = "Regional and national events"
+            imageName = "sports"
+        case .Facilities:
+            title = "Accessibility"
+            placeholderSubtitle = "Find restrooms and other family-friendly facilities"
+            imageName = "venues"
+        case .Travel:
+            title = NavigationCategory.Travel.rawValue
+            placeholderSubtitle = "Resources for vacations and travel within the US"
+            imageName = "travel"
+        case .Inbox:
+            title = NavigationCategory.Inbox.rawValue
+            placeholderSubtitle = "Your messages"
+            imageName = "inbox"
+        case .Profile:
+            title = NavigationCategory.Profile.rawValue
+            placeholderSubtitle = "Tell us about yourself"
+            imageName = "favourite2"
+        case .News:
+            title = NavigationCategory.News.rawValue
+            placeholderSubtitle = "Online articles and news"
+            imageName = "rss"
+        }
+        
+        if let _subtitle = subtitle {
+            self.subtitle = _subtitle
+        } else {
+            self.subtitle = placeholderSubtitle
+        }
     }
 }
+

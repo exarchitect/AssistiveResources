@@ -14,7 +14,7 @@ typealias EntityDescriptor = (entityName:String, entityID:Int)
 
 
 struct EntityFilter {
-    var needProfile: TargetNeedProfile?
+    var needProfile: ProvidedServicesProfile?
     var proximityRadius: Int = -1
     var entityType: EntityType
     var entityDescriptor: EntityDescriptor

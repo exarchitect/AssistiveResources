@@ -8,6 +8,16 @@
 
 import UIKit
 
+// MARK: -TO DO LIST-
+// TODO: Filter for EventList
+// TODO: Organization Detail
+// TODO: Filter for OrganizationList
+// TODO: Remote data source
+// TODO: CocoaLumberjack
+// TODO: Timepiece cocoapod
+// TODO: Unit Tests for models
+// TODO: UI Unit Tests -
+
 
 struct SharedServices: RegionalResourcesProvider, UserProvider {
     var regionalResourcesModelController: RegionalResourcesModelController!

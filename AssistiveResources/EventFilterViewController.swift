@@ -15,7 +15,6 @@ protocol EventFilterResponseProtocol: class {
 }
 
 
-
 class EventFilterViewController: UIViewController {
 
     weak private var selectorDelegate:EventFilterResponseProtocol!
@@ -24,6 +23,16 @@ class EventFilterViewController: UIViewController {
     func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventFilterResponseProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
+        
+//        let profile = FilterProfile()
+//        profile.addSection(filter: ProximityFilterSection())
+//        profile.addSection(filter: HeaderFilterSection(headerTitle: "For Participant"))
+//        profile.addSection(filter: AgeFilterSection())
+//        profile.addSection(filter: DevelopmentalAgeFilterSection())
+//        profile.addSection(filter: MobilityFilterSection())
+//        profile.addSection(filter: PrimaryDiagnosisFilterSection())
+//        profile.addSection(filter: SecondaryDiagnosisFilterSection())
+//        let filterTA: FilterSettingsTableAdapter = FilterSettingsTableAdapter(table: nil, filterWhat: profile)
     }
     
     deinit {
@@ -45,5 +54,4 @@ class EventFilterViewController: UIViewController {
         self.selectorDelegate.okFilterButtonAction()
     }
 
-    
 }

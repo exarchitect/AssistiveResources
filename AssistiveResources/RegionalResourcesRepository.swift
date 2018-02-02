@@ -10,9 +10,6 @@ import UIKit
 import RealmSwift
 
 
-let resourceRepoChangeNotificationKey = "key_notify_resource_repository_changed"
-
-
 class RegionalResourcesRepository: Repository {
     
     private var loc: LocationProfile?
@@ -111,7 +108,7 @@ class RegionalResourcesRepository: Repository {
     }
     
     override func repositoryUpdateNotificationKey () -> String {
-        return resourceRepoChangeNotificationKey
+        return "key_notify_resource_repository_changed"
     }
     
 

@@ -9,17 +9,40 @@
 import Foundation
 
 
-enum MobilityLimitation : Int {
-    case NoLimitationSpecified, NoLimitation, WalkWithAid, Wheelchair
+protocol CaseCountable {
+    static var caseCount: Int { get }
 }
 
-enum DevelopmentalAge : Int {
+extension CaseCountable where Self: RawRepresentable, Self.RawValue == Int {
+    internal static var caseCount: Int {
+        var count = 0
+        while let _ = Self(rawValue: count) {
+            count += 1
+        }
+        return count
+    }
+}
+
+
+// MARK: Profile Characteristics -
+
+enum MobilityLimitation : Int, CaseCountable {
+    case NoLimitationSpecified, NoLimitation, WalkWithAid, Wheelchair
+
+    static let titleAtIndex = ["No Limitation Specified", "No Limitation", "Walk With Aid", "Wheelchair"]
+}
+
+enum DevelopmentalAge : Int, CaseCountable {
     case NoDevelopmentalAgeSpecified, InfantDevelopmentalAge, ToddlerDevelopmentalAge, PreschoolDevelopmentalAge, GradeschoolDevelopmentalAge, PreTeenDevelopmentalAge, TeenDevelopmentalAge, AdultDevelopmentalAge
     // infant 1, toddler 2, preschool 3-5, gradeschool 6-9, pre-teen 10-12, teen 13-19, adult 20+
+
+    static let titleAtIndex = ["No Developmental Age Specified", "Infant Developmental Age", "Toddler Developmental Age", "Preschool Developmental Age", "Gradeschool Developmental Age", "PreTeen Developmental Age", "Teen Developmental Age", "Adult Developmental Age"]
 }
 
-enum Diagnosis : Int {
+enum Diagnosis : Int, CaseCountable {
     case NoDiagnosisSpecified, AutismDiagnosis, CPDiagnosis, SpinaBifidaDiagnosis, OtherDiagnosis
+
+    static let titleAtIndex = ["No Diagnosis Specified", "Autism Diagnosis", "CP Diagnosis", "Spina Bifida Diagnosis", "Other Diagnosis"]
 }
 
 enum EntityType : Int {
@@ -43,7 +66,7 @@ struct IndividualNeedProfile {
     }
 }
 
-struct TargetNeedProfile {
+struct ProvidedServicesProfile {
     var supportedMobility: [MobilityLimitation] = []
     var supportedDevelopmentalAge: [DevelopmentalAge] = []
     var actualAge: Int = -1
@@ -54,6 +77,11 @@ struct TargetNeedProfile {
         return true
     }
 }
+
+
+
+
+// MARK: Location-related -
 
 enum ISOCountryCode : String {      // only support USA initially
     case USA = "USA", GBR = "GBR"
