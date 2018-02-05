@@ -13,12 +13,15 @@ import RealmSwift
 class RegionalResourcesRepository: Repository {
     
     private var loc: LocationProfile?
-    
+    private var remoteDataSrc: RegionalResourcesRemoteDatasource! = nil
+    private var retrievingData: Bool = false
+
     init(location: LocationProfile)
     {
         super.init()
         
         self.loc = location
+        self.remoteDataSrc = RegionalResourcesRemoteDatasource()
     }
     
     override func checkRepositoryState() -> RepositoryState {
@@ -35,30 +38,82 @@ class RegionalResourcesRepository: Repository {
         }
     }
     
-    override func loadLocalStoreFromRemote() {
 
-        self.beginRepositoryUpdate()
-        self.clearLocalStore()
+    override func initiateRemoteLoading() {
+        // 1) create RemoteDatasource if it doesnt exist
+        // 2) call remoteData.pull and pass closure
+        // 3) return
+        // 4) when closure called:
+        //  - beginRepoUpdate
+        //  - update realm store (clear and save)
+        //  - release remoteData object
+        //  - endRepoUpdate
+        //  - call closure / clear closure
         
-        // TEMP
-        let eventList: [StoredEvent] = testEvents()
-        for evt in eventList {
-            evt.save()
+        guard self.retrievingData == false else {
+            return
+        }
+        self.retrievingData = true
+
+        if self.remoteDataSrc == nil {
+            self.remoteDataSrc = RegionalResourcesRemoteDatasource()
         }
         
-        // TEMP
-        let orgList: [Organization] = testOrganizations()
-        for org in orgList {
-            org.save()
-        }
+        self.remoteDataSrc.validateConnection()
         
-        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 4.0)) {
-            self.completionClosure?(true)
-            self.completionClosure = nil
+        self.remoteDataSrc.pull { (success) in
+            
+            if success {
+                self.beginRepositoryUpdate()
+                self.clearLocalStore()
 
-            self.endRepositoryUpdate()
+                // update local store
+                let eventList: [StoredEvent] = self.remoteDataSrc.getEvents()
+                for evt in eventList {
+                    evt.save()
+                }
+                
+                let orgList: [Organization] = self.remoteDataSrc.getOrganizations()
+                for org in orgList {
+                    org.save()
+                }
+
+                self.dataUpdateCompletion?(true)
+                self.dataUpdateCompletion = nil
+                self.retrievingData = false
+                
+                self.endRepositoryUpdate()
+            } else {
+                // TODO: failure case
+            }
         }
     }
+    
+//    func initiateRemoteLoading_original() {
+//    //override func initiateRemoteLoading() {
+//
+//        self.beginRepositoryUpdate()
+//        self.clearLocalStore()
+//        
+//        // TEMP
+//        let eventList: [StoredEvent] = testEvents()
+//        for evt in eventList {
+//            evt.save()
+//        }
+//        
+//        // TEMP
+//        let orgList: [Organization] = testOrganizations()
+//        for org in orgList {
+//            org.save()
+//        }
+//        
+//        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 4.0)) {
+//            self.dataUpdateCompletion?(true)
+//            self.dataUpdateCompletion = nil
+//
+//            self.endRepositoryUpdate()
+//        }
+//    }
     
     override func clearLocalStore() {
         // clear contents of invalid or outdated db

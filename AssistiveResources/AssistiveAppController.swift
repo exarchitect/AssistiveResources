@@ -9,7 +9,7 @@
 import UIKit
 
 // MARK: -TO DO LIST-
-// TODO: Filter for EventList
+// TODO: Filter (UI and model) for EventList
 // TODO: Organization Detail
 // TODO: Filter for OrganizationList
 // TODO: Remote data source

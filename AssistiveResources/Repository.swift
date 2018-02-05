@@ -13,18 +13,23 @@ let kExpirationSeconds = 60 * 60 * 24       // 24 hours
 
 
 typealias RepositoryUpdateCompletionHandlerType = (_ success: Bool) -> Void
+typealias RemoteDataRetrievalCompletionType = (_ success: Bool) -> Void
 
 
 enum RepositoryState : Int {
     case Current = 0, Outdated = 1, Invalid = 2, Empty = 3
 }
 
+protocol RemoteDatasourceProtocol: class {
+    func validateConnection ()
+    func pull (completion: @escaping RemoteDataRetrievalCompletionType)
+}
 
 
 class Repository: NSObject {
     
-    var repositoryAvailable = false
-    var completionClosure: RepositoryUpdateCompletionHandlerType? = nil
+    var localRepositoryAvailable = false
+    var dataUpdateCompletion: RepositoryUpdateCompletionHandlerType? = nil
     
     override init() {
         // ?
@@ -32,27 +37,27 @@ class Repository: NSObject {
     }
     
     func load (completion: @escaping RepositoryUpdateCompletionHandlerType) {
-        self.completionClosure = completion
+        self.dataUpdateCompletion = completion
         
         let repoStartupState = self.checkRepositoryState()
         
         switch repoStartupState {
             
         case .Current:
-            self.completionClosure?(true)
-            self.completionClosure = nil
-            self.repositoryAvailable = true
+            self.dataUpdateCompletion?(true)
+            self.dataUpdateCompletion = nil
+            self.localRepositoryAvailable = true
             
-        case .Outdated:      // do nothing here - after accessor is done, then update will be called
-            self.completionClosure?(true)
-            self.completionClosure = nil
-            self.repositoryAvailable = true
+        case .Outdated:      // do nothing here? - after accessor is done, then update will be called
+            self.dataUpdateCompletion?(true)
+            self.dataUpdateCompletion = nil
+            self.localRepositoryAvailable = true
 
         case .Invalid:
-            self.loadLocalStoreFromRemote()
+            self.initiateRemoteLoading()
             
         case .Empty:
-            self.loadLocalStoreFromRemote()
+            self.initiateRemoteLoading()
         }
     }
 
@@ -63,11 +68,11 @@ class Repository: NSObject {
         case .Current:
             let _ = 3       // do nothing
         case .Outdated:
-            self.loadLocalStoreFromRemote()
+            self.initiateRemoteLoading()
         case .Invalid:
-            self.loadLocalStoreFromRemote()
+            self.initiateRemoteLoading()
         case .Empty:
-            self.loadLocalStoreFromRemote()
+            self.initiateRemoteLoading()
         }
     }
     
@@ -78,7 +83,7 @@ class Repository: NSObject {
         fatalError("override \(#function)")
     }
     
-    internal func loadLocalStoreFromRemote() {
+    internal func initiateRemoteLoading() {
         fatalError("override \(#function)")
     }
     
@@ -94,41 +99,15 @@ class Repository: NSObject {
     // MARK: - methods for subclass use
     
     internal func beginRepositoryUpdate() {
-        self.repositoryAvailable = false
+        self.localRepositoryAvailable = false
     }
     
     internal func endRepositoryUpdate() {
-        self.repositoryAvailable = true
+        self.localRepositoryAvailable = true
         
         let notificationkey = self.repositoryUpdateNotificationKey()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationkey), object: nil)
     }
 
 }
-
-// MARK: - Backendless
-
-func initializeRemoteDatabase() {
-    let APP_ID = "F817A756-BEB2-79AD-FF65-D49A4E97A800"     // AssistiveResources
-    let SECRET_KEY = "6F155BAE-91A6-0455-FFFD-30F4442B0A00"
-    //let VERSION_NUM = "v1"
-    
-    let backendless = Backendless.sharedInstance()
-    
-    //backendless?.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM)
-    backendless?.initApp(APP_ID, apiKey: SECRET_KEY)
-    
-}
-
-//func initializeRemoteDatabase() {
-//    let APP_ID = "A9F4E1E9-EE0E-C611-FF91-4B3E52A79900"     // SwiftNeed
-//    let SECRET_KEY = "91933CE7-53FE-117C-FFC0-E9A8751F9800"
-//    let VERSION_NUM = "v1"
-//    
-//    let backendless = Backendless.sharedInstance()
-//    
-//    //backendless?.initApp(APP_ID, secret:SECRET_KEY, version:VERSION_NUM)
-//    backendless?.initApp(APP_ID, apiKey: SECRET_KEY)
-//    
-//}
 

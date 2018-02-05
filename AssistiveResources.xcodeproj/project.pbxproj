@@ -16,6 +16,7 @@
 		D22768551DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22768531DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift */; };
 		D22768561DEFBB4D00C1917A /* MainNavTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22768541DEFBB4D00C1917A /* MainNavTableViewCell.swift */; };
 		D2309DE71E2B481E0056A66C /* AssistiveCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2309DE61E2B481E0056A66C /* AssistiveCommand.swift */; };
+		D2446FC320282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2446FC220282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift */; };
 		D24E4DB01DE3EB6F008A11FB /* UserModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DAF1DE3EB6F008A11FB /* UserModelController.swift */; };
 		D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */; };
 		D24E4DB71DE56320008A11FB /* AuthenticationProcess.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */; };
@@ -98,6 +99,7 @@
 		D22768531DEFBB4D00C1917A /* MainNavigationTableAdaptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationTableAdaptor.swift; sourceTree = "<group>"; };
 		D22768541DEFBB4D00C1917A /* MainNavTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavTableViewCell.swift; sourceTree = "<group>"; };
 		D2309DE61E2B481E0056A66C /* AssistiveCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistiveCommand.swift; sourceTree = "<group>"; };
+		D2446FC220282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionalResourcesRemoteDatasource.swift; sourceTree = "<group>"; };
 		D24E4DAF1DE3EB6F008A11FB /* UserModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModelController.swift; sourceTree = "<group>"; };
 		D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertySettings.swift; sourceTree = "<group>"; };
 		D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AuthenticationProcess.storyboard; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 			children = (
 				D255504C1E2491AA004FE72B /* RegionalResourcesModelController.swift */,
 				D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */,
+				D2446FC220282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift */,
 				D275718E1E415C3E0007CEF1 /* RepositoryProfile.swift */,
 				D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */,
 				D24E4DC71DE74167008A11FB /* PublicEvent.swift */,
@@ -752,6 +755,7 @@
 				D28C80D11DF0E821002D3940 /* EventListProcessController.swift in Sources */,
 				D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */,
 				D24E4DB01DE3EB6F008A11FB /* UserModelController.swift in Sources */,
+				D2446FC320282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift in Sources */,
 				D24E4DD31DED2703008A11FB /* NavListViewController.swift in Sources */,
 				D25550571E24A68F004FE72B /* EventRepositoryAccessor.swift in Sources */,
 				D24E4DBB1DE56ACF008A11FB /* AuthenticationProcessController.swift in Sources */,

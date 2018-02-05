@@ -32,7 +32,7 @@ class RegionalResourcesModelController: ModelController {
 
         self.regionalRepository.load { (success) in
             if (success) {
-                // data pulled by accessors
+                // data pulled by accessors, using notification mechanism
             } else {
                 print("loading failed")
             }

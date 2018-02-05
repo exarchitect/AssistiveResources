@@ -28,26 +28,26 @@ class AssistiveResourcesUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        
-        let app = XCUIApplication()
-        app.buttons["Sign Up"].tap()
-        
-        let okButton = app.buttons["OK"]
-        okButton.tap()
-        
-        let tablesQuery = app.tables
-        tablesQuery.staticTexts["Regional and national events in your area"].tap()
-        tablesQuery.staticTexts["Best Buddies Spring Gala"].tap()
-        tablesQuery.cells.containing(.staticText, identifier:"Come to the event of the season - our spring gala celebration.  This is a grand opportunity to socialize and make friends, party, and generally have a great time.").buttons["Details"].tap()
-        
-        let backButton = app.buttons["Back"]
-        backButton.tap()
-        app.buttons["settings"].tap()
-        okButton.tap()
-        backButton.tap()
-        
-    }
+//    func testExample() {
+//        // Use recording to get started writing UI tests.
+//
+//        let app = XCUIApplication()
+//        app.buttons["Sign Up"].tap()
+//
+//        let okButton = app.buttons["OK"]
+//        okButton.tap()
+//
+//        let tablesQuery = app.tables
+//        tablesQuery.staticTexts["Regional and national events in your area"].tap()
+//        tablesQuery.staticTexts["Best Buddies Spring Gala"].tap()
+//        tablesQuery.cells.containing(.staticText, identifier:"Come to the event of the season - our spring gala celebration.  This is a grand opportunity to socialize and make friends, party, and generally have a great time.").buttons["Details"].tap()
+//
+//        let backButton = app.buttons["Back"]
+//        backButton.tap()
+//        app.buttons["settings"].tap()
+//        okButton.tap()
+//        backButton.tap()
+//
+//    }
     
 }

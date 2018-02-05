@@ -23,7 +23,7 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
     }
     
     func requestData(filteredBy: IndividualNeedProfile){
-        if (self.repo.repositoryAvailable) {
+        if (self.repo.localRepositoryAvailable) {
             self.retrieve(usingFilter: filteredBy)
             self.state = .Loaded
         } else {
@@ -63,20 +63,5 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
         self.organizations.append(newOrg)
     }
     
-}
-
-
-// MARK: - TESTING
-
-func testOrganizations() -> [Organization] {
-    var returnOrganizations: [Organization] = []
-    
-    returnOrganizations.append(Organization(entity: ("Best Buddies International",0), tagline: "Friendship, Jobs and Leadership Development", mission: "Dedicated to ending the social, physical and economic isolation of the 200 million people with intellectual and developmental disabilities.", scope: "Best Buddies programs engage participants in each of the 50 United States, and in over 50 countries around the world", location:LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: ""), url: ""))
-    
-    returnOrganizations.append(Organization(entity: ("Easter Seals",0), tagline: "Taking on disability together", mission: "Providing exceptional services, education, outreach, and advocacy so that people living with autism and other disabilities can live, learn, work and play in our communities.", scope: "Easter Seals is a national organization with over 75 affiliates and local service centers in the US", location:LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: ""), url: ""))
-    
-    returnOrganizations.append(Organization(entity: ("The Penguin Project",0), tagline: "Empowering children with special needs through theater", mission: "Providing an opportunity for children with special needs to develop creative skills related to the theater arts, and participate in a community theater experience", scope: "The Penguin Project is based in central Illinois and has 18 Projects across the US in 11 different states", location:LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: ""), url: ""))
-    
-    return returnOrganizations
 }
 
