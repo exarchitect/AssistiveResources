@@ -14,7 +14,14 @@ class RegionalResourcesRepository: Repository {
     
     private var loc: LocationProfile?
     private var remoteDataSrc: RegionalResourcesRemoteDatasource! = nil
-    private var retrievingData: Bool = false
+
+    var retrievingData: Bool {
+        get {
+            let haveRemoveDS: Bool = self.remoteDataSrc != nil
+            let retrieving: Bool = haveRemoveDS ? self.remoteDataSrc.isRetrievingData : false
+            return retrieving
+        }
+    }
 
     init(location: LocationProfile)
     {
@@ -40,20 +47,10 @@ class RegionalResourcesRepository: Repository {
     
 
     override func initiateRemoteLoading() {
-        // 1) create RemoteDatasource if it doesnt exist
-        // 2) call remoteData.pull and pass closure
-        // 3) return
-        // 4) when closure called:
-        //  - beginRepoUpdate
-        //  - update realm store (clear and save)
-        //  - release remoteData object
-        //  - endRepoUpdate
-        //  - call closure / clear closure
         
         guard self.retrievingData == false else {
             return
         }
-        self.retrievingData = true
 
         if self.remoteDataSrc == nil {
             self.remoteDataSrc = RegionalResourcesRemoteDatasource()
@@ -80,7 +77,6 @@ class RegionalResourcesRepository: Repository {
 
                 self.dataUpdateCompletion?(true)
                 self.dataUpdateCompletion = nil
-                self.retrievingData = false
                 
                 self.endRepositoryUpdate()
             } else {
@@ -89,34 +85,8 @@ class RegionalResourcesRepository: Repository {
         }
     }
     
-//    func initiateRemoteLoading_original() {
-//    //override func initiateRemoteLoading() {
-//
-//        self.beginRepositoryUpdate()
-//        self.clearLocalStore()
-//        
-//        // TEMP
-//        let eventList: [StoredEvent] = testEvents()
-//        for evt in eventList {
-//            evt.save()
-//        }
-//        
-//        // TEMP
-//        let orgList: [Organization] = testOrganizations()
-//        for org in orgList {
-//            org.save()
-//        }
-//        
-//        DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 4.0)) {
-//            self.dataUpdateCompletion?(true)
-//            self.dataUpdateCompletion = nil
-//
-//            self.endRepositoryUpdate()
-//        }
-//    }
-    
     override func clearLocalStore() {
-        // clear contents of invalid or outdated db
+        // TODO clear contents of invalid or outdated db
     }
 
     
@@ -147,12 +117,9 @@ class RegionalResourcesRepository: Repository {
                 state = RepositoryState.Invalid
             }
             
-            // - if DOES NOT HAVE UpdateProfile then:
-            //    state = RepositoryState.Empty
+        } else {        // NO profiles found, so we assume no database
             
-        } else {        // if NO database
             // create empty database
-            
             let dbProfile = RepositoryProfile()
             dbProfile.save()
             

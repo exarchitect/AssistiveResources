@@ -42,6 +42,7 @@
 		D27440F31DF9009A008E0476 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D27440F21DF9009A008E0476 /* HeaderView.xib */; };
 		D27440F51DF903B3008E0476 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27440F41DF903B3008E0476 /* HeaderView.swift */; };
 		D275718F1E415C3E0007CEF1 /* RepositoryProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D275718E1E415C3E0007CEF1 /* RepositoryProfile.swift */; };
+		D28338EC20293F2400A1837D /* FilterTableViewCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28338EB20293F2300A1837D /* FilterTableViewCellHeader.swift */; };
 		D28C80D11DF0E821002D3940 /* EventListProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D01DF0E821002D3940 /* EventListProcessController.swift */; };
 		D28C80D41DF0E8B6002D3940 /* EventListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D31DF0E8B6002D3940 /* EventListViewController.swift */; };
 		D28C80D81DF0E8DE002D3940 /* EventListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */; };
@@ -126,6 +127,7 @@
 		D27440F41DF903B3008E0476 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		D275718E1E415C3E0007CEF1 /* RepositoryProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryProfile.swift; sourceTree = "<group>"; };
 		D276B5291EABAEF600182357 /* AssistiveResources.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AssistiveResources.entitlements; sourceTree = "<group>"; };
+		D28338EB20293F2300A1837D /* FilterTableViewCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableViewCellHeader.swift; sourceTree = "<group>"; };
 		D28C80D01DF0E821002D3940 /* EventListProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListProcessController.swift; sourceTree = "<group>"; };
 		D28C80D31DF0E8B6002D3940 /* EventListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListViewController.swift; sourceTree = "<group>"; };
 		D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListTableViewCell.swift; sourceTree = "<group>"; };
@@ -251,7 +253,6 @@
 		D24E4DB31DE3F111008A11FB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				D25B5838202164F5001FE284 /* FilterSettingsTableAdapter.swift */,
 				D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */,
 				D24E4DC91DE741E4008A11FB /* DateUtilities.swift */,
 				D27440EE1DF6459C008E0476 /* UXUtilities.swift */,
@@ -287,6 +288,16 @@
 			name = RegionalResources;
 			sourceTree = "<group>";
 		};
+		D28338EA2029353300A1837D /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				D27440F01DF669A3008E0476 /* EventFilterViewController.swift */,
+				D25B5838202164F5001FE284 /* FilterSettingsTableAdapter.swift */,
+				D28338EB20293F2300A1837D /* FilterTableViewCellHeader.swift */,
+			);
+			name = Filter;
+			sourceTree = "<group>";
+		};
 		D28C80D21DF0E867002D3940 /* EventList */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,8 +305,8 @@
 				D28C80D31DF0E8B6002D3940 /* EventListViewController.swift */,
 				D28C80DB1DF12B76002D3940 /* EventContainerViewController.swift */,
 				D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */,
-				D27440F01DF669A3008E0476 /* EventFilterViewController.swift */,
 				D28C80D91DF0E908002D3940 /* EventList.storyboard */,
+				D28338EA2029353300A1837D /* Filter */,
 			);
 			name = EventList;
 			sourceTree = "<group>";
@@ -759,6 +770,7 @@
 				D24E4DD31DED2703008A11FB /* NavListViewController.swift in Sources */,
 				D25550571E24A68F004FE72B /* EventRepositoryAccessor.swift in Sources */,
 				D24E4DBB1DE56ACF008A11FB /* AuthenticationProcessController.swift in Sources */,
+				D28338EC20293F2400A1837D /* FilterTableViewCellHeader.swift in Sources */,
 				D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */,
 				D27440F51DF903B3008E0476 /* HeaderView.swift in Sources */,
 				D255504A1E234626004FE72B /* Repository.swift in Sources */,

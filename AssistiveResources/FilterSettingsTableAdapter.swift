@@ -15,7 +15,7 @@ import UIKit
 class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
 
     var tableView: UITableView!
-    weak private var filter: FilterProfile!
+    private var filter: FilterProfile!
 
     init(table: UITableView, filterWhat: FilterProfile) {
         super.init()
@@ -36,19 +36,31 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     //MARK: tableView delegate
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return kHomeNavCellHeight
+        //return 45
+        if indexPath.row == 0 {
+            return 50
+        }
+        if self.filter[indexPath.section].rowsVisible {
+            return 45
+        } else {
+            return 0
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.filter.count
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-        return self.filter[section].headerTitle
-    }
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
+//        return self.filter[section].headerTitle
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.filter[section].editableRowCount
+//        if self.filter[section].rowsVisible {
+            return self.filter[section].editableRowCount + 1
+//        } else {
+//            return 1
+//        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,13 +69,15 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             // section header
             if (filter[indexPath.section].filterType == .NoCharacteristic) {
                 // Major Heading
-                let cell:MainNavTableViewCell = tableView.dequeueReusableCell(withIdentifier: kHomeNavCellID) as! MainNavTableViewCell
+                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
+                cell.headerLabelOutlet.text = filter[indexPath.section].headerTitle
                 
                 return cell
             } else {
                 // section heading
-                let cell:MainNavTableViewCell = tableView.dequeueReusableCell(withIdentifier: kHomeNavCellID) as! MainNavTableViewCell
-                
+                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
+                cell.headerLabelOutlet.text = filter[indexPath.section].headerTitle
+
 //                let _cellTitle = filter[indexPath.section].rowTitle(atIndex: indexPath.row+1)
                 
 //                let _title = navigationData[indexPath.row].title
@@ -76,33 +90,63 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             
         } else {
             // row cell
-            if (filter[indexPath.section].filterType == .Age) {
-                // age input
-                let cell:MainNavTableViewCell = tableView.dequeueReusableCell(withIdentifier: kHomeNavCellID) as! MainNavTableViewCell
-                
-                return cell
-            } else {
-                // enum input
-                let cell:MainNavTableViewCell = tableView.dequeueReusableCell(withIdentifier: kHomeNavCellID) as! MainNavTableViewCell
+            let rowCellType: FilterCharacteristic = self.filter[indexPath.section].filterType
+            switch rowCellType {
 
+            case .Age:
+            // age input
+            let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
+            cell.headerLabelOutlet.text = "[age data entry]"
+            return cell
+
+            case .DevelopmentalAge:
+                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
+                cell.headerLabelOutlet.text = DevelopmentalAge.titleAtIndex[indexPath.row]
+                return cell
+
+            case .MobilityLimitation:
+                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
+                cell.headerLabelOutlet.text = MobilityLimitation.titleAtIndex[indexPath.row]
+                return cell
+
+            case .Proximity:
+                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
+                cell.headerLabelOutlet.text = "[proximity data entry]"
+                return cell
+
+            case .PrimaryDiagnosis, .SecondaryDiagnosis:
+                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
+                cell.headerLabelOutlet.text = Diagnosis.titleAtIndex[indexPath.row]
+                return cell
+
+            default:
+                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
                 return cell
             }
         }
     }
     
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 4
+//    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView .deselectRow(at: indexPath as IndexPath, animated: true)
         
-//        self.selectorClosure?(navigationData[indexPath.row].destination)
+//        if indexPath.row == 0 {
+            self.filter[indexPath.section].rowsVisible = !self.filter[indexPath.section].rowsVisible
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+//        }
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return false
     }
     
-    // debug
     
-    deinit {
+    // debug
+deinit {
         print("deallocating FilterSettingsTableAdapter")
     }
 }
@@ -129,7 +173,8 @@ class FilterSectionDescriptor: NSObject {
 }
 
 class FilterProfile: NSObject {
-    
+//struct FilterProfile {
+
     private var sectionList:[FilterSectionDescriptor] = []
     var count: Int {
         return sectionList.count
@@ -138,7 +183,7 @@ class FilterProfile: NSObject {
         return sectionList[pos]
     }
     func addSection(filter: FilterSectionDescriptor) {
-        self.sectionList.append(filter)
+        sectionList.append(filter)
     }
 }
 
@@ -159,7 +204,7 @@ class ProximityFilterSection: FilterSectionDescriptor {
         super.init()
         self.headerTitle = "Proximity"
         self.editableRowCount = 1
-        self.rowsVisible = true
+        self.rowsVisible = false
         self.filterType = .Proximity
     }
 }
@@ -170,7 +215,7 @@ class AgeFilterSection: FilterSectionDescriptor {
         super.init()
         self.headerTitle = "Age"
         self.editableRowCount = 1
-        self.rowsVisible = true
+        self.rowsVisible = false
         self.filterType = .Age
     }
     
@@ -184,8 +229,8 @@ class DevelopmentalAgeFilterSection: FilterSectionDescriptor {
     override init () {
         super.init()
         self.headerTitle = "Developmental Age"
-        self.editableRowCount = DevelopmentalAge.caseCount
-        self.rowsVisible = true
+        self.editableRowCount = DevelopmentalAge.caseCount - 1
+        self.rowsVisible = false
         self.filterType = .DevelopmentalAge
     }
     
@@ -199,8 +244,8 @@ class MobilityFilterSection: FilterSectionDescriptor {
     override init () {
         super.init()
         self.headerTitle = "Mobility Limitation"
-        self.editableRowCount = MobilityLimitation.caseCount
-        self.rowsVisible = true
+        self.editableRowCount = MobilityLimitation.caseCount - 1
+        self.rowsVisible = false
         self.filterType = .MobilityLimitation
     }
     
@@ -214,8 +259,8 @@ class PrimaryDiagnosisFilterSection: FilterSectionDescriptor {
     override init () {
         super.init()
         self.headerTitle = "Primary Diagnosis"
-        self.editableRowCount = Diagnosis.caseCount
-        self.rowsVisible = true
+        self.editableRowCount = Diagnosis.caseCount - 1
+        self.rowsVisible = false
         self.filterType = .PrimaryDiagnosis
     }
     
@@ -229,8 +274,8 @@ class SecondaryDiagnosisFilterSection: FilterSectionDescriptor {
     override init () {
         super.init()
         self.headerTitle = "Secondary Diagnosis"
-        self.editableRowCount = Diagnosis.caseCount
-        self.rowsVisible = true
+        self.editableRowCount = Diagnosis.caseCount - 1
+        self.rowsVisible = false
         self.filterType = .SecondaryDiagnosis
     }
     

@@ -12,7 +12,7 @@ import UIKit
 // TODO: Filter (UI and model) for EventList
 // TODO: Organization Detail
 // TODO: Filter for OrganizationList
-// TODO: Remote data source
+// TODO: **DONE** Remote data source
 // TODO: CocoaLumberjack
 // TODO: Timepiece cocoapod
 // TODO: Unit Tests for models

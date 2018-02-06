@@ -12,6 +12,7 @@ class RegionalResourcesRemoteDatasource: NSObject, RemoteDatasourceProtocol {
     
 //    var eventList: [StoredEvent]! = nil
 //    var orgList: [Organization]! = nil
+    var isRetrievingData: Bool = false
 
     func validateConnection() {
         let _ = 3
@@ -19,6 +20,10 @@ class RegionalResourcesRemoteDatasource: NSObject, RemoteDatasourceProtocol {
     
     func pull(completion: @escaping RemoteDataRetrievalCompletionType) {
 
+        self.isRetrievingData = true
+        
+        // GET THE DATA
+        
 //        // TEST
 //        self.eventList = testEvents()
 //
@@ -26,6 +31,7 @@ class RegionalResourcesRemoteDatasource: NSObject, RemoteDatasourceProtocol {
 //        self.orgList = testOrganizations()
         
         DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 4.0)) {
+            self.isRetrievingData = false
             completion(true)
         }
     }

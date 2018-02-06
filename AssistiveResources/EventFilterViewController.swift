@@ -17,34 +17,36 @@ protocol EventFilterResponseProtocol: class {
 
 class EventFilterViewController: UIViewController {
 
+    private var tableAdapter: FilterSettingsTableAdapter! = nil
     weak private var selectorDelegate:EventFilterResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
-
+    
+    @IBOutlet weak var filterTableViewOutlet: UITableView!
+    
     func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventFilterResponseProtocol) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
         
-//        let profile = FilterProfile()
-//        profile.addSection(filter: ProximityFilterSection())
-//        profile.addSection(filter: HeaderFilterSection(headerTitle: "For Participant"))
-//        profile.addSection(filter: AgeFilterSection())
-//        profile.addSection(filter: DevelopmentalAgeFilterSection())
-//        profile.addSection(filter: MobilityFilterSection())
-//        profile.addSection(filter: PrimaryDiagnosisFilterSection())
-//        profile.addSection(filter: SecondaryDiagnosisFilterSection())
-//        let filterTA: FilterSettingsTableAdapter = FilterSettingsTableAdapter(table: nil, filterWhat: profile)
-    }
-    
-    deinit {
-        print("deallocating EventFilterVC")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // other layout
+        
+        let profile = FilterProfile()
+        profile.addSection(filter: ProximityFilterSection())
+        //profile.addSection(filter: HeaderFilterSection(headerTitle: "For Participant"))
+        profile.addSection(filter: AgeFilterSection())
+        profile.addSection(filter: DevelopmentalAgeFilterSection())
+        profile.addSection(filter: MobilityFilterSection())
+        profile.addSection(filter: PrimaryDiagnosisFilterSection())
+        profile.addSection(filter: SecondaryDiagnosisFilterSection())
+        self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: profile)
     }
 
+    deinit {
+        print("deallocating EventFilterVC")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
