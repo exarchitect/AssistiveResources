@@ -34,7 +34,6 @@ class EventFilterViewController: UIViewController {
         
         let profile = FilterProfile()
         profile.addSection(filter: ProximityFilterSection())
-        //profile.addSection(filter: HeaderFilterSection(headerTitle: "For Participant"))
         profile.addSection(filter: AgeFilterSection())
         profile.addSection(filter: DevelopmentalAgeFilterSection())
         profile.addSection(filter: MobilityFilterSection())

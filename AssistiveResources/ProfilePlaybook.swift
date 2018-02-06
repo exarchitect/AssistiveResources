@@ -26,6 +26,12 @@ extension CaseCountable where Self: RawRepresentable, Self.RawValue == Int {
 
 // MARK: Profile Characteristics -
 
+enum ProximityToService : Int, CaseCountable {
+    case NoProximitySpecified, TenMiles, TwentyFiveMiles, FiftyMiles, OneHundredMiles, AnyDistance
+    
+    static let titleAtIndex = ["No Distance Specified", "Within 10 Miles", "Within 25 Miles", "Within 50 Miles", "Within 100 Miles", "Any Distance"]
+}
+
 enum MobilityLimitation : Int, CaseCountable {
     case NoLimitationSpecified, NoLimitation, WalkWithAid, Wheelchair
 
@@ -36,13 +42,13 @@ enum DevelopmentalAge : Int, CaseCountable {
     case NoDevelopmentalAgeSpecified, InfantDevelopmentalAge, ToddlerDevelopmentalAge, PreschoolDevelopmentalAge, GradeschoolDevelopmentalAge, PreTeenDevelopmentalAge, TeenDevelopmentalAge, AdultDevelopmentalAge
     // infant 1, toddler 2, preschool 3-5, gradeschool 6-9, pre-teen 10-12, teen 13-19, adult 20+
 
-    static let titleAtIndex = ["No Developmental Age Specified", "Infant Developmental Age", "Toddler Developmental Age", "Preschool Developmental Age", "Gradeschool Developmental Age", "PreTeen Developmental Age", "Teen Developmental Age", "Adult Developmental Age"]
+    static let titleAtIndex = ["No Developmental Age Specified", "Infant", "Toddler", "Preschool", "Gradeschool", "PreTeen", "Teen", "Adult"]
 }
 
 enum Diagnosis : Int, CaseCountable {
     case NoDiagnosisSpecified, AutismDiagnosis, CPDiagnosis, SpinaBifidaDiagnosis, OtherDiagnosis
 
-    static let titleAtIndex = ["No Diagnosis Specified", "Autism Diagnosis", "CP Diagnosis", "Spina Bifida Diagnosis", "Other Diagnosis"]
+    static let titleAtIndex = ["No Diagnosis Specified", "Autism", "CP", "Spina Bifida", "Other Diagnosis"]
 }
 
 enum EntityType : Int {

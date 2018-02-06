@@ -9,26 +9,23 @@
 import UIKit
 
 
-//typealias FilterSelector = (_ destination:NavigationCategory) -> Void
-
-
 class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
 
     var tableView: UITableView!
-    private var filter: FilterProfile!
+    private var filterProfile: FilterProfile!
 
     init(table: UITableView, filterWhat: FilterProfile) {
         super.init()
         
         self.tableView = table
-        self.filter = filterWhat
+        self.filterProfile = filterWhat
         
         // attach table
         tableView.delegate = self
         tableView.dataSource = self
         
         tableView.separatorInset = UIEdgeInsets.zero
-        tableView.separatorColor = UIColor.clear
+        tableView.separatorColor = UIColor.white
         tableView.backgroundColor = UIColor.white
     }
     
@@ -36,110 +33,96 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     //MARK: tableView delegate
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //return 45
         if indexPath.row == 0 {
-            return 50
-        }
-        if self.filter[indexPath.section].rowsVisible {
-            return 45
+            return 68       // header
         } else {
-            return 0
+            return self.filterProfile[indexPath.section].rowsVisible ? 45 : 0
         }
+//        if self.filterProfile[indexPath.section].rowsVisible {
+//            return 45       // editable row
+//        } else {
+//            return 0
+//        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.filter.count
+        return self.filterProfile.count
     }
     
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-//        return self.filter[section].headerTitle
-//    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if self.filter[section].rowsVisible {
-            return self.filter[section].editableRowCount + 1
-//        } else {
-//            return 1
-//        }
+        return self.filterProfile[section].editableRowCount + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if (indexPath.row == 0) {
-            // section header
-            if (filter[indexPath.section].filterType == .NoCharacteristic) {
-                // Major Heading
-                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
-                cell.headerLabelOutlet.text = filter[indexPath.section].headerTitle
-                
-                return cell
-            } else {
-                // section heading
-                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
-                cell.headerLabelOutlet.text = filter[indexPath.section].headerTitle
+            // section heading is first row cell so we can detect hits
+            let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
+            cell.headerLabelOutlet.text = filterProfile[indexPath.section].headerTitle
+            cell.backgroundColor = UIColor.groupTableViewBackground
+            cell.subheadLabelOutlet.text = "none specified"
 
-//                let _cellTitle = filter[indexPath.section].rowTitle(atIndex: indexPath.row+1)
-                
-//                let _title = navigationData[indexPath.row].title
-//                let _subtitle = navigationData[indexPath.row].subtitle
-//                let _image = navigationData[indexPath.row].imageName
-//                cell .configureCell(title: _title, subTitle: _subtitle, imageName: _image)
-                
-                return cell
-            }
+            //let _cellTitle = filterProfile[indexPath.section].rowTitle(atIndex: indexPath.row+1)
+            
+            //let _title = navigationData[indexPath.row].title
+            //let _subtitle = navigationData[indexPath.row].subtitle
+            //let _image = navigationData[indexPath.row].imageName
+            //cell .configureCell(title: _title, subTitle: _subtitle, imageName: _image)
+            
+            return cell
             
         } else {
             // row cell
-            let rowCellType: FilterCharacteristic = self.filter[indexPath.section].filterType
+            let rowCellType: FilterCharacteristic = self.filterProfile[indexPath.section].filterType
             switch rowCellType {
 
             case .Age:
-            // age input
             let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
             cell.headerLabelOutlet.text = "[age data entry]"
+            cell.backgroundColor = UIColor.white
+            cell.subheadLabelOutlet.text = ""
             return cell
 
             case .DevelopmentalAge:
                 let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
                 cell.headerLabelOutlet.text = DevelopmentalAge.titleAtIndex[indexPath.row]
+                cell.backgroundColor = UIColor.white
+                cell.subheadLabelOutlet.text = ""
                 return cell
 
             case .MobilityLimitation:
                 let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
                 cell.headerLabelOutlet.text = MobilityLimitation.titleAtIndex[indexPath.row]
+                cell.backgroundColor = UIColor.white
+                cell.subheadLabelOutlet.text = ""
                 return cell
 
             case .Proximity:
                 let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
-                cell.headerLabelOutlet.text = "[proximity data entry]"
+                cell.headerLabelOutlet.text = ProximityToService.titleAtIndex[indexPath.row]
+                cell.backgroundColor = UIColor.white
+                cell.subheadLabelOutlet.text = ""
                 return cell
 
             case .PrimaryDiagnosis, .SecondaryDiagnosis:
                 let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
                 cell.headerLabelOutlet.text = Diagnosis.titleAtIndex[indexPath.row]
+                cell.backgroundColor = UIColor.white
+                cell.subheadLabelOutlet.text = ""
                 return cell
 
-            default:
-                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
-                return cell
             }
         }
     }
     
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 4
-//    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView .deselectRow(at: indexPath as IndexPath, animated: true)
         
-//        if indexPath.row == 0 {
-            self.filter[indexPath.section].rowsVisible = !self.filter[indexPath.section].rowsVisible
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-//        }
+        self.filterProfile[indexPath.section].rowsVisible = !self.filterProfile[indexPath.section].rowsVisible
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
     }
-    
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return false
     }
@@ -151,18 +134,18 @@ deinit {
     }
 }
 
-
-// MARK:- Filter - generic classes
+// ------------------------------------------------------------------------------
+// MARK:- Filter configuration
 
 enum FilterCharacteristic : Int {
-    case NoCharacteristic, Age, Proximity, DevelopmentalAge, MobilityLimitation, PrimaryDiagnosis, SecondaryDiagnosis
+    case /*NoCharacteristic,*/ Age, Proximity, DevelopmentalAge, MobilityLimitation, PrimaryDiagnosis, SecondaryDiagnosis
 }
 
-class FilterSectionDescriptor: NSObject {
+class FilterCharacteristicDescriptor: NSObject {
     var headerTitle: String = ""
     var editableRowCount = 0
     var rowsVisible: Bool = false
-    var filterType: FilterCharacteristic = .NoCharacteristic
+    var filterType: FilterCharacteristic! = nil
     
     var isSelected: Bool = false
     var valueText: String = ""
@@ -173,16 +156,15 @@ class FilterSectionDescriptor: NSObject {
 }
 
 class FilterProfile: NSObject {
-//struct FilterProfile {
 
-    private var sectionList:[FilterSectionDescriptor] = []
+    private var sectionList:[FilterCharacteristicDescriptor] = []
     var count: Int {
         return sectionList.count
     }
-    subscript(pos: Int) -> FilterSectionDescriptor {
+    subscript(pos: Int) -> FilterCharacteristicDescriptor {
         return sectionList[pos]
     }
-    func addSection(filter: FilterSectionDescriptor) {
+    func addSection(filter: FilterCharacteristicDescriptor) {
         sectionList.append(filter)
     }
 }
@@ -190,26 +172,26 @@ class FilterProfile: NSObject {
 
 // MARK:- Filter - specific
 
-class HeaderFilterSection: FilterSectionDescriptor {
-    
-    init (headerTitle: String) {
-        super.init()
-        self.headerTitle = headerTitle
-    }
-}
+//class HeaderFilterSection: FilterCharacteristicDescriptor {
+//
+//    init (headerTitle: String) {
+//        super.init()
+//        self.headerTitle = headerTitle
+//    }
+//}
 
-class ProximityFilterSection: FilterSectionDescriptor {
+class ProximityFilterSection: FilterCharacteristicDescriptor {
     
     override init () {
         super.init()
         self.headerTitle = "Proximity"
-        self.editableRowCount = 1
+        self.editableRowCount = ProximityToService.caseCount - 1
         self.rowsVisible = false
         self.filterType = .Proximity
     }
 }
 
-class AgeFilterSection: FilterSectionDescriptor {
+class AgeFilterSection: FilterCharacteristicDescriptor {
     
     override init () {
         super.init()
@@ -224,7 +206,7 @@ class AgeFilterSection: FilterSectionDescriptor {
     }
 }
 
-class DevelopmentalAgeFilterSection: FilterSectionDescriptor {
+class DevelopmentalAgeFilterSection: FilterCharacteristicDescriptor {
     
     override init () {
         super.init()
@@ -239,11 +221,11 @@ class DevelopmentalAgeFilterSection: FilterSectionDescriptor {
     }
 }
 
-class MobilityFilterSection: FilterSectionDescriptor {
+class MobilityFilterSection: FilterCharacteristicDescriptor {
     
     override init () {
         super.init()
-        self.headerTitle = "Mobility Limitation"
+        self.headerTitle = "Mobility"
         self.editableRowCount = MobilityLimitation.caseCount - 1
         self.rowsVisible = false
         self.filterType = .MobilityLimitation
@@ -254,7 +236,7 @@ class MobilityFilterSection: FilterSectionDescriptor {
     }
 }
 
-class PrimaryDiagnosisFilterSection: FilterSectionDescriptor {
+class PrimaryDiagnosisFilterSection: FilterCharacteristicDescriptor {
     
     override init () {
         super.init()
@@ -269,7 +251,7 @@ class PrimaryDiagnosisFilterSection: FilterSectionDescriptor {
     }
 }
 
-class SecondaryDiagnosisFilterSection: FilterSectionDescriptor {
+class SecondaryDiagnosisFilterSection: FilterCharacteristicDescriptor {
     
     override init () {
         super.init()

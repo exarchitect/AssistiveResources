@@ -11,6 +11,7 @@ import UIKit
 class FilterTableViewCellHeader: UITableViewCell {
 
     @IBOutlet weak var headerLabelOutlet: UILabel!
+    @IBOutlet weak var subheadLabelOutlet: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
