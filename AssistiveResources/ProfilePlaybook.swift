@@ -9,47 +9,6 @@
 import Foundation
 
 
-protocol CaseCountable {
-    static var caseCount: Int { get }
-}
-
-extension CaseCountable where Self: RawRepresentable, Self.RawValue == Int {
-    internal static var caseCount: Int {
-        var count = 0
-        while let _ = Self(rawValue: count) {
-            count += 1
-        }
-        return count
-    }
-}
-
-
-// MARK: Profile Characteristics -
-
-enum ProximityToService : Int, CaseCountable {
-    case NoProximitySpecified, TenMiles, TwentyFiveMiles, FiftyMiles, OneHundredMiles, AnyDistance
-    
-    static let titleAtIndex = ["No Distance Specified", "Within 10 Miles", "Within 25 Miles", "Within 50 Miles", "Within 100 Miles", "Any Distance"]
-}
-
-enum MobilityLimitation : Int, CaseCountable {
-    case NoLimitationSpecified, NoLimitation, WalkWithAid, Wheelchair
-
-    static let titleAtIndex = ["No Limitation Specified", "No Limitation", "Walk With Aid", "Wheelchair"]
-}
-
-enum DevelopmentalAge : Int, CaseCountable {
-    case NoDevelopmentalAgeSpecified, InfantDevelopmentalAge, ToddlerDevelopmentalAge, PreschoolDevelopmentalAge, GradeschoolDevelopmentalAge, PreTeenDevelopmentalAge, TeenDevelopmentalAge, AdultDevelopmentalAge
-    // infant 1, toddler 2, preschool 3-5, gradeschool 6-9, pre-teen 10-12, teen 13-19, adult 20+
-
-    static let titleAtIndex = ["No Developmental Age Specified", "Infant", "Toddler", "Preschool", "Gradeschool", "PreTeen", "Teen", "Adult"]
-}
-
-enum Diagnosis : Int, CaseCountable {
-    case NoDiagnosisSpecified, AutismDiagnosis, CPDiagnosis, SpinaBifidaDiagnosis, OtherDiagnosis
-
-    static let titleAtIndex = ["No Diagnosis Specified", "Autism", "CP", "Spina Bifida", "Other Diagnosis"]
-}
 
 enum EntityType : Int {
     case Organization, Chapter, Event, Facility

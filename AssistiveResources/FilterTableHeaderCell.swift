@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FilterTableViewCellHeader: UITableViewCell {
+class FilterTableHeaderCell: UITableViewCell {
 
     @IBOutlet weak var headerLabelOutlet: UILabel!
     @IBOutlet weak var subheadLabelOutlet: UILabel!

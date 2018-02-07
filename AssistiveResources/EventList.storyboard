@@ -368,7 +368,7 @@
                                 <rect key="frame" x="0.0" y="113" width="375" height="483"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterHeaderCellIdentifier" rowHeight="68" id="i5U-xc-KOX" customClass="FilterTableViewCellHeader" customModule="AssistiveResources" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterHeaderCellIdentifier" rowHeight="68" id="i5U-xc-KOX" customClass="FilterTableHeaderCell" customModule="AssistiveResources" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="68"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i5U-xc-KOX" id="q5h-sk-SRt">
@@ -378,7 +378,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mobility" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fD2-E3-4Qa">
                                                     <rect key="frame" x="15" y="10" width="345" height="23"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -394,6 +394,31 @@
                                         <connections>
                                             <outlet property="headerLabelOutlet" destination="fD2-E3-4Qa" id="hKe-9h-vm0"/>
                                             <outlet property="subheadLabelOutlet" destination="utg-rz-OPV" id="ViP-5G-NcR"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterRowCellIdentifier" rowHeight="45" id="GRu-0o-prt" customClass="FilterTableRowCell" customModule="AssistiveResources" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="96" width="375" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GRu-0o-prt" id="Oit-go-dT9">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="checkmark_green_45x41" translatesAutoresizingMaskIntoConstraints="NO" id="ZXk-ev-8gG">
+                                                    <rect key="frame" x="17" y="6" width="36" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9W-G2-SJD">
+                                                    <rect key="frame" x="59" y="12" width="299" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="checkmarkImageOutlet" destination="ZXk-ev-8gG" id="2gd-Mo-oRw"/>
+                                            <outlet property="titleLabelOutlet" destination="L9W-G2-SJD" id="pnn-SV-C0d"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -422,6 +447,7 @@
     <resources>
         <image name="404-200" width="200" height="200"/>
         <image name="back" width="256" height="256"/>
+        <image name="checkmark_green_45x41" width="45" height="41"/>
         <image name="settings" width="256" height="256"/>
         <image name="settings-lineart" width="100" height="100"/>
     </resources>

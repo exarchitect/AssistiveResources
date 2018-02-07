@@ -13,6 +13,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
     var tableView: UITableView!
     private var filterProfile: FilterProfile!
+    private var editableSectionIndex: Int = Constants.noSectionOpen
 
     init(table: UITableView, filterWhat: FilterProfile) {
         super.init()
@@ -57,7 +58,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         
         if (indexPath.row == 0) {
             // section heading is first row cell so we can detect hits
-            let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
+            let cell:FilterTableHeaderCell = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableHeaderCell
             cell.headerLabelOutlet.text = filterProfile[indexPath.section].headerTitle
             cell.backgroundColor = UIColor.groupTableViewBackground
             cell.subheadLabelOutlet.text = "none specified"
@@ -74,41 +75,43 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         } else {
             // row cell
             let rowCellType: FilterCharacteristic = self.filterProfile[indexPath.section].filterType
+            let isSelectedRow:Bool = filterProfile[indexPath.section].selectionIndex == indexPath.row
+            
             switch rowCellType {
 
             case .Age:
-            let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
-            cell.headerLabelOutlet.text = "[age data entry]"
+            let cell:FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
+            cell.titleLabelOutlet.text = "[age data entry]"
+            cell.checkmarkImageOutlet.isHidden = !isSelectedRow
             cell.backgroundColor = UIColor.white
-            cell.subheadLabelOutlet.text = ""
             return cell
 
             case .DevelopmentalAge:
-                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
-                cell.headerLabelOutlet.text = DevelopmentalAge.titleAtIndex[indexPath.row]
+                let cell:FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
+                cell.titleLabelOutlet.text = DevelopmentalAge.titleAtIndex[indexPath.row]
+                cell.checkmarkImageOutlet.isHidden = !isSelectedRow
                 cell.backgroundColor = UIColor.white
-                cell.subheadLabelOutlet.text = ""
                 return cell
 
             case .MobilityLimitation:
-                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
-                cell.headerLabelOutlet.text = MobilityLimitation.titleAtIndex[indexPath.row]
+                let cell:FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
+                cell.titleLabelOutlet.text = MobilityLimitation.titleAtIndex[indexPath.row]
+                cell.checkmarkImageOutlet.isHidden = !isSelectedRow
                 cell.backgroundColor = UIColor.white
-                cell.subheadLabelOutlet.text = ""
                 return cell
 
             case .Proximity:
-                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
-                cell.headerLabelOutlet.text = ProximityToService.titleAtIndex[indexPath.row]
+                let cell:FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
+                cell.titleLabelOutlet.text = ProximityToService.titleAtIndex[indexPath.row]
+                cell.checkmarkImageOutlet.isHidden = !isSelectedRow
                 cell.backgroundColor = UIColor.white
-                cell.subheadLabelOutlet.text = ""
                 return cell
 
             case .PrimaryDiagnosis, .SecondaryDiagnosis:
-                let cell:FilterTableViewCellHeader = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableViewCellHeader
-                cell.headerLabelOutlet.text = Diagnosis.titleAtIndex[indexPath.row]
+                let cell:FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
+                cell.titleLabelOutlet.text = Diagnosis.titleAtIndex[indexPath.row]
+                cell.checkmarkImageOutlet.isHidden = !isSelectedRow
                 cell.backgroundColor = UIColor.white
-                cell.subheadLabelOutlet.text = ""
                 return cell
 
             }
@@ -118,7 +121,42 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView .deselectRow(at: indexPath as IndexPath, animated: true)
         
+        if (self.editableSectionIndex != Constants.noSectionOpen && self.editableSectionIndex != indexPath.section) {
+            self.filterProfile[editableSectionIndex].rowsVisible = false
+        }
+        self.editableSectionIndex = indexPath.section
+        
         self.filterProfile[indexPath.section].rowsVisible = !self.filterProfile[indexPath.section].rowsVisible
+        
+        if indexPath.row>0 {
+            let previousSelectionIndex = filterProfile[indexPath.section].selectionIndex
+
+            let isSelectedRow:Bool = filterProfile[indexPath.section].selectionIndex == indexPath.row
+            let newSelectionState:Bool = !isSelectedRow
+            let newSelectionIndex = newSelectionState ? indexPath.row : Constants.noSelection
+            filterProfile[indexPath.section].selectionIndex = newSelectionIndex
+            let cell:FilterTableRowCell = tableView.cellForRow(at: indexPath) as! FilterTableRowCell
+            cell.checkmarkImageOutlet.isHidden = !newSelectionState
+            
+            // deselect prev checkmark
+            if (previousSelectionIndex != Constants.noSelection && previousSelectionIndex != newSelectionIndex) {
+                let previouslySelectedCellIndex:IndexPath = IndexPath(row: previousSelectionIndex, section: indexPath.section)
+                let previouslySelectedCell:FilterTableRowCell = tableView.cellForRow(at: previouslySelectedCellIndex) as! FilterTableRowCell
+                previouslySelectedCell.checkmarkImageOutlet.isHidden = true
+            }
+            
+            // update header with selection
+            let headerCellIndex:IndexPath = IndexPath(row: 0, section: indexPath.section)
+            let headerCell:FilterTableHeaderCell = tableView.cellForRow(at: headerCellIndex) as! FilterTableHeaderCell
+            if (newSelectionIndex == Constants.noSelection) {
+                headerCell.subheadLabelOutlet.text = "none selected"
+                headerCell.subheadLabelOutlet.textColor = UIColor.darkGray
+            } else {
+                headerCell.subheadLabelOutlet.text = filterProfile[indexPath.section].rowTitle(atIndex: newSelectionIndex)
+                headerCell.subheadLabelOutlet.textColor = UIColor.darkText
+            }
+        }
+
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
     }
@@ -137,6 +175,47 @@ deinit {
 // ------------------------------------------------------------------------------
 // MARK:- Filter configuration
 
+
+protocol CaseCountable {
+    static var caseCount: Int { get }
+}
+
+extension CaseCountable where Self: RawRepresentable, Self.RawValue == Int {
+    internal static var caseCount: Int {
+        var count = 0
+        while let _ = Self(rawValue: count) {
+            count += 1
+        }
+        return count
+    }
+}
+
+
+// MARK: Profile Characteristics -
+
+enum ProximityToService : Int, CaseCountable {
+    case NoProximitySpecified, TenMiles, TwentyFiveMiles, FiftyMiles, OneHundredMiles, AnyDistance
+    
+    static let titleAtIndex = ["No Distance Specified", "Within 10 Miles", "Within 25 Miles", "Within 50 Miles", "Within 100 Miles", "Any Distance"]
+}
+
+enum MobilityLimitation : Int, CaseCountable {
+    case NoLimitationSpecified, NoLimitation, WalkWithAid, Wheelchair
+    
+    static let titleAtIndex = ["No Limitation Specified", "No Limitation", "Walk With Aid", "Wheelchair"]
+}
+
+enum DevelopmentalAge : Int, CaseCountable {
+    case NoDevelopmentalAgeSpecified, InfantDevelopmentalAge, ToddlerDevelopmentalAge, PreschoolDevelopmentalAge, GradeschoolDevelopmentalAge, PreTeenDevelopmentalAge, TeenDevelopmentalAge, AdultDevelopmentalAge
+    
+    static let titleAtIndex = ["No Developmental Age Specified", "Infant(1 year old)", "Toddler (2 year old)", "Preschool (3-5)", "Gradeschool (6-9)", "PreTeen (10-12)", "Teen (13-19)", "Adult (20+)"]
+}
+
+enum Diagnosis : Int, CaseCountable {
+    case NoDiagnosisSpecified, AutismDiagnosis, CPDiagnosis, SpinaBifidaDiagnosis, OtherDiagnosis
+    
+    static let titleAtIndex = ["No Diagnosis Specified", "Autism", "CP", "Spina Bifida", "Other Diagnosis"]
+}
 enum FilterCharacteristic : Int {
     case /*NoCharacteristic,*/ Age, Proximity, DevelopmentalAge, MobilityLimitation, PrimaryDiagnosis, SecondaryDiagnosis
 }
@@ -146,8 +225,7 @@ class FilterCharacteristicDescriptor: NSObject {
     var editableRowCount = 0
     var rowsVisible: Bool = false
     var filterType: FilterCharacteristic! = nil
-    
-    var isSelected: Bool = false
+    var selectionIndex: Int = Constants.noSelection
     var valueText: String = ""
 
     func rowTitle(atIndex: Int) -> String {
@@ -186,8 +264,11 @@ class ProximityFilterSection: FilterCharacteristicDescriptor {
         super.init()
         self.headerTitle = "Proximity"
         self.editableRowCount = ProximityToService.caseCount - 1
-        self.rowsVisible = false
         self.filterType = .Proximity
+    }
+    
+    override func rowTitle(atIndex: Int) -> String {
+        return ProximityToService.titleAtIndex[atIndex]
     }
 }
 
@@ -197,7 +278,6 @@ class AgeFilterSection: FilterCharacteristicDescriptor {
         super.init()
         self.headerTitle = "Age"
         self.editableRowCount = 1
-        self.rowsVisible = false
         self.filterType = .Age
     }
     
@@ -212,7 +292,6 @@ class DevelopmentalAgeFilterSection: FilterCharacteristicDescriptor {
         super.init()
         self.headerTitle = "Developmental Age"
         self.editableRowCount = DevelopmentalAge.caseCount - 1
-        self.rowsVisible = false
         self.filterType = .DevelopmentalAge
     }
     
@@ -227,7 +306,6 @@ class MobilityFilterSection: FilterCharacteristicDescriptor {
         super.init()
         self.headerTitle = "Mobility"
         self.editableRowCount = MobilityLimitation.caseCount - 1
-        self.rowsVisible = false
         self.filterType = .MobilityLimitation
     }
     
@@ -242,7 +320,6 @@ class PrimaryDiagnosisFilterSection: FilterCharacteristicDescriptor {
         super.init()
         self.headerTitle = "Primary Diagnosis"
         self.editableRowCount = Diagnosis.caseCount - 1
-        self.rowsVisible = false
         self.filterType = .PrimaryDiagnosis
     }
     
@@ -257,8 +334,9 @@ class SecondaryDiagnosisFilterSection: FilterCharacteristicDescriptor {
         super.init()
         self.headerTitle = "Secondary Diagnosis"
         self.editableRowCount = Diagnosis.caseCount - 1
-        self.rowsVisible = false
         self.filterType = .SecondaryDiagnosis
+        
+        //self.selectionFlags = Array(repeating: false, count: self.editableRowCount+1)
     }
     
     override func rowTitle(atIndex: Int) -> String {
