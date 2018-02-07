@@ -14,6 +14,8 @@ enum EntityType : Int {
     case Organization, Chapter, Event, Facility
 }
 
+// MARK:- Profile-related
+
 struct IndividualNeedProfile {
     var mobilityLimitation: MobilityLimitation
     var developmentalAge: DevelopmentalAge
@@ -46,7 +48,7 @@ struct ProvidedServicesProfile {
 
 
 
-// MARK: Location-related -
+// MARK:- Location-related
 
 enum ISOCountryCode : String {      // only support USA initially
     case USA = "USA", GBR = "GBR"
