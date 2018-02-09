@@ -32,14 +32,24 @@ class EventFilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let profile = FilterProfile()
-        profile.addSection(filter: ProximityFilterSection())
-        profile.addSection(filter: AgeFilterSection())
-        profile.addSection(filter: DevelopmentalAgeFilterSection())
-        profile.addSection(filter: MobilityFilterSection())
-        profile.addSection(filter: PrimaryDiagnosisFilterSection())
-        profile.addSection(filter: SecondaryDiagnosisFilterSection())
-        self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: profile)
+        // TEST------------------------------------------------
+        let filterProfile = FltrProfile()
+        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.Proximity(mileageBand: .NotSpecified)))
+        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.Age(years: Constants.amountNotSpecified)))
+        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.DevelopmentalAge(stage: .NotSpecified)))
+        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.MobilityLimitation(mobility: .NotSpecified)))
+        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.PrimaryDiagnosis(primaryDx: .NotSpecified)))
+        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.SecondaryDiagnosis(secondaryDx: .NotSpecified)))
+
+        // existing
+//        let profile = FilterProfile()
+//        profile.addSection(filter: ProximityFilterSection())
+//        profile.addSection(filter: AgeFilterSection())
+//        profile.addSection(filter: DevelopmentalAgeFilterSection())
+//        profile.addSection(filter: MobilityFilterSection())
+//        profile.addSection(filter: PrimaryDiagnosisFilterSection())
+//        profile.addSection(filter: SecondaryDiagnosisFilterSection())
+        self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterProfile)
     }
 
     deinit {

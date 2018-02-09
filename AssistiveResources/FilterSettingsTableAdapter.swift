@@ -12,10 +12,10 @@ import UIKit
 class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
 
     var tableView: UITableView!
-    private var filterProfile: FilterProfile!
+    private var filterProfile: FltrProfile!
     private var editableSectionIndex: Int = Constants.noSectionOpen
 
-    init(table: UITableView, filterWhat: FilterProfile) {
+    init(table: UITableView, filterWhat: FltrProfile) {
         super.init()
         
         self.tableView = table
@@ -28,9 +28,15 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.separatorColor = UIColor.white
         tableView.backgroundColor = UIColor.white
+        
     }
     
+    // debug
+    deinit {
+        print("deallocating FilterSettingsTableAdapter")
+    }
     
+
     //MARK: tableView delegate
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -65,7 +71,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             let cell:FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
             cell.checkmarkImageOutlet.isHidden = !isSelectedRow
             cell.backgroundColor = UIColor.white
-            cell.titleLabelOutlet.text = self.filterProfile[indexPath.section].rowTitle(atIndex: indexPath.row)
+            cell.titleLabelOutlet.text = self.filterProfile[indexPath.section].labelForRow(atIndex: indexPath.row)
 
             return cell
         }
@@ -109,19 +115,26 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         self.tableView.endUpdates()
     }
     
-    // debug
-    deinit {
-        print("deallocating FilterSettingsTableAdapter")
-    }
+    // MARK:- utilities
     
     func configHeaderCell (cell:FilterTableHeaderCell, section:Int){
-        cell.headerLabelOutlet.text = self.filterProfile[section].headerTitle
+        cell.headerLabelOutlet.text = self.filterProfile[section].title
+        if (self.filterProfile[section].sectionEnabled) {
+            cell.headerLabelOutlet.textColor = UIColor.darkText
+        } else {
+            cell.headerLabelOutlet.textColor = UIColor.lightGray
+        }
         cell.backgroundColor = UIColor.groupTableViewBackground
         let selectedCellIndex = self.filterProfile[section].selectionIndex
+        
         if (selectedCellIndex == Constants.noSelection) {
-            cell.setCellSubhead()
+            if (self.filterProfile[section].title == "Age") {
+                cell.setCellSubhead(text: "not set")
+            } else {
+                cell.setCellSubhead()
+            }
         } else {
-            cell.setCellSubhead(text: filterProfile[section].rowTitle(atIndex: selectedCellIndex))
+            cell.setCellSubhead(text: filterProfile[section].labelForRow(atIndex: selectedCellIndex))
         }
     }
 }

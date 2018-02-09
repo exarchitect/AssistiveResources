@@ -53,7 +53,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
 
-        self.eventAccessor.requestData(filteredBy: IndividualNeedProfile(age: 1, mobility: .NoLimitation, delay: .NoDevelopmentalAgeSpecified, primarydx: .NoDiagnosisSpecified, secondarydx: .NoDiagnosisSpecified))
+        self.eventAccessor.requestData(filteredBy: IndividualNeedProfile(age: 1, mobility: .NoLimitation, delay: .NotSpecified, primarydx: .NotSpecified, secondarydx: .NotSpecified))
         if (self.eventAccessor.state == .NotLoaded) {
             self.showLoadingIndicator = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
@@ -152,7 +152,13 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
             notificationDelegate?.notifyFilterSelected()
         }
     }
-
+ 
+    @IBAction func filterTextButtonAction(_ sender: Any) {
+        if (!self.showLoadingIndicator) {
+            notificationDelegate?.notifyFilterSelected()
+        }
+    }
+    
 }
 
 

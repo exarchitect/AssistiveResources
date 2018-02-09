@@ -15,6 +15,7 @@ struct Constants {
     static let localStoreVersion = "v1.0.0.0"
     static let noSectionOpen:Int = -1
     static let noSelection:Int = -1
+    static let amountNotSpecified:Int = -1
 }
 
 class RepositoryProfile: Object {
