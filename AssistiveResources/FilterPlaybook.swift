@@ -31,55 +31,88 @@ extension CaseCountable where Self: RawRepresentable, Self.RawValue == Int {
 // MARK: Profile Characteristics -
 
 
-class FltrDescriptor {
+enum FilterType {
+    case Age(years:Int)
+    case Proximity(mileageBand:ProximityToService)
+    case DevelopmentalAge(stage:DevelopmentalAge)
+    case MobilityLimitation(mobility:MobilityLimitation)
+    case PrimaryDiagnosis(primaryDx: Diagnosis)
+    case SecondaryDiagnosis(secondaryDx: Diagnosis)
+}
 
-    enum FltrType {
-        case Age(years:Int)
-        case Proximity(mileageBand:ProximityToService)
-        case DevelopmentalAge(stage:DevelopmentalAge)
-        case MobilityLimitation(mobility:MobilityLimitation)
-        case PrimaryDiagnosis(primaryDx: Diagnosis)
-        case SecondaryDiagnosis(secondaryDx: Diagnosis)
-    }
+class FilterDescriptor {
 
-    var fltrType: FltrType
+    var fltrType: FilterType
     var title: String
     var editableRowCount = 0
     var sectionEnabled: Bool = true
     var rowsVisible: Bool = false
-    var selectionIndex: Int = Constants.noSelection
+    public private(set) var selectionIndex: Int
+    var haveValue: Bool {
+        get {
+            return selectionIndex != Constants.noSelection
+        }
+    }
 
-    init(category: FltrType,selection:Int = -1) {
+    init(category: FilterType) {
         fltrType = category
-        self.selectionIndex = selection
+        //self.selectionIndex = selection
         
         switch category {
-        case .Age:
+        case .Age(years: let yrs):
             self.title = "Age"
             self.editableRowCount = 1
-        case .Proximity:
+            self.selectionIndex = yrs
+        case .Proximity(mileageBand: let mileage):
             self.title = "Proximity"
             self.editableRowCount = ProximityToService.caseCount - 1
-        case .DevelopmentalAge:
+            self.selectionIndex = mileage.rawValue
+       case .DevelopmentalAge(stage: let devStage):
             self.title = "Developmental Age"
             self.editableRowCount = DevelopmentalAge.caseCount - 1
-        case .MobilityLimitation:
+            self.selectionIndex = devStage.rawValue
+        case .MobilityLimitation(mobility: let mobilityLimit):
             self.title = "Mobility"
             self.editableRowCount = MobilityLimitation.caseCount - 1
-        case .PrimaryDiagnosis:
+            self.selectionIndex = mobilityLimit.rawValue
+        case .PrimaryDiagnosis(primaryDx: let dx):
             self.title = "Primary Diagnosis"
             self.editableRowCount = Diagnosis.caseCount - 1
-        case .SecondaryDiagnosis:
+            self.selectionIndex = dx.rawValue
+        case .SecondaryDiagnosis(secondaryDx: let dx):
             self.title = "Secondary Diagnosis"
             self.editableRowCount = Diagnosis.caseCount - 1
+            self.selectionIndex = dx.rawValue
+        }
+    }
+    
+    func setSelection(atIndex: Int) {
+        self.selectionIndex = atIndex
+        switch self.fltrType {
+        case .Age:
+            self.fltrType = .Age(years: atIndex)
+        case .Proximity:
+            self.fltrType = .Proximity(mileageBand: ProximityToService(rawValue: atIndex)!)
+        case .DevelopmentalAge:
+            self.fltrType = .DevelopmentalAge(stage: DevelopmentalAge(rawValue: atIndex)!)
+        case .MobilityLimitation:
+            self.fltrType = .MobilityLimitation(mobility: MobilityLimitation(rawValue: atIndex)!)
+        case .PrimaryDiagnosis:
+            self.fltrType = .PrimaryDiagnosis(primaryDx: Diagnosis(rawValue: atIndex)!)
+        case .SecondaryDiagnosis:
+            self.fltrType = .SecondaryDiagnosis(secondaryDx: Diagnosis(rawValue: atIndex)!)
         }
     }
     
     func labelForRow(atIndex:Int) -> String {
         var returnString:String!
         switch self.fltrType {
-        case .Age:
-            returnString = "???"
+        case .Age(years: let yrs):
+            if (yrs == 0 || yrs == -1) {
+                returnString = "not set"
+            } else {
+                returnString = String(yrs)
+            }
         case .Proximity:
             returnString = ProximityToService.titleAtIndex[atIndex]
         case .DevelopmentalAge:
@@ -96,53 +129,58 @@ class FltrDescriptor {
 
 }
 
-
-class FltrProfile: NSObject {
+class FilterInputTemplate: NSObject {
     
-    private var descriptors:[FltrDescriptor] = []
+    private var descriptors:[FilterDescriptor] = []
     
     var count: Int {
         return descriptors.count
     }
     
-    subscript(pos: Int) -> FltrDescriptor {
+    subscript(pos: Int) -> FilterDescriptor {
         return descriptors[pos]
     }
  
-    func add(filter: FltrDescriptor) {
+    func add(filter: FilterDescriptor) {
         descriptors.append(filter)
     }
+    
+    func createValues() -> FilterValues {
+        let returnData = FilterValues()
+        
+        for descr in descriptors {
+            switch descr.fltrType {
+            case .Age(years: let yrs):
+                returnData.ageValue = yrs
+            case .Proximity(mileageBand: let mileage):
+                returnData.proximityValue = mileage
+            case .DevelopmentalAge(stage: let devStage):
+                returnData.developmentalAgeValue = devStage
+            case .MobilityLimitation(mobility: let mobilityLimit):
+                returnData.mobilityValue = mobilityLimit
+            case .PrimaryDiagnosis(primaryDx: let dx):
+                returnData.primaryDxValue = dx
+            case .SecondaryDiagnosis(secondaryDx: let dx):
+                returnData.secondaryDxValue = dx
+            }
+        }
+        
+        return returnData
+    }
+
 }
 
+class FilterValues: NSObject {
+    
+    var ageValue:Int = Constants.amountNotSpecified
+    var proximityValue:ProximityToService = .NotSpecified
+    var mobilityValue:MobilityLimitation = .NotSpecified
+    var developmentalAgeValue:DevelopmentalAge = .NotSpecified
+    var primaryDxValue:Diagnosis = .NotSpecified
+    var secondaryDxValue:Diagnosis = .NotSpecified
 
-//-------------- existing ----------------
+}
 
-
-//class FilterProfile: NSObject {
-//
-//    private var sectionList:[FilterCharacteristicDescriptor] = []
-//    var count: Int {
-//        return sectionList.count
-//    }
-//    subscript(pos: Int) -> FilterCharacteristicDescriptor {
-//        return sectionList[pos]
-//    }
-//    func addSection(filter: FilterCharacteristicDescriptor) {
-//        sectionList.append(filter)
-//    }
-//}
-//
-//class FilterCharacteristicDescriptor: NSObject {
-//    var headerTitle: String = ""
-//    var editableRowCount = 0
-//    var sectionEnabled: Bool = true
-//    var rowsVisible: Bool = false
-//    var selectionIndex: Int = Constants.noSelection
-//
-//    func rowTitle(atIndex: Int) -> String {
-//        return self.headerTitle
-//    }
-//}
 
 enum ProximityToService : Int, CaseCountable {
     case NotSpecified=0, TenMiles=1, TwentyFiveMiles=2, FiftyMiles=3, OneHundredMiles=4, AnyDistance=5
@@ -164,81 +202,4 @@ enum Diagnosis : Int, CaseCountable {
     case NotSpecified=0, AutismDiagnosis=1, CPDiagnosis=2, SpinaBifidaDiagnosis=3, OtherDiagnosis=4
     static let titleAtIndex = ["No Diagnosis Specified", "Autism", "CP", "Spina Bifida", "Other Diagnosis"]
 }
-
-
-// MARK:- Filter - specific
-
-//class ProximityFilterSection: FilterCharacteristicDescriptor {
-//    
-//    override init () {
-//        super.init()
-//        self.headerTitle = "Proximity"
-//        self.editableRowCount = ProximityToService.caseCount - 1
-//    }
-//    
-//    override func rowTitle(atIndex: Int) -> String {
-//        return ProximityToService.titleAtIndex[atIndex]
-//    }
-//}
-//
-//class AgeFilterSection: FilterCharacteristicDescriptor {
-//    
-//    override init () {
-//        super.init()
-//        self.headerTitle = "Age"
-//        self.editableRowCount = 1
-//    }
-//    
-//    override func rowTitle(atIndex: Int) -> String {
-//        return "???"
-//    }
-//}
-//
-//class DevelopmentalAgeFilterSection: FilterCharacteristicDescriptor {
-//    
-//    override init () {
-//        super.init()
-//        self.headerTitle = "Developmental Age"
-//        self.editableRowCount = DevelopmentalAge.caseCount - 1
-//    }
-//    
-//    override func rowTitle(atIndex: Int) -> String {
-//        return DevelopmentalAge.titleAtIndex[atIndex]
-//    }
-//}
-//
-//class MobilityFilterSection: FilterCharacteristicDescriptor {
-//    
-//    override init () {
-//        super.init()
-//        self.headerTitle = "Mobility"
-//        self.editableRowCount = MobilityLimitation.caseCount - 1
-//    }
-//    
-//    override func rowTitle(atIndex: Int) -> String {
-//        return MobilityLimitation.titleAtIndex[atIndex]
-//    }
-//}
-//
-//class PrimaryDiagnosisFilterSection: FilterCharacteristicDescriptor {
-//    
-//    override init () {
-//        super.init()
-//        self.headerTitle = "Primary Diagnosis"
-//        self.editableRowCount = Diagnosis.caseCount - 1
-//    }
-//    
-//    override func rowTitle(atIndex: Int) -> String {
-//        return Diagnosis.titleAtIndex[atIndex]
-//    }
-//}
-//
-//class SecondaryDiagnosisFilterSection: PrimaryDiagnosisFilterSection {
-//    
-//    override init () {
-//        super.init()
-//        self.headerTitle = "Secondary Diagnosis"
-//        self.sectionEnabled = false
-//    }
-//}
 

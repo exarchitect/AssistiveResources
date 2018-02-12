@@ -12,10 +12,10 @@ import UIKit
 class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
 
     var tableView: UITableView!
-    private var filterProfile: FltrProfile!
+    private var filterProfile: FilterInputTemplate!
     private var editableSectionIndex: Int = Constants.noSectionOpen
 
-    init(table: UITableView, filterWhat: FltrProfile) {
+    init(table: UITableView, filterWhat: FilterInputTemplate) {
         super.init()
         
         self.tableView = table
@@ -94,7 +94,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             let isSelectedRow:Bool = filterProfile[indexPath.section].selectionIndex == indexPath.row
             let newSelectionState:Bool = !isSelectedRow
             let newSelectionIndex = newSelectionState ? indexPath.row : Constants.noSelection
-            filterProfile[indexPath.section].selectionIndex = newSelectionIndex
+            filterProfile[indexPath.section].setSelection(atIndex: newSelectionIndex)
             let cell:FilterTableRowCell = tableView.cellForRow(at: indexPath) as! FilterTableRowCell
             cell.checkmarkImageOutlet.isHidden = !newSelectionState
             

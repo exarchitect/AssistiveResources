@@ -20,7 +20,8 @@ class EventFilterViewController: UIViewController {
     private var tableAdapter: FilterSettingsTableAdapter! = nil
     weak private var selectorDelegate:EventFilterResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
-    
+    let filterProfile = FilterInputTemplate()
+
     @IBOutlet weak var filterTableViewOutlet: UITableView!
     
     func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventFilterResponseProtocol) {
@@ -32,14 +33,20 @@ class EventFilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TEST------------------------------------------------
-        let filterProfile = FltrProfile()
-        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.Proximity(mileageBand: .NotSpecified)))
-        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.Age(years: Constants.amountNotSpecified)))
-        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.DevelopmentalAge(stage: .NotSpecified)))
-        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.MobilityLimitation(mobility: .NotSpecified)))
-        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.PrimaryDiagnosis(primaryDx: .NotSpecified)))
-        filterProfile.add(filter: FltrDescriptor(category: FltrDescriptor.FltrType.SecondaryDiagnosis(secondaryDx: .NotSpecified)))
+        let filterValues = FilterValues()
+        filterValues.developmentalAgeValue = .PreschoolDevelopmentalAge
+        filterValues.proximityValue = .TwentyFiveMiles
+        filterValues.ageValue = 21
+
+//        let filterProfile = FilterInputTemplate()
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.Proximity(mileageBand: filterValues.proximityValue)))
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.Age(years: filterValues.ageValue)))
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.DevelopmentalAge(stage: filterValues.developmentalAgeValue)))
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.MobilityLimitation(mobility: filterValues.mobilityValue)))
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.PrimaryDiagnosis(primaryDx: filterValues.primaryDxValue)))
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.SecondaryDiagnosis(secondaryDx: filterValues.secondaryDxValue)))
+        
+        //filterProfile.
 
         // existing
 //        let profile = FilterProfile()
@@ -62,6 +69,8 @@ class EventFilterViewController: UIViewController {
     }
     
     @IBAction func okButtonAction(_ sender: Any) {
+        let filterResults:FilterValues = filterProfile.createValues()
+        //print(filterResults.filterValues[0])
         self.selectorDelegate.okFilterButtonAction()
     }
 
