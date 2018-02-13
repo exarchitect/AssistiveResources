@@ -70,6 +70,8 @@ class EventFilterViewController: UIViewController {
     
     @IBAction func okButtonAction(_ sender: Any) {
         let filterResults:FilterValues = filterProfile.createValues()
+        let label = filterResults.descriptiveText()
+        print(label)
         //print(filterResults.filterValues[0])
         self.selectorDelegate.okFilterButtonAction()
     }
