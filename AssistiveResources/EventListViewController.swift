@@ -16,17 +16,23 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     
     weak private var resourcesModelController:RegionalResourcesModelController?
     var filterViewController:EventFilterViewController?
+    weak private var containerViewController:EventContainerViewController?
+    var filter: FilterValues = FilterValues()
     
     func configuration(resources: RegionalResourcesModelController) {
         self.resourcesModelController = resources
-    }
+
+        //filter.developmentalAgeValue = .PreschoolDevelopmentalAge
+        filter.proximityValue = .TwentyFiveMiles
+        filter.ageValue = 21
+}
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         precondition(self.resourcesModelController != nil)
         self.headerView.titleLabel.text = "Upcoming Events"
-    }
+}
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -36,11 +42,12 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        weak var containerViewController: EventContainerViewController?
+        //weak var containerViewController: EventContainerViewController?
         
         if segue.identifier == "EventContainerSegueID" {
             containerViewController = segue.destination as? EventContainerViewController
-            containerViewController?.configuration(rsrcModelController: resourcesModelController!, delegate: self)
+            containerViewController?.configuration(rsrcModelController: resourcesModelController!, delegate: self, filter: self.filter)
+            //containerViewController?.setFilterDescription(desrc: filter.naturalLanguageText())
         }
         
     }
@@ -64,7 +71,8 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     func notifyFilterSelected() {
 
         let filterViewController:EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
-        filterViewController?.configuration(resources: self.resourcesModelController!, selectorDelegate: self)
+        
+        filterViewController?.configuration(resources: self.resourcesModelController!, selectorDelegate: self, filter: filter)
 
         if let filterVC = filterViewController {
             present(filterVC, animated: true, completion: nil)
@@ -74,7 +82,11 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     
     //MARK: - EventFilterResponseProtocol delegate
 
-    func okFilterButtonAction() {
+    func okFilterButtonAction(filter:FilterValues) {
+        self.filter = filter
+        if let container = containerViewController {
+            container.setFilter(fltr: self.filter)
+        }
         self.dismiss(animated: true, completion: nil)
         self.filterViewController = nil
     }

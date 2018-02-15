@@ -18,16 +18,19 @@ protocol EventListContainerNotificationProtocol: class {
 class EventContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, RepositoryAccessorProtocol {
 
     @IBOutlet weak var containerTableView: UITableView!
+    @IBOutlet weak var filterValueDescriptionLabelOutlet: UILabel!
     
     weak private var notificationDelegate:EventListContainerNotificationProtocol?
     private var expandedRowIndex = -1
     private var showLoadingIndicator: Bool = false
     private var eventAccessor: EventRepositoryAccessor!
-    
+    private var filter: FilterValues!
 
-    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
+
+    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol, filter: FilterValues) {
     
         self.notificationDelegate = delegate
+        self.filter = filter
       
         self.eventAccessor = rsrcModelController.createEventAccessor(delegate: self)
         guard self.eventAccessor != nil else {
@@ -35,6 +38,15 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
     
+//    func setFilterDescription(desrc:String) {
+//        self.filterValueDescriptionLabelOutlet.text = desrc
+//    }
+    
+    func setFilter(fltr:FilterValues) {
+        self.filter = fltr
+        self.filterValueDescriptionLabelOutlet.text = self.filter.naturalLanguageText()
+    }
+
     //MARK: - overrides
 
     deinit {
@@ -52,6 +64,8 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         containerTableView.backgroundColor = UIColor.white
         
         containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
+        
+        self.filterValueDescriptionLabelOutlet.text = filter.naturalLanguageText()
 
         self.eventAccessor.requestData(filteredBy: IndividualNeedProfile(age: 1, mobility: .NoLimitation, delay: .NotSpecified, primarydx: .NotSpecified, secondarydx: .NotSpecified))
         if (self.eventAccessor.state == .NotLoaded) {

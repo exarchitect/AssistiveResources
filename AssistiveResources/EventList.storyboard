@@ -347,6 +347,7 @@
                     </view>
                     <connections>
                         <outlet property="containerTableView" destination="Q1c-rz-8tG" id="NGy-Bv-GOG"/>
+                        <outlet property="filterValueDescriptionLabelOutlet" destination="m1Z-o6-Nfl" id="PIx-fe-Gm8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nR6-f8-Nfg" userLabel="First Responder" sceneMemberID="firstResponder"/>

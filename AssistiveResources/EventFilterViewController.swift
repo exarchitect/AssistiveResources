@@ -10,8 +10,8 @@ import UIKit
 
 
 protocol EventFilterResponseProtocol: class {
-    func okFilterButtonAction ()
-    func cancelFilterButtonAction ()
+    func okFilterButtonAction(filter:FilterValues)
+    func cancelFilterButtonAction()
 }
 
 
@@ -21,41 +21,31 @@ class EventFilterViewController: UIViewController {
     weak private var selectorDelegate:EventFilterResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
     let filterProfile = FilterInputTemplate()
+    var filterVals:FilterValues! = nil
 
     @IBOutlet weak var filterTableViewOutlet: UITableView!
     
-    func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventFilterResponseProtocol) {
+    func configuration(resources: RegionalResourcesModelController, selectorDelegate: EventFilterResponseProtocol, filter:FilterValues) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
-        
+        self.filterVals = filter
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let filterValues = FilterValues()
-        filterValues.developmentalAgeValue = .PreschoolDevelopmentalAge
-        filterValues.proximityValue = .TwentyFiveMiles
-        filterValues.ageValue = 21
+//        let filterValues = FilterValues()
+//        //filterValues.developmentalAgeValue = .PreschoolDevelopmentalAge
+//        filterValues.proximityValue = .TwentyFiveMiles
+//        //filterValues.ageValue = 21
 
-//        let filterProfile = FilterInputTemplate()
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.Proximity(mileageBand: filterValues.proximityValue)))
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.Age(years: filterValues.ageValue)))
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.DevelopmentalAge(stage: filterValues.developmentalAgeValue)))
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.MobilityLimitation(mobility: filterValues.mobilityValue)))
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.PrimaryDiagnosis(primaryDx: filterValues.primaryDxValue)))
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.SecondaryDiagnosis(secondaryDx: filterValues.secondaryDxValue)))
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.Proximity(mileageBand: self.filterVals.proximityValue)))
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.Age(years: self.filterVals.ageValue)))
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.DevelopmentalAge(stage: self.filterVals.developmentalAgeValue)))
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.MobilityLimitation(mobility: self.filterVals.mobilityValue)))
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.PrimaryDiagnosis(primaryDx: self.filterVals.primaryDxValue)))
+        filterProfile.add(filter: FilterDescriptor(category: FilterType.SecondaryDiagnosis(secondaryDx: self.filterVals.secondaryDxValue)))
         
-        //filterProfile.
-
-        // existing
-//        let profile = FilterProfile()
-//        profile.addSection(filter: ProximityFilterSection())
-//        profile.addSection(filter: AgeFilterSection())
-//        profile.addSection(filter: DevelopmentalAgeFilterSection())
-//        profile.addSection(filter: MobilityFilterSection())
-//        profile.addSection(filter: PrimaryDiagnosisFilterSection())
-//        profile.addSection(filter: SecondaryDiagnosisFilterSection())
         self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterProfile)
     }
 
@@ -70,10 +60,10 @@ class EventFilterViewController: UIViewController {
     
     @IBAction func okButtonAction(_ sender: Any) {
         let filterResults:FilterValues = filterProfile.createValues()
-        let label = filterResults.descriptiveText()
-        print(label)
+        //let label = filterResults.naturalLanguageText()
+        //print(label)
         //print(filterResults.filterValues[0])
-        self.selectorDelegate.okFilterButtonAction()
+        self.selectorDelegate.okFilterButtonAction(filter: filterResults)
     }
 
 }

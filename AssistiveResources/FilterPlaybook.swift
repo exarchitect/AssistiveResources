@@ -146,7 +146,7 @@ class FilterInputTemplate: NSObject {
     }
     
     func createValues() -> FilterValues {
-        let returnData = FilterValues()
+        var returnData = FilterValues()
         
         for descr in descriptors {
             switch descr.fltrType {
@@ -170,7 +170,7 @@ class FilterInputTemplate: NSObject {
 
 }
 
-class FilterValues: NSObject {
+struct FilterValues {
     
     // Events for 21yo, dev. age preteen with autism, within 50 miles
     
@@ -178,8 +178,7 @@ class FilterValues: NSObject {
     // "within" <(mi) miles>
     // "for" <(yr)yo,> <dev. age (preteen)> "someone"
     // "with" <(primarydx)> <and (secondarydx)>
-    // ". "
-    // "Uses" (walker/aid | wheelchair>
+    // "who uses" (walker/aid | wheelchair>
     
     var ageValue:Int = Constants.amountNotSpecified
     var proximityValue:ProximityToService = .NotSpecified
@@ -188,7 +187,7 @@ class FilterValues: NSObject {
     var primaryDxValue:Diagnosis = .NotSpecified
     var secondaryDxValue:Diagnosis = .NotSpecified
 
-    func descriptiveText() -> String {
+    func naturalLanguageText() -> String {
         var accumulateString = "Events "
         
         // proximity
@@ -201,23 +200,27 @@ class FilterValues: NSObject {
         let haveAge = ageValue > -1
         let haveDevAge = developmentalAgeValue != .NotSpecified
         if haveAge || haveDevAge {
-            accumulateString.append("for ")
+            accumulateString.append(" for ")
             if haveAge {
-                accumulateString.append("\(ageValue)yo ")
+                accumulateString.append("\(ageValue)yo")
+                if haveDevAge {
+                    accumulateString.append(" ")
+                }
             }
             if haveDevAge {
                 accumulateString.append("(dev age ")
                 accumulateString.append(DevelopmentalAge.labelAtIndex[developmentalAgeValue.rawValue])
-                accumulateString.append(") ")
+                accumulateString.append(")")
             }
-        } else {
-            accumulateString.append("someone")
         }
         
         // dx
-        let have1dx = primaryDxValue != .NotSpecified && primaryDxValue != .OtherDiagnosis
-        if have1dx {
-            accumulateString.append("with ")
+        let haveAtLeast1dx = primaryDxValue != .NotSpecified && primaryDxValue != .OtherDiagnosis
+        if haveAtLeast1dx {
+            if !(haveAge || haveDevAge) {
+                accumulateString.append("for someone")
+            }
+            accumulateString.append(" with ")
             accumulateString.append(Diagnosis.labelAtIndex[primaryDxValue.rawValue])
         }
         if secondaryDxValue != .NotSpecified && secondaryDxValue != .OtherDiagnosis {
@@ -225,18 +228,18 @@ class FilterValues: NSObject {
             accumulateString.append(Diagnosis.labelAtIndex[secondaryDxValue.rawValue])
         }
         
-        if haveproximity || haveAge || haveDevAge || have1dx {
-            accumulateString.append(".")
-        }
+//        if haveproximity || haveAge || haveDevAge || haveAtLeast1dx {
+//            accumulateString.append(".")
+//        }
         
         // mobility
         let havemobility = mobilityValue != .NotSpecified
         if havemobility {
-            accumulateString.append(" ")
+            accumulateString.append(". ")
             accumulateString.append(MobilityLimitation.labelAtIndex[mobilityValue.rawValue])
         }
         
-        if !(haveproximity || haveAge || haveDevAge || have1dx || havemobility) {
+        if !(haveproximity || haveAge || haveDevAge || haveAtLeast1dx || havemobility) {
             accumulateString = "Upcoming events"
         }
 
@@ -249,7 +252,7 @@ enum ProximityToService : Int, CaseCountable {
     case NotSpecified=0, TenMiles=1, TwentyFiveMiles=2, FiftyMiles=3, OneHundredMiles=4, AnyDistance=5
     static let titleAtIndex = ["No Distance Specified", "Within 10 Miles", "Within 25 Miles", "Within 50 Miles", "Within 100 Miles", "Any Distance"]
     static let distanceAtIndex:[Int] = [-1, 10, 25, 50, 100, 1_000_000]
-    static let labelAtIndex:[String] = ["None", "within 10 mi ", "within 25 mi ", "within 50 mi ", "within 100 mi ", "at any distance "]
+    static let labelAtIndex:[String] = ["None", "within 10 mi", "within 25 mi", "within 50 mi", "within 100 mi", "at any distance"]
 }
 
 enum MobilityLimitation : Int, CaseCountable {
