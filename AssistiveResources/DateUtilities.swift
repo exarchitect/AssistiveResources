@@ -46,76 +46,79 @@ struct EventDescriptor {
         self.dayOfWeek = dayOfWk.uppercased()
         
         self.startTimeDescription = createTimeString(hours: hour, minutes: minute)
+        //self.startTimeDescription = self.startdatetime.timeString(in: .short)
         if (durationMin == 0) {
             self.whenDescription = "Starts at " + self.startTimeDescription
         } else {
             let endTime =  createTimeString(hours: hour, minutes: (minute+durationMin))
+            //let endDateTime = Date(timeInterval: TimeInterval(hour)+TimeInterval(minute), since: self.startdatetime)
+            //let endTime = endDateTime.timeString(in: .short)
             self.whenDescription = self.startTimeDescription + "-" + endTime
         }
     }
 }
 
-struct DateTimeDuration {
-    var year: Int
-    var month: Int
-    var day: Int
-    var hour: Int
-    var minute: Int
-    var duration: Int
-    
-    var startdatetime:Date!
-    
-    var whenDescription:String!        // 1pm-3pm
-    private var startTimeDescription:String!        // 1pm
-    var monthAbbreviation:String!
-    var dayOfWeek:String!
-    
-    init(yr:Int, mo:Int, dy:Int, hr: Int, min: Int, durationMin: Int)
-    {
-        year = yr
-        month = mo
-        day = dy
-        hour = hr
-        minute = min
-        duration = durationMin
-        
-        let startcomponents = DateComponents(calendar: nil,
-                                             timeZone: nil,
-                                             era: nil,
-                                             year: yr,
-                                             month: mo,
-                                             day: dy,
-                                             hour: hr,
-                                             minute: min,
-                                             second: nil,
-                                             nanosecond: nil,
-                                             weekday: nil,
-                                             weekdayOrdinal: nil,
-                                             quarter: nil,
-                                             weekOfMonth: nil,
-                                             weekOfYear: nil,
-                                             yearForWeekOfYear: nil)
-        
-        self.startdatetime = Calendar.current.date(from: startcomponents)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM"
-        let monthAbbr = dateFormatter.string(from: self.startdatetime)
-        self.monthAbbreviation = monthAbbr.uppercased()
-        
-        dateFormatter.dateFormat = "EEE"
-        let dayOfWk = dateFormatter.string(from: self.startdatetime)
-        self.dayOfWeek = dayOfWk.uppercased()
-        
-        self.startTimeDescription = createTimeString(hours: hour, minutes: minute)
-        if (durationMin == 0) {
-            self.whenDescription = "Starts at " + self.startTimeDescription
-        } else {
-            let endTime =  createTimeString(hours: hour, minutes: (minute+durationMin))
-            self.whenDescription = self.startTimeDescription + "-" + endTime
-        }
-    }
-}
+//struct DateTimeDuration {
+//    var year: Int
+//    var month: Int
+//    var day: Int
+//    var hour: Int
+//    var minute: Int
+//    var duration: Int
+//
+//    var startdatetime:Date!
+//
+//    var whenDescription:String!        // 1pm-3pm
+//    private var startTimeDescription:String!        // 1pm
+//    var monthAbbreviation:String!
+//    var dayOfWeek:String!
+//
+//    init(yr:Int, mo:Int, dy:Int, hr: Int, min: Int, durationMin: Int)
+//    {
+//        year = yr
+//        month = mo
+//        day = dy
+//        hour = hr
+//        minute = min
+//        duration = durationMin
+//
+//        let startcomponents = DateComponents(calendar: nil,
+//                                             timeZone: nil,
+//                                             era: nil,
+//                                             year: yr,
+//                                             month: mo,
+//                                             day: dy,
+//                                             hour: hr,
+//                                             minute: min,
+//                                             second: nil,
+//                                             nanosecond: nil,
+//                                             weekday: nil,
+//                                             weekdayOrdinal: nil,
+//                                             quarter: nil,
+//                                             weekOfMonth: nil,
+//                                             weekOfYear: nil,
+//                                             yearForWeekOfYear: nil)
+//
+//        self.startdatetime = Calendar.current.date(from: startcomponents)
+//
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "MMM"
+//        let monthAbbr = dateFormatter.string(from: self.startdatetime)
+//        self.monthAbbreviation = monthAbbr.uppercased()
+//
+//        dateFormatter.dateFormat = "EEE"
+//        let dayOfWk = dateFormatter.string(from: self.startdatetime)
+//        self.dayOfWeek = dayOfWk.uppercased()
+//
+//        self.startTimeDescription = createTimeString(hours: hour, minutes: minute)
+//        if (durationMin == 0) {
+//            self.whenDescription = "Starts at " + self.startTimeDescription
+//        } else {
+//            let endTime =  createTimeString(hours: hour, minutes: (minute+durationMin))
+//            self.whenDescription = self.startTimeDescription + "-" + endTime
+//        }
+//    }
+//}
 
 func createTimeString (hours: Int, minutes: Int) -> String {
     var startTime: String
@@ -152,27 +155,27 @@ func createTimeString (hours: Int, minutes: Int) -> String {
 }
 
 
-extension Date {
-    static func dateFromComponents(yr:Int, mo:Int, dy:Int, hr: Int, min: Int) -> Date? {
-        
-        let startcomponents = DateComponents(calendar: nil,
-                                             timeZone: nil,
-                                             era: nil,
-                                             year: yr,
-                                             month: mo,
-                                             day: dy,
-                                             hour: hr,
-                                             minute: min,
-                                             second: nil,
-                                             nanosecond: nil,
-                                             weekday: nil,
-                                             weekdayOrdinal: nil,
-                                             quarter: nil,
-                                             weekOfMonth: nil,
-                                             weekOfYear: nil,
-                                             yearForWeekOfYear: nil)
-        
-        return Calendar.current.date(from: startcomponents)
-    }
-}
+//extension Date {
+//    static func dateFromComponents(yr:Int, mo:Int, dy:Int, hr: Int, min: Int) -> Date? {
+//
+//        let startcomponents = DateComponents(calendar: nil,
+//                                             timeZone: nil,
+//                                             era: nil,
+//                                             year: yr,
+//                                             month: mo,
+//                                             day: dy,
+//                                             hour: hr,
+//                                             minute: min,
+//                                             second: nil,
+//                                             nanosecond: nil,
+//                                             weekday: nil,
+//                                             weekdayOrdinal: nil,
+//                                             quarter: nil,
+//                                             weekOfMonth: nil,
+//                                             weekOfYear: nil,
+//                                             yearForWeekOfYear: nil)
+//
+//        return Calendar.current.date(from: startcomponents)
+//    }
+//}
 
