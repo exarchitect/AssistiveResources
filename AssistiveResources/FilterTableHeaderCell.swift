@@ -27,10 +27,10 @@ class FilterTableHeaderCell: UITableViewCell {
     func setCellSubhead (text: String = "none selected") {
         self.subheadLabelOutlet.text = text
         if (text == "select one" || text == "none selected" || text == "not set") {
-            self.subheadLabelOutlet.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightThin)
+            self.subheadLabelOutlet.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.thin)
             self.subheadLabelOutlet.textColor = UIColor.lightGray
         } else {
-            self.subheadLabelOutlet.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightRegular)
+            self.subheadLabelOutlet.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
             self.subheadLabelOutlet.textColor = UIColor.darkText
         }
 

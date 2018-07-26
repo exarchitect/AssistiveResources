@@ -80,7 +80,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
 
         switch command.type {
             
-        case .dismissProcessController():
+        case .dismissProcessController:
             let pController: ProcessController? = self.getTopProcessController()
             if let pController = pController {
                 pController.terminate()

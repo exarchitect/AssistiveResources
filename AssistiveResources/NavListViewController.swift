@@ -55,7 +55,7 @@ class NavListViewController: ProcessViewController {
         //freeMemory()
     }
     
-    func refreshContent() {
+    @objc func refreshContent() {
         self.navigationData.updateSubtitles()
         if (self.isCurrentlyVisible) {
             self.navTable.reloadData()

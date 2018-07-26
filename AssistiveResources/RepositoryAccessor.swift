@@ -38,7 +38,7 @@ class RepositoryAccessor: NSObject {
         NotificationCenter.default.removeObserver(self)
     }
 
-    func repositoryUpdateNotification() {
+    @objc func repositoryUpdateNotification() {
         fatalError("override \(#function)")
     }
 

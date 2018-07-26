@@ -22,19 +22,19 @@ struct EntityFilter {
 
 
 class StoredEvent: Object {
-    dynamic var objectId: String?
-    dynamic var created: Date?
-    dynamic var updated: Date?
+    @objc dynamic var objectId: String?
+    @objc dynamic var created: Date?
+    @objc dynamic var updated: Date?
 
-    dynamic var eventTitle: String = ""
-    dynamic var eventID: Int = 0
-    dynamic var organizationTitle: String = ""
-    dynamic var organizationID: Int = 0
-    dynamic var facilityTitle: String!
-    dynamic var facilityID: Int = 0
-    dynamic var eventDate: Date!
-    dynamic var durationMinutes: Int = 0
-    dynamic var eventDescriptionBrief: String = ""
+    @objc dynamic var eventTitle: String = ""
+    @objc dynamic var eventID: Int = 0
+    @objc dynamic var organizationTitle: String = ""
+    @objc dynamic var organizationID: Int = 0
+    @objc dynamic var facilityTitle: String!
+    @objc dynamic var facilityID: Int = 0
+    @objc dynamic var eventDate: Date!
+    @objc dynamic var durationMinutes: Int = 0
+    @objc dynamic var eventDescriptionBrief: String = ""
 
     var eventDescriptor: EventDescriptor?
 

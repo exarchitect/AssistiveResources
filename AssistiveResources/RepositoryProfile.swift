@@ -20,10 +20,10 @@ struct Constants {
 
 class RepositoryProfile: Object {
     
-    dynamic var lastUpdated: Date = Date()
-    dynamic var location: String = "00000"
-    dynamic var dbVersion: String = Constants.localStoreVersion
-    dynamic var haveRecords: Bool = false
+    @objc dynamic var lastUpdated: Date = Date()
+    @objc dynamic var location: String = "00000"
+    @objc dynamic var dbVersion: String = Constants.localStoreVersion
+    @objc dynamic var haveRecords: Bool = false
     
     required init() {
         super.init()

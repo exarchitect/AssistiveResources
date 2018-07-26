@@ -106,7 +106,7 @@ final class UserModelController: ModelController {
     
     func logout() {
         let backend = Backendless.sharedInstance()
-        backend?.userService.logout({ (user: Any?) in
+        backend?.userService.logout({ () in
             print ("logged out")
         }, error: { (fault: Fault?) in
             print (fault ?? "failed logoff")

@@ -74,24 +74,24 @@ class Service {
 class Organization: Object {
     
     // for backendless
-    dynamic var objectId: String?
-    dynamic var created: NSDate?
-    dynamic var updated: NSDate?
+    @objc dynamic var objectId: String?
+    @objc dynamic var created: NSDate?
+    @objc dynamic var updated: NSDate?
     
-    dynamic var organizationTitle: String = ""
-    dynamic var organizationID: Int = 0
-    dynamic var hqLongitude: Double = 0.0
-    dynamic var hqLatitude: Double = 0.0
-    dynamic var hqZip: String = ""
+    @objc dynamic var organizationTitle: String = ""
+    @objc dynamic var organizationID: Int = 0
+    @objc dynamic var hqLongitude: Double = 0.0
+    @objc dynamic var hqLatitude: Double = 0.0
+    @objc dynamic var hqZip: String = ""
     
-    dynamic var tagline: String = ""
-    dynamic var mission: String = ""
-    dynamic var geographicScope: String = ""
-    dynamic var website: String = ""
+    @objc dynamic var tagline: String = ""
+    @objc dynamic var mission: String = ""
+    @objc dynamic var geographicScope: String = ""
+    @objc dynamic var website: String = ""
     
-    dynamic var countryCodeISO: String = "USA"     // default
+    @objc dynamic var countryCodeISO: String = "USA"     // default
 
-    dynamic var proximityInMiles: Double = 0.0
+    @objc dynamic var proximityInMiles: Double = 0.0
     
     //var dummy: Double = 0.0
     
