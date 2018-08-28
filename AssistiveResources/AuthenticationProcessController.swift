@@ -44,9 +44,9 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
 //                fallthrough
 
             case .Authenticated:
-                print("authenticated")
+                //print("authenticated")
                 self.invokeAction(command: AssistiveCommand(type: .userIdentified))
-                self.invokeAction(command: AssistiveCommand(type: .dismissProcessController))
+                self.invokeAction(command: AssistiveCommand(type: .dismissTopProcessController))
 
             case .Uninitialized:
                 // TODO - get credentials
@@ -68,7 +68,8 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     //MARK:- debug
     
     deinit {
-        print("deallocating AuthenticationProcessController")
+        let _ = 0
+        //print("deallocating AuthenticationProcessController")
     }
     
 }

@@ -30,11 +30,12 @@ class EventDetailViewController: ProcessViewController {
     }
     
     deinit {
-        print("deallocating eventdetailVC")
+        let _ = 0
+        //print("deallocating eventdetailVC")
     }
     
     @IBAction func evntDetailBackButtonAction(_ sender: Any) {
-        self.requestAction(command: AssistiveCommand(type: .dismissProcessController))
+        self.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
     }
 
     @IBAction func orgSelectedButtonAction(_ sender: Any) {

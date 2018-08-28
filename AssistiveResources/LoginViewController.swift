@@ -43,10 +43,15 @@ class LoginViewController: ProcessViewController {
         //freeMemory()
     }
     
+    deinit {
+        let _ = 0
+        //print("deallocating LoginViewController")
+    }
+    
     //MARK:-  IBActions
     
     @IBAction func loginButtonAction(_ sender: Any) {
-        // TODO
+        // TODO:
         self.completionProtocol?.loginAction(username: "exarchitect@gmail.com", password: "alongishpassword")
     }
 

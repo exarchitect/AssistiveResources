@@ -40,6 +40,9 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
         //freeMemory()
     }
     
+    deinit {
+        let _ = 0
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         //weak var containerViewController: EventContainerViewController?
@@ -55,7 +58,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     //MARK:- @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
-        self.requestAction(command: AssistiveCommand(type: .dismissProcessController))
+        self.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {
@@ -94,12 +97,6 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     func cancelFilterButtonAction() {
         self.dismiss(animated: true, completion: nil)
         self.filterViewController = nil
-    }
-    
-    //MARK: - debug
-    
-    deinit {
-        print("deallocating EventListVC")
     }
     
 }

@@ -20,7 +20,8 @@ class EventListProcessController: ProcessController {
 
     //MARK: - debug
     deinit {
-        print("deallocating EventListPC")
+        let _ = 0
+        //print("deallocating EventListPC")
     }
     
 }

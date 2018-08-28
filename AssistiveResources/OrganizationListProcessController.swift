@@ -19,7 +19,8 @@ class OrganizationListProcessController: ProcessController {
 
     //MARK: - debug
     deinit {
-        print("deallocating OrganizationListPC")
+        let _ = 0
+        //print("deallocating OrganizationListPC")
     }
     
 

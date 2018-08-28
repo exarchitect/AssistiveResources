@@ -50,7 +50,8 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     //MARK: - overrides
 
     deinit {
-        print("deallocating EventContainerVC")
+        let _ = 0
+        //print("deallocating EventContainerVC")
     }
     
     override func viewDidLoad() {

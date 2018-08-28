@@ -50,7 +50,8 @@ class EventFilterViewController: UIViewController {
     }
 
     deinit {
-        print("deallocating EventFilterVC")
+        let _ = 0
+        //print("deallocating EventFilterVC")
     }
     
     override func didReceiveMemoryWarning() {

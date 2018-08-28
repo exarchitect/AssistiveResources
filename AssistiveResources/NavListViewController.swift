@@ -55,6 +55,11 @@ class NavListViewController: ProcessViewController {
         //freeMemory()
     }
     
+    deinit {
+        //print("deallocating NavListViewController")
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @objc func refreshContent() {
         self.navigationData.updateSubtitles()
         if (self.isCurrentlyVisible) {
@@ -63,12 +68,6 @@ class NavListViewController: ProcessViewController {
         } else {
             self.needContentRefresh = true
         }
-    }
-    
-    //MARK: - debug
-    deinit {
-        print("deallocating NavListViewController")
-        NotificationCenter.default.removeObserver(self)
     }
     
 }

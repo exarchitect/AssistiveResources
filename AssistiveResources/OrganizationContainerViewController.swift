@@ -38,7 +38,8 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     }
     
     deinit {
-        print("deallocating OrganizationContainerVC")
+        let _ = 0
+        //print("deallocating OrganizationContainerVC")
     }
     
     override func viewDidLoad() {

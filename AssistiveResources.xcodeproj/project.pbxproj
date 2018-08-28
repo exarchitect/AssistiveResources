@@ -32,6 +32,7 @@
 		D24E4DCF1DED173F008A11FB /* NavListProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DCE1DED173F008A11FB /* NavListProcessController.swift */; };
 		D24E4DD11DED26DF008A11FB /* NavList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D24E4DD01DED26DF008A11FB /* NavList.storyboard */; };
 		D24E4DD31DED2703008A11FB /* NavListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DD21DED2703008A11FB /* NavListViewController.swift */; };
+		D250DFE62135E65700E8FFE4 /* AssistivePlaybook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D250DFE52135E65700E8FFE4 /* AssistivePlaybook.swift */; };
 		D255504A1E234626004FE72B /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550491E234626004FE72B /* Repository.swift */; };
 		D255504D1E2491AA004FE72B /* RegionalResourcesModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D255504C1E2491AA004FE72B /* RegionalResourcesModelController.swift */; };
 		D255504F1E24934F004FE72B /* RegionalResourcesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */; };
@@ -118,6 +119,7 @@
 		D24E4DCE1DED173F008A11FB /* NavListProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavListProcessController.swift; sourceTree = "<group>"; };
 		D24E4DD01DED26DF008A11FB /* NavList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NavList.storyboard; sourceTree = "<group>"; };
 		D24E4DD21DED2703008A11FB /* NavListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavListViewController.swift; sourceTree = "<group>"; };
+		D250DFE52135E65700E8FFE4 /* AssistivePlaybook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistivePlaybook.swift; sourceTree = "<group>"; };
 		D25550491E234626004FE72B /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		D255504C1E2491AA004FE72B /* RegionalResourcesModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionalResourcesModelController.swift; sourceTree = "<group>"; };
 		D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionalResourcesRepository.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 			children = (
 				D276B5291EABAEF600182357 /* AssistiveResources.entitlements */,
 				D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */,
+				D250DFE52135E65700E8FFE4 /* AssistivePlaybook.swift */,
 				D2F91E9B1DDFE5D20084F00E /* Info.plist */,
 				D2B028521E2C71770064B3D2 /* Common */,
 				D2C9AD6C1DDFF3800028341D /* AppController */,
@@ -694,6 +697,7 @@
 				D24E4DCC1DE74750008A11FB /* ProcessController.swift in Sources */,
 				D2B7D1471E46A4E000E69D1E /* OrganizationListViewController.swift in Sources */,
 				D2C445B820154ADB0065099A /* ProcessViewController.swift in Sources */,
+				D250DFE62135E65700E8FFE4 /* AssistivePlaybook.swift in Sources */,
 				D28C80D81DF0E8DE002D3940 /* EventListTableViewCell.swift in Sources */,
 				D28C80DC1DF12B76002D3940 /* EventContainerViewController.swift in Sources */,
 				D2E868342019AC0400C68F66 /* ConnectivityService.swift in Sources */,

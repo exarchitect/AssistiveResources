@@ -58,6 +58,7 @@ final class UserModelController: ModelController {
     func authorizeUser (completion: @escaping AsyncCompletionHandlerType) {
         completionClosure = completion
 
+        
         //DispatchQueue.main.async { [unowned self] in
         DispatchQueue.main.async {
             startActivityIndicator(title: nil, message: "authenticating...")

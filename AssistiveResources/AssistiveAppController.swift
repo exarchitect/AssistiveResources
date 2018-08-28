@@ -46,7 +46,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         self.pushProcessController(type: NavListProcessController.self)
 
         // temp override to fail login for testing
-        self.shared.userModelController.storeUserCredentials(username: "", password: "")
+        //self.shared.userModelController.storeUserCredentials(username: "", password: "")
         //self.shared.userModelController.storeUserCredentials(username: "exarchitect@gmail.com", password: "alongishpassword")
         
         self.shared.userModelController.authorizeUser(completion: { (loginResult) in
@@ -75,12 +75,10 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
     // MARK: - CommandResponseProtocol
     
     func invokeAction(command: AssistiveCommand) {
-        
-        print("-- invokeAction: \(command.type)")
 
         switch command.type {
             
-        case .dismissProcessController:
+        case .dismissTopProcessController:
             let pController: ProcessController? = self.getTopProcessController()
             if let pController = pController {
                 pController.terminate()
@@ -95,7 +93,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
             requestMainNavigationRefresh()
 
         case .navigateTo(let destination):
-            print(" -- navigate to: \(destination.rawValue)")
+            //print(" -- navigate to: \(destination.rawValue)")
             switch destination {
             case .Organizations:
                 self.pushProcessController(type: OrganizationListProcessController.self)

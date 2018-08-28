@@ -21,7 +21,8 @@ class EventDetailProcessController: ProcessController {
     }
     
     deinit {
-        print("deallocating eventdetailPC")
+        let _ = 0
+        //print("deallocating eventdetailPC")
     }
     
 }

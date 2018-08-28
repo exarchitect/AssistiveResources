@@ -33,7 +33,8 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     
     // debug
     deinit {
-        print("deallocating FilterSettingsTableAdapter")
+        let _ = 0
+        //print("deallocating FilterSettingsTableAdapter")
     }
     
 
