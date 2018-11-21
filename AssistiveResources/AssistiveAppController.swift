@@ -46,7 +46,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         self.pushProcessController(type: NavListProcessController.self)
 
         // temp override to fail login for testing
-        //self.shared.userModelController.storeUserCredentials(username: "", password: "")
+        self.shared.userModelController.storeUserCredentials(username: "", password: "")
         //self.shared.userModelController.storeUserCredentials(username: "exarchitect@gmail.com", password: "alongishpassword")
         
         self.shared.userModelController.authorizeUser(completion: { (loginResult) in
@@ -79,11 +79,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         switch command.type {
             
         case .dismissTopProcessController:
-            let pController: ProcessController? = self.getTopProcessController()
-            if let pController = pController {
-                pController.terminate()
-                self.freeTopProcessController()
-            }
+            self.popTopProcessController()
             
         case .identifyUser:
             self.pushProcessController(type: AuthenticationProcessController.self)

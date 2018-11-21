@@ -28,8 +28,8 @@ final class PropertySettings: NSObject {
     static let sharedInstance = PropertySettings()     // singleton
     
     private override init() {
-        username = ""
-        password = ""
+//        username = ""
+//        password = ""
         rememberMe = true
         zipcode = "00000"
         

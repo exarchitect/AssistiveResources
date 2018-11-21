@@ -56,12 +56,20 @@ class AppController: NSObject {
         }
     }
     
-    func freeTopProcessController () {
-        if (self.processControllerStack.last != nil){
-            if (self.processControllerStack.last!.inUse == false) {
-                let _ = self.processControllerStack.popLast()
-            }
-        }
+//    func freeTopProcessController () {
+//        if (self.processControllerStack.last != nil){
+//            if (self.processControllerStack.last!.inUse == false) {
+//                let _ = self.processControllerStack.popLast()
+//            }
+//        }
+//    }
+    
+    func popTopProcessController () {
+        let pController = self.processControllerStack.last
+        //if (self.processControllerStack.last != nil){
+        pController?.terminate()
+        let _ = self.processControllerStack.popLast()
+        //}
     }
     
 }

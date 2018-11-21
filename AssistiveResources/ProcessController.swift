@@ -21,11 +21,11 @@ class ProcessController: NSObject, Navigable, CommandResponseProtocol {
     private var primaryProcessViewController: ProcessViewController? = nil
     private weak var navigationController: UINavigationController!
 
-    var inUse: Bool {
-        get {
-            return primaryProcessViewController != nil
-        }
-    }
+//    var inUse: Bool {
+//        get {
+//            return primaryProcessViewController != nil
+//        }
+//    }
 
     required override init(){
         super.init()

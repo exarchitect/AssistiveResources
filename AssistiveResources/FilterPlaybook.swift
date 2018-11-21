@@ -172,14 +172,6 @@ class FilterInputTemplate: NSObject {
 
 struct FilterValues {
     
-    // Events for 21yo, dev. age preteen with autism, within 50 miles
-    
-    // "Events"
-    // "within" <(mi) miles>
-    // "for" <(yr)yo,> <dev. age (preteen)> "someone"
-    // "with" <(primarydx)> <and (secondarydx)>
-    // "who uses" (walker/aid | wheelchair>
-    
     var ageValue:Int = Constants.amountNotSpecified
     var proximityValue:ProximityToService = .NotSpecified
     var mobilityValue:MobilityLimitation = .NotSpecified
@@ -187,6 +179,13 @@ struct FilterValues {
     var primaryDxValue:Diagnosis = .NotSpecified
     var secondaryDxValue:Diagnosis = .NotSpecified
 
+    // Events for 21yo, dev. age preteen with autism, within 50 miles
+    // "Events"
+    // "within" <(mi) miles>
+    // "for" <(yr)yo,> <dev. age (preteen)> "someone"
+    // "with" <(primarydx)> <and (secondarydx)>
+    // "who uses" (walker/aid | wheelchair>
+    
     func naturalLanguageText() -> String {
         var accumulateString = "Events "
         
