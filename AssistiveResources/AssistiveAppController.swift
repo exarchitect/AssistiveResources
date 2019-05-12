@@ -57,7 +57,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
                 fallthrough
 
             case .Authenticated:
-                self.invokeAction(command: AssistiveCommand(type: .userIdentified))
+                self.invokeAction(command: AssistiveCommand(type: .proceedWithStartup))
 
             case .Uninitialized:
                 fallthrough
@@ -66,7 +66,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
                 fallthrough
                 
             case .NoCredentials:
-                self.invokeAction(command: AssistiveCommand(type: .identifyUser))
+                self.invokeAction(command: AssistiveCommand(type: .requestUserIdentity))
             }
         })
     }
@@ -81,10 +81,10 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         case .dismissTopProcessController:
             self.popTopProcessController()
             
-        case .identifyUser:
+        case .requestUserIdentity:
             self.pushProcessController(type: AuthenticationProcessController.self)
 
-        case .userIdentified:
+        case .proceedWithStartup:
             self.loadRegionalResourceModelController(online: true)
             requestMainNavigationRefresh()
 
@@ -143,7 +143,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
     private func loadRegionalResourceModelController (online: Bool) {
         if (self.shared.regionalResourcesModelController == nil) {
             self.shared.regionalResourcesModelController = RegionalResourcesModelController(atLocation: self.shared.userModelController.locationProfile, isOnline: online)
-            self.shared.regionalResourcesModelController?.initiateLoading()
+            self.shared.regionalResourcesModelController?.initiateLoading()     // TODO: get rid of this
         }
         precondition(self.shared.regionalResourcesModelController != nil)
     }

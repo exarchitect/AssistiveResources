@@ -12,8 +12,8 @@ import Foundation
 struct AssistiveCommand {
     enum CommandType {
         case dismissTopProcessController
-        case userIdentified
-        case identifyUser
+        case proceedWithStartup
+        case requestUserIdentity
         case navigateTo(destination:NavigationCategory)
         case eventSelected(event: EntityDescriptor)
         case organizationSelected(organization: EntityDescriptor)

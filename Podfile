@@ -6,7 +6,7 @@ target 'AssistiveResources' do
 pod 'Backendless'
 pod 'RealmSwift'
 pod 'ReachabilitySwift', '~> 3'
-pod 'Timepiece'
+pod 'SwiftDate'
 
 end
 

@@ -45,7 +45,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
 
             case .Authenticated:
                 //print("authenticated")
-                self.invokeAction(command: AssistiveCommand(type: .userIdentified))
+                self.invokeAction(command: AssistiveCommand(type: .proceedWithStartup))
                 self.invokeAction(command: AssistiveCommand(type: .dismissTopProcessController))
 
             case .Uninitialized:

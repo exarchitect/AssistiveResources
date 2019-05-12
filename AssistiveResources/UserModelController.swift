@@ -41,8 +41,8 @@ final class UserModelController: ModelController {
     override init() {
         let props = PropertySettings.sharedInstance
         props.read()
-        self.username = props.username
-        self.password = props.password
+        self.username = props.username ?? ""
+        self.password = props.password ?? ""
         self.rememberMe = props.rememberMe
         
         self.locationZip = props.zipcode
