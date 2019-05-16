@@ -36,7 +36,7 @@ class StoredEvent: Object {
     @objc dynamic var durationMinutes: Int = 0
     @objc dynamic var eventDescriptionBrief: String = ""
 
-    var eventDescriptor: EventDescriptor?
+    var timeBlockDescriptor: TimeBlockDescriptor?
 
     convenience required init(event:EntityDescriptor, organization:EntityDescriptor, facility:EntityDescriptor, eventStart:Date, durationInMinutes:Int, eventDetail:String)
     {
@@ -50,16 +50,14 @@ class StoredEvent: Object {
 
         self.eventDescriptionBrief = eventDetail
 
-        self.eventDescriptor = EventDescriptor(date: eventDate, durationMin: durationInMinutes)
+        self.timeBlockDescriptor = TimeBlockDescriptor(date: eventDate, durationMin: durationInMinutes)
 
         //address = ""
         //directions = ""
-        
         //eventDescriptionVerbose = eventDetail
         //eventDescriptionBrief = ""
     }
-    
-    
+
     //Specify properties to ignore (Realm won't persist)
     
     override static func ignoredProperties() -> [String] {
