@@ -34,24 +34,18 @@ class EventFilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let filterValues = FilterValues()
-//        //filterValues.developmentalAgeValue = .PreschoolDevelopmentalAge
-//        filterValues.proximityValue = .TwentyFiveMiles
-//        //filterValues.ageValue = 21
-
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.Proximity(mileageBand: self.filterVals.proximityValue)))
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.Age(years: self.filterVals.ageValue)))
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.DevelopmentalAge(stage: self.filterVals.developmentalAgeValue)))
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.MobilityLimitation(mobility: self.filterVals.mobilityValue)))
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.PrimaryDiagnosis(primaryDx: self.filterVals.primaryDxValue)))
-        filterProfile.add(filter: FilterDescriptor(category: FilterType.SecondaryDiagnosis(secondaryDx: self.filterVals.secondaryDxValue)))
+        filterProfile.add(filter: ElementInteractor(using: .proximity(mileageBand: self.filterVals.proximityValue)))
+        filterProfile.add(filter: ElementInteractor(using: .age(years: self.filterVals.ageValue)))
+        filterProfile.add(filter: ElementInteractor(using: .developmentalAge(stage: self.filterVals.developmentalAgeValue)))
+        filterProfile.add(filter: ElementInteractor(using: .mobilityLimitation(mobility: self.filterVals.mobilityValue)))
+        filterProfile.add(filter: ElementInteractor(using: .primaryDiagnosis(primaryDx: self.filterVals.primaryDxValue)))
+        filterProfile.add(filter: ElementInteractor(using: .secondaryDiagnosis(secondaryDx: self.filterVals.secondaryDxValue)))
         
         self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterProfile)
     }
 
     deinit {
-        let _ = 0
-        //print("deallocating EventFilterVC")
+        print("deallocating EventFilterVC")
     }
     
     override func didReceiveMemoryWarning() {

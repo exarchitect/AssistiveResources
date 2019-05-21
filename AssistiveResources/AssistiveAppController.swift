@@ -46,7 +46,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         self.pushProcessController(type: NavListProcessController.self)
 
         // temp override to fail login for testing
-        self.shared.userModelController.storeUserCredentials(username: "", password: "")
+        //self.shared.userModelController.storeUserCredentials(username: "", password: "")
         //self.shared.userModelController.storeUserCredentials(username: "exarchitect@gmail.com", password: "alongishpassword")
         
         self.shared.userModelController.authorizeUser(completion: { (loginResult) in

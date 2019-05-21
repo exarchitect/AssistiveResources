@@ -30,20 +30,68 @@ extension CaseCountable where Self: RawRepresentable, Self.RawValue == Int {
 
 // MARK: Profile Characteristics -
 
-
-enum FilterType {
-    case Age(years:Int)
-    case Proximity(mileageBand:ProximityToService)
-    case DevelopmentalAge(stage:DevelopmentalAge)
-    case MobilityLimitation(mobility:MobilityLimitation)
-    case PrimaryDiagnosis(primaryDx: Diagnosis)
-    case SecondaryDiagnosis(secondaryDx: Diagnosis)
+enum RenderType {
+    case titleOnly, valueOnly, abbreviatedPhrase, fullPhrase, nilValue
+}
+protocol Nameable {
+    func render (_ renderType: RenderType) -> String
 }
 
-class FilterDescriptor {
+enum FilteringElement: Nameable {
+    case age(years:Int)
+    case proximity(mileageBand:ProximityTo)
+    case developmentalAge(stage:DevelopmentalAge)
+    case mobilityLimitation(mobility:MobilityLimitation)
+    case primaryDiagnosis(primaryDx: Diagnosis)
+    case secondaryDiagnosis(secondaryDx: Diagnosis)
 
-    var fltrType: FilterType
-    var title: String
+    func render(_ renderType: RenderType) -> String {
+        switch self {
+        case .age(let yrs):
+            if renderType == .titleOnly { return "Age" }
+            if renderType == .nilValue { return "not set" }
+            if (yrs == 0 || yrs == -1) { return "not set" }
+            if renderType == .valueOnly { return String(yrs) }
+            if renderType == .abbreviatedPhrase { return "\(yrs)yo" }
+            if renderType == .fullPhrase { return "\(yrs) year old" }
+
+        case .proximity(let mileageBand):
+            if renderType == .titleOnly { return "Proximity" }
+            if renderType == .nilValue { return "none selected" }
+            if renderType == .abbreviatedPhrase { return ProximityTo.conciseLabel[mileageBand.rawValue] }
+            if renderType == .fullPhrase { return ProximityTo.verboseLabel[mileageBand.rawValue] }
+
+        case .developmentalAge(let stage):
+            if renderType == .titleOnly { return "Developmental Age" }
+            if renderType == .nilValue { return "none selected" }
+            if renderType == .abbreviatedPhrase { return DevelopmentalAge.conciseLabel[stage.rawValue] }
+            if renderType == .fullPhrase { return DevelopmentalAge.verboseLabel[stage.rawValue] }
+
+        case .mobilityLimitation(let mobility):
+            if renderType == .titleOnly { return "Mobility" }
+            if renderType == .nilValue { return "none selected" }
+            if renderType == .abbreviatedPhrase { return MobilityLimitation.conciseLabel[mobility.rawValue] }
+            if renderType == .fullPhrase { return MobilityLimitation.verboseLabel[mobility.rawValue] }
+
+        case .primaryDiagnosis(let primaryDx):
+            if renderType == .titleOnly { return "Primary Diagnosis" }
+            if renderType == .nilValue { return "none selected" }
+            if renderType == .abbreviatedPhrase { return Diagnosis.conciseLabel[primaryDx.rawValue] }
+            if renderType == .fullPhrase { return Diagnosis.verboseLabel[primaryDx.rawValue] }
+
+        case .secondaryDiagnosis(let secondaryDx):
+            if renderType == .titleOnly { return "Secondary Diagnosis" }
+            if renderType == .nilValue { return "none selected" }
+            if renderType == .abbreviatedPhrase { return Diagnosis.conciseLabel[secondaryDx.rawValue] }
+            if renderType == .fullPhrase { return Diagnosis.verboseLabel[secondaryDx.rawValue] }
+        }
+        return ""
+    }
+}
+
+class ElementInteractor {
+
+    var element: FilteringElement
     var editableRowCount = 0
     var sectionEnabled: Bool = true
     var rowsVisible: Bool = false
@@ -54,75 +102,68 @@ class FilterDescriptor {
         }
     }
 
-    init(category: FilterType) {
-        fltrType = category
-        //self.selectionIndex = selection
+    init(using filterElement: FilteringElement) {
+        element = filterElement
         
-        switch category {
-        case .Age(years: let yrs):
-            self.title = "Age"
+        switch filterElement {
+        case .age(years: let yrs):
             self.editableRowCount = 1
             self.selectionIndex = yrs
-        case .Proximity(mileageBand: let mileage):
-            self.title = "Proximity"
-            self.editableRowCount = ProximityToService.caseCount - 1
+        case .proximity(mileageBand: let mileage):
+            self.editableRowCount = ProximityTo.caseCount - 1
             self.selectionIndex = mileage.rawValue
-       case .DevelopmentalAge(stage: let devStage):
-            self.title = "Developmental Age"
+        case .developmentalAge(stage: let devStage):
             self.editableRowCount = DevelopmentalAge.caseCount - 1
             self.selectionIndex = devStage.rawValue
-        case .MobilityLimitation(mobility: let mobilityLimit):
-            self.title = "Mobility"
+        case .mobilityLimitation(mobility: let mobilityLimit):
             self.editableRowCount = MobilityLimitation.caseCount - 1
             self.selectionIndex = mobilityLimit.rawValue
-        case .PrimaryDiagnosis(primaryDx: let dx):
-            self.title = "Primary Diagnosis"
+        case .primaryDiagnosis(primaryDx: let dx):
             self.editableRowCount = Diagnosis.caseCount - 1
             self.selectionIndex = dx.rawValue
-        case .SecondaryDiagnosis(secondaryDx: let dx):
-            self.title = "Secondary Diagnosis"
+        case .secondaryDiagnosis(secondaryDx: let dx):
             self.editableRowCount = Diagnosis.caseCount - 1
             self.selectionIndex = dx.rawValue
         }
     }
-    
-    func setSelection(atIndex: Int) {
-        self.selectionIndex = atIndex
-        switch self.fltrType {
-        case .Age:
-            self.fltrType = .Age(years: atIndex)
-        case .Proximity:
-            self.fltrType = .Proximity(mileageBand: ProximityToService(rawValue: atIndex)!)
-        case .DevelopmentalAge:
-            self.fltrType = .DevelopmentalAge(stage: DevelopmentalAge(rawValue: atIndex)!)
-        case .MobilityLimitation:
-            self.fltrType = .MobilityLimitation(mobility: MobilityLimitation(rawValue: atIndex)!)
-        case .PrimaryDiagnosis:
-            self.fltrType = .PrimaryDiagnosis(primaryDx: Diagnosis(rawValue: atIndex)!)
-        case .SecondaryDiagnosis:
-            self.fltrType = .SecondaryDiagnosis(secondaryDx: Diagnosis(rawValue: atIndex)!)
+
+    func render(_ renderType: RenderType) -> String {
+        return element.render(renderType)
+    }
+
+    func select(at index: Int) {
+        self.selectionIndex = index
+        switch self.element {
+        case .age:
+            self.element = .age(years: index)
+        case .proximity:
+            self.element = .proximity(mileageBand: ProximityTo(rawValue: index)!)
+        case .developmentalAge:
+            self.element = .developmentalAge(stage: DevelopmentalAge(rawValue: index)!)
+        case .mobilityLimitation:
+            self.element = .mobilityLimitation(mobility: MobilityLimitation(rawValue: index)!)
+        case .primaryDiagnosis:
+            self.element = .primaryDiagnosis(primaryDx: Diagnosis(rawValue: index)!)
+        case .secondaryDiagnosis:
+            self.element = .secondaryDiagnosis(secondaryDx: Diagnosis(rawValue: index)!)
         }
     }
     
-    func labelForRow(atIndex:Int) -> String {
+    func label(atIndex:Int) -> String {
         var returnString:String!
-        switch self.fltrType {
-        case .Age(years: let yrs):
-            if (yrs == 0 || yrs == -1) {
-                returnString = "not set"
-            } else {
-                returnString = String(yrs)
-            }
-        case .Proximity:
-            returnString = ProximityToService.titleAtIndex[atIndex]
-        case .DevelopmentalAge:
-            returnString = DevelopmentalAge.titleAtIndex[atIndex]
-        case .MobilityLimitation:
-            returnString = MobilityLimitation.titleAtIndex[atIndex]
-        case .PrimaryDiagnosis:
-            returnString = Diagnosis.titleAtIndex[atIndex]
-        case .SecondaryDiagnosis:
-            returnString = Diagnosis.titleAtIndex[atIndex]
+        switch self.element {
+        case .age(years: let yrs):
+            returnString = FilteringElement.age(years: yrs).render(.abbreviatedPhrase)
+        case .proximity:
+            returnString = ProximityTo.verboseLabel[atIndex]
+        case .developmentalAge:
+            returnString = DevelopmentalAge.verboseLabel[atIndex]
+        case .mobilityLimitation:
+            returnString = MobilityLimitation.verboseLabel[atIndex]
+        case .primaryDiagnosis:
+            returnString = Diagnosis.verboseLabel[atIndex]
+        case .secondaryDiagnosis:
+            returnString = Diagnosis.verboseLabel[atIndex]
         }
         return returnString
     }
@@ -131,49 +172,47 @@ class FilterDescriptor {
 
 class FilterInputTemplate: NSObject {
     
-    private var descriptors:[FilterDescriptor] = []
+    private var elements:[ElementInteractor] = []
     
     var count: Int {
-        return descriptors.count
+        return elements.count
     }
     
-    subscript(pos: Int) -> FilterDescriptor {
-        return descriptors[pos]
+    subscript(pos: Int) -> ElementInteractor {
+        return elements[pos]
     }
  
-    func add(filter: FilterDescriptor) {
-        descriptors.append(filter)
+    func add(filter: ElementInteractor) {
+        elements.append(filter)
     }
     
     func createValues() -> FilterValues {
         var returnData = FilterValues()
         
-        for descr in descriptors {
-            switch descr.fltrType {
-            case .Age(years: let yrs):
+        for element in elements {
+            switch element.element {
+            case .age(years: let yrs):
                 returnData.ageValue = yrs
-            case .Proximity(mileageBand: let mileage):
+            case .proximity(mileageBand: let mileage):
                 returnData.proximityValue = mileage
-            case .DevelopmentalAge(stage: let devStage):
+            case .developmentalAge(stage: let devStage):
                 returnData.developmentalAgeValue = devStage
-            case .MobilityLimitation(mobility: let mobilityLimit):
+            case .mobilityLimitation(mobility: let mobilityLimit):
                 returnData.mobilityValue = mobilityLimit
-            case .PrimaryDiagnosis(primaryDx: let dx):
+            case .primaryDiagnosis(primaryDx: let dx):
                 returnData.primaryDxValue = dx
-            case .SecondaryDiagnosis(secondaryDx: let dx):
+            case .secondaryDiagnosis(secondaryDx: let dx):
                 returnData.secondaryDxValue = dx
             }
         }
-        
         return returnData
     }
-
 }
 
 struct FilterValues {
     
     var ageValue:Int = Constants.amountNotSpecified
-    var proximityValue:ProximityToService = .NotSpecified
+    var proximityValue:ProximityTo = .NotSpecified
     var mobilityValue:MobilityLimitation = .NotSpecified
     var developmentalAgeValue:DevelopmentalAge = .NotSpecified
     var primaryDxValue:Diagnosis = .NotSpecified
@@ -182,93 +221,83 @@ struct FilterValues {
     // Events for 21yo, dev. age preteen with autism, within 50 miles
     // "Events"
     // "within" <(mi) miles>
-    // "for" <(yr)yo,> <dev. age (preteen)> "someone"
+    // "for" <(yr)yo> "someone"
     // "with" <(primarydx)> <and (secondarydx)>
     // "who uses" (walker/aid | wheelchair>
+    // TODO developmental age
     
     func naturalLanguageText() -> String {
         var accumulateString = "Events "
         
-        // proximity
         let haveproximity = proximityValue != .NotSpecified
+        let haveAge = ageValue > -1
+        let haveDevAge = developmentalAgeValue != .NotSpecified
+        let haveAtLeast1dx = primaryDxValue != .NotSpecified && primaryDxValue != .OtherDiagnosis
+        let havemobility = mobilityValue != .NotSpecified
+
+        guard haveproximity || haveAge || haveDevAge || haveAtLeast1dx || havemobility else {
+            return "Upcoming events"
+        }
+
+        // proximity
         if haveproximity {
-            accumulateString.append(ProximityToService.labelAtIndex[proximityValue.rawValue])
+            accumulateString.append(ProximityTo.conciseLabel[proximityValue.rawValue])
         }
 
         // age
-        let haveAge = ageValue > -1
-        let haveDevAge = developmentalAgeValue != .NotSpecified
-        if haveAge || haveDevAge {
+        if haveAge {
             accumulateString.append(" for ")
             if haveAge {
                 accumulateString.append("\(ageValue)yo")
-                if haveDevAge {
-                    accumulateString.append(" ")
-                }
-            }
-            if haveDevAge {
-                accumulateString.append("(dev age ")
-                accumulateString.append(DevelopmentalAge.labelAtIndex[developmentalAgeValue.rawValue])
-                accumulateString.append(")")
+                //if haveDevAge { accumulateString.append(" ") }
             }
         }
         
         // dx
-        let haveAtLeast1dx = primaryDxValue != .NotSpecified && primaryDxValue != .OtherDiagnosis
         if haveAtLeast1dx {
-            if !(haveAge || haveDevAge) {
-                accumulateString.append("for someone")
-            }
+            if !haveAge { accumulateString.append("for someone") }
             accumulateString.append(" with ")
-            accumulateString.append(Diagnosis.labelAtIndex[primaryDxValue.rawValue])
+            accumulateString.append(Diagnosis.conciseLabel[primaryDxValue.rawValue])
         }
         if secondaryDxValue != .NotSpecified && secondaryDxValue != .OtherDiagnosis {
-            accumulateString.append(" and ")
-            accumulateString.append(Diagnosis.labelAtIndex[secondaryDxValue.rawValue])
-        }
-        
-//        if haveproximity || haveAge || haveDevAge || haveAtLeast1dx {
-//            accumulateString.append(".")
-//        }
-        
-        // mobility
-        let havemobility = mobilityValue != .NotSpecified
-        if havemobility {
-            accumulateString.append(". ")
-            accumulateString.append(MobilityLimitation.labelAtIndex[mobilityValue.rawValue])
-        }
-        
-        if !(haveproximity || haveAge || haveDevAge || haveAtLeast1dx || havemobility) {
-            accumulateString = "Upcoming events"
+            accumulateString.append(" & ")
+            accumulateString.append(Diagnosis.conciseLabel[secondaryDxValue.rawValue])
         }
 
+        // mobility
+        if havemobility {
+            accumulateString.append(". ")
+            accumulateString.append(MobilityLimitation.conciseLabel[mobilityValue.rawValue])
+            accumulateString.append(".")
+        }
+        
         return accumulateString
     }
 }
 
 
-enum ProximityToService : Int, CaseCountable {
+enum ProximityTo : Int, CaseCountable {
     case NotSpecified=0, TenMiles=1, TwentyFiveMiles=2, FiftyMiles=3, OneHundredMiles=4, AnyDistance=5
-    static let titleAtIndex = ["No Distance Specified", "Within 10 Miles", "Within 25 Miles", "Within 50 Miles", "Within 100 Miles", "Any Distance"]
-    static let distanceAtIndex:[Int] = [-1, 10, 25, 50, 100, 1_000_000]
-    static let labelAtIndex:[String] = ["None", "within 10 mi", "within 25 mi", "within 50 mi", "within 100 mi", "at any distance"]
+    static let distanceValue:[Int] = [-1, 10, 25, 50, 100, 1_000_000]
+    static let verboseLabel = ["No Distance Specified", "Within 10 Miles", "Within 25 Miles", "Within 50 Miles", "Within 100 Miles", "Any Distance"]
+    static let conciseLabel:[String] = ["None", "within 10 mi", "within 25 mi", "within 50 mi", "within 100 mi", "at any distance"]
 }
 
 enum MobilityLimitation : Int, CaseCountable {
     case NotSpecified=0, NoLimitation=1, WalkWithAid=2, Wheelchair=3
-    static let titleAtIndex = ["No Limitation Specified", "No Limitation", "Walk With Aid", "Wheelchair"]
-    static let labelAtIndex:[String] = ["None", "No mobility limits", "Uses a walker/aid", "Uses a wheelchair"]
+    static let verboseLabel = ["No Limitation Specified", "No Limitation", "Walks With Aid", "Uses A Wheelchair"]
+    static let conciseLabel:[String] = ["None", "No mobility limits", "Walks with aid", "Uses a wheelchair"]
 }
 
 enum DevelopmentalAge : Int, CaseCountable {
     case NotSpecified=0, InfantDevelopmentalAge=1, ToddlerDevelopmentalAge=2, PreschoolDevelopmentalAge=3, GradeschoolDevelopmentalAge=4, PreTeenDevelopmentalAge=5, TeenDevelopmentalAge=6, AdultDevelopmentalAge=7
-    static let titleAtIndex = ["No Developmental Age Specified", "Infant(1 year old)", "Toddler (2 year old)", "Preschool (3-5)", "Gradeschool (6-9)", "PreTeen (10-12)", "Teen (13-19)", "Adult (20+)"]
-    static let labelAtIndex = ["None", "infant", "toddler", "preschool", "gradeschool", "preteen", "teen", "adult"]
+    static let verboseLabel = ["No Developmental Age Specified", "Infant(1 year old)", "Toddler (2 year old)", "Preschool (3-5)", "Gradeschool (6-9)", "PreTeen (10-12)", "Teen (13-19)", "Adult (20+)"]
+    static let conciseLabel = ["None", "infant", "toddler", "preschool", "gradeschool", "preteen", "teen", "adult"]
 }
 
 enum Diagnosis : Int, CaseCountable {
     case NotSpecified=0, AutismDiagnosis=1, CPDiagnosis=2, SpinaBifidaDiagnosis=3, OtherDiagnosis=4
-    static let titleAtIndex = ["No Diagnosis Specified", "Autism", "CP", "Spina Bifida", "Other Diagnosis"]
-    static let labelAtIndex = ["None", "Autism", "CP", "Spina Bifida", "Other Diagnosis"]
+    static let verboseLabel = ["No Diagnosis Specified", "Autism", "CP", "Spina Bifida", "Other Diagnosis"]
+    static let conciseLabel = ["None", "Autism", "CP", "Spina Bifida", "Other Diagnosis"]
 }
 
