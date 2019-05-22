@@ -11,14 +11,14 @@ import UIKit
 class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
 
     var tableView: UITableView!
-    private var filterProfile: FilterInputTemplate!
+    private var filterTemplate: FilterInputTemplate!
     private var editableSectionIndex: Int = Constants.noSectionOpen
 
     init(table: UITableView, filterWhat: FilterInputTemplate) {
         super.init()
         
         self.tableView = table
-        self.filterProfile = filterWhat
+        self.filterTemplate = filterWhat
         
         // attach table
         tableView.delegate = self
@@ -40,16 +40,16 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         if indexPath.row == 0 {
             return 68       // header
         } else {
-            return self.filterProfile[indexPath.section].rowsVisible ? 45 : 0
+            return self.filterTemplate[indexPath.section].rowsVisible ? 45 : 0
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.filterProfile.count
+        return self.filterTemplate.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.filterProfile[section].editableRowCount + 1
+        return self.filterTemplate[section].editableRowCount + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,13 +62,13 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             return cell
             
         } else {
-            // row cell
-            let isSelectedRow:Bool = filterProfile[indexPath.section].selectionIndex == indexPath.row
+            // row for selecting an enumerated type (except for age)
+            let isSelectedRow:Bool = filterTemplate[indexPath.section].selectionIndex == indexPath.row
             
             let cell:FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
             cell.checkmarkImageOutlet.isHidden = !isSelectedRow
             cell.backgroundColor = UIColor.white
-            cell.titleLabelOutlet.text = self.filterProfile[indexPath.section].label(atIndex: indexPath.row)
+            cell.titleLabelOutlet.text = self.filterTemplate[indexPath.section].label(at: indexPath.row)
 
             return cell
         }
@@ -78,20 +78,20 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         tableView .deselectRow(at: indexPath as IndexPath, animated: true)
         
         if (self.editableSectionIndex != Constants.noSectionOpen && self.editableSectionIndex != indexPath.section) {
-            self.filterProfile[editableSectionIndex].rowsVisible = false
+            self.filterTemplate[editableSectionIndex].rowsVisible = false
         }
         self.editableSectionIndex = indexPath.section
         
-        self.filterProfile[indexPath.section].rowsVisible = !self.filterProfile[indexPath.section].rowsVisible
+        self.filterTemplate[indexPath.section].rowsVisible = !self.filterTemplate[indexPath.section].rowsVisible
         
         if indexPath.row>0 {
-            let previousSelectionIndex = filterProfile[indexPath.section].selectionIndex
+            let previousSelectionIndex = filterTemplate[indexPath.section].selectionIndex
 
             // select row
-            let isSelectedRow:Bool = filterProfile[indexPath.section].selectionIndex == indexPath.row
+            let isSelectedRow:Bool = filterTemplate[indexPath.section].selectionIndex == indexPath.row
             let newSelectionState:Bool = !isSelectedRow
             let newSelectionIndex = newSelectionState ? indexPath.row : Constants.noSelection
-            filterProfile[indexPath.section].select(at: newSelectionIndex)
+            filterTemplate[indexPath.section].select(at: newSelectionIndex)
             let cell:FilterTableRowCell = tableView.cellForRow(at: indexPath) as! FilterTableRowCell
             cell.checkmarkImageOutlet.isHidden = !newSelectionState
             
@@ -117,19 +117,15 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     // MARK:- utilities
     
     func configHeaderCell (cell:FilterTableHeaderCell, section:Int){
-        cell.headerLabelOutlet.text = self.filterProfile[section].render(.titleOnly)
-        if (self.filterProfile[section].sectionEnabled) {
+        cell.headerLabelOutlet.text = self.filterTemplate[section].element.title
+        if (self.filterTemplate[section].sectionEnabled) {
             cell.headerLabelOutlet.textColor = UIColor.darkText
         } else {
             cell.headerLabelOutlet.textColor = UIColor.lightGray
         }
         cell.backgroundColor = UIColor.groupTableViewBackground
-        let selectedCellIndex = self.filterProfile[section].selectionIndex
+        let selectedCellIndex = self.filterTemplate[section].selectionIndex
         
-        if (selectedCellIndex == Constants.noSelection) {
-            cell.setCellSubhead(text: filterProfile[section].render(.nilValue))
-        } else {
-            cell.setCellSubhead(text: filterProfile[section].label(atIndex: selectedCellIndex))
-        }
+        cell.setCellSubhead(text: filterTemplate[section].label(at: selectedCellIndex), disabled: !filterTemplate[section].element.hasValue)
     }
 }

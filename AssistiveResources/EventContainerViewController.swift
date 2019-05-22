@@ -24,10 +24,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     private var expandedRowIndex = -1
     private var showLoadingIndicator: Bool = false
     private var eventAccessor: EventRepositoryAccessor!
-    private var filter: FilterValues!
+    private var filter: FilterProfile!
 
 
-    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol, filter: FilterValues) {
+    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol, filter: FilterProfile) {
     
         self.notificationDelegate = delegate
         self.filter = filter
@@ -42,7 +42,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 //        self.filterValueDescriptionLabelOutlet.text = desrc
 //    }
     
-    func setFilter(fltr:FilterValues) {
+    func setFilter(fltr:FilterProfile) {
         self.filter = fltr
         self.filterValueDescriptionLabelOutlet.text = self.filter.naturalLanguageText()
     }

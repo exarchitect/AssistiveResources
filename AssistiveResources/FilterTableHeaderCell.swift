@@ -24,9 +24,9 @@ class FilterTableHeaderCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setCellSubhead (text: String = "none selected") {
+    func setCellSubhead (text: String = "none selected", disabled: Bool) {
         self.subheadLabelOutlet.text = text
-        if (text == "select one" || text == "none selected" || text == "not set") {
+        if disabled {
             self.subheadLabelOutlet.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.thin)
             self.subheadLabelOutlet.textColor = UIColor.lightGray
         } else {

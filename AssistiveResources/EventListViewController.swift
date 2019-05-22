@@ -17,14 +17,14 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     weak private var resourcesModelController:RegionalResourcesModelController?
     var filterViewController:EventFilterViewController?
     weak private var containerViewController:EventContainerViewController?
-    var filter: FilterValues = FilterValues()
+    var filter: FilterProfile = FilterProfile()
     
     func configuration(resources: RegionalResourcesModelController) {
         self.resourcesModelController = resources
 
         //filter.developmentalAgeValue = .PreschoolDevelopmentalAge
-        filter.proximityValue = .TwentyFiveMiles
-        filter.ageValue = 21
+        filter.proximityValue = .twentyFiveMiles
+        filter.ageValue = Age(years: 21)
 }
 
     override func viewDidLoad() {
@@ -85,7 +85,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     
     //MARK: - EventFilterResponseProtocol delegate
 
-    func okFilterButtonAction(filter:FilterValues) {
+    func okFilterButtonAction(filter:FilterProfile) {
         self.filter = filter
         if let container = containerViewController {
             container.setFilter(fltr: self.filter)
