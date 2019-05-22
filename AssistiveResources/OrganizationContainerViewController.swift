@@ -61,7 +61,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
         self.containerTableView.rowHeight = UITableViewAutomaticDimension
         self.containerTableView.estimatedRowHeight = 140
 
-        self.organizationAccessor.requestData(filteredBy: IndividualNeedProfile(age: 1, mobility: .NoLimitation, delay: .NotSpecified, primarydx: .NotSpecified, secondarydx: .NotSpecified))
+        self.organizationAccessor.requestData(filteredBy: IndividualNeedProfile(age: 1, mobility: .noLimitation, delay: .notSpecified, primarydx: .notSpecified, secondarydx: .notSpecified))
         if (self.organizationAccessor.state == .NotLoaded) {
             self.showLoadingIndicator = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {

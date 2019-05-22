@@ -31,15 +31,19 @@ extension CaseCountable where Self: RawRepresentable, Self.RawValue == Int {
 // MARK: Profile Characteristics -
 
 enum RenderType {
-    case titleOnly, valueOnly, abbreviatedPhrase, fullPhrase, nilValue
+    case titleOnly, nilValue
 }
 protocol Nameable {
     func render (_ renderType: RenderType) -> String
 }
+protocol Labelable {
+    var verboseLabel: String { get }
+    var conciseLabel: String { get }
+}
 
 enum FilteringElement: Nameable {
     case age(years:Int)
-    case proximity(mileageBand:ProximityTo)
+    case proximity(mileageBand:Proximity)
     case developmentalAge(stage:DevelopmentalAge)
     case mobilityLimitation(mobility:MobilityLimitation)
     case primaryDiagnosis(primaryDx: Diagnosis)
@@ -51,39 +55,39 @@ enum FilteringElement: Nameable {
             if renderType == .titleOnly { return "Age" }
             if renderType == .nilValue { return "not set" }
             if (yrs == 0 || yrs == -1) { return "not set" }
-            if renderType == .valueOnly { return String(yrs) }
-            if renderType == .abbreviatedPhrase { return "\(yrs)yo" }
-            if renderType == .fullPhrase { return "\(yrs) year old" }
+//            if renderType == .valueOnly { return String(yrs) }
+//            if renderType == .abbreviatedPhrase { return "\(yrs)yo" }
+//            if renderType == .fullPhrase { return "\(yrs) year old" }
 
         case .proximity(let mileageBand):
             if renderType == .titleOnly { return "Proximity" }
             if renderType == .nilValue { return "none selected" }
-            if renderType == .abbreviatedPhrase { return ProximityTo.conciseLabel[mileageBand.rawValue] }
-            if renderType == .fullPhrase { return ProximityTo.verboseLabel[mileageBand.rawValue] }
+//            if renderType == .abbreviatedPhrase { return mileageBand.conciseLabel }
+//            if renderType == .fullPhrase { return mileageBand.verboseLabel }
 
         case .developmentalAge(let stage):
             if renderType == .titleOnly { return "Developmental Age" }
             if renderType == .nilValue { return "none selected" }
-            if renderType == .abbreviatedPhrase { return DevelopmentalAge.conciseLabel[stage.rawValue] }
-            if renderType == .fullPhrase { return DevelopmentalAge.verboseLabel[stage.rawValue] }
+//            if renderType == .abbreviatedPhrase { return stage.conciseLabel }
+//            if renderType == .fullPhrase { return stage.verboseLabel }
 
         case .mobilityLimitation(let mobility):
             if renderType == .titleOnly { return "Mobility" }
             if renderType == .nilValue { return "none selected" }
-            if renderType == .abbreviatedPhrase { return MobilityLimitation.conciseLabel[mobility.rawValue] }
-            if renderType == .fullPhrase { return MobilityLimitation.verboseLabel[mobility.rawValue] }
+//            if renderType == .abbreviatedPhrase { return mobility.conciseLabel }
+//            if renderType == .fullPhrase { return mobility.verboseLabel }
 
         case .primaryDiagnosis(let primaryDx):
             if renderType == .titleOnly { return "Primary Diagnosis" }
             if renderType == .nilValue { return "none selected" }
-            if renderType == .abbreviatedPhrase { return Diagnosis.conciseLabel[primaryDx.rawValue] }
-            if renderType == .fullPhrase { return Diagnosis.verboseLabel[primaryDx.rawValue] }
+//            if renderType == .abbreviatedPhrase { return primaryDx.conciseLabel }
+//            if renderType == .fullPhrase { return primaryDx.verboseLabel }
 
         case .secondaryDiagnosis(let secondaryDx):
             if renderType == .titleOnly { return "Secondary Diagnosis" }
             if renderType == .nilValue { return "none selected" }
-            if renderType == .abbreviatedPhrase { return Diagnosis.conciseLabel[secondaryDx.rawValue] }
-            if renderType == .fullPhrase { return Diagnosis.verboseLabel[secondaryDx.rawValue] }
+//            if renderType == .abbreviatedPhrase { return secondaryDx.conciseLabel }
+//            if renderType == .fullPhrase { return secondaryDx.verboseLabel }
         }
         return ""
     }
@@ -110,19 +114,19 @@ class ElementInteractor {
             self.editableRowCount = 1
             self.selectionIndex = yrs
         case .proximity(mileageBand: let mileage):
-            self.editableRowCount = ProximityTo.caseCount - 1
+            self.editableRowCount = Proximity.allCases.count - 1
             self.selectionIndex = mileage.rawValue
         case .developmentalAge(stage: let devStage):
-            self.editableRowCount = DevelopmentalAge.caseCount - 1
+            self.editableRowCount = DevelopmentalAge.allCases.count - 1
             self.selectionIndex = devStage.rawValue
         case .mobilityLimitation(mobility: let mobilityLimit):
-            self.editableRowCount = MobilityLimitation.caseCount - 1
+            self.editableRowCount = MobilityLimitation.allCases.count - 1
             self.selectionIndex = mobilityLimit.rawValue
         case .primaryDiagnosis(primaryDx: let dx):
-            self.editableRowCount = Diagnosis.caseCount - 1
+            self.editableRowCount = Diagnosis.allCases.count - 1
             self.selectionIndex = dx.rawValue
         case .secondaryDiagnosis(secondaryDx: let dx):
-            self.editableRowCount = Diagnosis.caseCount - 1
+            self.editableRowCount = Diagnosis.allCases.count - 1
             self.selectionIndex = dx.rawValue
         }
     }
@@ -137,7 +141,7 @@ class ElementInteractor {
         case .age:
             self.element = .age(years: index)
         case .proximity:
-            self.element = .proximity(mileageBand: ProximityTo(rawValue: index)!)
+            self.element = .proximity(mileageBand: Proximity(rawValue: index)!)
         case .developmentalAge:
             self.element = .developmentalAge(stage: DevelopmentalAge(rawValue: index)!)
         case .mobilityLimitation:
@@ -153,17 +157,18 @@ class ElementInteractor {
         var returnString:String!
         switch self.element {
         case .age(years: let yrs):
-            returnString = FilteringElement.age(years: yrs).render(.abbreviatedPhrase)
+            let txt = "\(yrs)yo"
+            returnString = txt
         case .proximity:
-            returnString = ProximityTo.verboseLabel[atIndex]
+            returnString = Proximity.allCases[atIndex].verboseLabel
         case .developmentalAge:
-            returnString = DevelopmentalAge.verboseLabel[atIndex]
+            returnString = DevelopmentalAge.allCases[atIndex].verboseLabel
         case .mobilityLimitation:
-            returnString = MobilityLimitation.verboseLabel[atIndex]
+            returnString = MobilityLimitation.allCases[atIndex].verboseLabel
         case .primaryDiagnosis:
-            returnString = Diagnosis.verboseLabel[atIndex]
+            returnString = Diagnosis.allCases[atIndex].verboseLabel
         case .secondaryDiagnosis:
-            returnString = Diagnosis.verboseLabel[atIndex]
+            returnString = Diagnosis.allCases[atIndex].verboseLabel
         }
         return returnString
     }
@@ -212,39 +217,25 @@ class FilterInputTemplate: NSObject {
 struct FilterValues {
     
     var ageValue:Int = Constants.amountNotSpecified
-    var proximityValue:ProximityTo = .NotSpecified
-    var mobilityValue:MobilityLimitation = .NotSpecified
-    var developmentalAgeValue:DevelopmentalAge = .NotSpecified
-    var primaryDxValue:Diagnosis = .NotSpecified
-    var secondaryDxValue:Diagnosis = .NotSpecified
+    var proximityValue:Proximity = .notSpecified
+    var mobilityValue:MobilityLimitation = .notSpecified
+    var developmentalAgeValue:DevelopmentalAge = .notSpecified
+    var primaryDxValue:Diagnosis = .notSpecified
+    var secondaryDxValue:Diagnosis = .notSpecified
 
-    // Events for 21yo, dev. age preteen with autism, within 50 miles
-    // "Events"
-    // "within" <(mi) miles>
-    // "for" <(yr)yo> "someone"
-    // "with" <(primarydx)> <and (secondarydx)>
-    // "who uses" (walker/aid | wheelchair>
-    // TODO developmental age
-    
     func naturalLanguageText() -> String {
         var accumulateString = "Events "
         
-        let haveproximity = proximityValue != .NotSpecified
+        let haveproximity = proximityValue != .notSpecified
         let haveAge = ageValue > -1
-        let haveDevAge = developmentalAgeValue != .NotSpecified
-        let haveAtLeast1dx = primaryDxValue != .NotSpecified && primaryDxValue != .OtherDiagnosis
-        let havemobility = mobilityValue != .NotSpecified
+        let haveDevAge = developmentalAgeValue != .notSpecified
+        let haveAtLeast1dx = primaryDxValue != .notSpecified && primaryDxValue != .otherDiagnosis
+        let havemobility = mobilityValue != .notSpecified
 
         guard haveproximity || haveAge || haveDevAge || haveAtLeast1dx || havemobility else {
             return "Upcoming events"
         }
-
-        // proximity
-        if haveproximity {
-            accumulateString.append(ProximityTo.conciseLabel[proximityValue.rawValue])
-        }
-
-        // age
+        if haveproximity { accumulateString.append(proximityValue.conciseLabel) }
         if haveAge {
             accumulateString.append(" for ")
             if haveAge {
@@ -252,22 +243,18 @@ struct FilterValues {
                 //if haveDevAge { accumulateString.append(" ") }
             }
         }
-        
-        // dx
         if haveAtLeast1dx {
             if !haveAge { accumulateString.append("for someone") }
             accumulateString.append(" with ")
-            accumulateString.append(Diagnosis.conciseLabel[primaryDxValue.rawValue])
+            accumulateString.append(primaryDxValue.conciseLabel)
         }
-        if secondaryDxValue != .NotSpecified && secondaryDxValue != .OtherDiagnosis {
+        if secondaryDxValue != .notSpecified && secondaryDxValue != .otherDiagnosis {
             accumulateString.append(" & ")
-            accumulateString.append(Diagnosis.conciseLabel[secondaryDxValue.rawValue])
+            accumulateString.append(secondaryDxValue.conciseLabel)
         }
-
-        // mobility
         if havemobility {
             accumulateString.append(". ")
-            accumulateString.append(MobilityLimitation.conciseLabel[mobilityValue.rawValue])
+            accumulateString.append(mobilityValue.conciseLabel)
             accumulateString.append(".")
         }
         
@@ -276,28 +263,129 @@ struct FilterValues {
 }
 
 
-enum ProximityTo : Int, CaseCountable {
-    case NotSpecified=0, TenMiles=1, TwentyFiveMiles=2, FiftyMiles=3, OneHundredMiles=4, AnyDistance=5
-    static let distanceValue:[Int] = [-1, 10, 25, 50, 100, 1_000_000]
-    static let verboseLabel = ["No Distance Specified", "Within 10 Miles", "Within 25 Miles", "Within 50 Miles", "Within 100 Miles", "Any Distance"]
-    static let conciseLabel:[String] = ["None", "within 10 mi", "within 25 mi", "within 50 mi", "within 100 mi", "at any distance"]
+enum Proximity : Int, CaseIterable, Labelable {
+    case notSpecified=0, TenMiles=1, TwentyFiveMiles=2, FiftyMiles=3, OneHundredMiles=4, AnyDistance=5
+    static var allCases: [Proximity] {
+        return [.notSpecified, .TenMiles, .TwentyFiveMiles, .FiftyMiles, .OneHundredMiles, .AnyDistance]
+    }
+    static let verboseMap: [Proximity: String] = [
+        .notSpecified: "No Distance Specified",
+        .TenMiles: "Within 10 Miles",
+        .TwentyFiveMiles: "Within 25 Miles",
+        .FiftyMiles: "Within 50 Miles",
+        .OneHundredMiles: "Within 100 Miles",
+        .AnyDistance: "Any Distance"
+    ]
+    var verboseLabel: String {
+        return Proximity.verboseMap[self]!
+    }
+    static let conciseMap: [Proximity: String] = [
+        .notSpecified: "None",
+        .TenMiles: "within 10 mi",
+        .TwentyFiveMiles: "within 25 mi",
+        .FiftyMiles: "within 50 mi",
+        .OneHundredMiles: "within 100 mi",
+        .AnyDistance: "at any distance"
+    ]
+    var conciseLabel: String {
+        return Proximity.conciseMap[self]!
+    }
+    static let distanceMap: [Proximity: Int] = [
+        .notSpecified: -1,
+        .TenMiles: 10,
+        .TwentyFiveMiles: 25,
+        .FiftyMiles: 50,
+        .OneHundredMiles: 100,
+        .AnyDistance: 1_000_000
+    ]
+    var distanceValue: Int {
+        return Proximity.distanceMap[self]!
+    }
 }
 
-enum MobilityLimitation : Int, CaseCountable {
-    case NotSpecified=0, NoLimitation=1, WalkWithAid=2, Wheelchair=3
-    static let verboseLabel = ["No Limitation Specified", "No Limitation", "Walks With Aid", "Uses A Wheelchair"]
-    static let conciseLabel:[String] = ["None", "No mobility limits", "Walks with aid", "Uses a wheelchair"]
+enum MobilityLimitation : Int, CaseIterable, Labelable {
+    case notSpecified=0, noLimitation=1, walksWithAid=2, wheelchair=3
+    static var allCases: [MobilityLimitation] {
+        return [.notSpecified, .noLimitation, .walksWithAid, .wheelchair]
+    }
+    static let verboseMap: [MobilityLimitation: String] = [
+        .notSpecified: "No Limitation Specified",
+        .noLimitation: "No Limitation",
+        .walksWithAid: "Walks With Aid",
+        .wheelchair: "Uses A Wheelchair"
+    ]
+    var verboseLabel: String {
+        return MobilityLimitation.verboseMap[self]!
+    }
+    static let conciseMap: [MobilityLimitation: String] = [
+        .notSpecified: "None",
+        .noLimitation: "No mobility limits",
+        .walksWithAid: "Walks with aid",
+        .wheelchair: "Uses a wheelchair"
+    ]
+    var conciseLabel: String {
+        return MobilityLimitation.conciseMap[self]!
+    }
 }
 
-enum DevelopmentalAge : Int, CaseCountable {
-    case NotSpecified=0, InfantDevelopmentalAge=1, ToddlerDevelopmentalAge=2, PreschoolDevelopmentalAge=3, GradeschoolDevelopmentalAge=4, PreTeenDevelopmentalAge=5, TeenDevelopmentalAge=6, AdultDevelopmentalAge=7
-    static let verboseLabel = ["No Developmental Age Specified", "Infant(1 year old)", "Toddler (2 year old)", "Preschool (3-5)", "Gradeschool (6-9)", "PreTeen (10-12)", "Teen (13-19)", "Adult (20+)"]
-    static let conciseLabel = ["None", "infant", "toddler", "preschool", "gradeschool", "preteen", "teen", "adult"]
+enum DevelopmentalAge : Int, CaseIterable, Labelable {
+    case notSpecified=0, infant=1, toddler=2, preschool=3, gradeschool=4, preTeen=5, teen=6, adult=7
+    static var allCases: [DevelopmentalAge] {
+        return [.notSpecified, .infant, .toddler, .preschool, .gradeschool, .preTeen, .teen, .adult]
+    }
+    static let verboseMap: [DevelopmentalAge: String] = [
+        .notSpecified: "No Developmental Age Specified",
+        .infant: "Infant(1 year old)",
+        .toddler: "Toddler (2 year old)",
+        .preschool: "Preschool (3-5)",
+        .gradeschool: "Gradeschool (6-9)",
+        .preTeen: "PreTeen (10-12)",
+        .teen: "Teen (13-19)",
+        .adult: "Adult (20+)"
+    ]
+    var verboseLabel: String {
+        return DevelopmentalAge.verboseMap[self]!
+    }
+    static let conciseMap: [DevelopmentalAge: String] = [
+        .notSpecified: "None",
+        .infant: "infant",
+        .toddler: "toddler",
+        .preschool: "preschool",
+        .gradeschool: "gradeschool",
+        .preTeen: "preteen",
+        .teen: "teen",
+        .adult: "adult"
+    ]
+    var conciseLabel: String {
+        return DevelopmentalAge.conciseMap[self]!
+    }
 }
 
-enum Diagnosis : Int, CaseCountable {
-    case NotSpecified=0, AutismDiagnosis=1, CPDiagnosis=2, SpinaBifidaDiagnosis=3, OtherDiagnosis=4
-    static let verboseLabel = ["No Diagnosis Specified", "Autism", "CP", "Spina Bifida", "Other Diagnosis"]
-    static let conciseLabel = ["None", "Autism", "CP", "Spina Bifida", "Other Diagnosis"]
+enum Diagnosis : Int, CaseIterable, Labelable {
+    static var allCases: [Diagnosis] {
+        return [.notSpecified, .autism, .cerebralPalsy, .spinaBifida, .otherDiagnosis]
+    }
+    case notSpecified=0, autism=1, cerebralPalsy=2, spinaBifida=3, otherDiagnosis=4
+
+    static let verboseMap: [Diagnosis: String] = [
+        .notSpecified: "No Diagnosis Specified",
+        .autism: "Autism",
+        .cerebralPalsy: "CP",
+        .spinaBifida: "Spina Bifida",
+        .otherDiagnosis: "Other Diagnosis"
+    ]
+    var verboseLabel: String {
+        return Diagnosis.verboseMap[self]!
+    }
+    static let conciseMap: [Diagnosis: String] = [
+        .notSpecified: "None",
+        .autism: "Autism",
+        .cerebralPalsy: "CP",
+        .spinaBifida: "Spina Bifida",
+        .otherDiagnosis: "Other Diagnosis"
+    ]
+    var conciseLabel: String {
+        return Diagnosis.conciseMap[self]!
+    }
 }
 

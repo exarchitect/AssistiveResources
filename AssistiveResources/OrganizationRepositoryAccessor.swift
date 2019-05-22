@@ -33,7 +33,7 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
     }
     
     override func repositoryUpdateNotification() {
-        self.retrieve(usingFilter: IndividualNeedProfile(age: 1, mobility: .NoLimitation, delay: .NotSpecified, primarydx: .NotSpecified, secondarydx: .NotSpecified))
+        self.retrieve(usingFilter: IndividualNeedProfile(age: 1, mobility: .noLimitation, delay: .notSpecified, primarydx: .notSpecified, secondarydx: .notSpecified))
         self.delegate?.notifyRepositoryWasUpdated()
     }
 
