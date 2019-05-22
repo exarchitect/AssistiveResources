@@ -25,6 +25,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
         //filter.developmentalAgeValue = .PreschoolDevelopmentalAge
         filter.proximityValue = .twentyFiveMiles
         filter.ageValue = Age(years: 21)
+        //filter.ageValue = Age.notSpecified
 }
 
     override func viewDidLoad() {
