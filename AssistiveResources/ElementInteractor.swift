@@ -48,6 +48,25 @@ enum FilteringElement {
             return "Secondary Diagnosis"
         }
     }
+    func itemText(at index:Int) -> String {
+        var returnString:String
+        if index==0 && !self.hasValue { return "not specified" }
+        switch self {
+        case .age(let age):
+            returnString = age.verboseValue
+        case .proximity:
+            returnString = Proximity.allCases[index].verboseValue
+        case .developmentalAge:
+            returnString = DevelopmentalAge.allCases[index].verboseValue
+        case .mobilityLimitation:
+            returnString = MobilityLimitation.allCases[index].verboseValue
+        case .primaryDiagnosis:
+            returnString = Diagnosis.allCases[index].verboseValue
+        case .secondaryDiagnosis:
+            returnString = Diagnosis.allCases[index].verboseValue
+        }
+        return returnString
+    }
 }
 
 class ElementInteractor: NSObject {
@@ -102,27 +121,6 @@ class ElementInteractor: NSObject {
             self.element = .secondaryDiagnosis(secondaryDx: Diagnosis(rawValue: index)!)
         }
     }
-
-    func label(at index:Int) -> String {
-        var returnString:String
-        if index==0 && !self.element.hasValue { return "not specified" }
-        switch self.element {
-        case .age(let age):
-            returnString = age.verboseValue
-        case .proximity:
-            returnString = Proximity.allCases[index].verboseValue
-        case .developmentalAge:
-            returnString = DevelopmentalAge.allCases[index].verboseValue
-        case .mobilityLimitation:
-            returnString = MobilityLimitation.allCases[index].verboseValue
-        case .primaryDiagnosis:
-            returnString = Diagnosis.allCases[index].verboseValue
-        case .secondaryDiagnosis:
-            returnString = Diagnosis.allCases[index].verboseValue
-        }
-        return returnString
-    }
-
 }
 
 class FilterInputTemplate: NSObject {

@@ -68,7 +68,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             let cell:FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
             cell.checkmarkImageOutlet.isHidden = !isSelectedRow
             cell.backgroundColor = UIColor.white
-            cell.titleLabelOutlet.text = self.filterTemplate[indexPath.section].label(at: indexPath.row)
+            cell.titleLabelOutlet.text = self.filterTemplate[indexPath.section].element.itemText(at: indexPath.row)
 
             return cell
         }
@@ -126,6 +126,6 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         cell.backgroundColor = UIColor.groupTableViewBackground
         let selectedCellIndex = self.filterTemplate[section].selectionIndex
         
-        cell.setCellSubhead(text: filterTemplate[section].label(at: selectedCellIndex), disabled: !filterTemplate[section].element.hasValue)
+        cell.setCellSubhead(text: filterTemplate[section].element.itemText(at: selectedCellIndex), enabled: filterTemplate[section].element.hasValue)
     }
 }

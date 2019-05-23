@@ -24,14 +24,14 @@ class FilterTableHeaderCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setCellSubhead (text: String = "none selected", disabled: Bool) {
+    func setCellSubhead (text: String = "none selected", enabled: Bool) {
         self.subheadLabelOutlet.text = text
-        if disabled {
-            self.subheadLabelOutlet.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.thin)
-            self.subheadLabelOutlet.textColor = UIColor.lightGray
-        } else {
+        if enabled {
             self.subheadLabelOutlet.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
             self.subheadLabelOutlet.textColor = UIColor.darkText
+        } else {
+            self.subheadLabelOutlet.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.thin)
+            self.subheadLabelOutlet.textColor = UIColor.lightGray
         }
 
     }
