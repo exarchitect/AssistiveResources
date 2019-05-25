@@ -69,6 +69,10 @@ enum FilteringElement {
     }
 }
 
+enum EditType {
+    case list, numeric
+}
+
 class ElementInteractor: NSObject {
     var element: FilteringElement
     var editableRowCount = 0
@@ -77,6 +81,14 @@ class ElementInteractor: NSObject {
     public private(set) var selectionIndex: Int
     var hasSelection: Bool {
         return selectionIndex != Constants.noSelection
+    }
+    var editType: EditType {
+        switch self.element {
+        case .age:
+            return .numeric
+        default:
+            return .list
+        }
     }
 
     init(using filterElement: FilteringElement) {

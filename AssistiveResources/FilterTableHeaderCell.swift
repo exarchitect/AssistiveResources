@@ -23,17 +23,23 @@ class FilterTableHeaderCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    func setCellSubhead (text: String = "none selected", enabled: Bool) {
-        self.subheadLabelOutlet.text = text
-        if enabled {
+
+    func configure (mainText: String, headerEnabled: Bool, subText: String, subTextEnabled: Bool) {
+        headerLabelOutlet.text = mainText
+        if headerEnabled {
+            headerLabelOutlet.textColor = UIColor.darkText
+        } else {
+            headerLabelOutlet.textColor = UIColor.lightGray
+        }
+        backgroundColor = UIColor.groupTableViewBackground
+
+        self.subheadLabelOutlet.text = subText
+        if subTextEnabled {
             self.subheadLabelOutlet.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
             self.subheadLabelOutlet.textColor = UIColor.darkText
         } else {
             self.subheadLabelOutlet.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.thin)
             self.subheadLabelOutlet.textColor = UIColor.lightGray
         }
-
     }
-
 }

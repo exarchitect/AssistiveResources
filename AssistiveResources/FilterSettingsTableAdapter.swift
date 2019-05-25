@@ -12,7 +12,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
     var tableView: UITableView!
     private var filterTemplate: FilterInputTemplate!
-    private var editableSectionIndex: Int = Constants.noSectionOpen
+    private var indexOfCurrentEditableSection: Int = Constants.noSectionOpen
 
     init(table: UITableView, filterWhat: FilterInputTemplate) {
         super.init()
@@ -58,33 +58,50 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             // section heading is first row cell so we can detect hits
             let cell:FilterTableHeaderCell = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableHeaderCell
             self.configHeaderCell(cell: cell, section: indexPath.section)
-
             return cell
             
         } else {
             // row for selecting an enumerated type (except for age)
             let isSelectedRow:Bool = filterTemplate[indexPath.section].selectionIndex == indexPath.row
-            
             let cell:FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
-            cell.checkmarkImageOutlet.isHidden = !isSelectedRow
-            cell.backgroundColor = UIColor.white
-            cell.titleLabelOutlet.text = self.filterTemplate[indexPath.section].element.itemText(at: indexPath.row)
-
+            cell.configure(text: self.filterTemplate[indexPath.section].element.itemText(at: indexPath.row), isChecked: isSelectedRow)
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView .deselectRow(at: indexPath as IndexPath, animated: true)
-        
-        if (self.editableSectionIndex != Constants.noSectionOpen && self.editableSectionIndex != indexPath.section) {
-            self.filterTemplate[editableSectionIndex].rowsVisible = false
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+
+        switch filterTemplate[indexPath.section].editType {
+        case .list:
+            listCellSelection(at: indexPath)
+        case .numeric:
+            numericCellSelection(at: indexPath)
         }
-        self.editableSectionIndex = indexPath.section
-        
-        self.filterTemplate[indexPath.section].rowsVisible = !self.filterTemplate[indexPath.section].rowsVisible
-        
-        if indexPath.row>0 {
+    }
+    
+    // MARK:- utilities
+    
+    private func configHeaderCell (cell:FilterTableHeaderCell, section:Int){
+        let selectedCellIndex = self.filterTemplate[section].selectionIndex
+        cell.configure (mainText: self.filterTemplate[section].element.title,
+                        headerEnabled: self.filterTemplate[section].sectionEnabled,
+                        subText: filterTemplate[section].element.itemText(at: selectedCellIndex),
+                        subTextEnabled: filterTemplate[section].element.hasValue)
+    }
+
+    func listCellSelection(at indexPath: IndexPath) {
+        // hide this section when open, either if the header is tapped, or one of its rows is tapped
+        if (indexOfCurrentEditableSection != Constants.noSectionOpen && indexOfCurrentEditableSection != indexPath.section) {
+            self.filterTemplate[indexOfCurrentEditableSection].rowsVisible = false
+        }
+
+        // set section visible/hidden
+        filterTemplate[indexPath.section].rowsVisible = !self.filterTemplate[indexPath.section].rowsVisible
+        indexOfCurrentEditableSection = filterTemplate[indexPath.section].rowsVisible ? indexPath.section : Constants.noSectionOpen
+
+        // update row cells
+        if indexPath.row > 0 {
             let previousSelectionIndex = filterTemplate[indexPath.section].selectionIndex
 
             // select row
@@ -94,7 +111,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             filterTemplate[indexPath.section].select(at: newSelectionIndex)
             let cell:FilterTableRowCell = tableView.cellForRow(at: indexPath) as! FilterTableRowCell
             cell.checkmarkImageOutlet.isHidden = !newSelectionState
-            
+
             // deselect prev checkmark
             if (previousSelectionIndex != Constants.noSelection && previousSelectionIndex != newSelectionIndex) {
                 let previouslySelectedCellIndex:IndexPath = IndexPath(row: previousSelectionIndex, section: indexPath.section)
@@ -103,7 +120,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
                     previouslySelectedCell.checkmarkImageOutlet.isHidden = true
                 }
             }
-            
+
             // update header with selection
             let headerCellIndex:IndexPath = IndexPath(row: 0, section: indexPath.section)
             let headerCell:FilterTableHeaderCell = tableView.cellForRow(at: headerCellIndex) as! FilterTableHeaderCell
@@ -113,19 +130,25 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         self.tableView.beginUpdates()
         self.tableView.endUpdates()
     }
-    
-    // MARK:- utilities
-    
-    func configHeaderCell (cell:FilterTableHeaderCell, section:Int){
-        cell.headerLabelOutlet.text = self.filterTemplate[section].element.title
-        if (self.filterTemplate[section].sectionEnabled) {
-            cell.headerLabelOutlet.textColor = UIColor.darkText
-        } else {
-            cell.headerLabelOutlet.textColor = UIColor.lightGray
+
+    func numericCellSelection(at indexPath: IndexPath) {
+        // hide this section when open if the header is tapped
+        if indexPath.row == 0 {
+            if (indexOfCurrentEditableSection != Constants.noSectionOpen && indexOfCurrentEditableSection != indexPath.section) {
+                self.filterTemplate[indexOfCurrentEditableSection].rowsVisible = false
+            }
+
+            // set section visible/hidden
+            filterTemplate[indexPath.section].rowsVisible = !self.filterTemplate[indexPath.section].rowsVisible
+            indexOfCurrentEditableSection = filterTemplate[indexPath.section].rowsVisible ? indexPath.section : Constants.noSectionOpen
+
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
         }
-        cell.backgroundColor = UIColor.groupTableViewBackground
-        let selectedCellIndex = self.filterTemplate[section].selectionIndex
-        
-        cell.setCellSubhead(text: filterTemplate[section].element.itemText(at: selectedCellIndex), enabled: filterTemplate[section].element.hasValue)
+
+        // tap row cell
+        if indexPath.row > 0 {
+            // tbd
+        }
     }
 }
