@@ -45,7 +45,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.filterTemplate.count
+        return self.filterTemplate.elementCount
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -74,9 +74,9 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
         switch filterTemplate[indexPath.section].editType {
         case .list:
-            listCellSelection(at: indexPath)
+            selectListCell(at: indexPath)
         case .numeric:
-            numericCellSelection(at: indexPath)
+            selectNumericCell(at: indexPath)
         }
     }
     
@@ -90,7 +90,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
                         subTextEnabled: filterTemplate[section].element.hasValue)
     }
 
-    func listCellSelection(at indexPath: IndexPath) {
+    func selectListCell(at indexPath: IndexPath) {
         // hide this section when open, either if the header is tapped, or one of its rows is tapped
         if (indexOfCurrentEditableSection != Constants.noSectionOpen && indexOfCurrentEditableSection != indexPath.section) {
             self.filterTemplate[indexOfCurrentEditableSection].rowsVisible = false
@@ -108,7 +108,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             let isSelectedRow:Bool = filterTemplate[indexPath.section].selectionIndex == indexPath.row
             let newSelectionState:Bool = !isSelectedRow
             let newSelectionIndex = newSelectionState ? indexPath.row : Constants.noSelection
-            filterTemplate[indexPath.section].select(at: newSelectionIndex)
+            filterTemplate[indexPath.section].selectItem(at: newSelectionIndex)
             let cell:FilterTableRowCell = tableView.cellForRow(at: indexPath) as! FilterTableRowCell
             cell.checkmarkImageOutlet.isHidden = !newSelectionState
 
@@ -131,7 +131,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         self.tableView.endUpdates()
     }
 
-    func numericCellSelection(at indexPath: IndexPath) {
+    func selectNumericCell(at indexPath: IndexPath) {
         // hide this section when open if the header is tapped
         if indexPath.row == 0 {
             if (indexOfCurrentEditableSection != Constants.noSectionOpen && indexOfCurrentEditableSection != indexPath.section) {

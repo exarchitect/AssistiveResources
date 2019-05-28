@@ -116,7 +116,7 @@ class ElementInteractor: NSObject {
         }
     }
 
-    func select(at index: Int) {
+    func selectItem(at index: Int) {
         self.selectionIndex = index
         switch self.element {
         case .age:
@@ -139,7 +139,7 @@ class FilterInputTemplate: NSObject {
 
     private var elements:[ElementInteractor] = []
 
-    var count: Int {
+    var elementCount: Int {
         return elements.count
     }
 
@@ -147,11 +147,11 @@ class FilterInputTemplate: NSObject {
         return elements[pos]
     }
 
-    func add(filter: ElementInteractor) {
-        elements.append(filter)
+    func add(filterType: ElementInteractor) {
+        elements.append(filterType)
     }
 
-    func createProfile() -> FilterProfile {
+    func createFilterProfile() -> FilterProfile {
         var returnData = FilterProfile()
 
         for element in elements {

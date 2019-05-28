@@ -32,13 +32,14 @@ class EventFilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        filterTemplate.add(filter: ElementInteractor(using: .proximity(mileageBand: self.filterProfile.proximityValue)))
-        filterTemplate.add(filter: ElementInteractor(using: .age(years: self.filterProfile.ageValue)))
-        filterTemplate.add(filter: ElementInteractor(using: .developmentalAge(stage: self.filterProfile.developmentalAgeValue)))
-        filterTemplate.add(filter: ElementInteractor(using: .mobilityLimitation(mobility: self.filterProfile.mobilityValue)))
-        filterTemplate.add(filter: ElementInteractor(using: .primaryDiagnosis(primaryDx: self.filterProfile.primaryDxValue)))
-        filterTemplate.add(filter: ElementInteractor(using: .secondaryDiagnosis(secondaryDx: self.filterProfile.secondaryDxValue)))
+
+        // TODO: pull this from ?
+        filterTemplate.add(filterType: ElementInteractor(using: .proximity(mileageBand: self.filterProfile.proximityValue)))
+        filterTemplate.add(filterType: ElementInteractor(using: .age(years: self.filterProfile.ageValue)))
+        filterTemplate.add(filterType: ElementInteractor(using: .developmentalAge(stage: self.filterProfile.developmentalAgeValue)))
+        filterTemplate.add(filterType: ElementInteractor(using: .mobilityLimitation(mobility: self.filterProfile.mobilityValue)))
+        filterTemplate.add(filterType: ElementInteractor(using: .primaryDiagnosis(primaryDx: self.filterProfile.primaryDxValue)))
+        filterTemplate.add(filterType: ElementInteractor(using: .secondaryDiagnosis(secondaryDx: self.filterProfile.secondaryDxValue)))
         
         self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterTemplate)
     }
@@ -53,7 +54,7 @@ class EventFilterViewController: UIViewController {
     }
     
     @IBAction func okButtonAction(_ sender: Any) {
-        let filterResults:FilterProfile = filterTemplate.createProfile()
+        let filterResults = filterTemplate.createFilterProfile()
         //let label = filterResults.naturalLanguageText()
         //print(label)
         //print(filterResults.filterValues[0])
