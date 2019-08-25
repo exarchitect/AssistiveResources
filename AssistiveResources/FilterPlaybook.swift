@@ -17,12 +17,12 @@ protocol Filterable {
     var conciseValue: String { get }
     var hasValue: Bool { get }
 }
-extension Filterable where Self == Diagnosis {
-    var hasValue: Bool {
-        //return self.rawValue != 0
-        return self != .notSpecified
-    }
-}
+//extension Filterable where Self == Diagnosis {
+//    var hasValue: Bool {
+//        //return self.rawValue != 0
+//        return self != .notSpecified
+//    }
+//}
 
 struct FilterProfile {
     
@@ -30,14 +30,13 @@ struct FilterProfile {
     var proximityValue:Proximity = .notSpecified
     var mobilityValue:MobilityLimitation = .notSpecified
     var developmentalAgeValue:DevelopmentalAge = .notSpecified
-    var primaryDxValue:Diagnosis = .notSpecified
-    var secondaryDxValue:Diagnosis = .notSpecified
+    var diagnoses:Diagnoses = Diagnoses()
 
     func naturalLanguageText() -> String {
         var accumulateString = "Events "
-        let haveAtLeast1dx = primaryDxValue.hasValue || secondaryDxValue.hasValue
+//        let haveAtLeast1dx = primaryDxValue.hasValue || secondaryDxValue.hasValue
 
-        guard proximityValue.hasValue || ageValue.hasValue || haveAtLeast1dx || mobilityValue.hasValue else {
+        guard proximityValue.hasValue || ageValue.hasValue || diagnoses.hasValue == true || mobilityValue.hasValue else {
             return "Upcoming events"
         }
         if proximityValue.hasValue { accumulateString.append(proximityValue.conciseValue) }
@@ -45,14 +44,15 @@ struct FilterProfile {
             accumulateString.append(" for ")
             accumulateString.append(ageValue.conciseValue)
         }
-        if haveAtLeast1dx && primaryDxValue != .otherDiagnosis {
+//        if diagnosisValue.hasValue && diagnosisValue != .otherDiagnosis {
+        if diagnoses.hasValue == true {
             if !ageValue.hasValue { accumulateString.append("for someone") }
             accumulateString.append(" with ")
-            accumulateString.append(primaryDxValue.conciseValue)
-            if secondaryDxValue.hasValue && secondaryDxValue != .otherDiagnosis {
-                accumulateString.append(" & ")
-                accumulateString.append(secondaryDxValue.conciseValue)
-            }
+            accumulateString.append(diagnoses.dx[0].conciseValue)
+//            if secondaryDxValue.hasValue && secondaryDxValue != .otherDiagnosis {
+//                accumulateString.append(" & ")
+//                accumulateString.append(secondaryDxValue.conciseValue)
+//            }
         }
         if mobilityValue.hasValue {
             accumulateString.append(". ")
@@ -240,10 +240,33 @@ enum DevelopmentalAge: Int, CaseIterable, Filterable {
     }
 }
 
+struct Diagnoses: Filterable {
+    var dx: [Diagnosis] = []
+    var verboseValue: String {
+        if dx.isEmpty {
+            return "No Diagnosis Specified"
+        } else {
+            return dx[0].verboseValue
+        }
+    }
+    var conciseValue: String {
+        if dx.isEmpty {
+            return "not specified"
+        } else {
+            return dx[0].verboseValue
+        }
+    }
+    var hasValue: Bool {
+        return dx.isEmpty == false
+    }
+}
+
 enum Diagnosis: Int, CaseIterable, Filterable {
     case notSpecified=0, autism=1, cerebralPalsy=2, spinaBifida=3, otherDiagnosis=4
+//    case autism=1, cerebralPalsy=2, spinaBifida=3, otherDiagnosis=4
     static var allCases: [Diagnosis] {
         return [.notSpecified, .autism, .cerebralPalsy, .spinaBifida, .otherDiagnosis]
+//        return [.autism, .cerebralPalsy, .spinaBifida, .otherDiagnosis]
     }
     var verboseValue: String {
         switch self {
@@ -273,8 +296,8 @@ enum Diagnosis: Int, CaseIterable, Filterable {
             return "Other Diagnosis"
         }
     }
-//    var hasValue: Bool {
-//        return self != .notSpecified
-//    }
+    var hasValue: Bool {
+        return true
+    }
 }
 

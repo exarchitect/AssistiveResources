@@ -34,12 +34,12 @@ class EventFilterViewController: UIViewController {
         super.viewDidLoad()
 
         // TODO: pull this from ?
-        filterTemplate.add(filterType: ElementInteractor(using: .proximity(mileageBand: self.filterProfile.proximityValue)))
-        filterTemplate.add(filterType: ElementInteractor(using: .age(years: self.filterProfile.ageValue)))
-        filterTemplate.add(filterType: ElementInteractor(using: .developmentalAge(stage: self.filterProfile.developmentalAgeValue)))
-        filterTemplate.add(filterType: ElementInteractor(using: .mobilityLimitation(mobility: self.filterProfile.mobilityValue)))
-        filterTemplate.add(filterType: ElementInteractor(using: .primaryDiagnosis(primaryDx: self.filterProfile.primaryDxValue)))
-        filterTemplate.add(filterType: ElementInteractor(using: .secondaryDiagnosis(secondaryDx: self.filterProfile.secondaryDxValue)))
+        filterTemplate.add(filterType: ElementInteractor(using: .proximity(mileageBand: filterProfile.proximityValue)))
+        filterTemplate.add(filterType: ElementInteractor(using: .age(years: filterProfile.ageValue)))
+        filterTemplate.add(filterType: ElementInteractor(using: .developmentalAge(stage: filterProfile.developmentalAgeValue)))
+        filterTemplate.add(filterType: ElementInteractor(using: .mobilityLimitation(mobility: filterProfile.mobilityValue)))
+        filterTemplate.add(filterType: ElementInteractor(using: .diagnoses(dx: filterProfile.diagnoses)))
+//        filterTemplate.add(filterType: ElementInteractor(using: .secondaryDiagnosis(secondaryDx: self.filterProfile.secondaryDxValue)))
         
         self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterTemplate)
     }

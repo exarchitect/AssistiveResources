@@ -33,7 +33,7 @@ class EventRepositoryAccessor: RepositoryAccessor {
     }
     
     override func repositoryUpdateNotification() {
-        let needProfile = IndividualNeedProfile(age: 1, mobility: .noLimitation, delay: .notSpecified, primarydx: .notSpecified, secondarydx: .notSpecified)
+        let needProfile = IndividualNeedProfile(age: 1, mobility: .noLimitation, delay: .notSpecified, diagnoses: nil)
         self.retrieve(usingFilter: needProfile)
         self.delegate?.notifyRepositoryWasUpdated()
     }

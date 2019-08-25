@@ -20,16 +20,17 @@ struct IndividualNeedProfile {
     var mobilityLimitation: MobilityLimitation
     var developmentalAge: DevelopmentalAge
     var actualAge: Int
-    var primaryDiagnosis: Diagnosis
-    var secondaryDiagnosis: Diagnosis
+    var diagnoses: Diagnoses
 
-    init(age: Int, mobility:MobilityLimitation, delay:DevelopmentalAge, primarydx:Diagnosis, secondarydx:Diagnosis)
+//    var primaryDiagnosis: Diagnosis
+//    var secondaryDiagnosis: Diagnosis
+
+    init(age: Int, mobility:MobilityLimitation, delay:DevelopmentalAge, diagnoses:Diagnoses?)
     {
         self.mobilityLimitation = mobility
         self.developmentalAge = delay
         self.actualAge = age        // -1 indicates age not specified
-        self.primaryDiagnosis = primarydx
-        self.secondaryDiagnosis = secondarydx
+        self.diagnoses = diagnoses ?? Diagnoses()
     }
 }
 

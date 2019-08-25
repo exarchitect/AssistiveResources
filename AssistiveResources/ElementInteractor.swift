@@ -13,8 +13,8 @@ enum FilteringElement {
     case proximity(mileageBand:Proximity)
     case developmentalAge(stage:DevelopmentalAge)
     case mobilityLimitation(mobility:MobilityLimitation)
-    case primaryDiagnosis(primaryDx: Diagnosis)
-    case secondaryDiagnosis(secondaryDx: Diagnosis)
+//    case diagnoses(_ dx: [Diagnosis])
+    case diagnoses(dx:Diagnoses)
 
     var hasValue: Bool {
         switch self {
@@ -26,10 +26,9 @@ enum FilteringElement {
             return stage.hasValue
         case .mobilityLimitation(let mobility):
             return mobility.hasValue
-        case .primaryDiagnosis(let primaryDx):
-            return primaryDx.hasValue
-        case .secondaryDiagnosis(let secondaryDx):
-            return secondaryDx.hasValue
+        case .diagnoses(let dx):
+//            return dx.isEmpty ? false : dx[0].hasValue
+            return dx.hasValue
         }
     }
     var title: String {
@@ -42,10 +41,8 @@ enum FilteringElement {
             return "Developmental Age"
         case .mobilityLimitation:
             return "Mobility"
-        case .primaryDiagnosis:
-            return "Primary Diagnosis"
-        case .secondaryDiagnosis:
-            return "Secondary Diagnosis"
+        case .diagnoses:
+            return "Diagnosis"
         }
     }
     func itemText(at index:Int) -> String {
@@ -60,10 +57,9 @@ enum FilteringElement {
             returnString = DevelopmentalAge.allCases[index].verboseValue
         case .mobilityLimitation:
             returnString = MobilityLimitation.allCases[index].verboseValue
-        case .primaryDiagnosis:
+        case .diagnoses:
             returnString = Diagnosis.allCases[index].verboseValue
-        case .secondaryDiagnosis:
-            returnString = Diagnosis.allCases[index].verboseValue
+//            returnString = Diagnoses.verboseValue
         }
         return returnString
     }
@@ -107,12 +103,10 @@ class ElementInteractor: NSObject {
         case .mobilityLimitation(mobility: let mobilityLimit):
             self.editableRowCount = MobilityLimitation.allCases.count - 1
             self.selectionIndex = mobilityLimit.rawValue
-        case .primaryDiagnosis(primaryDx: let dx):
+        case .diagnoses(dx: let dxs):
             self.editableRowCount = Diagnosis.allCases.count - 1
-            self.selectionIndex = dx.rawValue
-        case .secondaryDiagnosis(secondaryDx: let dx):
-            self.editableRowCount = Diagnosis.allCases.count - 1
-            self.selectionIndex = dx.rawValue
+//            self.selectionIndex = dx.rawValue
+            self.selectionIndex = dxs.hasValue ? dxs.dx[0].rawValue : 0
         }
     }
 
@@ -127,10 +121,10 @@ class ElementInteractor: NSObject {
             self.element = .developmentalAge(stage: DevelopmentalAge(rawValue: index)!)
         case .mobilityLimitation:
             self.element = .mobilityLimitation(mobility: MobilityLimitation(rawValue: index)!)
-        case .primaryDiagnosis:
-            self.element = .primaryDiagnosis(primaryDx: Diagnosis(rawValue: index)!)
-        case .secondaryDiagnosis:
-            self.element = .secondaryDiagnosis(secondaryDx: Diagnosis(rawValue: index)!)
+        case .diagnoses:
+            var dxs: Diagnoses = Diagnoses()
+            dxs.dx.append(Diagnosis(rawValue: index+1)!)
+            self.element = .diagnoses(dx: dxs)
         }
     }
 }
@@ -164,10 +158,8 @@ class FilterInputTemplate: NSObject {
                 returnData.developmentalAgeValue = devStage
             case .mobilityLimitation(mobility: let mobilityLimit):
                 returnData.mobilityValue = mobilityLimit
-            case .primaryDiagnosis(primaryDx: let dx):
-                returnData.primaryDxValue = dx
-            case .secondaryDiagnosis(secondaryDx: let dx):
-                returnData.secondaryDxValue = dx
+            case .diagnoses(dx: let dxs):
+                returnData.diagnoses = dxs
             }
         }
         return returnData
