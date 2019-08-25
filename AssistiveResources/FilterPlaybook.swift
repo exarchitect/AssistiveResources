@@ -19,7 +19,8 @@ protocol Filterable {
 }
 extension Filterable where Self == Diagnosis {
     var hasValue: Bool {
-        return self.rawValue != 0
+        //return self.rawValue != 0
+        return self != .notSpecified
     }
 }
 
@@ -272,8 +273,8 @@ enum Diagnosis: Int, CaseIterable, Filterable {
             return "Other Diagnosis"
         }
     }
-    var hasValue: Bool {
-        return self != .notSpecified
-    }
+//    var hasValue: Bool {
+//        return self != .notSpecified
+//    }
 }
 
