@@ -116,7 +116,7 @@ struct DestinationDescriptor {
             imageName = "favourite2"
         case .News:
             title = NavigationCategory.News.rawValue
-            placeholderSubtitle = "Online articles and news"
+            placeholderSubtitle = "Online articles and news for the special needs community"
             imageName = "rss"
         }
         

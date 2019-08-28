@@ -82,7 +82,7 @@ func testEvents() -> [StoredEvent] {
                                     organization: ("Athletes In Action",0),
                                     facility: ("Atherton High School, 222 Dundee Rd.",0),
                                     eventStart: Date(year: 2016, month: 5, day: 12, hour: 11, minute: 30, second: 0),
-                                    durationInMinutes: 120,
+                                    durationInMinutes: 240,
                                     eventDetail: "Come join us Saturday after lunch for fun on the baseball diamond. If you like to play ball, get ready for a good time. Bring a glove, or just show up ready to play.  It's time to PLAY BALL!"))
     
     returnevents.append(StoredEvent(event: ("Penguin Project \"Crazy For You\"",1),

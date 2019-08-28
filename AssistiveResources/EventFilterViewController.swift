@@ -39,7 +39,7 @@ class EventFilterViewController: UIViewController {
         filterTemplate.add(filterType: ElementInteractor(using: .developmentalAge(stage: self.filterProfile.developmentalAgeValue)))
         filterTemplate.add(filterType: ElementInteractor(using: .mobilityLimitation(mobility: self.filterProfile.mobilityValue)))
         filterTemplate.add(filterType: ElementInteractor(using: .primaryDiagnosis(primaryDx: self.filterProfile.primaryDxValue)))
-        filterTemplate.add(filterType: ElementInteractor(using: .secondaryDiagnosis(secondaryDx: self.filterProfile.secondaryDxValue)))
+        filterTemplate.add(filterType: ElementInteractor(using: .additionalDiagnoses(secondaryDx: self.filterProfile.secondaryDxValue)))
         
         self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterTemplate)
     }

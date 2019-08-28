@@ -103,12 +103,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jf0-5b-0qJ">
-                                        <rect key="frame" x="333" y="9" width="34" height="34"/>
+                                        <rect key="frame" x="335" y="9" width="30" height="32"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="34" id="On5-2K-9HT"/>
-                                            <constraint firstAttribute="width" constant="34" id="tcb-DD-ZLb"/>
+                                            <constraint firstAttribute="height" constant="32" id="On5-2K-9HT"/>
+                                            <constraint firstAttribute="width" constant="30" id="tcb-DD-ZLb"/>
                                         </constraints>
-                                        <state key="normal" backgroundImage="settings"/>
+                                        <state key="normal" backgroundImage="filter-512"/>
                                         <connections>
                                             <action selector="filterButtonAction:" destination="BO0-If-4BN" eventType="touchUpInside" id="s2U-Bm-71b"/>
                                         </connections>
@@ -117,12 +117,12 @@
                                 <color key="backgroundColor" red="0.7459995317" green="0.82946075200000002" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="m1Z-o6-Nfl" firstAttribute="top" secondItem="Oy7-Pn-LKt" secondAttribute="top" constant="5" id="1Ef-2O-K0f"/>
-                                    <constraint firstItem="Jf0-5b-0qJ" firstAttribute="centerY" secondItem="Oy7-Pn-LKt" secondAttribute="centerY" id="5wX-cV-sup"/>
-                                    <constraint firstItem="m1Z-o6-Nfl" firstAttribute="centerY" secondItem="Jf0-5b-0qJ" secondAttribute="centerY" id="7XA-G4-D1l"/>
-                                    <constraint firstItem="Jf0-5b-0qJ" firstAttribute="leading" secondItem="m1Z-o6-Nfl" secondAttribute="trailing" constant="6" id="K9h-O8-TKO"/>
+                                    <constraint firstItem="Jf0-5b-0qJ" firstAttribute="centerY" secondItem="Oy7-Pn-LKt" secondAttribute="centerY" constant="-1" id="5wX-cV-sup"/>
+                                    <constraint firstItem="m1Z-o6-Nfl" firstAttribute="centerY" secondItem="Jf0-5b-0qJ" secondAttribute="centerY" constant="1" id="7XA-G4-D1l"/>
+                                    <constraint firstItem="Jf0-5b-0qJ" firstAttribute="leading" secondItem="m1Z-o6-Nfl" secondAttribute="trailing" constant="8" id="K9h-O8-TKO"/>
                                     <constraint firstItem="m1Z-o6-Nfl" firstAttribute="leading" secondItem="Oy7-Pn-LKt" secondAttribute="leadingMargin" id="RJA-us-eW4"/>
                                     <constraint firstAttribute="height" constant="52" id="W6I-FI-I3X"/>
-                                    <constraint firstAttribute="trailing" secondItem="Jf0-5b-0qJ" secondAttribute="trailing" constant="8" id="gfv-gh-XnD"/>
+                                    <constraint firstAttribute="trailing" secondItem="Jf0-5b-0qJ" secondAttribute="trailing" constant="10" id="gfv-gh-XnD"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="214" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q1c-rz-8tG">
@@ -257,6 +257,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="settings" width="256" height="256"/>
+        <image name="filter-512" width="512" height="512"/>
     </resources>
 </document>

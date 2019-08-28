@@ -138,12 +138,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jf0-5b-0qJ">
-                                        <rect key="frame" x="327" y="6" width="40" height="40"/>
+                                        <rect key="frame" x="333" y="10" width="30" height="32"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="On5-2K-9HT"/>
-                                            <constraint firstAttribute="width" constant="40" id="tcb-DD-ZLb"/>
+                                            <constraint firstAttribute="height" constant="32" id="On5-2K-9HT"/>
+                                            <constraint firstAttribute="width" constant="30" id="tcb-DD-ZLb"/>
                                         </constraints>
-                                        <state key="normal" backgroundImage="settings-lineart"/>
+                                        <state key="normal" backgroundImage="filter-512"/>
                                         <connections>
                                             <action selector="filterButtonAction:" destination="BO0-If-4BN" eventType="touchUpInside" id="s2U-Bm-71b"/>
                                         </connections>
@@ -163,11 +163,11 @@
                                     <constraint firstItem="m1Z-o6-Nfl" firstAttribute="centerY" secondItem="Jf0-5b-0qJ" secondAttribute="centerY" id="7XA-G4-D1l"/>
                                     <constraint firstAttribute="bottom" secondItem="oRG-hy-UK2" secondAttribute="bottom" id="FV5-gb-Vz7"/>
                                     <constraint firstAttribute="trailing" secondItem="oRG-hy-UK2" secondAttribute="trailing" id="GCg-nF-i7L"/>
-                                    <constraint firstItem="Jf0-5b-0qJ" firstAttribute="leading" secondItem="m1Z-o6-Nfl" secondAttribute="trailing" id="K9h-O8-TKO"/>
+                                    <constraint firstItem="Jf0-5b-0qJ" firstAttribute="leading" secondItem="m1Z-o6-Nfl" secondAttribute="trailing" constant="6" id="K9h-O8-TKO"/>
                                     <constraint firstItem="m1Z-o6-Nfl" firstAttribute="leading" secondItem="Oy7-Pn-LKt" secondAttribute="leadingMargin" id="RJA-us-eW4"/>
                                     <constraint firstAttribute="height" constant="52" id="W6I-FI-I3X"/>
                                     <constraint firstItem="oRG-hy-UK2" firstAttribute="leading" secondItem="Oy7-Pn-LKt" secondAttribute="leading" id="g3A-mq-Ypa"/>
-                                    <constraint firstAttribute="trailing" secondItem="Jf0-5b-0qJ" secondAttribute="trailing" constant="8" id="gfv-gh-XnD"/>
+                                    <constraint firstAttribute="trailing" secondItem="Jf0-5b-0qJ" secondAttribute="trailing" constant="12" id="gfv-gh-XnD"/>
                                     <constraint firstItem="oRG-hy-UK2" firstAttribute="top" secondItem="Oy7-Pn-LKt" secondAttribute="top" id="oi3-3U-kVt"/>
                                 </constraints>
                             </view>
@@ -459,7 +459,7 @@
         <image name="404-200" width="200" height="200"/>
         <image name="back" width="256" height="256"/>
         <image name="checkmark_green_45x41" width="45" height="41"/>
+        <image name="filter-512" width="512" height="512"/>
         <image name="settings" width="256" height="256"/>
-        <image name="settings-lineart" width="100" height="100"/>
     </resources>
 </document>
