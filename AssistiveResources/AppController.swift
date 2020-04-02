@@ -64,12 +64,12 @@ class AppController: NSObject {
 //        }
 //    }
     
-    func popTopProcessController () {
-        let pController = self.processControllerStack.last
-        //if (self.processControllerStack.last != nil){
-        pController?.terminate()
+    func endTopProcessController () {
+        guard let pController = self.processControllerStack.last else {
+            return
+        }
+        pController.terminate()
         let _ = self.processControllerStack.popLast()
-        //}
     }
     
 }

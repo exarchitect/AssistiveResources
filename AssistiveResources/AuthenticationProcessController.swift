@@ -27,7 +27,7 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
 
     // MARK:- LoginViewControllerCompletionProtocol
     
-    func loginAction (username: String, password: String) {
+    func attemptLogin (username: String, password: String) {
 
         self.sharedServices.userModelController.storeUserCredentials(username: username, password: password)
 

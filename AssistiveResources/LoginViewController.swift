@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol LoginViewControllerCompletionProtocol: class {
-    func loginAction (username: String, password: String)
+    func attemptLogin (username: String, password: String)
 }
 
 
@@ -52,7 +52,7 @@ class LoginViewController: ProcessViewController {
     
     @IBAction func loginButtonAction(_ sender: Any) {
         // TODO:
-        self.completionProtocol?.loginAction(username: "exarchitect@gmail.com", password: "alongishpassword")
+        self.completionProtocol?.attemptLogin(username: "exarchitect@gmail.com", password: "alongishpassword")
     }
 
     @IBAction func segmentedControlAction(_ sender: Any) {

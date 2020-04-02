@@ -74,7 +74,7 @@ func testEvents() -> [StoredEvent] {
     returnevents.append(StoredEvent(event: ("Best Buddies Spring Gala",0),
                                     organization: ("Best Buddies",0),
                                     facility: ("Grand Ballroom, Pacific Hotel",0),
-                                    eventStart: Date(year: 2016, month: 5, day: 10, hour: 10, minute: 0, second: 0),
+                                    eventStart: Date(year: 2016, month: 5, day: 10, hour: 10, minute: 30, second: 0),
                                     durationInMinutes: 120,
                                     eventDetail: "Come to the event of the season - our spring gala celebration.  This is a grand opportunity to socialize and make friends, party, and generally have a great time."))
     

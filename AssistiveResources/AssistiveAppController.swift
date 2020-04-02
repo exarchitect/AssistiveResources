@@ -43,7 +43,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         self.loadUserModelController()        // other model controllers not called until after login
         self.loadConnectivityService()
         
-        self.pushProcessController(type: NavListProcessController.self)
+        self.startProcessController(type: NavListProcessController.self)
 
         // temp override to fail login for testing
         //self.shared.userModelController.storeUserCredentials(username: "", password: "")
@@ -79,10 +79,10 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         switch command.type {
             
         case .dismissTopProcessController:
-            self.popTopProcessController()
+            self.endTopProcessController()
             
         case .requestUserIdentity:
-            self.pushProcessController(type: AuthenticationProcessController.self)
+            self.startProcessController(type: AuthenticationProcessController.self)
 
         case .proceedWithStartup:
             self.loadRegionalResourceModelController(online: true)
@@ -92,10 +92,10 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
             //print(" -- navigate to: \(destination.rawValue)")
             switch destination {
             case .Organizations:
-                self.pushProcessController(type: OrganizationListProcessController.self)
+                self.startProcessController(type: OrganizationListProcessController.self)
                 
             case .Events:
-                self.pushProcessController(type: EventListProcessController.self)
+                self.startProcessController(type: EventListProcessController.self)
                 
             case .Facilities:
                 let _ = 7
@@ -112,7 +112,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
             case .Profile:
                 // temp for testing
                 self.shared.userModelController.logout()
-                self.pushProcessController(type: AuthenticationProcessController.self)
+                self.startProcessController(type: AuthenticationProcessController.self)
             }
 
         case .eventSelected(let event):
@@ -130,7 +130,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
     
     // MARK: - process controller handling
     
-    private func pushProcessController<T> (type: T.Type) where T: ProcessController{
+    private func startProcessController<T> (type: T.Type) where T: ProcessController{
         let processController = T.init()
         processController.setup(responseDelegate: self, navController: self.navController, services: self.shared)
         processController.launch()
