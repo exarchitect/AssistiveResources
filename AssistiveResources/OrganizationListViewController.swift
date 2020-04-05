@@ -16,7 +16,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     weak private var resourcesModelController:RegionalResourcesModelController?
     //private var filterViewController:OrganizationFilterViewController?
     
-    func configuration(resources: RegionalResourcesModelController) {
+    func configuration(resources: RegionalResourcesModelController?) {
         self.resourcesModelController = resources
     }
     

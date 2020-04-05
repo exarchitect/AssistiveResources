@@ -9,15 +9,10 @@
 import UIKit
 
 
-protocol LoginViewControllerCompletionProtocol: class {
-    func attemptLogin (username: String, password: String)
-}
-
-
 class LoginViewController: ProcessViewController {
 
-    weak private var user: UserModelController?
-    weak private var completionProtocol: LoginViewControllerCompletionProtocol!
+    weak private var user: User?
+    weak private var authenticationDelegate: AuthenticationProtocol!
     @IBOutlet weak var selectLoginType: UISegmentedControl!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -26,16 +21,16 @@ class LoginViewController: ProcessViewController {
     
     @IBOutlet weak var tryoutSubtextLabel: UILabel!
     
-    func configuration(userModelController: UserModelController, completionProtocol: LoginViewControllerCompletionProtocol) {
-        self.user = userModelController
-        self.completionProtocol = completionProtocol
+    func configuration(userModelController: User, delegate: AuthenticationProtocol) {
+        user = userModelController
+        authenticationDelegate = delegate
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        precondition(self.user != nil)
-        precondition(self.completionProtocol != nil)
+        precondition(user != nil)
+        precondition(authenticationDelegate != nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,26 +47,26 @@ class LoginViewController: ProcessViewController {
     
     @IBAction func loginButtonAction(_ sender: Any) {
         // TODO:
-        self.completionProtocol?.attemptLogin(username: "exarchitect@gmail.com", password: "alongishpassword")
+        authenticationDelegate.userCredentials(loginType: .IdentifiedUser, credentials: Credentials(userName: "exarchitect@gmail.com", password: "alongishpassword"))
     }
 
     @IBAction func segmentedControlAction(_ sender: Any) {
         let ctrl:UISegmentedControl = sender as! UISegmentedControl
         
         let isTryout = (ctrl.selectedSegmentIndex == 2)
-        self.subtitleLabel.isHidden = isTryout
-        self.emailTextField.isHidden = isTryout
-        self.passwordTextField.isHidden = isTryout
-        self.zipcodeTextField.isHidden = (ctrl.selectedSegmentIndex == 0)
-        self.tryoutSubtextLabel.isHidden = !isTryout
+        subtitleLabel.isHidden = isTryout
+        emailTextField.isHidden = isTryout
+        passwordTextField.isHidden = isTryout
+        zipcodeTextField.isHidden = (ctrl.selectedSegmentIndex == 0)
+        tryoutSubtextLabel.isHidden = !isTryout
 
         switch ctrl.selectedSegmentIndex {
         case 0:
-            self.subtitleLabel.text = "If you have already registered, please enter your email address and password."
+            subtitleLabel.text = "If you have already registered, please enter your email address and password."
         case 1:
-            self.subtitleLabel.text = "If you haven't registered, please sign up so that we can customize information for you and your family."
+            subtitleLabel.text = "If you haven't registered, please sign up so that we can customize information for you and your family."
         default:
-            self.subtitleLabel.text = "You are welcome to use this app without registering.  We never share your information with any other party."
+            subtitleLabel.text = "You are welcome to use this app without registering.  We never share your information with any other party."
         }
     }
     

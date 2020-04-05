@@ -8,12 +8,15 @@
 
 import UIKit
 
+protocol AuthenticationProtocol: class {
+    func userCredentials (loginType: LoginAccess, credentials: Credentials)
+}
 
-class AuthenticationProcessController: ProcessController, LoginViewControllerCompletionProtocol {
+class AuthenticationProcessController: ProcessController, AuthenticationProtocol {
     
     override func createPrimaryViewController() -> ProcessViewController? {
         let loginViewController: LoginViewController? = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
-        loginViewController?.configuration(userModelController: self.sharedServices.userModelController, completionProtocol: self)
+        loginViewController?.configuration(userModelController: self.sharedServices.userModel, delegate: self)
         
         return loginViewController
     }
@@ -25,41 +28,23 @@ class AuthenticationProcessController: ProcessController, LoginViewControllerCom
     }
     
 
-    // MARK:- LoginViewControllerCompletionProtocol
+    // MARK:- AuthenticationCoordinatorProtocol
     
-    func attemptLogin (username: String, password: String) {
+    func userCredentials (loginType: LoginAccess, credentials: Credentials) {
 
-        self.sharedServices.userModelController.storeUserCredentials(username: username, password: password)
-
-        self.sharedServices.userModelController.authorizeUser(completion: { (loginResult) in
-         
+        sharedServices.userModel.validateCredentials(completion: { loginResult in
             switch loginResult {
-                
-            case .Anonymous:
-                print("Anonymous")
-                fallthrough
-                
-//            case .ServiceOffline:
-//                print("Service Offline")
-//                fallthrough
-
             case .Authenticated:
                 //print("authenticated")
+                self.sharedServices.userModel.storeUserCredentials(username: credentials.userName, password: credentials.password)
                 self.invokeAction(command: AssistiveCommand(type: .proceedWithStartup))
                 self.invokeAction(command: AssistiveCommand(type: .dismissTopProcessController))
-
-            case .Uninitialized:
+            case .NeedCredentials:
                 // TODO - get credentials
                 fallthrough
-                
-            case .NoCredentials:
-                // TODO - get credentials
-                fallthrough
-                
-            case .Rejected:
+            case .Unknown:
                 print("NOT logged in")
                 // TODO - warn user of bad credentials
-                
             }
         })
     }

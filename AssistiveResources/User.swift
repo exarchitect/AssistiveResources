@@ -1,0 +1,113 @@
+//
+//  User.swift
+//  AssistiveResources
+//
+//  Created by Bill Johnson on 4/2/20.
+//  Copyright © 2020 SevenPlusTwo. All rights reserved.
+//
+
+import UIKit
+
+
+enum LoginResponse {
+    case Authenticated, Unknown, NeedCredentials
+}
+
+enum LoginAccess {
+    case Anonymous, IdentifiedUser, PendingSignup
+}
+
+typealias LoginCompletionHandlerType = (_ loginResult: LoginResponse) -> Void
+
+protocol UserProvider {
+    var userModel: User! { get }
+}
+
+final class User: NSObject {
+
+    var locationProfile: LocationProfile
+    var locationZip: String = ""
+    private var username: String = ""
+    private var password: String = ""
+
+    private var rememberMe: Bool
+    private var loginType: LoginAccess?
+    private var backendlUser: BackendlessUser? = nil
+    static let sharedInstance = User()
+
+    override init() {
+        let props = PropertySettings.sharedInstance
+        props.read()
+        username = props.username ?? ""
+        password = props.password ?? ""
+        rememberMe = props.rememberMe
+
+        locationZip = props.zipcode
+        locationProfile = LocationProfile(zip: self.locationZip)
+
+        super.init()
+    }
+
+    func validateCredentials(completion: @escaping LoginCompletionHandlerType) {
+        guard haveCredentials() else {
+            self.loginType = nil
+            completion(.NeedCredentials)      // failed, since we dont have creds
+            return
+        }
+        DispatchQueue.main.async {
+            startActivityIndicator(title: nil, message: "authenticating...")
+        }
+
+        Backendless.sharedInstance()?.userService.login(username, password: password, response: { (user: BackendlessUser?) in
+            self.backendlUser = user
+            self.storeUserCredentials(username: self.username, password: self.password)
+
+            stopActivityIndicator()
+
+            self.loginType = .IdentifiedUser
+            completion(.Authenticated)
+
+        }, error: { (fault: Fault?) in
+            print (fault ?? "failed login")
+            let err: String = fault!.faultCode
+            // temp
+            self.loginType = .IdentifiedUser
+//                if err=="-1009" {
+//                    self.loginType = .Anonymous        // TODO: if system comes back online, re-authorize user
+//                } else {
+//                    self.loginType = .Rejected
+//                }
+
+            DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.5)) {
+                stopActivityIndicator()
+                // temp
+                completion(.Authenticated)
+            }
+        })
+    }
+
+    func logout() {
+        let backend = Backendless.sharedInstance()
+        backend?.userService.logout({ () in
+            print ("logged out")
+        }, error: { (fault: Fault?) in
+            print (fault ?? "failed logoff")
+        })
+
+    }
+
+    private func haveCredentials() -> Bool {
+        return (!self.username.isEmpty && !self.password.isEmpty)
+    }
+
+    func storeUserCredentials (username: String, password: String) {
+        self.username = username
+        self.password = password
+
+        let props = PropertySettings.sharedInstance
+        props.username = username
+        props.password = password
+        props.write()
+    }
+
+}

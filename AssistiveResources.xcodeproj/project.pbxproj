@@ -10,6 +10,8 @@
 		78BE6FBF8913BE5E60A80F72 /* Pods_AssistiveResourcesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB555A1779314481D6BFF3DC /* Pods_AssistiveResourcesUITests.framework */; };
 		82A2F78C360FA96106099AEF /* Pods_AssistiveResourcesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32905B721FA008F6AD1B3B6C /* Pods_AssistiveResourcesTests.framework */; };
 		C1F3E673E6BCF568D5BFCA60 /* Pods_AssistiveResources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EE8B2CD99623C42D941D32 /* Pods_AssistiveResources.framework */; };
+		D202D5252436AAED00B77958 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D202D5242436AAED00B77958 /* User.swift */; };
+		D202D5272437D1B900B77958 /* AuthenticationPlaybook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D202D5262437D1B900B77958 /* AuthenticationPlaybook.swift */; };
 		D209FAC51E00CF030099BD46 /* EventDetailProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209FAC41E00CF030099BD46 /* EventDetailProcessController.swift */; };
 		D209FAC71E0245D00099BD46 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209FAC61E0245D00099BD46 /* EventDetailViewController.swift */; };
 		D209FAC91E0245EC0099BD46 /* EventDetailStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D209FAC81E0245EC0099BD46 /* EventDetailStoryboard.storyboard */; };
@@ -19,7 +21,6 @@
 		D2309DE71E2B481E0056A66C /* AssistiveCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2309DE61E2B481E0056A66C /* AssistiveCommand.swift */; };
 		D23767E2229583A9004C8E85 /* ElementInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23767E1229583A9004C8E85 /* ElementInteractor.swift */; };
 		D2446FC320282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2446FC220282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift */; };
-		D24E4DB01DE3EB6F008A11FB /* UserModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DAF1DE3EB6F008A11FB /* UserModelController.swift */; };
 		D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */; };
 		D24E4DB71DE56320008A11FB /* AuthenticationProcess.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */; };
 		D24E4DB91DE5637E008A11FB /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DB81DE5637E008A11FB /* LoginViewController.swift */; };
@@ -98,6 +99,8 @@
 		63147EA889513E185CD2ADEF /* Pods-AssistiveResourcesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AssistiveResourcesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AssistiveResourcesTests/Pods-AssistiveResourcesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6EF60E8FC5E67E799797B663 /* Pods-AssistiveResources.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AssistiveResources.release.xcconfig"; path = "Pods/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources.release.xcconfig"; sourceTree = "<group>"; };
 		AB555A1779314481D6BFF3DC /* Pods_AssistiveResourcesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AssistiveResourcesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D202D5242436AAED00B77958 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D202D5262437D1B900B77958 /* AuthenticationPlaybook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPlaybook.swift; sourceTree = "<group>"; };
 		D209FAC41E00CF030099BD46 /* EventDetailProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailProcessController.swift; sourceTree = "<group>"; };
 		D209FAC61E0245D00099BD46 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		D209FAC81E0245EC0099BD46 /* EventDetailStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EventDetailStoryboard.storyboard; sourceTree = "<group>"; };
@@ -107,7 +110,6 @@
 		D2309DE61E2B481E0056A66C /* AssistiveCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistiveCommand.swift; sourceTree = "<group>"; };
 		D23767E1229583A9004C8E85 /* ElementInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementInteractor.swift; sourceTree = "<group>"; };
 		D2446FC220282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionalResourcesRemoteDatasource.swift; sourceTree = "<group>"; };
-		D24E4DAF1DE3EB6F008A11FB /* UserModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModelController.swift; sourceTree = "<group>"; };
 		D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertySettings.swift; sourceTree = "<group>"; };
 		D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AuthenticationProcess.storyboard; sourceTree = "<group>"; };
 		D24E4DB81DE5637E008A11FB /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -208,6 +210,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D202D5232436A36E00B77958 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D2C9AD701DDFF5120028341D /* AppController.swift */,
+				D2C9AD721DE00A8D0028341D /* RootViewController.swift */,
+				D2F91E931DDFE5D20084F00E /* Main.storyboard */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
 		D209FAC31E00CE790099BD46 /* EventDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +236,7 @@
 				D24E4DBA1DE56ACF008A11FB /* AuthenticationProcessController.swift */,
 				D24E4DB81DE5637E008A11FB /* LoginViewController.swift */,
 				D24E4DB61DE56320008A11FB /* AuthenticationProcess.storyboard */,
+				D202D5262437D1B900B77958 /* AuthenticationPlaybook.swift */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -252,7 +265,7 @@
 		D24E4DAE1DE3E86C008A11FB /* User */ = {
 			isa = PBXGroup;
 			children = (
-				D24E4DAF1DE3EB6F008A11FB /* UserModelController.swift */,
+				D202D5242436AAED00B77958 /* User.swift */,
 				D24E4DBD1DE56D6F008A11FB /* ProfilePlaybook.swift */,
 			);
 			name = User;
@@ -325,9 +338,6 @@
 		D2B028521E2C71770064B3D2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				D2C9AD701DDFF5120028341D /* AppController.swift */,
-				D2C9AD721DE00A8D0028341D /* RootViewController.swift */,
-				D2F91E931DDFE5D20084F00E /* Main.storyboard */,
 				D24E4DCB1DE74750008A11FB /* ProcessController.swift */,
 				D2C445B720154ADB0065099A /* ProcessViewController.swift */,
 				D2B028501E2C29530064B3D2 /* ModelController.swift */,
@@ -353,6 +363,7 @@
 		D2C9AD6C1DDFF3800028341D /* AppController */ = {
 			isa = PBXGroup;
 			children = (
+				D202D5232436A36E00B77958 /* Components */,
 				D2B7D1571E594B8400E69D1E /* AssistiveAppController.swift */,
 				D2309DE61E2B481E0056A66C /* AssistiveCommand.swift */,
 			);
@@ -643,7 +654,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/ReachabilitySwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -662,7 +673,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		93D701079285C363926CC20D /* [CP] Check Pods Manifest.lock */ = {
@@ -690,6 +701,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D202D5272437D1B900B77958 /* AuthenticationPlaybook.swift in Sources */,
 				D24E4DB91DE5637E008A11FB /* LoginViewController.swift in Sources */,
 				D27440EF1DF6459C008E0476 /* UXUtilities.swift in Sources */,
 				D28C80D41DF0E8B6002D3940 /* EventListViewController.swift in Sources */,
@@ -710,7 +722,6 @@
 				D22C973A202A8A1F001C311A /* FilterTableRowCell.swift in Sources */,
 				D28C80D11DF0E821002D3940 /* EventListProcessController.swift in Sources */,
 				D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */,
-				D24E4DB01DE3EB6F008A11FB /* UserModelController.swift in Sources */,
 				D2446FC320282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift in Sources */,
 				D24E4DD31DED2703008A11FB /* NavListViewController.swift in Sources */,
 				D25550571E24A68F004FE72B /* EventRepositoryAccessor.swift in Sources */,
@@ -731,6 +742,7 @@
 				D2B7D1491E46A50F00E69D1E /* OrganizationListTableViewCell.swift in Sources */,
 				D2B028511E2C29530064B3D2 /* ModelController.swift in Sources */,
 				D255504F1E24934F004FE72B /* RegionalResourcesRepository.swift in Sources */,
+				D202D5252436AAED00B77958 /* User.swift in Sources */,
 				D209FAC71E0245D00099BD46 /* EventDetailViewController.swift in Sources */,
 				D24E4DC81DE74167008A11FB /* PublicEvent.swift in Sources */,
 				D24E4DC61DE74066008A11FB /* Organization.swift in Sources */,

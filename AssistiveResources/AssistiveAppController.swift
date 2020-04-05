@@ -12,16 +12,16 @@ import UIKit
 // TODO: Filter (UI and model) for EventList
 // TODO: Organization Detail
 // TODO: Filter for OrganizationList
-// TODO: **DONE** Remote data source
+// TODO: Refactor Command Objects
+// TODO: User Login
 // TODO: CocoaLumberjack
-// TODO: Timepiece cocoapod
 // TODO: Unit Tests for models
 // TODO: UI Unit Tests -
 
 
 struct SharedServices: RegionalResourcesProvider, UserProvider {
     var regionalResourcesModelController: RegionalResourcesModelController!
-    var userModelController: UserModelController!
+    var userModel: User!
     var connectivityService: ConnectivityService!
     //var interactionService: InteractionService!
 }
@@ -40,32 +40,22 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
     
     override func internalStart() {
 
-        self.loadUserModelController()        // other model controllers not called until after login
-        self.loadConnectivityService()
+        loadUserModel()        // other model controllers not called until after login
+        loadConnectivityService()
         
         self.startProcessController(type: NavListProcessController.self)
 
         // temp override to fail login for testing
-        //self.shared.userModelController.storeUserCredentials(username: "", password: "")
-        //self.shared.userModelController.storeUserCredentials(username: "exarchitect@gmail.com", password: "alongishpassword")
+        //self.shared.userModel.storeUserCredentials(username: "", password: "")
+        //self.shared.userModel.storeUserCredentials(username: "exarchitect@gmail.com", password: "alongishpassword")
         
-        self.shared.userModelController.authorizeUser(completion: { (loginResult) in
-            
-            switch loginResult {
-                
-            case .Anonymous:
-                fallthrough
-
+        self.shared.userModel.validateCredentials(completion: { loginOutcome in
+            switch loginOutcome {
             case .Authenticated:
                 self.invokeAction(command: AssistiveCommand(type: .proceedWithStartup))
-
-            case .Uninitialized:
+            case .Unknown:
                 fallthrough
-                
-            case .Rejected:
-                fallthrough
-                
-            case .NoCredentials:
+            case .NeedCredentials:
                 self.invokeAction(command: AssistiveCommand(type: .requestUserIdentity))
             }
         })
@@ -111,7 +101,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
                 
             case .Profile:
                 // temp for testing
-                self.shared.userModelController.logout()
+                self.shared.userModel.logout()
                 self.startProcessController(type: AuthenticationProcessController.self)
             }
 
@@ -142,17 +132,17 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
 
     private func loadRegionalResourceModelController (online: Bool) {
         if (self.shared.regionalResourcesModelController == nil) {
-            self.shared.regionalResourcesModelController = RegionalResourcesModelController(atLocation: self.shared.userModelController.locationProfile, isOnline: online)
+            self.shared.regionalResourcesModelController = RegionalResourcesModelController(atLocation: self.shared.userModel.locationProfile, isOnline: online)
             self.shared.regionalResourcesModelController?.initiateLoading()     // TODO: get rid of this
         }
         precondition(self.shared.regionalResourcesModelController != nil)
     }
     
-    private func loadUserModelController () {
-        if (self.shared.userModelController == nil) {
-            self.shared.userModelController = UserModelController()
+    private func loadUserModel () {
+        if (self.shared.userModel == nil) {
+            self.shared.userModel = User()
         }
-        precondition(self.shared.userModelController != nil)
+        precondition(self.shared.userModel != nil)
     }
     
     private func loadConnectivityService () {

@@ -17,12 +17,12 @@ enum LoginType : Int {
 typealias AsyncCompletionHandlerType = (_ loginResult: LoginType) -> Void
 
 
-protocol UserProvider {
-    var userModelController: UserModelController! { get }
+protocol OLDUserProvider {
+    var userModelController: OLDUserModelController! { get }
 }
 
 
-final class UserModelController: ModelController {
+final class OLDUserModelController: ModelController {
     
     var locationProfile: LocationProfile
     var locationZip: String = ""
@@ -36,7 +36,7 @@ final class UserModelController: ModelController {
     
     private var backendlUser: BackendlessUser? = nil
     
-    static let sharedInstance = UserModelController()     // singleton
+    static let sharedInstance = OLDUserModelController()     // singleton
     
     override init() {
         let props = PropertySettings.sharedInstance
@@ -49,10 +49,6 @@ final class UserModelController: ModelController {
         self.locationProfile = LocationProfile(zip: self.locationZip)
         
         super.init()
-    }
-    
-    func haveCredentials() -> Bool {
-        return (!self.username.isEmpty && !self.password.isEmpty)
     }
     
     func authorizeUser (completion: @escaping AsyncCompletionHandlerType) {
@@ -111,6 +107,10 @@ final class UserModelController: ModelController {
             print (fault ?? "failed logoff")
         })
         
+    }
+
+    private func haveCredentials() -> Bool {
+        return (!self.username.isEmpty && !self.password.isEmpty)
     }
 
     func storeUserCredentials (username: String, password: String) {

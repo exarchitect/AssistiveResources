@@ -14,7 +14,7 @@ class EventDetailViewController: ProcessViewController {
     weak private var resourcesModelController: RegionalResourcesModelController?
     @IBOutlet weak var scrollView: UIScrollView!
     
-    func configuration(resources: RegionalResourcesModelController) {
+    func configuration(resources: RegionalResourcesModelController?) {
         self.resourcesModelController = resources
     }
     

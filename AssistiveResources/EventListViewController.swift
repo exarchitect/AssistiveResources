@@ -19,7 +19,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     weak private var containerViewController:EventContainerViewController?
     var filter: FilterProfile = FilterProfile()
     
-    func configuration(resources: RegionalResourcesModelController) {
+    func configuration(resources: RegionalResourcesModelController?) {
         self.resourcesModelController = resources
 
         //filter.developmentalAgeValue = .PreschoolDevelopmentalAge
@@ -76,7 +76,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
 
         let filterViewController:EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
         
-        filterViewController?.configuration(resources: self.resourcesModelController!, selectorDelegate: self, filter: filter)
+        filterViewController?.configuration(resources: self.resourcesModelController, selectorDelegate: self, filter: filter)
 
         if let filterVC = filterViewController {
             present(filterVC, animated: true, completion: nil)
