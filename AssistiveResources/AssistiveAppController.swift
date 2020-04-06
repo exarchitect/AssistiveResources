@@ -23,7 +23,6 @@ struct SharedServices: RegionalResourcesProvider, UserProvider {
     var regionalResourcesModelController: RegionalResourcesModelController!
     var userModel: User!
     var connectivityService: ConnectivityService!
-    //var interactionService: InteractionService!
 }
 
 
@@ -69,8 +68,12 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         switch command.type {
             
         case .dismissTopProcessController:
-            self.endTopProcessController()
-            
+            guard let pController = self.processControllerStack.last else {
+                return
+            }
+            pController.terminate()
+            let _ = self.processControllerStack.popLast()
+
         case .requestUserIdentity:
             self.startProcessController(type: AuthenticationProcessController.self)
 

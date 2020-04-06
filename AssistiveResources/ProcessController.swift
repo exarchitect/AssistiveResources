@@ -14,8 +14,8 @@ protocol CommandResponseProtocol: class {
 }
 
 
-class ProcessController: NSObject, Navigable, CommandResponseProtocol {
-    
+class ProcessController: NSObject, CommandResponseProtocol {
+
     var sharedServices: SharedServices!
     private weak var responseDelegate: CommandResponseProtocol!
     private var primaryProcessViewController: ProcessViewController? = nil
@@ -70,10 +70,22 @@ func instantiateViewController<T>(storyboardName: String, storyboardID: String) 
 
 // MARK: - Navigable PROTOCOL
 
-protocol Navigable {
-    func setup (responseDelegate: CommandResponseProtocol, navController: UINavigationController, services: SharedServices)
-    func launch()
-    func terminate()
+protocol Navigable where Self: UIViewController {
+    var services: SharedServices { get set }
+    static var storyboardName: String { get }
+    static var storyboardID: String { get }
 }
 
+extension Navigable {
+    func setupNav (services: SharedServices) {
+        self.services = services
+    }
+
+    static func launchProcessViewController<T>(type: T.Type, with services: SharedServices) -> T? {
+        let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: storyboardID)
+
+        return viewController as? T
+    }
+}
 
