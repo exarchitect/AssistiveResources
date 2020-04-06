@@ -47,7 +47,7 @@ class LoginViewController: ProcessViewController {
     
     @IBAction func loginButtonAction(_ sender: Any) {
         // TODO:
-        authenticationDelegate.userCredentials(loginType: .IdentifiedUser, credentials: Credentials(userName: "exarchitect@gmail.com", password: "alongishpassword"))
+        authenticationDelegate.userEnteredCredentials(loginType: .IdentifiedUser, credentials: Credentials(userName: "exarchitect@gmail.com", password: "alongishpassword"))
     }
 
     @IBAction func segmentedControlAction(_ sender: Any) {

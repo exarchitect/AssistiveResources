@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AuthenticationProtocol: class {
-    func userCredentials (loginType: LoginAccess, credentials: Credentials)
+    func userEnteredCredentials (loginType: LoginAccess, credentials: Credentials)
 }
 
 class AuthenticationProcessController: ProcessController, AuthenticationProtocol {
@@ -30,14 +30,14 @@ class AuthenticationProcessController: ProcessController, AuthenticationProtocol
 
     // MARK:- AuthenticationCoordinatorProtocol
     
-    func userCredentials (loginType: LoginAccess, credentials: Credentials) {
+    func userEnteredCredentials (loginType: LoginAccess, credentials: Credentials) {
 
         sharedServices.userModel.validateCredentials(completion: { loginResult in
             switch loginResult {
             case .Authenticated:
                 //print("authenticated")
                 self.sharedServices.userModel.storeUserCredentials(username: credentials.userName, password: credentials.password)
-                self.invokeAction(command: AssistiveCommand(type: .proceedWithStartup))
+                self.invokeAction(command: AssistiveCommand(type: .userSuccessfullyIdentified))
                 self.invokeAction(command: AssistiveCommand(type: .dismissTopProcessController))
             case .NeedCredentials:
                 // TODO - get credentials

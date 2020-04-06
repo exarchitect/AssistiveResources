@@ -52,7 +52,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         self.shared.userModel.validateCredentials(completion: { loginOutcome in
             switch loginOutcome {
             case .Authenticated:
-                self.invokeAction(command: AssistiveCommand(type: .proceedWithStartup))
+                self.invokeAction(command: AssistiveCommand(type: .userSuccessfullyIdentified))
             case .Unknown:
                 fallthrough
             case .NeedCredentials:
@@ -74,7 +74,7 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         case .requestUserIdentity:
             self.startProcessController(type: AuthenticationProcessController.self)
 
-        case .proceedWithStartup:
+        case .userSuccessfullyIdentified:
             self.loadRegionalResourceModelController(online: true)
             requestMainNavigationRefresh()
 
