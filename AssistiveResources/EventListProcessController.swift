@@ -11,6 +11,10 @@ import UIKit
 
 class EventListProcessController: ProcessController {
     
+    override func createPrimaryViewController() -> ProcessViewController? {
+        return instantiateProcessViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID")
+    }
+
     //MARK: - debug
     deinit {
         let _ = 0

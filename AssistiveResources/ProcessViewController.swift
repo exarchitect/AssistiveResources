@@ -2,7 +2,7 @@
 //  ProcessViewController.swift
 //  AssistiveResources
 //
-//  Created by WCJ on 1/21/18.
+//  Created by Bill Johnson on 1/21/18.
 //  Copyright © 2018 SevenPlusTwo. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ class ProcessViewController: UIViewController {
 
     weak var processController: ProcessController?
 
-    func requestAction (command: AssistiveCommand){
+    func execute(command: AssistiveCommand){
         processController?.commandHandler.execute(command: command)
     }
 

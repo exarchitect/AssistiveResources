@@ -13,6 +13,10 @@ class EventDetailProcessController: ProcessController {
 
     var filter:EntityDescriptor?
     
+    override func createPrimaryViewController() -> ProcessViewController? {
+        return instantiateProcessViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")
+    }
+
     deinit {
         let _ = 0
         //print("deallocating eventdetailPC")

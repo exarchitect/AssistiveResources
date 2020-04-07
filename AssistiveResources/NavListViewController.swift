@@ -25,7 +25,7 @@ class NavListViewController: ProcessViewController {
         super.viewDidLoad()
 
         tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationItems, selector: { (destination:NavigationCategory) -> Void in
-            self.requestAction(command: .selectCategory(destination))
+            self.execute(command: .selectCategory(destination))
         })
     }
     

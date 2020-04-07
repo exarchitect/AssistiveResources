@@ -53,7 +53,6 @@
 		D28C80D81DF0E8DE002D3940 /* EventListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */; };
 		D28C80DA1DF0E908002D3940 /* EventList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D28C80D91DF0E908002D3940 /* EventList.storyboard */; };
 		D28C80DC1DF12B76002D3940 /* EventContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D28C80DB1DF12B76002D3940 /* EventContainerViewController.swift */; };
-		D2B028511E2C29530064B3D2 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B028501E2C29530064B3D2 /* ModelController.swift */; };
 		D2B7D1451E46A4A900E69D1E /* OrganizationListProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1441E46A4A900E69D1E /* OrganizationListProcessController.swift */; };
 		D2B7D1471E46A4E000E69D1E /* OrganizationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1461E46A4E000E69D1E /* OrganizationListViewController.swift */; };
 		D2B7D1491E46A50F00E69D1E /* OrganizationListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1481E46A50F00E69D1E /* OrganizationListTableViewCell.swift */; };
@@ -144,7 +143,6 @@
 		D28C80D61DF0E8DE002D3940 /* EventListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventListTableViewCell.swift; sourceTree = "<group>"; };
 		D28C80D91DF0E908002D3940 /* EventList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EventList.storyboard; sourceTree = "<group>"; };
 		D28C80DB1DF12B76002D3940 /* EventContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventContainerViewController.swift; sourceTree = "<group>"; };
-		D2B028501E2C29530064B3D2 /* ModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		D2B7D1441E46A4A900E69D1E /* OrganizationListProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationListProcessController.swift; sourceTree = "<group>"; };
 		D2B7D1461E46A4E000E69D1E /* OrganizationListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationListViewController.swift; sourceTree = "<group>"; };
 		D2B7D1481E46A50F00E69D1E /* OrganizationListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationListTableViewCell.swift; sourceTree = "<group>"; };
@@ -231,6 +229,15 @@
 			name = Components;
 			sourceTree = "<group>";
 		};
+		D202D52D243D20C800B77958 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D25550491E234626004FE72B /* Repository.swift */,
+				D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
 		D209FAC31E00CE790099BD46 /* EventDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,6 +275,7 @@
 		D24E4DAD1DE3E593008A11FB /* ModelControllers */ = {
 			isa = PBXGroup;
 			children = (
+				D202D52D243D20C800B77958 /* Components */,
 				D255504B1E249162004FE72B /* RegionalResources */,
 				D24E4DAE1DE3E86C008A11FB /* User */,
 			);
@@ -347,16 +355,6 @@
 			name = EventList;
 			sourceTree = "<group>";
 		};
-		D2B028521E2C71770064B3D2 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				D2B028501E2C29530064B3D2 /* ModelController.swift */,
-				D25550491E234626004FE72B /* Repository.swift */,
-				D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */,
-			);
-			name = Common;
-			sourceTree = "<group>";
-		};
 		D2B7D1431E46A40F00E69D1E /* OrganizationList */ = {
 			isa = PBXGroup;
 			children = (
@@ -429,7 +427,6 @@
 				D2F91E8F1DDFE5D20084F00E /* AppDelegate.swift */,
 				D250DFE52135E65700E8FFE4 /* AssistivePlaybook.swift */,
 				D2F91E9B1DDFE5D20084F00E /* Info.plist */,
-				D2B028521E2C71770064B3D2 /* Common */,
 				D2C9AD6C1DDFF3800028341D /* AppController */,
 				D24E4DAD1DE3E593008A11FB /* ModelControllers */,
 				D24E4DAC1DE3E581008A11FB /* ProcessControllers */,
@@ -751,7 +748,6 @@
 				D25550551E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift in Sources */,
 				D2B7D1561E59422D00E69D1E /* RepositoryAccessor.swift in Sources */,
 				D2B7D1491E46A50F00E69D1E /* OrganizationListTableViewCell.swift in Sources */,
-				D2B028511E2C29530064B3D2 /* ModelController.swift in Sources */,
 				D255504F1E24934F004FE72B /* RegionalResourcesRepository.swift in Sources */,
 				D202D5252436AAED00B77958 /* User.swift in Sources */,
 				D202D52B243BDD6F00B77958 /* NavigationStack.swift in Sources */,

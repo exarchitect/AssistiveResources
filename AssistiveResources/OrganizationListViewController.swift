@@ -43,11 +43,10 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     
     func notifyRowDetailSelected(rowIndex: Int) {
         let testOrg: EntityDescriptor = (entityName: "TestOrg", entityID: 2)
-        self.requestAction(command: .selectOrganization(testOrg))
+        self.execute(command: .selectOrganization(testOrg))
     }
     
     func notifyFilterSelected() {
-
 //        unowned var filterViewController:EventFilterViewController
 //        filterViewController = (instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController)!
 //        filterViewController.dependencies(resources: self.resourcesModelController!, selectorDelegate: self)
@@ -59,7 +58,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     //MARK: @IBAction
     
     @IBAction func backButtonAction(_ sender: Any) {
-        self.requestAction(command: .dismissCurrentProcess)
+        self.execute(command: .dismissCurrentProcess)
     }
     
 }

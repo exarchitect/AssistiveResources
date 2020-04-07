@@ -10,6 +10,10 @@ import UIKit
 
 class OrganizationListProcessController: ProcessController {
     
+    override func createPrimaryViewController() -> ProcessViewController? {
+        return instantiateProcessViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID")
+    }
+
     //MARK: - debug
     deinit {
         let _ = 0

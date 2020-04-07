@@ -14,6 +14,10 @@ protocol AuthenticationProtocol: class {
 
 class AuthenticationProcessController: ProcessController, AuthenticationProtocol {
     
+    override func createPrimaryViewController() -> ProcessViewController? {
+        return instantiateProcessViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
+    }
+
     // MARK:- AuthenticationCoordinatorProtocol
     
     func userEnteredCredentials (loginType: UserAccess, credentials: Credentials) {

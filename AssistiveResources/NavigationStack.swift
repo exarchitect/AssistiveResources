@@ -11,8 +11,8 @@ import UIKit
 class NavigationStack: NSObject, Commandable {
 
     var processControllerStack = [ProcessController]()
-    var services: SharedServices!      // TODO: should this be weak?
-    var navController: UINavigationController
+    var services: SharedServices?
+    weak var navController: UINavigationController!
 
     init(services: SharedServices, navController: UINavigationController) {
         self.services = services
@@ -20,29 +20,10 @@ class NavigationStack: NSObject, Commandable {
     }
 
     @discardableResult func instantiateProcess<T: ProcessController>(ofType: T.Type) -> T? {
-        var viewController: UIViewController?
         let processController = T.init()
+        let viewController = processController.createPrimaryViewController()
 
-        switch ofType {
-        case is NavListProcessController.Type:
-            viewController = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID")
-
-        case is AuthenticationProcessController.Type:
-            viewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
-
-        case is EventListProcessController.Type:
-            viewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID")
-
-        case is EventDetailProcessController.Type:
-            viewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")
-
-        case is OrganizationListProcessController.Type:
-            viewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID")
-
-        default:
-            fatalError("override \(#function)")
-        }
-        guard let processViewController = viewController as? ProcessViewController else {
+        guard let processViewController = viewController, let services = services else {
             return nil
         }
         processController.setup(commandHandler: self, services: services, primaryViewController: processViewController)
@@ -60,7 +41,6 @@ class NavigationStack: NSObject, Commandable {
     func execute(command: AssistiveCommand) {
 
         switch command {
-
         case .dismissCurrentProcess:
             guard let pController = processControllerStack.popLast(), let previousViewController = processControllerStack.last?.primaryProcessViewController else {
                 return
@@ -71,10 +51,13 @@ class NavigationStack: NSObject, Commandable {
             instantiateProcess(ofType: AuthenticationProcessController.self)
 
         case .userSuccessfullyIdentified:
-            if (services.regionalResourcesModelController == nil) {
+            guard services != nil else {
+                return
+            }
+            if (services!.regionalResourcesModelController == nil) {
                 let online = true       // TODO: implement
-                services.regionalResourcesModelController = RegionalResourcesModelController(atLocation: services.userModel.locationProfile, isOnline: online)
-                services.regionalResourcesModelController?.initiateLoading()
+                services!.regionalResourcesModelController = RegionalResourcesModelController(atLocation: services!.userModel.locationProfile, isOnline: online)
+                services!.regionalResourcesModelController?.initiateLoading()
             }
             requestMainNavigationRefresh()
 
@@ -100,7 +83,7 @@ class NavigationStack: NSObject, Commandable {
 
             case .Profile:
                 // temp for testing
-                services.userModel.logout()
+                services?.userModel.logout()
                 instantiateProcess(ofType: AuthenticationProcessController.self)
 }
 

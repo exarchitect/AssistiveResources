@@ -15,7 +15,7 @@ protocol RegionalResourcesProvider {
 }
 
 
-class RegionalResourcesModelController: ModelController {
+class RegionalResourcesModelController: NSObject {
     
     private var regionalRepository : RegionalResourcesRepository!
     private var online : Bool!
