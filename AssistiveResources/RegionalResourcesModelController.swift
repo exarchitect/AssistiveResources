@@ -29,13 +29,12 @@ class RegionalResourcesModelController: ModelController {
     }
     
     func initiateLoading() {
-
-        self.regionalRepository.load { (success) in
-            if (success) {
-                // data pulled by accessors, using notification mechanism
-            } else {
+        regionalRepository.load { success in
+            guard success == true else {
                 print("loading failed")
+                return
             }
+            // data pulled by accessors, using notification mechanism
         }
     }
 

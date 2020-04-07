@@ -15,7 +15,7 @@ let updateNavigationNotificationKeyName = NSNotification.Name(rawValue: "key_not
 class NavListViewController: ProcessViewController {
 
     private var navigationData: NavigationContent!
-    private var isCurrentlyVisible: Bool = false
+    private var isVisible: Bool = false
     private var needContentRefresh: Bool = false
     
     @IBOutlet weak var navTable: UITableView!
@@ -37,7 +37,7 @@ class NavListViewController: ProcessViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.isCurrentlyVisible = true
+        self.isVisible = true
         if (self.needContentRefresh) {
             self.navTable.reloadData()
             self.needContentRefresh = false
@@ -46,7 +46,7 @@ class NavListViewController: ProcessViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.isCurrentlyVisible = false
+        self.isVisible = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,7 +62,7 @@ class NavListViewController: ProcessViewController {
     
     @objc func refreshContent() {
         self.navigationData.updateSubtitles()
-        if (self.isCurrentlyVisible) {
+        if (self.isVisible) {
             self.navTable.reloadData()
             self.needContentRefresh = false
         } else {

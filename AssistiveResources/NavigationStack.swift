@@ -87,7 +87,7 @@ class NavigationStack: NSObject, CommandResponseProtocol {
             if (services.regionalResourcesModelController == nil) {
                 let online = true       // TODO: implement
                 services.regionalResourcesModelController = RegionalResourcesModelController(atLocation: services.userModel.locationProfile, isOnline: online)
-                services.regionalResourcesModelController?.initiateLoading()     // TODO: get rid of this
+                services.regionalResourcesModelController?.initiateLoading()
             }
             requestMainNavigationRefresh()
 

@@ -10,13 +10,6 @@ import UIKit
 
 class OrganizationListProcessController: ProcessController {
     
-//    override func createPrimaryViewController() -> ProcessViewController? {
-//        let organizationListViewController: OrganizationListViewController? = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID")
-//        organizationListViewController?.configuration(resources: self.sharedServices.regionalResourcesModelController)
-//        
-//        return organizationListViewController
-//    }
-
     //MARK: - debug
     deinit {
         let _ = 0

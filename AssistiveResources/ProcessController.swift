@@ -35,15 +35,6 @@ class ProcessController: NSObject, CommandResponseProtocol {
 }
 
 
-// MARK: - utilities
-
-func instantiateViewController<T>(storyboardName: String, storyboardID: String) -> T? {
-    let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
-    let viewController = storyboard.instantiateViewController(withIdentifier: storyboardID)
-    return viewController as? T
-}
-
-
 // MARK: - Navigable PROTOCOL
 
 //protocol Navigable where Self: UIViewController {

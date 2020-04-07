@@ -47,4 +47,10 @@ class AppController: NSObject {
     
 }
 
+// MARK: - utilities
 
+func instantiateViewController<T>(storyboardName: String, storyboardID: String) -> T? {
+    let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
+    let viewController = storyboard.instantiateViewController(withIdentifier: storyboardID)
+    return viewController as? T
+}
