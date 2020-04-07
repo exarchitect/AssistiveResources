@@ -9,6 +9,11 @@
 import Foundation
 
 
+protocol CommandResponseProtocol: class {
+    func invokeAction (command: AssistiveCommand)
+}
+
+
 struct AssistiveCommand {
     enum CommandType {
         case dismissTopProcessController

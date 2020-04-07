@@ -11,11 +11,11 @@ import UIKit
 
 class NavListProcessController: ProcessController {
     
-    override func createPrimaryViewController() -> ProcessViewController? {
-        let navListViewController: NavListViewController? = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID")
-        navListViewController?.configuration()
-        
-        return navListViewController
-    }
+//    override func createPrimaryViewController() -> ProcessViewController? {
+//        let navListViewController: NavListViewController? = instantiateViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID")
+//        navListViewController?.configuration()
+//        
+//        return navListViewController
+//    }
 
 }

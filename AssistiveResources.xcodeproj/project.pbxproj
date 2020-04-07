@@ -12,6 +12,7 @@
 		C1F3E673E6BCF568D5BFCA60 /* Pods_AssistiveResources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2EE8B2CD99623C42D941D32 /* Pods_AssistiveResources.framework */; };
 		D202D5252436AAED00B77958 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D202D5242436AAED00B77958 /* User.swift */; };
 		D202D5272437D1B900B77958 /* AuthenticationPlaybook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D202D5262437D1B900B77958 /* AuthenticationPlaybook.swift */; };
+		D202D52B243BDD6F00B77958 /* NavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D202D52A243BDD6F00B77958 /* NavigationStack.swift */; };
 		D209FAC51E00CF030099BD46 /* EventDetailProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209FAC41E00CF030099BD46 /* EventDetailProcessController.swift */; };
 		D209FAC71E0245D00099BD46 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D209FAC61E0245D00099BD46 /* EventDetailViewController.swift */; };
 		D209FAC91E0245EC0099BD46 /* EventDetailStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D209FAC81E0245EC0099BD46 /* EventDetailStoryboard.storyboard */; };
@@ -101,6 +102,7 @@
 		AB555A1779314481D6BFF3DC /* Pods_AssistiveResourcesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AssistiveResourcesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D202D5242436AAED00B77958 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D202D5262437D1B900B77958 /* AuthenticationPlaybook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPlaybook.swift; sourceTree = "<group>"; };
+		D202D52A243BDD6F00B77958 /* NavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStack.swift; sourceTree = "<group>"; };
 		D209FAC41E00CF030099BD46 /* EventDetailProcessController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailProcessController.swift; sourceTree = "<group>"; };
 		D209FAC61E0245D00099BD46 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		D209FAC81E0245EC0099BD46 /* EventDetailStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EventDetailStoryboard.storyboard; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 			children = (
 				D202D5232436A36E00B77958 /* Components */,
 				D2B7D1571E594B8400E69D1E /* AssistiveAppController.swift */,
+				D202D52A243BDD6F00B77958 /* NavigationStack.swift */,
 				D2309DE61E2B481E0056A66C /* AssistiveCommand.swift */,
 			);
 			name = AppController;
@@ -743,6 +746,7 @@
 				D2B028511E2C29530064B3D2 /* ModelController.swift in Sources */,
 				D255504F1E24934F004FE72B /* RegionalResourcesRepository.swift in Sources */,
 				D202D5252436AAED00B77958 /* User.swift in Sources */,
+				D202D52B243BDD6F00B77958 /* NavigationStack.swift in Sources */,
 				D209FAC71E0245D00099BD46 /* EventDetailViewController.swift in Sources */,
 				D24E4DC81DE74167008A11FB /* PublicEvent.swift in Sources */,
 				D24E4DC61DE74066008A11FB /* Organization.swift in Sources */,

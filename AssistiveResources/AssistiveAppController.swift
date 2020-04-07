@@ -26,10 +26,10 @@ struct SharedServices: RegionalResourcesProvider, UserProvider {
 }
 
 
-class AssistiveAppController: AppController, CommandResponseProtocol {
+class AssistiveAppController: AppController {
     
     var shared: SharedServices = SharedServices()
-    //var commandLog = [AssistiveCommand]()
+    var navigationStack: NavigationStack!
 
     override init() {
         super.init()
@@ -42,7 +42,8 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         loadUserModel()        // other model controllers not called until after login
         loadConnectivityService()
         
-        self.startProcessController(type: NavListProcessController.self)
+        navigationStack = NavigationStack(services: shared, navController: self.navController)
+        navigationStack.instantiateProcess(ofType: NavListProcessController.self)
 
         // temp override to fail login for testing
         //self.shared.userModel.storeUserCredentials(username: "", password: "")
@@ -51,18 +52,18 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         self.shared.userModel.validateCredentials(completion: { loginOutcome in
             switch loginOutcome {
             case .Authenticated:
-                self.invokeAction(command: AssistiveCommand(type: .userSuccessfullyIdentified))
+                self.navigationStack.invokeAction(command: AssistiveCommand(type: .userSuccessfullyIdentified))
             case .Unknown:
                 fallthrough
             case .NeedCredentials:
-                self.invokeAction(command: AssistiveCommand(type: .requestUserIdentity))
+                self.navigationStack.invokeAction(command: AssistiveCommand(type: .requestUserIdentity))
             }
         })
     }
     
     
     // MARK: - CommandResponseProtocol
-    
+/*
     func invokeAction(command: AssistiveCommand) {
 
         switch command.type {
@@ -129,18 +130,10 @@ class AssistiveAppController: AppController, CommandResponseProtocol {
         processController.launch()
         self.processControllerStack.append(processController as ProcessController)
     }
-    
+*/
 
     // MARK: - model controller & services handling
 
-    private func loadRegionalResourceModelController (online: Bool) {
-        if (self.shared.regionalResourcesModelController == nil) {
-            self.shared.regionalResourcesModelController = RegionalResourcesModelController(atLocation: self.shared.userModel.locationProfile, isOnline: online)
-            self.shared.regionalResourcesModelController?.initiateLoading()     // TODO: get rid of this
-        }
-        precondition(self.shared.regionalResourcesModelController != nil)
-    }
-    
     private func loadUserModel () {
         if (self.shared.userModel == nil) {
             self.shared.userModel = User()

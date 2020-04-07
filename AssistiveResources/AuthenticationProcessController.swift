@@ -14,15 +14,15 @@ protocol AuthenticationProtocol: class {
 
 class AuthenticationProcessController: ProcessController, AuthenticationProtocol {
     
-    override func createPrimaryViewController() -> ProcessViewController? {
-        let loginViewController: LoginViewController? = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
-        loginViewController?.configuration(userModelController: self.sharedServices.userModel, delegate: self)
-        
-        return loginViewController
-    }
+//    override func createPrimaryViewController() -> ProcessViewController? {
+//        let loginViewController: LoginViewController? = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
+//        loginViewController?.configuration(userModelController: self.sharedServices.userModel, delegate: self)
+//        
+//        return loginViewController
+//    }
     
-    override func terminate () {
-        super.terminate()
+    override func terminate (navController: UINavigationController) {
+        super.terminate(navController: navController)
 
         requestMainNavigationRefresh()
     }
