@@ -222,6 +222,15 @@
 			name = Components;
 			sourceTree = "<group>";
 		};
+		D202D52C243D1EA800B77958 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D24E4DCB1DE74750008A11FB /* ProcessController.swift */,
+				D2C445B720154ADB0065099A /* ProcessViewController.swift */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
 		D209FAC31E00CE790099BD46 /* EventDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +255,7 @@
 		D24E4DAC1DE3E581008A11FB /* ProcessControllers */ = {
 			isa = PBXGroup;
 			children = (
+				D202D52C243D1EA800B77958 /* Components */,
 				D24E4DCD1DED1699008A11FB /* NavList */,
 				D24E4DAB1DE3E553008A11FB /* Authentication */,
 				D28C80D21DF0E867002D3940 /* EventList */,
@@ -340,8 +350,6 @@
 		D2B028521E2C71770064B3D2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				D24E4DCB1DE74750008A11FB /* ProcessController.swift */,
-				D2C445B720154ADB0065099A /* ProcessViewController.swift */,
 				D2B028501E2C29530064B3D2 /* ModelController.swift */,
 				D25550491E234626004FE72B /* Repository.swift */,
 				D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */,

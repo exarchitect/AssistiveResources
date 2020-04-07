@@ -9,21 +9,16 @@
 import Foundation
 
 
-protocol CommandResponseProtocol: class {
-    func invokeAction (command: AssistiveCommand)
+protocol Commandable: class {
+    func execute (command: AssistiveCommand)
 }
 
 
-struct AssistiveCommand {
-    enum CommandType {
-        case dismissTopProcessController
-        case requestUserIdentity
-        case userSuccessfullyIdentified
-        case navigateTo(destination:NavigationCategory)
-        case eventSelected(event: EntityDescriptor)
-        case organizationSelected(organization: EntityDescriptor)
-    }
-    let type: CommandType
+enum AssistiveCommand {
+    case dismissCurrentProcess
+    case requestUserIdentity
+    case userSuccessfullyIdentified
+    case selectCategory(_ destination:NavigationCategory)
+    case selectEvent(_ event: EntityDescriptor)
+    case selectOrganization(_ organization: EntityDescriptor)
 }
-
-

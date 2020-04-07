@@ -10,5 +10,23 @@ import UIKit
 
 
 class NavListProcessController: ProcessController {
-    
+
+    required init() {
+        super.init()
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshNavigationContent), name: updateNavigationNotificationKeyName, object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc func refreshNavigationContent() {
+        (primaryProcessViewController as? NavListViewController)?.refreshContent()
+    }
+}
+
+//MARK: - helper functions
+
+func requestMainNavigationRefresh() {
+    NotificationCenter.default.post(name: updateNavigationNotificationKeyName, object: nil)
 }

@@ -14,32 +14,27 @@ let updateNavigationNotificationKeyName = NSNotification.Name(rawValue: "key_not
 
 class NavListViewController: ProcessViewController {
 
-    private var navigationData: NavigationContent!
+    private var navigationItems = NavigationCategories()
     private var isVisible: Bool = false
     private var needContentRefresh: Bool = false
     
     @IBOutlet weak var navTable: UITableView!
     var tableAdaptor:MainNavigationTableAdaptor?
     
-    func configuration() {
-        self.navigationData = NavigationContent()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateNavigationNotificationKeyName, object: nil)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationData, selector: { (destination:NavigationCategory) -> Void in
-            self.requestAction(command: AssistiveCommand(type: .navigateTo(destination: destination)))
+        tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationItems, selector: { (destination:NavigationCategory) -> Void in
+            self.requestAction(command: .selectCategory(destination))
         })
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.isVisible = true
-        if (self.needContentRefresh) {
-            self.navTable.reloadData()
-            self.needContentRefresh = false
+        isVisible = true
+        if needContentRefresh {
+            navTable.reloadData()
+            needContentRefresh = false
         }
     }
 
@@ -48,33 +43,17 @@ class NavListViewController: ProcessViewController {
         self.isVisible = false
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-        //freeMemory()
-    }
-    
     deinit {
         //print("deallocating NavListViewController")
-        NotificationCenter.default.removeObserver(self)
     }
-    
-    @objc func refreshContent() {
-        self.navigationData.updateSubtitles()
-        if (self.isVisible) {
-            self.navTable.reloadData()
-            self.needContentRefresh = false
+
+    func refreshContent() {
+        navigationItems.updateSubtitles()
+        if isVisible {
+            navTable.reloadData()
+            needContentRefresh = false
         } else {
-            self.needContentRefresh = true
+            needContentRefresh = true
         }
     }
-    
 }
-
-//MARK: - helper functions
-
-func requestMainNavigationRefresh() {
-    NotificationCenter.default.post(name: updateNavigationNotificationKeyName, object: nil)
-}
-
-

@@ -54,7 +54,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     //MARK:- @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
-        requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
+        requestAction(command: .dismissCurrentProcess)
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {
@@ -73,7 +73,8 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     //MARK: - EventListContainerNotificationProtocol delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-        requestAction(command: AssistiveCommand(type: .eventSelected(event: (entityName: "TestEvent", entityID: 3))))
+        let testEvent: EntityDescriptor = (entityName: "TestEvent", entityID: 3)
+        requestAction(command: .selectEvent(testEvent))
     }
     
     func notifyFilterSelected() {

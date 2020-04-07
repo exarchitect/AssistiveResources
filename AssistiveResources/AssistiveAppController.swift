@@ -52,11 +52,11 @@ class AssistiveAppController: AppController {
         self.shared.userModel.validateCredentials(completion: { loginOutcome in
             switch loginOutcome {
             case .Authenticated:
-                self.navigationStack.invokeAction(command: AssistiveCommand(type: .userSuccessfullyIdentified))
+                self.navigationStack.execute(command: .userSuccessfullyIdentified)
             case .Unknown:
                 fallthrough
             case .NeedCredentials:
-                self.navigationStack.invokeAction(command: AssistiveCommand(type: .requestUserIdentity))
+                self.navigationStack.execute(command: .requestUserIdentity)
             }
         })
     }

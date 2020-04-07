@@ -19,10 +19,10 @@ typealias DestinationSelector = (_ destination:NavigationCategory) -> Void
 class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     var tableView: UITableView!
-    weak private var navigationData: NavigationContent!
+    weak private var navigationData: NavigationCategories!
     var selectorClosure: DestinationSelector!
     
-    init(table: UITableView, navItems: NavigationContent, selector: @escaping DestinationSelector) {
+    init(table: UITableView, navItems: NavigationCategories, selector: @escaping DestinationSelector) {
         super.init()
         
         self.tableView = table

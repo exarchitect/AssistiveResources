@@ -15,7 +15,7 @@ enum NavigationCategory : String {
 }
 
 
-class NavigationContent: NSObject {
+class NavigationCategories: NSObject {
     
     private var navigationArray:[DestinationDescriptor] = []
 

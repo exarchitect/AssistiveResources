@@ -32,11 +32,12 @@ class EventDetailViewController: ProcessViewController {
     }
     
     @IBAction func evntDetailBackButtonAction(_ sender: Any) {
-        self.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
+        self.requestAction(command: .dismissCurrentProcess)
     }
 
     @IBAction func orgSelectedButtonAction(_ sender: Any) {
-        self.requestAction(command: AssistiveCommand(type: .eventSelected(event: (entityName: "test", entityID: 1))))
+        let testEvent: EntityDescriptor = (entityName: "test", entityID: 1)
+        self.requestAction(command: .selectEvent(testEvent))
     }
 
 }

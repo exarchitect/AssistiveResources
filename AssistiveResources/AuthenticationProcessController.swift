@@ -14,13 +14,6 @@ protocol AuthenticationProtocol: class {
 
 class AuthenticationProcessController: ProcessController, AuthenticationProtocol {
     
-    override func terminate (navController: UINavigationController) {
-        super.terminate(navController: navController)
-
-        requestMainNavigationRefresh()
-    }
-    
-
     // MARK:- AuthenticationCoordinatorProtocol
     
     func userEnteredCredentials (loginType: UserAccess, credentials: Credentials) {
@@ -30,8 +23,8 @@ class AuthenticationProcessController: ProcessController, AuthenticationProtocol
             case .Authenticated:
                 //print("authenticated")
                 self.sharedServices.userModel.storeUserCredentials(username: credentials.userName, password: credentials.password)
-                self.invokeAction(command: AssistiveCommand(type: .userSuccessfullyIdentified))
-                self.invokeAction(command: AssistiveCommand(type: .dismissTopProcessController))
+                self.execute(command: .userSuccessfullyIdentified)
+                self.execute(command: .dismissCurrentProcess)
             case .NeedCredentials:
                 // TODO - get credentials
                 fallthrough

@@ -42,7 +42,8 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     //MARK: delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-        self.requestAction(command: AssistiveCommand(type: .organizationSelected(organization: (entityName: "TestOrg", entityID: 2))))
+        let testOrg: EntityDescriptor = (entityName: "TestOrg", entityID: 2)
+        self.requestAction(command: .selectOrganization(testOrg))
     }
     
     func notifyFilterSelected() {
@@ -58,7 +59,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     //MARK: @IBAction
     
     @IBAction func backButtonAction(_ sender: Any) {
-        self.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
+        self.requestAction(command: .dismissCurrentProcess)
     }
     
 }

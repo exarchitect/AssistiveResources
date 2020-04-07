@@ -9,28 +9,29 @@
 import UIKit
 
 
-class ProcessController: NSObject, CommandResponseProtocol {
+class ProcessController: NSObject, Commandable {
 
-    var sharedServices: SharedServices!      // TODO: should this be weak?
-    weak var commandHandler: CommandResponseProtocol!
-    private var primaryProcessViewController: ProcessViewController? = nil      // TODO: should this be weak?
+    var sharedServices: SharedServices!
+    weak var commandHandler: Commandable!
+    weak var primaryProcessViewController: ProcessViewController?
 
     required override init(){
         super.init()
     }
 
-    func setup (responseDelegate: CommandResponseProtocol, services: SharedServices) {
-        self.commandHandler = responseDelegate
+    func setup(commandHandler: Commandable, services: SharedServices, primaryViewController: ProcessViewController) {
+        self.commandHandler = commandHandler
         self.sharedServices = services
+        self.primaryProcessViewController = primaryViewController
     }
 
-    func terminate (navController: UINavigationController) {
-        navController.popViewController(animated: true)
+    func terminate(navController: UINavigationController, previousTopViewController: UIViewController) {
+        navController.popToViewController(previousTopViewController, animated: true)
         self.primaryProcessViewController = nil;
     }
 
-    final func invokeAction (command: AssistiveCommand){
-        self.commandHandler.invokeAction(command: command)
+    final func execute(command: AssistiveCommand){
+        self.commandHandler.execute(command: command)
     }
 }
 
