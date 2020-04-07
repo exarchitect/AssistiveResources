@@ -10,14 +10,10 @@ import UIKit
 
 class ProcessViewController: UIViewController {
 
-    private weak var commandDelegate:CommandResponseProtocol!
+    weak var processController: ProcessController?
 
-    func setupDelegate(selectorDelegate: CommandResponseProtocol) {
-        self.commandDelegate = selectorDelegate
-    }
-    
     func requestAction (command: AssistiveCommand){
-        self.commandDelegate.invokeAction(command: command)
+        processController?.commandHandler.invokeAction(command: command)
     }
 
 }

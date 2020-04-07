@@ -14,25 +14,18 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
 
     @IBOutlet weak var headerView: HeaderView!
     
-    weak private var resourcesModelController:RegionalResourcesModelController?
     var filterViewController:EventFilterViewController?
     weak private var containerViewController:EventContainerViewController?
     var filter: FilterProfile = FilterProfile()
-    
-    func configuration(resources: RegionalResourcesModelController?) {
-        self.resourcesModelController = resources
-
-        //filter.developmentalAgeValue = .PreschoolDevelopmentalAge
-        filter.proximityValue = .twentyFiveMiles
-        filter.ageValue = Age(years: 21)
-        //filter.ageValue = Age.notSpecified
-}
+    var resourcesModelController: RegionalResourcesModelController? {
+        return processController?.sharedServices.regionalResourcesModelController
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        precondition(self.resourcesModelController != nil)
-        self.headerView.titleLabel.text = "Upcoming Events"
+
+        setupFilter()
+        headerView.titleLabel.text = "Upcoming Events"
 }
     
     override func didReceiveMemoryWarning() {
@@ -46,11 +39,13 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //weak var containerViewController: EventContainerViewController?
+        guard let rsrcsModelController = resourcesModelController else {
+            return
+        }
         
         if segue.identifier == "EventContainerSegueID" {
             containerViewController = segue.destination as? EventContainerViewController
-            containerViewController?.configuration(rsrcModelController: resourcesModelController!, delegate: self, filter: self.filter)
+            containerViewController?.configuration(rsrcModelController: rsrcsModelController, delegate: self, filter: filter)
             //containerViewController?.setFilterDescription(desrc: filter.naturalLanguageText())
         }
         
@@ -59,24 +54,33 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     //MARK:- @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
-        self.requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
+        requestAction(command: AssistiveCommand(type: .dismissTopProcessController))
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {
-        self.notifyFilterSelected()
+        notifyFilterSelected()
     }
-    
+
+    //MARK:- Utilities
+
+    func setupFilter() {
+        //filter.developmentalAgeValue = .PreschoolDevelopmentalAge
+        filter.proximityValue = .twentyFiveMiles
+        filter.ageValue = Age(years: 21)
+        //filter.ageValue = Age.notSpecified
+    }
+
     //MARK: - EventListContainerNotificationProtocol delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-        self.requestAction(command: AssistiveCommand(type: .eventSelected(event: (entityName: "TestEvent", entityID: 3))))
+        requestAction(command: AssistiveCommand(type: .eventSelected(event: (entityName: "TestEvent", entityID: 3))))
     }
     
     func notifyFilterSelected() {
 
         let filterViewController:EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
         
-        filterViewController?.configuration(resources: self.resourcesModelController, selectorDelegate: self, filter: filter)
+        filterViewController?.configuration(resources: resourcesModelController, selectorDelegate: self, filter: filter)
 
         if let filterVC = filterViewController {
             present(filterVC, animated: true, completion: nil)
@@ -89,15 +93,15 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     func okFilterButtonAction(filter:FilterProfile) {
         self.filter = filter
         if let container = containerViewController {
-            container.setFilter(fltr: self.filter)
+            container.setFilter(fltr: filter)
         }
-        self.dismiss(animated: true, completion: nil)
-        self.filterViewController = nil
+        dismiss(animated: true, completion: nil)
+        filterViewController = nil
     }
     
     func cancelFilterButtonAction() {
-        self.dismiss(animated: true, completion: nil)
-        self.filterViewController = nil
+        dismiss(animated: true, completion: nil)
+        filterViewController = nil
     }
     
 }

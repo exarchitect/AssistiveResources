@@ -31,24 +31,16 @@ class NavigationStack: NSObject, CommandResponseProtocol {
             viewController = navListViewController
 
         case is AuthenticationProcessController.Type:
-            let loginViewController: LoginViewController? = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
-            loginViewController?.configuration(userModelController: services.userModel, delegate: processController as! AuthenticationProtocol)
-            viewController = loginViewController
+            viewController = instantiateViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
 
         case is EventListProcessController.Type:
-            let eventListViewController: EventListViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID")
-            eventListViewController?.configuration(resources: services.regionalResourcesModelController)
-            viewController = eventListViewController
+            viewController = instantiateViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID")
 
         case is EventDetailProcessController.Type:
-            let eventDetailViewController: EventDetailViewController? = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")
-            eventDetailViewController?.configuration(resources: services.regionalResourcesModelController)
-            viewController = eventDetailViewController
+            viewController = instantiateViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")
 
         case is OrganizationListProcessController.Type:
-            let organizationListViewController: OrganizationListViewController? = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID")
-            organizationListViewController?.configuration(resources: services.regionalResourcesModelController)
-            viewController = organizationListViewController
+            viewController = instantiateViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID")
 
         default:
             fatalError("override \(#function)")
@@ -58,10 +50,10 @@ class NavigationStack: NSObject, CommandResponseProtocol {
         }
 
         processController.setup(responseDelegate: self, services: services)
-        processController.responseDelegate = self
+        processController.commandHandler = self
         processControllerStack.append(processController)
 
-        processViewController.setupDelegate(selectorDelegate: self)
+        processViewController.processController = processController
         navController.pushViewController(processViewController, animated: false)
 
         return processController

@@ -12,7 +12,7 @@ import UIKit
 class ProcessController: NSObject, CommandResponseProtocol {
 
     var sharedServices: SharedServices!      // TODO: should this be weak?
-    weak var responseDelegate: CommandResponseProtocol!
+    weak var commandHandler: CommandResponseProtocol!
     private var primaryProcessViewController: ProcessViewController? = nil      // TODO: should this be weak?
 
     required override init(){
@@ -20,7 +20,7 @@ class ProcessController: NSObject, CommandResponseProtocol {
     }
 
     func setup (responseDelegate: CommandResponseProtocol, services: SharedServices) {
-        self.responseDelegate = responseDelegate
+        self.commandHandler = responseDelegate
         self.sharedServices = services
     }
 
@@ -30,7 +30,7 @@ class ProcessController: NSObject, CommandResponseProtocol {
     }
 
     final func invokeAction (command: AssistiveCommand){
-        self.responseDelegate.invokeAction(command: command)
+        self.commandHandler.invokeAction(command: command)
     }
 }
 

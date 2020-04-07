@@ -13,36 +13,30 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
 
     @IBOutlet weak var headerView: HeaderView!
     
-    weak private var resourcesModelController:RegionalResourcesModelController?
     //private var filterViewController:OrganizationFilterViewController?
-    
-    func configuration(resources: RegionalResourcesModelController?) {
-        self.resourcesModelController = resources
+    var resourcesModelController: RegionalResourcesModelController? {
+        return processController?.sharedServices.regionalResourcesModelController
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        precondition(self.resourcesModelController != nil)
-        self.headerView.titleLabel.text = "Organizations & Services"
+        headerView.titleLabel.text = "Organizations & Services"
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
         //freeMemory()
     }
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        weak var containerViewController: OrganizationContainerViewController?
-        
-        if segue.identifier == "OrganizationContainerSegueID" {
-            containerViewController = segue.destination as? OrganizationContainerViewController
-            containerViewController?.configuration(rsrcModelController: resourcesModelController!, delegate: self)
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let rsrcModelController = resourcesModelController else {
+            return
         }
-        
+        if segue.identifier == "OrganizationContainerSegueID" {
+            let containerViewController = segue.destination as? OrganizationContainerViewController
+            containerViewController?.configuration(rsrcModelController: rsrcModelController, delegate: self)
+        }
     }
 
     //MARK: delegate
@@ -54,10 +48,8 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     func notifyFilterSelected() {
 
 //        unowned var filterViewController:EventFilterViewController
-//        
 //        filterViewController = (instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController)!
 //        filterViewController.dependencies(resources: self.resourcesModelController!, selectorDelegate: self)
-//        
 //        //guard?
 //        present(filterViewController, animated: true, completion: nil)
     }

@@ -13,7 +13,7 @@ enum LoginResponse {
     case Authenticated, Unknown, NeedCredentials
 }
 
-enum LoginAccess {
+enum UserAccess {
     case Anonymous, IdentifiedUser, PendingSignup
 }
 
@@ -31,7 +31,7 @@ final class User: NSObject {
     private var password: String = ""
 
     private var rememberMe: Bool
-    private var loginType: LoginAccess?
+    private var loginType: UserAccess?
     private var backendlUser: BackendlessUser? = nil
     static let sharedInstance = User()
 
@@ -51,6 +51,8 @@ final class User: NSObject {
     func validateCredentials(completion: @escaping LoginCompletionHandlerType) {
         guard haveCredentials() else {
             self.loginType = nil
+            // temp
+            self.storeUserCredentials (username: "exarchitect", password: "whatever**@^")
             completion(.NeedCredentials)      // failed, since we dont have creds
             return
         }
@@ -64,19 +66,21 @@ final class User: NSObject {
 
             stopActivityIndicator()
 
+            // temp
+            self.storeUserCredentials (username: "exarchitect", password: "whatever**@^")
+
             self.loginType = .IdentifiedUser
             completion(.Authenticated)
 
         }, error: { (fault: Fault?) in
             print (fault ?? "failed login")
             let err: String = fault!.faultCode
+            if err=="-1009" {
+                self.loginType = .Anonymous        // TODO: if system comes back online, re-authorize user
+            } // else no access 
+
             // temp
             self.loginType = .IdentifiedUser
-//                if err=="-1009" {
-//                    self.loginType = .Anonymous        // TODO: if system comes back online, re-authorize user
-//                } else {
-//                    self.loginType = .Rejected
-//                }
 
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.5)) {
                 stopActivityIndicator()

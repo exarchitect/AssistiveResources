@@ -46,7 +46,7 @@ class AssistiveAppController: AppController {
         navigationStack.instantiateProcess(ofType: NavListProcessController.self)
 
         // temp override to fail login for testing
-        //self.shared.userModel.storeUserCredentials(username: "", password: "")
+        self.shared.userModel.storeUserCredentials(username: "", password: "")
         //self.shared.userModel.storeUserCredentials(username: "exarchitect@gmail.com", password: "alongishpassword")
         
         self.shared.userModel.validateCredentials(completion: { loginOutcome in

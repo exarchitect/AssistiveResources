@@ -11,21 +11,20 @@ import UIKit
 
 class LoginViewController: ProcessViewController {
 
-    weak private var user: User?
-    weak private var authenticationDelegate: AuthenticationProtocol!
+    var user: User? {
+        return processController?.sharedServices.userModel
+    }
+    var authenticationDelegate: AuthenticationProtocol? {
+        return processController as? AuthenticationProtocol
+    }
+
     @IBOutlet weak var selectLoginType: UISegmentedControl!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var zipcodeTextField: UITextField!
     @IBOutlet weak var subtitleLabel: UILabel!
-    
     @IBOutlet weak var tryoutSubtextLabel: UILabel!
-    
-    func configuration(userModelController: User, delegate: AuthenticationProtocol) {
-        user = userModelController
-        authenticationDelegate = delegate
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,7 +46,7 @@ class LoginViewController: ProcessViewController {
     
     @IBAction func loginButtonAction(_ sender: Any) {
         // TODO:
-        authenticationDelegate.userEnteredCredentials(loginType: .IdentifiedUser, credentials: Credentials(userName: "exarchitect@gmail.com", password: "alongishpassword"))
+        authenticationDelegate?.userEnteredCredentials(loginType: .IdentifiedUser, credentials: Credentials(userName: "exarchitect@gmail.com", password: "alongishpassword"))
     }
 
     @IBAction func segmentedControlAction(_ sender: Any) {

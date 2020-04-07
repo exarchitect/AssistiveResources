@@ -22,7 +22,6 @@ class NavListViewController: ProcessViewController {
     var tableAdaptor:MainNavigationTableAdaptor?
     
     func configuration() {
-
         self.navigationData = NavigationContent()
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshContent), name: updateNavigationNotificationKeyName, object: nil)
     }

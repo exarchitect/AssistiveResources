@@ -11,17 +11,14 @@ import UIKit
 
 class EventDetailViewController: ProcessViewController {
 
-    weak private var resourcesModelController: RegionalResourcesModelController?
     @IBOutlet weak var scrollView: UIScrollView!
     
-    func configuration(resources: RegionalResourcesModelController?) {
-        self.resourcesModelController = resources
+    var resourcesModelController: RegionalResourcesModelController? {
+        return processController?.sharedServices.regionalResourcesModelController
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        precondition(self.resourcesModelController != nil)
     }
 
     override func didReceiveMemoryWarning() {
