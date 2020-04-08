@@ -21,7 +21,7 @@ protocol RepositoryAccessorProtocol: class {
 class RepositoryAccessor: NSObject {
 
     var state: AccessorState = .NotLoaded
-    weak var repo: Repository!
+    weak var repo: Repository?
     weak var delegate: RepositoryAccessorProtocol?
     
     init (repository: Repository, delegate: RepositoryAccessorProtocol) {

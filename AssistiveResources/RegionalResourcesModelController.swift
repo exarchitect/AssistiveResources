@@ -13,7 +13,7 @@ import RealmSwift
 
 class RegionalResourcesModelController: NSObject {
     
-    private var regionalRepository : RegionalResourcesRepository!
+    private var regionalRepository : RegionalResourcesRepository?
     private var online : Bool!
     
     init(atLocation: LocationProfile, isOnline: Bool)
@@ -25,7 +25,7 @@ class RegionalResourcesModelController: NSObject {
     }
     
     func initiateLoading() {
-        regionalRepository.load { success in
+        regionalRepository?.load { success in
             guard success == true else {
                 print("loading failed")
                 return
@@ -34,18 +34,22 @@ class RegionalResourcesModelController: NSObject {
         }
     }
 
-    func createEventAccessor(delegate: RepositoryAccessorProtocol) -> EventRepositoryAccessor {
-        
-        return EventRepositoryAccessor(repository: self.regionalRepository, delegate: delegate)
+    func createEventAccessor(delegate: RepositoryAccessorProtocol) -> EventRepositoryAccessor? {
+        guard let repo = regionalRepository else {
+            return nil
+        }
+        return EventRepositoryAccessor(repository: repo, delegate: delegate)
     }
     
-    func createOrganizationAccessor(delegate: RepositoryAccessorProtocol) -> OrganizationRepositoryAccessor {
-        
-        return OrganizationRepositoryAccessor(repository: self.regionalRepository, delegate: delegate)
+    func createOrganizationAccessor(delegate: RepositoryAccessorProtocol) -> OrganizationRepositoryAccessor? {
+        guard let repo = regionalRepository else {
+            return nil
+        }
+        return OrganizationRepositoryAccessor(repository: repo, delegate: delegate)
     }
     
     func checkRepositoryUpdate() {
-        self.regionalRepository.backgroundUpdate()
+        regionalRepository?.backgroundUpdate()
     }
 }
 

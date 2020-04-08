@@ -12,14 +12,12 @@ import RealmSwift
 
 class RegionalResourcesRepository: Repository {
     
-    private var loc: LocationProfile?
-    private var remoteDataSrc: RegionalResourcesRemoteDatasource! = nil
+    private var location: LocationProfile?
+    private var remoteDataSource = RegionalResourcesRemoteDatasource()
 
     var retrievingData: Bool {
         get {
-            let haveRemoveDS: Bool = self.remoteDataSrc != nil
-            let retrieving: Bool = haveRemoveDS ? self.remoteDataSrc.isRetrievingData : false
-            return retrieving
+            return remoteDataSource.isRetrievingData
         }
     }
 
@@ -27,8 +25,7 @@ class RegionalResourcesRepository: Repository {
     {
         super.init()
         
-        self.loc = location
-        self.remoteDataSrc = RegionalResourcesRemoteDatasource()
+        self.location = location
     }
     
     override func checkRepositoryState() -> RepositoryState {
@@ -51,26 +48,20 @@ class RegionalResourcesRepository: Repository {
         guard self.retrievingData == false else {
             return
         }
-
-        if self.remoteDataSrc == nil {
-            self.remoteDataSrc = RegionalResourcesRemoteDatasource()
-        }
-        
-        self.remoteDataSrc.validateConnection()
-        
-        self.remoteDataSrc.pull { (success) in
+        remoteDataSource.validateConnection()
+        remoteDataSource.pull { success in
             
             if success {
                 self.beginRepositoryUpdate()
                 self.clearLocalStore()
 
                 // update local store
-                let eventList: [StoredEvent] = self.remoteDataSrc.getEvents()
+                let eventList: [StoredEvent] = self.remoteDataSource.getEvents()
                 for evt in eventList {
                     evt.save()
                 }
                 
-                let orgList: [Organization] = self.remoteDataSrc.getOrganizations()
+                let orgList: [Organization] = self.remoteDataSource.getOrganizations()
                 for org in orgList {
                     org.save()
                 }
@@ -101,7 +92,7 @@ class RegionalResourcesRepository: Repository {
         if (haveLocalDatabase) {
             
             let profile = profilesFound[0]
-            let locationMatch: Bool = (profile.location == self.loc?.zipCode)
+            let locationMatch: Bool = (profile.location == self.location?.zipCode)
             let expireDate = profile.lastUpdated.addingTimeInterval(TimeInterval(kExpirationSeconds))
             let now = Date()
             let dateCompare = now.compare(expireDate)

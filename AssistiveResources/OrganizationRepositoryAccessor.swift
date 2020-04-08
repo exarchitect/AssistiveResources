@@ -23,18 +23,17 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
     }
     
     func requestData(filteredBy: IndividualNeedProfile){
-        if (self.repo.localRepositoryAvailable) {
-            self.retrieve(usingFilter: filteredBy)
-            self.state = .Loaded
-        } else {
-            self.state = .NotLoaded
-            // when we get an update for the repository, we will retrieve the data and call the delegate
+        guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
+            state = .NotLoaded
+            return
         }
+        retrieve(usingFilter: filteredBy)
+        state = .Loaded
     }
     
     override func repositoryUpdateNotification() {
-        self.retrieve(usingFilter: IndividualNeedProfile(age: 1, mobility: .noLimitation, delay: .notSpecified, primarydx: .notSpecified, secondarydx: .notSpecified))
-        self.delegate?.notifyRepositoryWasUpdated()
+        retrieve(usingFilter: IndividualNeedProfile(age: 1, mobility: .noLimitation, delay: .notSpecified, primarydx: .notSpecified, secondarydx: .notSpecified))
+        delegate?.notifyRepositoryWasUpdated()
     }
 
     // MARK: - PRIVATE
@@ -45,22 +44,22 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
             let uiRealm = try Realm()
             let orgsFound = uiRealm.objects(Organization.self)
             for org in orgsFound {
-                self.addOrganization(org: org)
+                addOrganization(org: org)
             }
-            self.state = .Loaded
+            state = .Loaded
            
         } catch let error as NSError {
             // handle error
             
             let _ = error
-            self.state = .NotLoaded
+            state = .NotLoaded
         }
         
     }
 
     func addOrganization(org: Organization) {
         let newOrg = Organization(entity: EntityDescriptor(entityName: org.organizationTitle,entityID:org.organizationID) , tagline: org.tagline, mission: org.mission, scope: org.geographicScope, location: LocationProfile(latitude: org.hqLatitude,longitude: org.hqLongitude,city: "",state: "",zip: org.hqZip), url: "")
-        self.organizations.append(newOrg)
+        organizations.append(newOrg)
     }
     
 }

@@ -23,19 +23,18 @@ class EventRepositoryAccessor: RepositoryAccessor {
     }
     
     func requestData(filteredBy: IndividualNeedProfile){
-        if (self.repo.localRepositoryAvailable) {
-            self.retrieve(usingFilter: filteredBy)
-            self.state = .Loaded
-        } else {
-            self.state = .NotLoaded
-            // when we get an update from the repository, we will retrieve the data and call the delegate
+        guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
+            state = .NotLoaded
+            return
         }
+        retrieve(usingFilter: filteredBy)
+        state = .Loaded
     }
     
     override func repositoryUpdateNotification() {
         let needProfile = IndividualNeedProfile(age: 1, mobility: .noLimitation, delay: .notSpecified, primarydx: .notSpecified, secondarydx: .notSpecified)
-        self.retrieve(usingFilter: needProfile)
-        self.delegate?.notifyRepositoryWasUpdated()
+        retrieve(usingFilter: needProfile)
+        delegate?.notifyRepositoryWasUpdated()
     }
     
     
@@ -47,15 +46,15 @@ class EventRepositoryAccessor: RepositoryAccessor {
             let uiRealm = try Realm()
             let eventsFound = uiRealm.objects(StoredEvent.self)
             for evt in eventsFound {
-                self.addEvent(event: evt)
+                addEvent(event: evt)
             }
-            self.state = .Loaded
+            state = .Loaded
             
         } catch let error as NSError {
             // handle error
 
             let _ = error
-            self.state = .NotLoaded
+            state = .NotLoaded
         }
         
     }
