@@ -19,10 +19,6 @@ enum UserAccess {
 
 typealias LoginCompletionHandlerType = (_ loginResult: LoginResponse) -> Void
 
-protocol UserProvider {
-    var userModel: User! { get }
-}
-
 final class User: NSObject {
 
     var locationProfile: LocationProfile

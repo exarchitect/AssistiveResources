@@ -19,16 +19,41 @@ import UIKit
 // TODO: UI Unit Tests -
 
 
+protocol UserProvider {
+    var userModel: User { get }
+}
+
+protocol RegionalResourcesProvider {
+    var regionalResourcesModelController: RegionalResourcesModelController? { get }
+}
+
 struct SharedServices: RegionalResourcesProvider, UserProvider {
-    var regionalResourcesModelController: RegionalResourcesModelController!
-    var userModel: User!
-    var connectivityService: ConnectivityService!
+    var regionalResourcesModelController: RegionalResourcesModelController?
+    var userModel: User
+    var connectivityService: ConnectivityService
+    init?() {
+        userModel = User()
+        connectivityService = ConnectivityService()
+//        guard ? else {
+//            return nil
+//        }
+    }
+
+    mutating func loadRepositoryIfNeeded() {
+        guard regionalResourcesModelController == nil else {
+            return
+        }
+        let online = true       // TODO: implement
+        let repository = RegionalResourcesModelController(atLocation: userModel.locationProfile, isOnline: online)
+        repository.initiateLoading()
+        regionalResourcesModelController = repository
+    }
 }
 
 
 class AssistiveAppController: AppController {
     
-    var shared: SharedServices = SharedServices()
+    var shared: SharedServices? = SharedServices()
     var navigationStack: NavigationStack!
 
     override init() {
@@ -39,17 +64,18 @@ class AssistiveAppController: AppController {
     
     override func internalStart() {
 
-        loadUserModel()        // other model controllers not called until after login
-        loadConnectivityService()
+        guard let sharedServices = shared, let navigationController = navController else {
+            return
+        }
         
-        navigationStack = NavigationStack(services: shared, navController: self.navController)
+        navigationStack = NavigationStack(services: sharedServices, navController: navigationController)
         navigationStack.instantiateProcess(ofType: NavListProcessController.self)
 
         // temp override to fail login for testing
-        self.shared.userModel.storeUserCredentials(username: "", password: "")
+        sharedServices.userModel.storeUserCredentials(username: "", password: "")
         //self.shared.userModel.storeUserCredentials(username: "exarchitect@gmail.com", password: "alongishpassword")
         
-        self.shared.userModel.validateCredentials(completion: { loginOutcome in
+        sharedServices.userModel.validateCredentials(completion: { loginOutcome in
             switch loginOutcome {
             case .Authenticated:
                 self.navigationStack.execute(command: .userSuccessfullyIdentified)
@@ -61,28 +87,9 @@ class AssistiveAppController: AppController {
         })
     }
     
-    
-    // MARK: - model controller & services handling
-
-    private func loadUserModel () {
-        if (self.shared.userModel == nil) {
-            self.shared.userModel = User()
-        }
-        precondition(self.shared.userModel != nil)
-    }
-    
-    private func loadConnectivityService () {
-        if (self.shared.connectivityService == nil) {
-            self.shared.connectivityService = ConnectivityService()
-        }
-        precondition(self.shared.connectivityService != nil)
-    }
-    
-
-    // MARK: - db Utilities
 
     override func checkDatabaseRefresh() {
-        self.shared.regionalResourcesModelController?.checkRepositoryUpdate()
+        shared?.regionalResourcesModelController?.checkRepositoryUpdate()
     }
     
 }

@@ -11,8 +11,8 @@ import UIKit
 
 class AppController: NSObject {
 
-    var rootViewController: RootViewController!
-    var navController: UINavigationController!
+    var rootViewController: RootViewController?
+    var navController: UINavigationController?
     var processControllerStack = [ProcessController]()
     
         
@@ -20,9 +20,12 @@ class AppController: NSObject {
         let window = UIWindow(frame: UIScreen.main.bounds)
         
         // create a root view controller
-        self.rootViewController = instantiateViewController(storyboardName: "Main", storyboardID: "RootViewController")
-        self.navController = UINavigationController(rootViewController: self.rootViewController)
-        self.navController.setNavigationBarHidden(true, animated: false)
+        rootViewController = instantiateViewController(storyboardName: "Main", storyboardID: "RootViewController")
+        guard let rootVwController = rootViewController else {
+            return window
+        }
+        navController = UINavigationController(rootViewController: rootVwController)
+        navController?.setNavigationBarHidden(true, animated: false)
 
         window.rootViewController = self.navController
         window.makeKeyAndVisible()

@@ -51,14 +51,7 @@ class NavigationStack: NSObject, Commandable {
             instantiateProcess(ofType: AuthenticationProcessController.self)
 
         case .userSuccessfullyIdentified:
-            guard services != nil else {
-                return
-            }
-            if (services!.regionalResourcesModelController == nil) {
-                let online = true       // TODO: implement
-                services!.regionalResourcesModelController = RegionalResourcesModelController(atLocation: services!.userModel.locationProfile, isOnline: online)
-                services!.regionalResourcesModelController?.initiateLoading()
-            }
+            services?.loadRepositoryIfNeeded()
             requestMainNavigationRefresh()
 
         case .selectCategory(let destination):
@@ -85,7 +78,7 @@ class NavigationStack: NSObject, Commandable {
                 // temp for testing
                 services?.userModel.logout()
                 instantiateProcess(ofType: AuthenticationProcessController.self)
-}
+            }
 
         case .selectEvent(let event):
             guard let eventDetailProcessController = instantiateProcess(ofType: EventDetailProcessController.self) else {

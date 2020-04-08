@@ -10,10 +10,6 @@ import UIKit
 import RealmSwift
 
 
-protocol RegionalResourcesProvider {
-    var regionalResourcesModelController: RegionalResourcesModelController! { get }
-}
-
 
 class RegionalResourcesModelController: NSObject {
     

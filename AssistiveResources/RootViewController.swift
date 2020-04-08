@@ -8,7 +8,7 @@
 
 import UIKit
 
-// currently does nothing
+// future - currently does nothing
 
 class RootViewController: UIViewController {
 
@@ -24,11 +24,5 @@ class RootViewController: UIViewController {
 //        self.appController = AppController.sharedInstance
 //        self.appController?.start()
 //    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-        //freeMemory()
-    }
     
 }
