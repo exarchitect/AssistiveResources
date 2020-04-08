@@ -36,7 +36,7 @@ class EventDetailViewController: ProcessViewController {
     }
 
     @IBAction func orgSelectedButtonAction(_ sender: Any) {
-        let testEvent: EntityDescriptor = (entityName: "test", entityID: 1)
+        let testEvent = EventDescriptor(name: "test", identifier: 1)
         self.execute(command: .selectEvent(testEvent))
     }
 

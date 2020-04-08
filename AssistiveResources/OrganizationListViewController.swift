@@ -42,7 +42,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     //MARK: delegate
     
     func notifyRowDetailSelected(rowIndex: Int) {
-        let testOrg: EntityDescriptor = (entityName: "TestOrg", entityID: 2)
+        let testOrg = OrganizationDescriptor(name: "TestOrg", identifier: 2)
         self.execute(command: .selectOrganization(testOrg))
     }
     

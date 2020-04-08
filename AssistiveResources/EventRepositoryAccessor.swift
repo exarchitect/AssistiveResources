@@ -60,7 +60,10 @@ class EventRepositoryAccessor: RepositoryAccessor {
     }
     
     private func addEvent(event: StoredEvent) {
-        let newEvent = StoredEvent(event: EntityDescriptor(entityName: event.eventTitle, entityID:event.eventID), organization: EntityDescriptor(entityName: event.organizationTitle, entityID:event.organizationID), facility: EntityDescriptor(entityName: event.facilityTitle, entityID:event.facilityID), eventStart: event.eventDate, durationInMinutes: event.durationMinutes, eventDetail: event.eventDescriptionBrief)
+        let eventdesc = EventDescriptor(name: event.eventTitle, identifier: event.eventID)
+        let organization = OrganizationDescriptor(name: event.organizationTitle, identifier: event.organizationID)
+        let facility = FacilityDescriptor(name: event.facilityTitle, identifier: event.facilityID)
+        let newEvent = StoredEvent(event: eventdesc, organization: organization, facility: facility, eventStart: event.eventDate, durationInMinutes: event.durationMinutes, eventDetail: event.eventDescriptionBrief)
         events.append(newEvent)
     }
     

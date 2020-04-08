@@ -14,16 +14,13 @@ enum OrganizationalStructure : Int {
     case SingleLocation = 0, MainOfficeWithChapters = 1, DistributedChapters = 2
 }
 
-
 enum GeographicScope : Int {
     case None = 0, International = 1, National = 2, Regional = 3, Local = 4
 }
 
-
 protocol OrganizationSearchProtocol {
     func matchOrganizationID (cityName: String, regionName: String, postalCode: String, countryCode: ISOCountryCode) -> Int     // regionName=State in US
 }
-
 
 //struct OrganizationFilter {
 //    var needProfile: TargetNeedProfile?
@@ -32,7 +29,6 @@ protocol OrganizationSearchProtocol {
 //    var entityDescriptor: EntityDescriptor
 //}
 
-
 class Chapter {
     
     // for backendless
@@ -40,11 +36,11 @@ class Chapter {
     var created: NSDate?
     var updated: NSDate?
     
-    var chapter: EntityDescriptor = EntityDescriptor("",0)
-    var parentOrganization: EntityDescriptor = EntityDescriptor("",0)
-    var location: LocationProfile = LocationProfile(latitude: 0.0,longitude: 0.0,city: "",state: "",zip: "")
+    var chapter: ChapterDescriptor = ChapterDescriptor(name: "", identifier: 0)
+    var parentOrganization: OrganizationDescriptor = OrganizationDescriptor(name: "", identifier: 0)
+    var location: LocationProfile = LocationProfile(latitude: 0.0, longitude: 0.0, city: "", state: "", zip: "")
     
-    init(chapter:EntityDescriptor, parentOrganization:EntityDescriptor, location:LocationProfile) {
+    init(chapter:ChapterDescriptor, parentOrganization:OrganizationDescriptor, location:LocationProfile) {
         self.chapter = chapter
         self.parentOrganization = parentOrganization
         self.location = location
@@ -98,10 +94,10 @@ class Organization: Object {
 //    var chapterList:[Chapter] = []
 //    var serviceList:[Service] = []
 
-    convenience required init(entity:EntityDescriptor, tagline:String, mission:String, scope:String, location:LocationProfile, url:String) {
+    convenience required init(entity:OrganizationDescriptor, tagline:String, mission:String, scope:String, location:LocationProfile, url:String) {
         self.init()
         
-        self.organizationTitle = entity.entityName
+        self.organizationTitle = entity.name
         self.organizationID = 0
         self.hqLatitude = location.coordinates.latitude
         self.hqLongitude = location.coordinates.longitude

@@ -11,7 +11,7 @@ import UIKit
 
 class EventDetailProcessController: ProcessController {
 
-    var filter:EntityDescriptor?
+    var filter:EventDescriptor?
     
     override func createPrimaryViewController() -> ProcessViewController? {
         return instantiateProcessViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")

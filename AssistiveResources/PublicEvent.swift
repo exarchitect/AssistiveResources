@@ -10,16 +10,11 @@ import UIKit
 import RealmSwift
 
 
-typealias EntityDescriptor = (entityName:String, entityID:Int)
-
-
 struct EntityFilter {
     var needProfile: ProvidedServicesProfile?
     var proximityRadius: Int = -1
-    var entityType: EntityType
-    var entityDescriptor: EntityDescriptor
+    var entityDescriptor: ResourceEntityDescriptor
 }
-
 
 class StoredEvent: Object {
     @objc dynamic var objectId: String?
@@ -38,13 +33,13 @@ class StoredEvent: Object {
 
     var timeBlock: TimeBlockDescriptor?
 
-    convenience required init(event:EntityDescriptor, organization:EntityDescriptor, facility:EntityDescriptor, eventStart:Date, durationInMinutes:Int, eventDetail:String)
+    convenience required init(event: EventDescriptor, organization: OrganizationDescriptor, facility: FacilityDescriptor, eventStart: Date, durationInMinutes: Int, eventDetail: String)
     {
         self.init()
         
-        self.eventTitle = event.entityName
-        self.organizationTitle = organization.entityName
-        self.facilityTitle = facility.entityName
+        self.eventTitle = event.name
+        self.organizationTitle = organization.name
+        self.facilityTitle = facility.name
         self.eventDate = eventStart
         self.durationMinutes = durationInMinutes
 
@@ -59,7 +54,6 @@ class StoredEvent: Object {
     }
 
     //Specify properties to ignore (Realm won't persist)
-    
     override static func ignoredProperties() -> [String] {
         return ["eventDescriptor"]
     }

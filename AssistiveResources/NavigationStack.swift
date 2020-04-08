@@ -84,10 +84,10 @@ class NavigationStack: NSObject, Commandable {
             guard let eventDetailProcessController = instantiateProcess(ofType: EventDetailProcessController.self) else {
                 return
             }
-            eventDetailProcessController.filter = EntityDescriptor(event)
+            eventDetailProcessController.filter = event
 
         case .selectOrganization(let organization):
-            _ = organization.entityID
+            _ = organization.identifier
         }
     }
 

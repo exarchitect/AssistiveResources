@@ -10,10 +10,6 @@ import Foundation
 
 
 
-enum EntityType : Int {
-    case Organization, Chapter, Event, Facility
-}
-
 // MARK:- Profile-related
 
 struct IndividualNeedProfile {

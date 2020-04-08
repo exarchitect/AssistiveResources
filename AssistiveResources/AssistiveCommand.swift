@@ -19,6 +19,6 @@ enum AssistiveCommand {
     case requestUserIdentity
     case userSuccessfullyIdentified
     case selectCategory(_ destination:NavigationCategory)
-    case selectEvent(_ event: EntityDescriptor)
-    case selectOrganization(_ organization: EntityDescriptor)
+    case selectEvent(_ event: EventDescriptor)
+    case selectOrganization(_ organization: OrganizationDescriptor)
 }

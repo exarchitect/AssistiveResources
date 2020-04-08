@@ -58,7 +58,7 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
     }
 
     func addOrganization(org: Organization) {
-        let newOrg = Organization(entity: EntityDescriptor(entityName: org.organizationTitle,entityID:org.organizationID) , tagline: org.tagline, mission: org.mission, scope: org.geographicScope, location: LocationProfile(latitude: org.hqLatitude,longitude: org.hqLongitude,city: "",state: "",zip: org.hqZip), url: "")
+        let newOrg = Organization(entity: OrganizationDescriptor(name: org.organizationTitle, identifier: org.organizationID), tagline: org.tagline, mission: org.mission, scope: org.geographicScope, location: LocationProfile(latitude: org.hqLatitude,longitude: org.hqLongitude,city: "",state: "",zip: org.hqZip), url: "")
         organizations.append(newOrg)
     }
     
