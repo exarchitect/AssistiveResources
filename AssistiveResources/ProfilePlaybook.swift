@@ -47,7 +47,7 @@ struct ProvidedServicesProfile {
 // MARK:- Location-related
 
 enum ISOCountryCode : String {      // only support USA initially
-    case USA = "USA", GBR = "GBR"
+    case usa = "USA", gbr = "GBR"
 }
 
 
@@ -60,14 +60,14 @@ struct LocationProfile {
     
     init(zip:String)
     {
-        countryCode = ISOCountryCode.USA
+        countryCode = ISOCountryCode.usa
         cityName = ""
         regionName = ""
         zipCode = zip
         coordinates = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     }
 
-    init(latitude:Double, longitude:Double, city:String, state:String, zip:String, country:ISOCountryCode = ISOCountryCode.USA)
+    init(latitude:Double, longitude:Double, city:String, state:String, zip:String, country:ISOCountryCode = .usa)
     {
         countryCode = country
         cityName = city

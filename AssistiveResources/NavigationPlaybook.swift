@@ -11,7 +11,7 @@ import Foundation
 
 
 enum NavigationCategory : String {
-    case Organizations, Events, Facilities, Travel, Inbox, Profile, News
+    case organizations, events, facilities, travel, inbox, profile, news
 }
 
 
@@ -30,36 +30,36 @@ class NavigationCategories: NSObject {
     override init() {
         super.init()
 
-        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Organizations))
-        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Events))
-        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Facilities))
-        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Travel))
-        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.News))
-        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Inbox))
-        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.Profile))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.events))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.organizations))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.facilities))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.travel))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.news))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.inbox))
+        navigationArray.append(DestinationDescriptor(dest: NavigationCategory.profile))
     }
     
     func updateSubtitles() {
         var index = 0
         for item in navigationArray {
             switch item.destination {
-            case NavigationCategory.Organizations:
+            case NavigationCategory.organizations:
                 let _ = 8
                 //navigationArray[index].subtitle = "Hi MOM!"
                 
-            case NavigationCategory.Events:
-                navigationArray[index].subtitle = NSLocalizedString("Regional and national events in your area", comment: "subtext for event nav item")
+            case NavigationCategory.events:
+                navigationArray[index].subtitle = NSLocalizedString("Upcoming events across the nation and in your area", comment: "subtext for event nav item")
                 
-            case NavigationCategory.Facilities:
+            case NavigationCategory.facilities:
                 let _ = 8
                 
-            case NavigationCategory.Travel:
+            case NavigationCategory.travel:
                 let _ = 8
                 
-            case NavigationCategory.News:
+            case NavigationCategory.news:
                 let _ = 8
                 
-            case NavigationCategory.Inbox:
+            case NavigationCategory.inbox:
                 let msgs = 3
                 var msgString = "no"
                 if (msgs > 0) {
@@ -69,7 +69,7 @@ class NavigationCategories: NSObject {
                 let suffix = NSLocalizedString(" unread messages", comment: "...unread messages")
                 navigationArray[index].subtitle = prefix + msgString + suffix
                 
-            case NavigationCategory.Profile:
+            case NavigationCategory.profile:
                 let _ = 8
             }
             
@@ -84,47 +84,46 @@ struct DestinationDescriptor {
     var subtitle: String
     var imageName: String
     
-    init(dest: NavigationCategory,subtitle:String?=nil)
+    init(dest: NavigationCategory, customSubtitle: String? = nil)
     {
         destination = dest
-        var placeholderSubtitle:String
+        var genericSubtitle:String
         
         switch dest {
-        case .Organizations:
+        case .organizations:
             title = "Organizations/Services"
-            placeholderSubtitle = "Locate services and groups for your needs"
+            genericSubtitle = "Locate services and groups for your needs"
             imageName = "organization"
-        case .Events:
-            title = NavigationCategory.Events.rawValue
-            placeholderSubtitle = "Regional and national events"
+        case .events:
+            title = "Events"
+            genericSubtitle = "Regional and national events"
             imageName = "sports"
-        case .Facilities:
+        case .facilities:
             title = "Accessibility"
-            placeholderSubtitle = "Find restrooms and other family-friendly facilities"
+            genericSubtitle = "Find restrooms and other family-friendly facilities"
             imageName = "venues"
-        case .Travel:
-            title = NavigationCategory.Travel.rawValue
-            placeholderSubtitle = "Resources for vacations and travel within the US"
+        case .travel:
+            title = "Travel"
+            genericSubtitle = "Resources for vacations and travel within the US"
             imageName = "travel"
-        case .Inbox:
-            title = NavigationCategory.Inbox.rawValue
-            placeholderSubtitle = "Your messages"
+        case .inbox:
+            title = "Inbox"
+            genericSubtitle = "Your messages"
             imageName = "inbox"
-        case .Profile:
-            title = NavigationCategory.Profile.rawValue
-            placeholderSubtitle = "Tell us about yourself"
+        case .profile:
+            title = "Profile"
+            genericSubtitle = "Tell us about yourself"
             imageName = "favourite2"
-        case .News:
-            title = NavigationCategory.News.rawValue
-            placeholderSubtitle = "Online articles and news for the special needs community"
+        case .news:
+            title = "News"
+            genericSubtitle = "Online articles and news for the special needs community"
             imageName = "rss"
         }
-        
-        if let _subtitle = subtitle {
-            self.subtitle = _subtitle
-        } else {
-            self.subtitle = placeholderSubtitle
+        guard let custom = customSubtitle else {
+            subtitle = genericSubtitle
+            return
         }
+        subtitle = custom
     }
 }
 

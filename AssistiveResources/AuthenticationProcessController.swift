@@ -24,15 +24,15 @@ class AuthenticationProcessController: ProcessController, AuthenticationProtocol
 
         sharedServices.userModel.validateCredentials(completion: { loginResult in
             switch loginResult {
-            case .Authenticated:
+            case .authenticated:
                 //print("authenticated")
                 self.sharedServices.userModel.storeUserCredentials(username: credentials.userName, password: credentials.password)
                 self.executeCommand(.userSuccessfullyIdentified)
                 self.executeCommand(.dismissCurrentProcess)
-            case .NeedCredentials:
+            case .needCredentials:
                 // TODO - get credentials
                 fallthrough
-            case .Unknown:
+            case .unknown:
                 print("NOT logged in")
                 // TODO - warn user of bad credentials
             }

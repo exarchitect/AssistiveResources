@@ -11,11 +11,11 @@ import RealmSwift
 
 
 enum OrganizationalStructure : Int {
-    case SingleLocation = 0, MainOfficeWithChapters = 1, DistributedChapters = 2
+    case singleLocation = 0, mainOfficeWithChapters = 1, distributedChapters = 2
 }
 
 enum GeographicScope : Int {
-    case None = 0, International = 1, National = 2, Regional = 3, Local = 4
+    case all = 0, global = 1, national = 2, regional = 3, local = 4
 }
 
 protocol OrganizationSearchProtocol {

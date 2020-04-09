@@ -14,7 +14,7 @@ class ResourceEntityDescriptor {
     var type: EntityType!
 
     enum EntityType : Int {
-        case Organization, Chapter, Event, Facility
+        case organization, chapter, event, facility
     }
 
     init(name: String, identifier: Int) {
@@ -26,28 +26,28 @@ class ResourceEntityDescriptor {
 class EventDescriptor: ResourceEntityDescriptor {
     override init(name: String, identifier: Int) {
         super.init(name: name, identifier: identifier)
-        self.type = .Event
+        self.type = .event
     }
 }
 
 class OrganizationDescriptor: ResourceEntityDescriptor {
     override init(name: String, identifier: Int) {
         super.init(name: name, identifier: identifier)
-        self.type = .Organization
+        self.type = .organization
     }
 }
 
 class ChapterDescriptor: ResourceEntityDescriptor {
     override init(name: String, identifier: Int) {
         super.init(name: name, identifier: identifier)
-        self.type = .Chapter
+        self.type = .chapter
     }
 }
 
 class FacilityDescriptor: ResourceEntityDescriptor {
     override init(name: String, identifier: Int) {
         super.init(name: name, identifier: identifier)
-        self.type = .Facility
+        self.type = .facility
     }
 }
 

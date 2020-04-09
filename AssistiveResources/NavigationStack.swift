@@ -56,25 +56,25 @@ class NavigationStack: NSObject, Commandable {
 
         case .selectCategory(let destination):
             switch destination {
-            case .Organizations:
+            case .organizations:
                 instantiateProcess(ofType: OrganizationListProcessController.self)
 
-            case .Events:
+            case .events:
                 instantiateProcess(ofType: EventListProcessController.self)
 
-            case .Facilities:
+            case .facilities:
                 let _ = 7
 
-            case .Travel:
+            case .travel:
                 let _ = 7
 
-            case .News:
+            case .news:
                 let _ = 7
 
-            case .Inbox:
+            case .inbox:
                 let _ = 7
 
-            case .Profile:
+            case .profile:
                 // temp for testing
                 services?.userModel.logout()
                 instantiateProcess(ofType: AuthenticationProcessController.self)

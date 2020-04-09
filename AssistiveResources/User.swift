@@ -10,11 +10,11 @@ import UIKit
 
 
 enum LoginResponse {
-    case Authenticated, Unknown, NeedCredentials
+    case authenticated, unknown, needCredentials
 }
 
 enum UserAccess {
-    case Anonymous, IdentifiedUser, PendingSignup
+    case anonymous, identified, pendingSignup
 }
 
 typealias LoginCompletionHandlerType = (_ loginResult: LoginResponse) -> Void
@@ -49,7 +49,7 @@ final class User: NSObject {
             self.loginType = nil
             // temp
             self.storeUserCredentials (username: "exarchitect", password: "whatever**@^")
-            completion(.NeedCredentials)      // failed, since we dont have creds
+            completion(.needCredentials)      // failed, since we dont have creds
             return
         }
         DispatchQueue.main.async {
@@ -65,23 +65,23 @@ final class User: NSObject {
             // temp
             self.storeUserCredentials (username: "exarchitect", password: "whatever**@^")
 
-            self.loginType = .IdentifiedUser
-            completion(.Authenticated)
+            self.loginType = .identified
+            completion(.authenticated)
 
         }, error: { (fault: Fault?) in
             print (fault ?? "failed login")
             let err: String = fault!.faultCode
             if err=="-1009" {
-                self.loginType = .Anonymous        // TODO: if system comes back online, re-authorize user
+                self.loginType = .anonymous        // TODO: if system comes back online, re-authorize user
             } // else no access 
 
             // temp
-            self.loginType = .IdentifiedUser
+            self.loginType = .identified
 
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.5)) {
                 stopActivityIndicator()
                 // temp
-                completion(.Authenticated)
+                completion(.authenticated)
             }
         })
     }
