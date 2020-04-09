@@ -38,7 +38,7 @@ class RegionalResourcesRepository: Repository {
             // TODO - if try fails, then the db format has changed - invalidate the database & delete
             let _ = error
 
-            return RepositoryState.Empty
+            return RepositoryState.empty
         }
     }
     
@@ -83,7 +83,6 @@ class RegionalResourcesRepository: Repository {
     
     private func repositoryState(db: Realm) -> RepositoryState {
         
-        var state: RepositoryState!
         var haveLocalDatabase = false
         
         let profilesFound = db.objects(RepositoryProfile.self)
@@ -96,28 +95,23 @@ class RegionalResourcesRepository: Repository {
             let expireDate = profile.lastUpdated.addingTimeInterval(TimeInterval(kExpirationSeconds))
             let now = Date()
             let dateCompare = now.compare(expireDate)
-            let expired: Bool = (dateCompare == ComparisonResult.orderedDescending)
-            
-            if (locationMatch && !expired) {
-                state = RepositoryState.Current
-                
-            } else if (locationMatch && expired) {
-                state = RepositoryState.Outdated
-                
-            } else if (!locationMatch) {
-                state = RepositoryState.Invalid
+            let refreshLocalStore = (dateCompare == ComparisonResult.orderedDescending)
+
+            guard locationMatch == true else {
+                return RepositoryState.invalidLocation
             }
-            
-        } else {        // NO profiles found, so we assume no database
-            
+            if refreshLocalStore == true {
+                return RepositoryState.outdated
+            } else {
+                return RepositoryState.current
+            }
+
+        } else {        // NO profiles found, so no valid database
             // create empty database
             let dbProfile = RepositoryProfile()
             dbProfile.save()
-            
-            state = RepositoryState.Empty
+            return RepositoryState.empty
         }
-        
-        return state
     }
     
     override func repositoryUpdateNotificationKey () -> String {

@@ -8,8 +8,8 @@
 
 import UIKit
 
-enum AccessorState : Int {
-    case NotLoaded = 0, Loaded = 1
+enum LocalStoreState {
+    case notLoaded, loaded
 }
 
 protocol RepositoryAccessorProtocol: class {
@@ -20,7 +20,7 @@ protocol RepositoryAccessorProtocol: class {
 
 class RepositoryAccessor: NSObject {
 
-    var state: AccessorState = .NotLoaded
+    var state: LocalStoreState = .notLoaded
     weak var repo: Repository?
     weak var delegate: RepositoryAccessorProtocol?
     

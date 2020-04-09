@@ -54,7 +54,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     //MARK:- @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
-        execute(command: .dismissCurrentProcess)
+        processController?.executeCommand(.dismissCurrentProcess)
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {
@@ -74,7 +74,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     
     func notifyRowDetailSelected(rowIndex: Int) {
         let testEvent = EventDescriptor(name: "TestEvent", identifier: 3)
-        execute(command: .selectEvent(testEvent))
+        processController?.executeCommand(.selectEvent(testEvent))
     }
     
     func notifyFilterSelected() {

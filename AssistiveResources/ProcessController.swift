@@ -9,7 +9,7 @@
 import UIKit
 
 
-class ProcessController: NSObject, Commandable {
+class ProcessController: NSObject {
 
     var sharedServices: SharedServices!
     weak var commandHandler: Commandable!
@@ -30,7 +30,7 @@ class ProcessController: NSObject, Commandable {
         self.primaryProcessViewController = nil;
     }
 
-    final func execute(command: AssistiveCommand){
+    final func executeCommand(_ command: AssistiveCommand){
         self.commandHandler.execute(command: command)
     }
 

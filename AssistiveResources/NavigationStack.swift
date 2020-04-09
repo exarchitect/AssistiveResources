@@ -90,5 +90,4 @@ class NavigationStack: NSObject, Commandable {
             _ = organization.identifier
         }
     }
-
 }

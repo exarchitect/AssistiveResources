@@ -27,8 +27,8 @@ class AuthenticationProcessController: ProcessController, AuthenticationProtocol
             case .Authenticated:
                 //print("authenticated")
                 self.sharedServices.userModel.storeUserCredentials(username: credentials.userName, password: credentials.password)
-                self.execute(command: .userSuccessfullyIdentified)
-                self.execute(command: .dismissCurrentProcess)
+                self.executeCommand(.userSuccessfullyIdentified)
+                self.executeCommand(.dismissCurrentProcess)
             case .NeedCredentials:
                 // TODO - get credentials
                 fallthrough

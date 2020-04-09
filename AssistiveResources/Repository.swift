@@ -16,8 +16,8 @@ typealias RepositoryUpdateCompletionHandlerType = (_ success: Bool) -> Void
 typealias RemoteDataRetrievalCompletionType = (_ success: Bool) -> Void
 
 
-enum RepositoryState : Int {
-    case Current = 0, Outdated = 1, Invalid = 2, Empty = 3
+enum RepositoryState {
+    case current, outdated, invalidLocation, empty
 }
 
 protocol RemoteDatasourceProtocol: class {
@@ -31,11 +31,6 @@ class Repository: NSObject {
     var localRepositoryAvailable = false
     var dataUpdateCompletion: RepositoryUpdateCompletionHandlerType? = nil
     
-    override init() {
-        // ?
-        super.init()
-    }
-    
     func load (completion: @escaping RepositoryUpdateCompletionHandlerType) {
         self.dataUpdateCompletion = completion
         
@@ -43,20 +38,20 @@ class Repository: NSObject {
         
         switch repoStartupState {
             
-        case .Current:
+        case .current:
+            self.localRepositoryAvailable = true
             self.dataUpdateCompletion?(true)
             self.dataUpdateCompletion = nil
-            self.localRepositoryAvailable = true
-            
-        case .Outdated:      // do nothing here? - after accessor is done, then update will be called
-            self.dataUpdateCompletion?(true)
-            self.dataUpdateCompletion = nil
-            self.localRepositoryAvailable = true
 
-        case .Invalid:
+        case .outdated:      // do nothing here? - after accessor is done, then update will be called
+            self.localRepositoryAvailable = true
+            self.dataUpdateCompletion?(true)
+            self.dataUpdateCompletion = nil
+
+        case .invalidLocation:
             self.initiateRemoteLoading()
             
-        case .Empty:
+        case .empty:
             self.initiateRemoteLoading()
         }
     }
@@ -65,13 +60,13 @@ class Repository: NSObject {
         let repoCurrentState = self.checkRepositoryState()
         
         switch repoCurrentState {
-        case .Current:
+        case .current:
             let _ = 3       // do nothing
-        case .Outdated:
+        case .outdated:
             self.initiateRemoteLoading()
-        case .Invalid:
+        case .invalidLocation:
             self.initiateRemoteLoading()
-        case .Empty:
+        case .empty:
             self.initiateRemoteLoading()
         }
     }

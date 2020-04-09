@@ -32,12 +32,12 @@ class EventDetailViewController: ProcessViewController {
     }
     
     @IBAction func evntDetailBackButtonAction(_ sender: Any) {
-        self.execute(command: .dismissCurrentProcess)
+        processController?.executeCommand(.dismissCurrentProcess)
     }
 
     @IBAction func orgSelectedButtonAction(_ sender: Any) {
         let testEvent = EventDescriptor(name: "test", identifier: 1)
-        self.execute(command: .selectEvent(testEvent))
+        processController?.executeCommand(.selectEvent(testEvent))
     }
 
 }

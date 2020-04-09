@@ -12,8 +12,4 @@ class ProcessViewController: UIViewController {
 
     weak var processController: ProcessController?
 
-    func execute(command: AssistiveCommand){
-        processController?.commandHandler.execute(command: command)
-    }
-
 }

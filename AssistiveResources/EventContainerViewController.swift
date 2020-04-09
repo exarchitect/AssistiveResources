@@ -69,7 +69,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         self.filterValueDescriptionLabelOutlet.text = filter.naturalLanguageText()
 
         self.eventAccessor.requestData(filteredBy: IndividualNeedProfile(age: 1, mobility: .noLimitation, delay: .notSpecified, primarydx: .notSpecified, secondarydx: .notSpecified))
-        if (self.eventAccessor.state == .NotLoaded) {
+        if (self.eventAccessor.state == .notLoaded) {
             self.showLoadingIndicator = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
                 startActivityIndicator(title: nil, message: "loading...")

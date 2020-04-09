@@ -43,7 +43,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     
     func notifyRowDetailSelected(rowIndex: Int) {
         let testOrg = OrganizationDescriptor(name: "TestOrg", identifier: 2)
-        self.execute(command: .selectOrganization(testOrg))
+        processController?.executeCommand(.selectOrganization(testOrg))
     }
     
     func notifyFilterSelected() {
@@ -58,7 +58,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     //MARK: @IBAction
     
     @IBAction func backButtonAction(_ sender: Any) {
-        self.execute(command: .dismissCurrentProcess)
+        processController?.executeCommand(.dismissCurrentProcess)
     }
     
 }

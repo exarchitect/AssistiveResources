@@ -24,11 +24,11 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
     
     func requestData(filteredBy: IndividualNeedProfile){
         guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
-            state = .NotLoaded
+            state = .notLoaded
             return
         }
         retrieve(usingFilter: filteredBy)
-        state = .Loaded
+        state = .loaded
     }
     
     override func repositoryUpdateNotification() {
@@ -46,13 +46,13 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
             for org in orgsFound {
                 addOrganization(org: org)
             }
-            state = .Loaded
+            state = .loaded
            
         } catch let error as NSError {
             // handle error
             
             let _ = error
-            state = .NotLoaded
+            state = .notLoaded
         }
         
     }
