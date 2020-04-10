@@ -36,9 +36,9 @@ class Chapter {
     var created: NSDate?
     var updated: NSDate?
     
-    var chapter: ChapterDescriptor = ChapterDescriptor(name: "", identifier: 0)
-    var parentOrganization: OrganizationDescriptor = OrganizationDescriptor(name: "", identifier: 0)
-    var location: LocationProfile = LocationProfile(latitude: 0.0, longitude: 0.0, city: "", state: "", zip: "")
+    var chapter = ChapterDescriptor(name: "", identifier: 0)
+    var parentOrganization = OrganizationDescriptor(name: "", identifier: 0)
+    var location = LocationProfile(latitude: 0.0, longitude: 0.0, city: "", state: "", zip: "")
     
     init(chapter:ChapterDescriptor, parentOrganization:OrganizationDescriptor, location:LocationProfile) {
         self.chapter = chapter

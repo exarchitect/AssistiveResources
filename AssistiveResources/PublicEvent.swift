@@ -13,7 +13,7 @@ import RealmSwift
 struct EntityFilter {
     var needProfile: ProvidedServicesProfile?
     var proximityRadius: Int = -1
-    var entityDescriptor: ResourceEntityDescriptor
+    var entityDescriptor: Describable
 }
 
 class StoredEvent: Object {
