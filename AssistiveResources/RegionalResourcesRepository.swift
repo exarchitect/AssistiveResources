@@ -56,15 +56,11 @@ class RegionalResourcesRepository: Repository {
                 self.clearLocalStore()
 
                 // update local store
-                let eventList: [StoredEvent] = self.remoteDataSource.getEvents()
-                for evt in eventList {
-                    evt.save()
-                }
-                
-                let orgList: [Organization] = self.remoteDataSource.getOrganizations()
-                for org in orgList {
-                    org.save()
-                }
+                let eventList = self.remoteDataSource.getEvents()
+                eventList.forEach { $0.save() }
+
+                let organizationList = self.remoteDataSource.getOrganizations()
+                organizationList.forEach { $0.save() }
 
                 self.dataUpdateCompletion?(true)
                 self.dataUpdateCompletion = nil

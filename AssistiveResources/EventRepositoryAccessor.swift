@@ -44,9 +44,9 @@ class EventRepositoryAccessor: RepositoryAccessor {
         
         do {
             let uiRealm = try Realm()
-            let eventsFound = uiRealm.objects(StoredEvent.self)
-            for evt in eventsFound {
-                addEvent(event: evt)
+            let events = uiRealm.objects(StoredEvent.self)
+            for event in events {
+                addEvent(event)
             }
             state = .loaded
             
@@ -59,7 +59,7 @@ class EventRepositoryAccessor: RepositoryAccessor {
         
     }
     
-    private func addEvent(event: StoredEvent) {
+    private func addEvent(_ event: StoredEvent) {
         let eventdesc = EventDescriptor(name: event.eventTitle, identifier: event.eventID)
         let organization = OrganizationDescriptor(name: event.organizationTitle, identifier: event.organizationID)
         let facility = FacilityDescriptor(name: event.facilityTitle, identifier: event.facilityID)

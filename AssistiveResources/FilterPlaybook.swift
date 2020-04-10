@@ -12,26 +12,21 @@ import Foundation
 // ------------------------------------------------------------------------------
 // MARK: Profile Characteristics -
 
-protocol Filterable {
+
+protocol Filterable: Equatable {
     var verboseValue: String { get }
     var conciseValue: String { get }
     var hasValue: Bool { get }
 }
-extension Filterable where Self == Diagnosis {
-    var hasValue: Bool {
-        //return self.rawValue != 0
-        return self != .notSpecified
-    }
-}
 
 struct FilterProfile {
     
-    var ageValue:Age = .notSpecified
-    var proximityValue:Proximity = .notSpecified
-    var mobilityValue:MobilityLimitation = .notSpecified
-    var developmentalAgeValue:DevelopmentalAge = .notSpecified
-    var primaryDxValue:Diagnosis = .notSpecified
-    var secondaryDxValue:Diagnosis = .notSpecified
+    var ageValue = Age.notSpecified
+    var proximityValue = Proximity.notSpecified
+    var mobilityValue = MobilityLimitation.notSpecified
+    var developmentalAgeValue = DevelopmentalAge.notSpecified
+    var primaryDxValue = Diagnosis.notSpecified
+    var secondaryDxValue = Diagnosis.notSpecified
 
     func naturalLanguageText() -> String {
         var accumulateString = "Events "
@@ -79,27 +74,22 @@ enum Age: Filterable {
     }
     var verboseValue: String {
         switch self {
-        case .notSpecified:
-            return "not set"
         case .age(let years):
             return "\(years) year old"
+        default:
+            return "not set"
         }
     }
     var conciseValue: String {
         switch self {
-        case .notSpecified:
-            return "not set"
         case .age(let years):
             return "\(years)yo"
+        default:
+            return "not set"
         }
     }
     var hasValue: Bool {
-        switch self {
-        case .notSpecified:
-            return false
-        case .age:
-            return true
-        }
+        self != Age.notSpecified
     }
 }
 
@@ -149,10 +139,10 @@ enum Proximity: Int, CaseIterable, Filterable {
         .anyDistance: 1_000_000
     ]
     var distanceValue: Int {
-        return Proximity.distanceMap[self]!
+        Proximity.distanceMap[self]!
     }
     var hasValue: Bool {
-        return self != .notSpecified
+        self != .notSpecified
     }
 }
 
@@ -186,7 +176,7 @@ enum MobilityLimitation: Int, CaseIterable, Filterable {
         }
     }
     var hasValue: Bool {
-        return self != .notSpecified
+        self != .notSpecified
     }
 }
 
@@ -236,7 +226,7 @@ enum DevelopmentalAge: Int, CaseIterable, Filterable {
         }
     }
     var hasValue: Bool {
-        return self.rawValue != 0
+        self != .notSpecified
     }
 }
 
@@ -273,8 +263,8 @@ enum Diagnosis: Int, CaseIterable, Filterable {
             return "Other Diagnosis"
         }
     }
-//    var hasValue: Bool {
-//        return self != .notSpecified
-//    }
+    var hasValue: Bool {
+        self != .notSpecified
+    }
 }
 

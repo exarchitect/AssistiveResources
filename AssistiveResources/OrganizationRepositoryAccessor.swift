@@ -42,9 +42,9 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
         
         do {
             let uiRealm = try Realm()
-            let orgsFound = uiRealm.objects(Organization.self)
-            for org in orgsFound {
-                addOrganization(org: org)
+            let organizations = uiRealm.objects(Organization.self)
+            for organization in organizations {
+                addOrganization(organization)
             }
             state = .loaded
            
@@ -57,7 +57,7 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
         
     }
 
-    func addOrganization(org: Organization) {
+    func addOrganization(_ org: Organization) {
         let newOrg = Organization(entity: OrganizationDescriptor(name: org.organizationTitle, identifier: org.organizationID), tagline: org.tagline, mission: org.mission, scope: org.geographicScope, location: LocationProfile(latitude: org.hqLatitude,longitude: org.hqLongitude,city: "",state: "",zip: org.hqZip), url: "")
         organizations.append(newOrg)
     }
