@@ -16,7 +16,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     
     var filterViewController:EventFilterViewController?
     weak private var containerViewController:EventContainerViewController?
-    var filter: FilterProfile = FilterProfile()
+    var filterDict = FilterDictionary()
     var resourcesModelController: RegionalResourcesModelController? {
         return processController?.sharedServices.regionalResourcesModelController
     }
@@ -45,7 +45,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
         
         if segue.identifier == "EventContainerSegueID" {
             containerViewController = segue.destination as? EventContainerViewController
-            containerViewController?.configuration(rsrcModelController: rsrcsModelController, delegate: self, filter: filter)
+            containerViewController?.configuration(rsrcModelController: rsrcsModelController, delegate: self, filter: filterDict)
             //containerViewController?.setFilterDescription(desrc: filter.naturalLanguageText())
         }
         
@@ -64,10 +64,8 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     //MARK:- Utilities
 
     func setupFilter() {
-        //filter.developmentalAgeValue = .PreschoolDevelopmentalAge
-        filter.proximityValue = .twentyFiveMiles
-        filter.ageValue = Age(years: 21)
-        //filter.ageValue = Age.notSpecified
+        filterDict[ProximityClass.key] = ProximityClass(range: .twentyFiveMiles)
+        filterDict[AgeClass.key] = AgeClass(years: 21)
     }
 
     //MARK: - EventListContainerNotificationProtocol delegate
@@ -81,7 +79,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
 
         let filterViewController:EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
         
-        filterViewController?.configuration(resources: resourcesModelController, selectorDelegate: self, filter: filter)
+        filterViewController?.configuration(resources: resourcesModelController, selectorDelegate: self, filter: filterDict)
 
         if let filterVC = filterViewController {
             present(filterVC, animated: true, completion: nil)
@@ -91,8 +89,8 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     
     //MARK: - EventFilterResponseProtocol delegate
 
-    func okFilterButtonAction(filter:FilterProfile) {
-        self.filter = filter
+    func okFilterButtonAction(filter:FilterDictionary) {
+        self.filterDict = filter
         if let container = containerViewController {
             container.setFilter(fltr: filter)
         }

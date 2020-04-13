@@ -9,47 +9,21 @@
 import Foundation
 
 
-
-// MARK:- Profile-related
-
-struct IndividualNeedProfile {
-    var mobilityLimitation: MobilityLimitation
-    var developmentalAge: DevelopmentalAge
-    var actualAge: Int
-    var primaryDiagnosis: Diagnosis
-    var secondaryDiagnosis: Diagnosis
-
-    init(age: Int, mobility:MobilityLimitation, delay:DevelopmentalAge, primarydx:Diagnosis, secondarydx:Diagnosis)
-    {
-        self.mobilityLimitation = mobility
-        self.developmentalAge = delay
-        self.actualAge = age        // -1 indicates age not specified
-        self.primaryDiagnosis = primarydx
-        self.secondaryDiagnosis = secondarydx
-    }
-}
-
 struct ProvidedServicesProfile {
-    var supportedMobility: [MobilityLimitation] = []
-    var supportedDevelopmentalAge: [DevelopmentalAge] = []
+    var supportedMobility: [Limitation] = []
+    var supportedDevelopmentalAge: [DevelopmentalStage] = []
     var actualAge: Int = -1
-    var diagnosis: [Diagnosis] = []
+    var diagnosis: [DevelopmentalDiagnosis] = []
     
-    func isMatch(for: IndividualNeedProfile) -> Bool {
+    func isMatch(for: FilterDictionary) -> Bool {
         
         return true
     }
 }
 
-
-
-
-// MARK:- Location-related
-
 enum ISOCountryCode : String {      // only support USA initially
     case usa = "USA", gbr = "GBR"
 }
-
 
 struct LocationProfile {
     var coordinates: CLLocationCoordinate2D!

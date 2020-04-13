@@ -2,103 +2,65 @@
 //  FilterPlaybook.swift
 //  AssistiveResources
 //
-//  Created by WCJ on 2/7/18.
+//  Created by Bill Johnson on 2/7/18.
 //  Copyright © 2018 SevenPlusTwo. All rights reserved.
 //
 
 import Foundation
 
 
-// ------------------------------------------------------------------------------
-// MARK: Profile Characteristics -
+typealias FilterDictionary = [String: FilterElement]
 
-
-protocol Filterable: Equatable {
-    var verboseValue: String { get }
-    var conciseValue: String { get }
+protocol FilterElement {
+    static var key: String { get }
+    var label: String { get }
+    var valueShort: String { get }
+    var valueLong: String { get }
     var hasValue: Bool { get }
+    var editType: EditType { get }
 }
 
-struct FilterProfile {
-    
-    var ageValue = Age.notSpecified
-    var proximityValue = Proximity.notSpecified
-    var mobilityValue = MobilityLimitation.notSpecified
-    var developmentalAgeValue = DevelopmentalAge.notSpecified
-    var primaryDxValue = Diagnosis.notSpecified
-    var secondaryDxValue = Diagnosis.notSpecified
+protocol Descriptable {
+    var concise: String { get }
+    var verbose: String { get }
+}
 
-    func naturalLanguageText() -> String {
-        var accumulateString = "Events "
-        let haveAtLeast1dx = primaryDxValue.hasValue || secondaryDxValue.hasValue
-
-        guard proximityValue.hasValue || ageValue.hasValue || haveAtLeast1dx || mobilityValue.hasValue else {
-            return "Upcoming events"
-        }
-        if proximityValue.hasValue { accumulateString.append(proximityValue.conciseValue) }
-        if ageValue.hasValue {
-            accumulateString.append(" for ")
-            accumulateString.append(ageValue.conciseValue)
-        }
-        if haveAtLeast1dx && primaryDxValue != .otherDiagnosis {
-            if !ageValue.hasValue { accumulateString.append("for someone") }
-            accumulateString.append(" with ")
-            accumulateString.append(primaryDxValue.conciseValue)
-            if secondaryDxValue.hasValue && secondaryDxValue != .otherDiagnosis {
-                accumulateString.append(" & ")
-                accumulateString.append(secondaryDxValue.conciseValue)
-            }
-        }
-        if mobilityValue.hasValue {
-            accumulateString.append(". ")
-            accumulateString.append(mobilityValue.conciseValue)
-            accumulateString.append(".")
-        }
-        
-        return accumulateString
+enum FilterKey: String {
+    case age, proximity, mobility, developmentalAge, primaryDiagnosis, otherDiagnosis
+    var key: String {
+        self.rawValue
     }
 }
 
-// MARK: Base Enumerated Filter Types -
+struct AgeClass: FilterElement {
+    var years: Int = -1
 
-enum Age: Filterable {
-    case notSpecified
-    case age(years: Int)
-
-    init(years: Int) {
-        if years < 0 {
-            self = .notSpecified
-        } else {
-            self = .age(years: years)
-        }
+    static var key: String {
+        "age"
     }
-    var verboseValue: String {
-        switch self {
-        case .age(let years):
-            return "\(years) year old"
-        default:
-            return "not set"
-        }
+    var label: String {
+        "Age"
     }
-    var conciseValue: String {
-        switch self {
-        case .age(let years):
-            return "\(years)yo"
-        default:
-            return "not set"
-        }
+    var valueLong: String {
+        return hasValue ? "not set" : "\(years) year old"
+    }
+    var valueShort: String {
+        return hasValue ? "not set" : "\(years)yo"
     }
     var hasValue: Bool {
-        self != Age.notSpecified
+        return years <= -1
+    }
+    var editType: EditType {
+        .numeric
     }
 }
 
-enum Proximity: Int, CaseIterable, Filterable {
+enum Distance: Int, CaseIterable, Descriptable {
     case notSpecified=0, tenMiles=1, twentyFiveMiles=2, fiftyMiles=3, oneHundredMiles=4, anyDistance=5
-    static var allCases: [Proximity] {
+    static var AllCases: [Distance] {
         return [.notSpecified, .tenMiles, .twentyFiveMiles, .fiftyMiles, .oneHundredMiles, .anyDistance]
     }
-    var verboseValue: String {
+    var verbose: String {
         switch self {
         case .notSpecified:
             return "No Distance Specified"
@@ -114,7 +76,7 @@ enum Proximity: Int, CaseIterable, Filterable {
             return "Any Distance"
         }
     }
-    var conciseValue: String {
+    var concise: String {
         switch self {
         case .notSpecified:
             return "not specified"
@@ -130,7 +92,30 @@ enum Proximity: Int, CaseIterable, Filterable {
             return "at any distance"
         }
     }
-    static let distanceMap: [Proximity: Int] = [
+}
+
+struct ProximityClass: FilterElement {
+    var range: Distance = .notSpecified
+
+    static var key: String {
+        "proximity"
+    }
+    var label: String {
+        "Proximity"
+    }
+    var valueLong: String {
+        range.verbose
+    }
+    var valueShort: String {
+        range.concise
+    }
+    var hasValue: Bool {
+        range != .notSpecified
+    }
+    var editType: EditType {
+        .list
+    }
+    static let distanceMap: [Distance: Int] = [
         .notSpecified: -1,
         .tenMiles: 10,
         .twentyFiveMiles: 25,
@@ -139,19 +124,16 @@ enum Proximity: Int, CaseIterable, Filterable {
         .anyDistance: 1_000_000
     ]
     var distanceValue: Int {
-        Proximity.distanceMap[self]!
-    }
-    var hasValue: Bool {
-        self != .notSpecified
+        ProximityClass.distanceMap[range]!
     }
 }
 
-enum MobilityLimitation: Int, CaseIterable, Filterable {
+enum Limitation: Int, CaseIterable, Descriptable {
     case notSpecified=0, noLimitation=1, walksWithAid=2, wheelchair=3
-    static var allCases: [MobilityLimitation] {
+    static var AllCases: [Limitation] {
         return [.notSpecified, .noLimitation, .walksWithAid, .wheelchair]
     }
-    var verboseValue: String {
+    var verbose: String {
         switch self {
         case .notSpecified:
             return "No Limitation Specified"
@@ -163,7 +145,7 @@ enum MobilityLimitation: Int, CaseIterable, Filterable {
             return "Uses A Wheelchair"
         }
     }
-    var conciseValue: String {
+    var concise: String {
         switch self {
         case .notSpecified:
             return "not specified"
@@ -175,17 +157,35 @@ enum MobilityLimitation: Int, CaseIterable, Filterable {
             return "Uses wheelchair"
         }
     }
+}
+struct MobilityClass: FilterElement {
+    var mobilityLimit: Limitation = .notSpecified
+    static var key: String {
+        "mobility"
+    }
+    var label: String {
+        "Mobility"
+    }
+    var valueLong: String {
+        mobilityLimit.verbose
+    }
+    var valueShort: String {
+        mobilityLimit.concise
+    }
     var hasValue: Bool {
-        self != .notSpecified
+        self.mobilityLimit != .notSpecified
+    }
+    var editType: EditType {
+        .list
     }
 }
 
-enum DevelopmentalAge: Int, CaseIterable, Filterable {
+enum DevelopmentalStage: Int, CaseIterable, Descriptable {
     case notSpecified=0, infant=1, toddler=2, preschool=3, gradeschool=4, preTeen=5, teen=6, adult=7
-    static var allCases: [DevelopmentalAge] {
+    static var AllCases: [DevelopmentalStage] {
         return [.notSpecified, .infant, .toddler, .preschool, .gradeschool, .preTeen, .teen, .adult]
     }
-    var verboseValue: String {
+    var verbose: String {
         switch self {
         case .notSpecified:
             return "No Developmental Age Specified"
@@ -205,7 +205,7 @@ enum DevelopmentalAge: Int, CaseIterable, Filterable {
             return "Adult (20+)"
         }
     }
-    var conciseValue: String {
+    var concise: String {
         switch self {
         case .notSpecified:
             return "not specified"
@@ -225,31 +225,49 @@ enum DevelopmentalAge: Int, CaseIterable, Filterable {
             return "adult"
         }
     }
+}
+struct DevelopmentalAgeClass: FilterElement {
+    var developmentalAge: DevelopmentalStage = .notSpecified
+    static var key: String {
+        "developmentalAge"
+    }
+    var label: String {
+        "Developmental Age"
+    }
+    var valueLong: String {
+        developmentalAge.verbose
+    }
+    var valueShort: String {
+        developmentalAge.concise
+    }
     var hasValue: Bool {
-        self != .notSpecified
+        self.developmentalAge != .notSpecified
+    }
+    var editType: EditType {
+        .list
     }
 }
 
-enum Diagnosis: Int, CaseIterable, Filterable {
+enum DevelopmentalDiagnosis: Int, CaseIterable, Descriptable {
     case notSpecified=0, autism=1, cerebralPalsy=2, spinaBifida=3, otherDiagnosis=4
-    static var allCases: [Diagnosis] {
+    static var AllCases: [DevelopmentalDiagnosis] {
         return [.notSpecified, .autism, .cerebralPalsy, .spinaBifida, .otherDiagnosis]
     }
-    var verboseValue: String {
-        switch self {
-        case .notSpecified:
-            return "No Diagnosis Specified"
-        case .autism:
-            return "Autism"
-        case .cerebralPalsy:
-            return "Cerebral Palsy"
-        case .spinaBifida:
-            return "Spina Bifida"
-        case .otherDiagnosis:
-            return "Other Diagnosis"
-        }
-    }
-    var conciseValue: String {
+    var verbose: String {
+           switch self {
+           case .notSpecified:
+               return "No Diagnosis Specified"
+           case .autism:
+               return "Autism"
+           case .cerebralPalsy:
+               return "Cerebral Palsy"
+           case .spinaBifida:
+               return "Spina Bifida"
+           case .otherDiagnosis:
+               return "Other Diagnosis"
+           }
+       }
+    var concise: String {
         switch self {
         case .notSpecified:
             return "not specified"
@@ -263,8 +281,78 @@ enum Diagnosis: Int, CaseIterable, Filterable {
             return "Other Diagnosis"
         }
     }
-    var hasValue: Bool {
-        self != .notSpecified
+}
+
+struct DiagnosisClass: FilterElement {
+    var diagnosis: DevelopmentalDiagnosis = .notSpecified
+    static var key: String {
+        "diagnosis"
     }
+    var label: String {
+        "Diagnosis"
+    }
+    var valueLong: String {
+        diagnosis.verbose
+    }
+    var valueShort: String {
+        diagnosis.concise
+    }
+    var hasValue: Bool {
+        diagnosis != .notSpecified
+    }
+    var editType: EditType {
+        .list
+    }
+}
+
+
+func naturalLanguageText(filters: FilterDictionary) -> String {
+    var accumulateString = "Events "
+    let ageFilter: AgeClass? = filters[AgeClass.key] as? AgeClass
+    let proximityFilter: ProximityClass? = filters[ProximityClass.key] as? ProximityClass
+    let mobilityValue: MobilityClass? = filters[MobilityClass.key] as? MobilityClass
+    let primaryDxValue: DiagnosisClass? = filters["primaryDiagnosis"] as? DiagnosisClass
+    let secondaryDxValue: DiagnosisClass? = filters["otherDiagnosis"] as? DiagnosisClass
+
+    let haveAtLeast1dx = (primaryDxValue != nil) || (secondaryDxValue != nil)
+    let ageValue = ageFilter?.valueShort
+    let haveProximity: Bool = proximityFilter?.hasValue ?? false
+    let haveMobility: Bool = mobilityValue?.hasValue ?? false
+
+    guard ageValue != nil || haveProximity || haveAtLeast1dx || haveMobility else {
+        return "Upcoming events"
+    }
+    if let proximity = proximityFilter?.valueShort {
+        accumulateString.append(proximity)
+    }
+    if let age = ageFilter?.valueShort {
+        accumulateString.append(" for ")
+        accumulateString.append(age)
+    }
+    if let primaryDx = primaryDxValue?.valueShort {
+        if (ageFilter?.valueShort) != nil {
+            accumulateString.append(" with ")
+        } else {
+            accumulateString.append("for someone with ")
+        }
+        accumulateString.append(primaryDx)
+    }
+
+//    if haveAtLeast1dx && primaryDxValue != .otherDiagnosis {
+//        if !ageValue.hasValue { accumulateString.append("for someone") }
+//        accumulateString.append(" with ")
+//        accumulateString.append(primaryDxValue.conciseValue)
+//        if secondaryDxValue.hasValue && secondaryDxValue != .otherDiagnosis {
+//            accumulateString.append(" & ")
+//            accumulateString.append(secondaryDxValue.conciseValue)
+//        }
+//    }
+//    if mobilityValue.hasValue {
+//        accumulateString.append(". ")
+//        accumulateString.append(mobilityValue.conciseValue)
+//        accumulateString.append(".")
+//    }
+
+    return accumulateString
 }
 

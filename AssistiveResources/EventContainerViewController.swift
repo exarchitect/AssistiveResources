@@ -24,10 +24,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     private var expandedRowIndex = -1
     private var showLoadingIndicator: Bool = false
     private var eventAccessor: EventRepositoryAccessor!
-    private var filter: FilterProfile!
+    private var filter: FilterDictionary!
 
 
-    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol, filter: FilterProfile) {
+    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol, filter: FilterDictionary) {
     
         self.notificationDelegate = delegate
         self.filter = filter
@@ -42,9 +42,9 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 //        self.filterValueDescriptionLabelOutlet.text = desrc
 //    }
     
-    func setFilter(fltr:FilterProfile) {
-        self.filter = fltr
-        self.filterValueDescriptionLabelOutlet.text = self.filter.naturalLanguageText()
+    func setFilter(fltr: FilterDictionary) {
+        filter = fltr
+        filterValueDescriptionLabelOutlet.text = naturalLanguageText(filters: fltr)
     }
 
     //MARK: - overrides
@@ -66,9 +66,9 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
         
-        self.filterValueDescriptionLabelOutlet.text = filter.naturalLanguageText()
+        filterValueDescriptionLabelOutlet.text = naturalLanguageText(filters: filter)
 
-        self.eventAccessor.requestData(filteredBy: IndividualNeedProfile(age: 1, mobility: .noLimitation, delay: .notSpecified, primarydx: .notSpecified, secondarydx: .notSpecified))
+        eventAccessor.requestData(filteredBy: FilterDictionary())
         if (self.eventAccessor.state == .notLoaded) {
             self.showLoadingIndicator = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {

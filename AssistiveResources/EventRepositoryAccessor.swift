@@ -22,7 +22,7 @@ class EventRepositoryAccessor: RepositoryAccessor {
         return events[pos]
     }
     
-    func requestData(filteredBy: IndividualNeedProfile){
+    func requestData(filteredBy: FilterDictionary){
         guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
             state = .notLoaded
             return
@@ -32,7 +32,7 @@ class EventRepositoryAccessor: RepositoryAccessor {
     }
     
     override func repositoryUpdateNotification() {
-        let needProfile = IndividualNeedProfile(age: 1, mobility: .noLimitation, delay: .notSpecified, primarydx: .notSpecified, secondarydx: .notSpecified)
+        let needProfile = FilterDictionary()
         retrieve(usingFilter: needProfile)
         delegate?.notifyRepositoryWasUpdated()
     }
@@ -40,7 +40,7 @@ class EventRepositoryAccessor: RepositoryAccessor {
     
     // MARK: - PRIVATE
 
-    private func retrieve(usingFilter: IndividualNeedProfile) {
+    private func retrieve(usingFilter individualNeedProfile: FilterDictionary) {
         
         do {
             let uiRealm = try Realm()

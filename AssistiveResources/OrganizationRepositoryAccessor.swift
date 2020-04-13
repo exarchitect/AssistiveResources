@@ -22,7 +22,7 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
         return organizations[pos]
     }
     
-    func requestData(filteredBy: IndividualNeedProfile){
+    func requestData(filteredBy: FilterDictionary){
         guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
             state = .notLoaded
             return
@@ -32,13 +32,14 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
     }
     
     override func repositoryUpdateNotification() {
-        retrieve(usingFilter: IndividualNeedProfile(age: 1, mobility: .noLimitation, delay: .notSpecified, primarydx: .notSpecified, secondarydx: .notSpecified))
+        let needProfile = FilterDictionary()
+        retrieve(usingFilter: needProfile)
         delegate?.notifyRepositoryWasUpdated()
     }
 
     // MARK: - PRIVATE
     
-    func retrieve(usingFilter: IndividualNeedProfile) {
+    func retrieve(usingFilter individualNeedProfile: FilterDictionary) {
         
         do {
             let uiRealm = try Realm()
