@@ -20,11 +20,11 @@ class NavigationCategories: NSObject {
     private var navigationArray:[DestinationDescriptor] = []
 
     var count: Int {
-        return navigationArray.count
+        navigationArray.count
     }
     
     subscript(pos: Int) -> DestinationDescriptor {
-        return navigationArray[pos]
+        navigationArray[pos]
     }
     
     override init() {

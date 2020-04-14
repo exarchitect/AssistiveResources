@@ -20,11 +20,11 @@ class ElementInteractor: NSObject {
     var rowsVisible = false
     public private(set) var selectionIndex: Int
     var hasSelection: Bool {
-        return selectionIndex != Constants.noSelection
+        selectionIndex != Constants.noSelection
     }
     var editType: EditType {
         switch element.self {
-        case is AgeClass:
+        case is AgeFilter:
             return .numeric
         default:
             return .list
@@ -35,21 +35,21 @@ class ElementInteractor: NSObject {
         element = filterElement
 
         switch element.self {
-        case is AgeClass:
+        case is AgeFilter:
             editableRowCount = 1
             selectionIndex = 1
-        case is ProximityClass:
+        case is ProximityFilter:
             editableRowCount = Distance.allCases.count - 1
-            selectionIndex = (element as! ProximityClass).range.rawValue
-        case is DevelopmentalAgeClass:
+            selectionIndex = (element as! ProximityFilter).range.rawValue
+        case is DevelopmentalAgeFilter:
             editableRowCount = DevelopmentalStage.allCases.count - 1
-            selectionIndex = (element as! DevelopmentalAgeClass).developmentalAge.rawValue
-        case is MobilityClass:
+            selectionIndex = (element as! DevelopmentalAgeFilter).developmentalAge.rawValue
+        case is MobilityFilter:
             editableRowCount = Limitation.allCases.count - 1
-            selectionIndex = (element as! MobilityClass).mobilityLimit.rawValue
-        case is DiagnosisClass:
+            selectionIndex = (element as! MobilityFilter).mobilityLimit.rawValue
+        case is DiagnosisFilter:
             editableRowCount = DevelopmentalDiagnosis.allCases.count - 1
-            selectionIndex = (element as! DiagnosisClass).diagnosis.rawValue
+            selectionIndex = (element as! DiagnosisFilter).diagnosis.rawValue
 //        case .additionalDiagnoses(secondaryDx: let dx):
 //            editableRowCount = Diagnosis.allCases.count - 1
 //            selectionIndex = dx.rawValue
@@ -61,16 +61,16 @@ class ElementInteractor: NSObject {
     func selectItem(at index: Int) {
         selectionIndex = index
         switch element {
-        case is AgeClass:
-            element = AgeClass(years: 21)
-        case is ProximityClass:
-            element = ProximityClass(range: Distance(rawValue: index)!)
-        case is DevelopmentalAgeClass:
-            element = DevelopmentalAgeClass(developmentalAge: DevelopmentalStage(rawValue: index)!)
-        case is MobilityClass:
-            element = MobilityClass(mobilityLimit: Limitation(rawValue: index)!)
-        case is DiagnosisClass:
-            element = DiagnosisClass(diagnosis: DevelopmentalDiagnosis(rawValue: index)!)
+        case is AgeFilter:
+            element = AgeFilter(years: 21)
+        case is ProximityFilter:
+            element = ProximityFilter(range: Distance(rawValue: index)!)
+        case is DevelopmentalAgeFilter:
+            element = DevelopmentalAgeFilter(developmentalAge: DevelopmentalStage(rawValue: index)!)
+        case is MobilityFilter:
+            element = MobilityFilter(mobilityLimit: Limitation(rawValue: index)!)
+        case is DiagnosisFilter:
+            element = DiagnosisFilter(diagnosis: DevelopmentalDiagnosis(rawValue: index)!)
 //        case .additionalDiagnoses:
 //            self.element = .additionalDiagnoses(secondaryDx: Diagnosis(rawValue: index)!)
             default:
@@ -83,15 +83,15 @@ class ElementInteractor: NSObject {
             return "not specified"
         }
         switch element {
-        case is AgeClass:
-            return (element as! AgeClass).years.description
-        case is ProximityClass:
+        case is AgeFilter:
+            return (element as! AgeFilter).years.description
+        case is ProximityFilter:
             return Distance.allCases[index].verbose
-        case is DevelopmentalAgeClass:
+        case is DevelopmentalAgeFilter:
             return DevelopmentalStage.allCases[index].verbose
-        case is MobilityClass:
+        case is MobilityFilter:
             return Limitation.allCases[index].verbose
-        case is DiagnosisClass:
+        case is DiagnosisFilter:
             return DevelopmentalDiagnosis.allCases[index].verbose
         default:
             fatalError()
@@ -99,10 +99,10 @@ class ElementInteractor: NSObject {
     }
 
     class func createFilterDictionary(from elementList: [ElementInteractor]) -> FilterDictionary {
-        let proximity = ProximityClass(range: Distance.twentyFiveMiles)
-        var filterDict: FilterDictionary = [ProximityClass.key: proximity]
-        let age = AgeClass(years: 21)
-        filterDict[AgeClass.key] = age
+        let proximity = ProximityFilter(range: Distance.twentyFiveMiles)
+        var filterDict: FilterDictionary = [ProximityFilter.key: proximity]
+        let age = AgeFilter(years: 21)
+        filterDict[AgeFilter.key] = age
         return filterDict
     }
 }

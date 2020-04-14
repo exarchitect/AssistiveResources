@@ -111,7 +111,7 @@ class RegionalResourcesRepository: Repository {
     }
     
     override func repositoryUpdateNotificationKey () -> String {
-        return "key_notify_resource_repository_changed"
+        "key_notify_resource_repository_changed"
     }
     
 

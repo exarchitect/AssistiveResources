@@ -15,11 +15,11 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
     private var organizations: [Organization] = []
     
     var count: Int {
-        return organizations.count
+        organizations.count
     }
     
     subscript(pos: Int) -> Organization {
-        return organizations[pos]
+        organizations[pos]
     }
     
     func requestData(filteredBy: FilterDictionary){

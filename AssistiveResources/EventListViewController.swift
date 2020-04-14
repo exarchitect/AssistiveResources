@@ -64,8 +64,8 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     //MARK:- Utilities
 
     func setupFilter() {
-        filterDict[ProximityClass.key] = ProximityClass(range: .twentyFiveMiles)
-        filterDict[AgeClass.key] = AgeClass(years: 21)
+        filterDict[ProximityFilter.key] = ProximityFilter(range: .twentyFiveMiles)
+        filterDict[AgeFilter.key] = AgeFilter(years: 21)
     }
 
     //MARK: - EventListContainerNotificationProtocol delegate

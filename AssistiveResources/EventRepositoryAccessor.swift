@@ -15,11 +15,11 @@ class EventRepositoryAccessor: RepositoryAccessor {
     private var events: [StoredEvent] = []
     
     var count: Int {
-        return events.count
+        events.count
     }
     
     subscript(pos: Int) -> StoredEvent {
-        return events[pos]
+        events[pos]
     }
     
     func requestData(filteredBy: FilterDictionary){

@@ -34,20 +34,13 @@ class EventFilterViewController: UIViewController {
         super.viewDidLoad()
 
         // TODO: pull this from ?
-        filterList.append(ElementInteractor(using: ProximityClass(range: .twentyFiveMiles)))
-        filterList.append(ElementInteractor(using: AgeClass(years: 21)))
-        filterList.append(ElementInteractor(using: DevelopmentalAgeClass(developmentalAge: .notSpecified)))
-        filterList.append(ElementInteractor(using: MobilityClass(mobilityLimit: .notSpecified)))
-        filterList.append(ElementInteractor(using: DiagnosisClass(diagnosis: .notSpecified)))
+        filterList.append(ElementInteractor(using: ProximityFilter(range: .twentyFiveMiles)))
+        filterList.append(ElementInteractor(using: AgeFilter(years: 21)))
+        filterList.append(ElementInteractor(using: DevelopmentalAgeFilter(developmentalAge: .notSpecified)))
+        filterList.append(ElementInteractor(using: MobilityFilter(mobilityLimit: .notSpecified)))
+        filterList.append(ElementInteractor(using: DiagnosisFilter(diagnosis: .notSpecified)))
         //filterList.append(ElementInteractor(using: FilteringElement.additionalDiagnoses(secondaryDx: .notSpecified)))
         
-//        filterList.append(ElementInteractor(using: .proximity(mileageBand: self.filterProfile.proximityValue)))
-//        filterList.append(ElementInteractor(using: .age(years: self.filterProfile.ageValue)))
-//        filterList.append(ElementInteractor(using: .developmentalAge(stage: self.filterProfile.developmentalAgeValue)))
-//        filterList.append(ElementInteractor(using: .mobilityLimitation(mobility: self.filterProfile.mobilityValue)))
-//        filterList.append(ElementInteractor(using: .primaryDiagnosis(primaryDx: self.filterProfile.primaryDxValue)))
-//        filterList.append(ElementInteractor(using: .additionalDiagnoses(secondaryDx: self.filterProfile.secondaryDxValue)))
-
         self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterList)
     }
 
@@ -62,9 +55,6 @@ class EventFilterViewController: UIViewController {
     
     @IBAction func okButtonAction(_ sender: Any) {
         let filterResults = ElementInteractor.createFilterDictionary(from: filterList)
-        //let label = filterResults.naturalLanguageText()
-        //print(label)
-        //print(filterResults.filterValues[0])
         self.selectorDelegate.okFilterButtonAction(filter: filterResults)
     }
 }

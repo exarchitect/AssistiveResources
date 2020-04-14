@@ -12,10 +12,10 @@ import UIKit
 class LoginViewController: ProcessViewController {
 
     var user: User? {
-        return processController?.sharedServices.userModel
+        processController?.sharedServices.userModel
     }
     var authenticationDelegate: AuthenticationProtocol? {
-        return processController as? AuthenticationProtocol
+        processController as? AuthenticationProtocol
     }
 
     @IBOutlet weak var selectLoginType: UISegmentedControl!
