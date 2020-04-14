@@ -18,9 +18,9 @@ class ElementInteractor: NSObject {
     var editableRowCount = 0
     var sectionEnabled = true
     var rowsVisible = false
-    public private(set) var selectionIndex: Int
+    public private(set) var selectedEnum: Int
     var hasSelection: Bool {
-        selectionIndex != Constants.noSelection
+        selectedEnum != invalidRawValue
     }
     var editType: EditType {
         switch element.self {
@@ -33,66 +33,43 @@ class ElementInteractor: NSObject {
 
     init(using filterElement: FilterElement) {
         element = filterElement
+        editableRowCount = element.valueCount()
+        selectedEnum = element.enumRawValue()
+    }
 
-        switch element.self {
+    func selectEnum(rawValue: Int) {
+        selectedEnum = rawValue
+        switch element {
         case is AgeFilter:
-            editableRowCount = 1
-            selectionIndex = 1
+            element = AgeFilter(years: 21)
         case is ProximityFilter:
-            editableRowCount = Distance.allCases.count - 1
-            selectionIndex = (element as! ProximityFilter).range.rawValue
+            element = ProximityFilter(range: Distance(rawValue: rawValue))
         case is DevelopmentalAgeFilter:
-            editableRowCount = DevelopmentalStage.allCases.count - 1
-            selectionIndex = (element as! DevelopmentalAgeFilter).developmentalAge.rawValue
+            element = DevelopmentalAgeFilter(developmentalAge: DevelopmentalStage(rawValue: rawValue))
         case is MobilityFilter:
-            editableRowCount = Limitation.allCases.count - 1
-            selectionIndex = (element as! MobilityFilter).mobilityLimit.rawValue
+            element = MobilityFilter(mobilityLimit: Limitation(rawValue: rawValue))
         case is DiagnosisFilter:
-            editableRowCount = DevelopmentalDiagnosis.allCases.count - 1
-            selectionIndex = (element as! DiagnosisFilter).diagnosis.rawValue
-//        case .additionalDiagnoses(secondaryDx: let dx):
-//            editableRowCount = Diagnosis.allCases.count - 1
-//            selectionIndex = dx.rawValue
+            element = DiagnosisFilter(diagnosis: DevelopmentalDiagnosis(rawValue: rawValue))
         default:
             fatalError()
         }
     }
 
-    func selectItem(at index: Int) {
-        selectionIndex = index
-        switch element {
-        case is AgeFilter:
-            element = AgeFilter(years: 21)
-        case is ProximityFilter:
-            element = ProximityFilter(range: Distance(rawValue: index)!)
-        case is DevelopmentalAgeFilter:
-            element = DevelopmentalAgeFilter(developmentalAge: DevelopmentalStage(rawValue: index)!)
-        case is MobilityFilter:
-            element = MobilityFilter(mobilityLimit: Limitation(rawValue: index)!)
-        case is DiagnosisFilter:
-            element = DiagnosisFilter(diagnosis: DevelopmentalDiagnosis(rawValue: index)!)
-//        case .additionalDiagnoses:
-//            self.element = .additionalDiagnoses(secondaryDx: Diagnosis(rawValue: index)!)
-            default:
-                fatalError()
-        }
-    }
-
-    func itemText(at index:Int) -> String {
-        if index == 0 && !element.hasValue {
+    func enumText(rawValue: Int) -> String {
+        if rawValue == -1 && !element.hasValue {
             return "not specified"
         }
         switch element {
         case is AgeFilter:
             return (element as! AgeFilter).years.description
         case is ProximityFilter:
-            return Distance.allCases[index].verbose
+            return Distance.allCases[rawValue].verbose
         case is DevelopmentalAgeFilter:
-            return DevelopmentalStage.allCases[index].verbose
+            return DevelopmentalStage.allCases[rawValue].verbose
         case is MobilityFilter:
-            return Limitation.allCases[index].verbose
+            return Limitation.allCases[rawValue].verbose
         case is DiagnosisFilter:
-            return DevelopmentalDiagnosis.allCases[index].verbose
+            return DevelopmentalDiagnosis.allCases[rawValue].verbose
         default:
             fatalError()
         }

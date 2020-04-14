@@ -36,10 +36,9 @@ class EventFilterViewController: UIViewController {
         // TODO: pull this from ?
         filterList.append(ElementInteractor(using: ProximityFilter(range: .twentyFiveMiles)))
         filterList.append(ElementInteractor(using: AgeFilter(years: 21)))
-        filterList.append(ElementInteractor(using: DevelopmentalAgeFilter(developmentalAge: .notSpecified)))
-        filterList.append(ElementInteractor(using: MobilityFilter(mobilityLimit: .notSpecified)))
-        filterList.append(ElementInteractor(using: DiagnosisFilter(diagnosis: .notSpecified)))
-        //filterList.append(ElementInteractor(using: FilteringElement.additionalDiagnoses(secondaryDx: .notSpecified)))
+        filterList.append(ElementInteractor(using: DevelopmentalAgeFilter(developmentalAge: .gradeschool)))
+        filterList.append(ElementInteractor(using: MobilityFilter(mobilityLimit: .wheelchair)))
+        filterList.append(ElementInteractor(using: DiagnosisFilter(diagnosis: .autism)))
         
         self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterList)
     }

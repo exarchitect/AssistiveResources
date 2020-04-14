@@ -62,9 +62,9 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             
         } else {
             // row for selecting an enumerated type (except for age)
-            let isSelectedRow:Bool = filterItems[indexPath.section].selectionIndex == indexPath.row
-            let cell:FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
-            cell.configure(text: self.filterItems[indexPath.section].itemText(at: indexPath.row), isChecked: isSelectedRow)
+            let isSelectedRow = filterItems[indexPath.section].selectedEnum == indexPath.row - 1
+            let cell: FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
+            cell.configure(text: self.filterItems[indexPath.section].enumText(rawValue: indexPath.row - 1), isChecked: isSelectedRow)
             return cell
         }
     }
@@ -83,10 +83,10 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     // MARK:- utilities
     
     private func configHeaderCell (cell:FilterTableHeaderCell, section:Int){
-        let selectedCellIndex = self.filterItems[section].selectionIndex
+        let selectedCellIndex = self.filterItems[section].selectedEnum + 1
         cell.configure (mainText: self.filterItems[section].element.label,
                         headerEnabled: self.filterItems[section].sectionEnabled,
-                        subText: filterItems[section].itemText(at: selectedCellIndex),
+                        subText: filterItems[section].enumText(rawValue: selectedCellIndex - 1),
                         subTextEnabled: filterItems[section].element.hasValue)
     }
 
@@ -102,13 +102,13 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
         // update row cells
         if indexPath.row > 0 {
-            let previousSelectionIndex = filterItems[indexPath.section].selectionIndex
+            let previousSelectionIndex = filterItems[indexPath.section].selectedEnum + 1
 
             // select row
-            let isSelectedRow:Bool = filterItems[indexPath.section].selectionIndex == indexPath.row
+            let isSelectedRow:Bool = filterItems[indexPath.section].selectedEnum + 1 == indexPath.row
             let newSelectionState:Bool = !isSelectedRow
             let newSelectionIndex = newSelectionState ? indexPath.row : Constants.noSelection
-            filterItems[indexPath.section].selectItem(at: newSelectionIndex)
+            filterItems[indexPath.section].selectEnum(rawValue: newSelectionIndex - 1)
             let cell:FilterTableRowCell = tableView.cellForRow(at: indexPath) as! FilterTableRowCell
             cell.checkmarkImageOutlet.isHidden = !newSelectionState
 

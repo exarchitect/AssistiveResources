@@ -11,11 +11,15 @@ import Foundation
 
 typealias FilterDictionary = [String: FilterElement]
 
+let invalidRawValue = -1
+
 protocol FilterElement {
     static var key: String { get }
     var label: String { get }
     var valueString: String { get }
     var hasValue: Bool { get }
+    func enumRawValue() -> Int
+    func valueCount() -> Int
 }
 
 protocol DescribeEnum {
@@ -37,17 +41,21 @@ struct AgeFilter: FilterElement {
     var hasValue: Bool {
         years <= -1
     }
+    func enumRawValue() -> Int {
+        1
+    }
+    func valueCount() -> Int {
+        1
+    }
 }
 
 enum Distance: Int, CaseIterable, DescribeEnum {
-    case notSpecified = 0, tenMiles = 1, twentyFiveMiles = 2, fiftyMiles = 3, oneHundredMiles = 4, anyDistance = 5
+    case tenMiles = 0, twentyFiveMiles, fiftyMiles, oneHundredMiles, anyDistance
     static var AllCases: [Distance] {
-        return [.notSpecified, .tenMiles, .twentyFiveMiles, .fiftyMiles, .oneHundredMiles, .anyDistance]
+        return [.tenMiles, .twentyFiveMiles, .fiftyMiles, .oneHundredMiles, .anyDistance]
     }
     var verbose: String {
         switch self {
-        case .notSpecified:
-            return "No Distance Specified"
         case .tenMiles:
             return "Within 10 Miles"
         case .twentyFiveMiles:
@@ -62,8 +70,6 @@ enum Distance: Int, CaseIterable, DescribeEnum {
     }
     var concise: String {
         switch self {
-        case .notSpecified:
-            return "not specified"
         case .tenMiles:
             return "within 10 mi"
         case .twentyFiveMiles:
@@ -79,7 +85,7 @@ enum Distance: Int, CaseIterable, DescribeEnum {
 }
 
 struct ProximityFilter: FilterElement {
-    var range: Distance = .notSpecified
+    var range: Distance? = .none
 
     static var key: String {
         "proximity"
@@ -88,13 +94,18 @@ struct ProximityFilter: FilterElement {
         "Proximity"
     }
     var valueString: String {
-        range.concise
+        range?.concise ?? ""
     }
     var hasValue: Bool {
-        range != .notSpecified
+        range != .none
+    }
+    func enumRawValue() -> Int {
+        range?.rawValue ?? invalidRawValue
+    }
+    func valueCount() -> Int {
+        Distance.allCases.count
     }
     static let distanceMap: [Distance: Int] = [
-        .notSpecified: -1,
         .tenMiles: 10,
         .twentyFiveMiles: 25,
         .fiftyMiles: 50,
@@ -102,19 +113,20 @@ struct ProximityFilter: FilterElement {
         .anyDistance: 1_000_000
     ]
     var distanceValue: Int {
-        ProximityFilter.distanceMap[range]!
+        guard let index = range else {
+            return -1
+        }
+        return ProximityFilter.distanceMap[index]!
     }
 }
 
 enum Limitation: Int, CaseIterable, DescribeEnum {
-    case notSpecified = 0, noLimitation = 1, walksWithAid = 2, wheelchair = 3
+    case noLimitation = 0, walksWithAid, wheelchair
     static var AllCases: [Limitation] {
-        return [.notSpecified, .noLimitation, .walksWithAid, .wheelchair]
+        return [.noLimitation, .walksWithAid, .wheelchair]
     }
     var verbose: String {
         switch self {
-        case .notSpecified:
-            return "No Limitation Specified"
         case .noLimitation:
             return "No Limitation"
         case .walksWithAid:
@@ -125,8 +137,6 @@ enum Limitation: Int, CaseIterable, DescribeEnum {
     }
     var concise: String {
         switch self {
-        case .notSpecified:
-            return "not specified"
         case .noLimitation:
             return "No mobility limits"
         case .walksWithAid:
@@ -137,7 +147,7 @@ enum Limitation: Int, CaseIterable, DescribeEnum {
     }
 }
 struct MobilityFilter: FilterElement {
-    var mobilityLimit: Limitation = .notSpecified
+    var mobilityLimit: Limitation? = .none
     static var key: String {
         "mobility"
     }
@@ -145,22 +155,29 @@ struct MobilityFilter: FilterElement {
         "Mobility"
     }
     var valueString: String {
-        mobilityLimit.concise
+        guard let limit = mobilityLimit else {
+            return "not specified"
+        }
+        return limit.concise
     }
     var hasValue: Bool {
-        self.mobilityLimit != .notSpecified
+        mobilityLimit != .none
+    }
+    func enumRawValue() -> Int {
+        mobilityLimit?.rawValue ?? invalidRawValue
+    }
+    func valueCount() -> Int {
+        Limitation.allCases.count
     }
 }
 
 enum DevelopmentalStage: Int, CaseIterable, DescribeEnum {
-    case notSpecified = 0, infant = 1, toddler = 2, preschool = 3, gradeschool = 4, preTeen = 5, teen = 6, adult = 7
+    case infant = 0, toddler, preschool, gradeschool, preTeen, teen, adult
     static var AllCases: [DevelopmentalStage] {
-        return [.notSpecified, .infant, .toddler, .preschool, .gradeschool, .preTeen, .teen, .adult]
+        return [.infant, .toddler, .preschool, .gradeschool, .preTeen, .teen, .adult]
     }
     var verbose: String {
         switch self {
-        case .notSpecified:
-            return "No Developmental Age Specified"
         case .infant:
             return "Infant(1 year old)"
         case .toddler:
@@ -179,8 +196,6 @@ enum DevelopmentalStage: Int, CaseIterable, DescribeEnum {
     }
     var concise: String {
         switch self {
-        case .notSpecified:
-            return "not specified"
         case .infant:
             return "infant"
         case .toddler:
@@ -199,7 +214,7 @@ enum DevelopmentalStage: Int, CaseIterable, DescribeEnum {
     }
 }
 struct DevelopmentalAgeFilter: FilterElement {
-    var developmentalAge: DevelopmentalStage = .notSpecified
+    var developmentalAge: DevelopmentalStage? = .none
     static var key: String {
         "developmentalAge"
     }
@@ -207,22 +222,29 @@ struct DevelopmentalAgeFilter: FilterElement {
         "Developmental Age"
     }
     var valueString: String {
-        developmentalAge.concise
+        guard let stage = developmentalAge else {
+            return "not specified"
+        }
+        return stage.concise
     }
     var hasValue: Bool {
-        self.developmentalAge != .notSpecified
+        developmentalAge != .none
+    }
+    func enumRawValue() -> Int {
+        developmentalAge?.rawValue ?? invalidRawValue
+    }
+    func valueCount() -> Int {
+        DevelopmentalStage.allCases.count
     }
 }
 
 enum DevelopmentalDiagnosis: Int, CaseIterable, DescribeEnum {
-    case notSpecified = 0, autism = 1, cerebralPalsy = 2, spinaBifida = 3, otherDiagnosis = 4
+    case autism = 0, cerebralPalsy, spinaBifida, otherDiagnosis
     static var AllCases: [DevelopmentalDiagnosis] {
-        return [.notSpecified, .autism, .cerebralPalsy, .spinaBifida, .otherDiagnosis]
+        return [.autism, .cerebralPalsy, .spinaBifida, .otherDiagnosis]
     }
     var verbose: String {
            switch self {
-           case .notSpecified:
-               return "No Diagnosis Specified"
            case .autism:
                return "Autism"
            case .cerebralPalsy:
@@ -235,8 +257,6 @@ enum DevelopmentalDiagnosis: Int, CaseIterable, DescribeEnum {
        }
     var concise: String {
         switch self {
-        case .notSpecified:
-            return "not specified"
         case .autism:
             return "Autism"
         case .cerebralPalsy:
@@ -250,7 +270,7 @@ enum DevelopmentalDiagnosis: Int, CaseIterable, DescribeEnum {
 }
 
 struct DiagnosisFilter: FilterElement {
-    var diagnosis: DevelopmentalDiagnosis = .notSpecified
+    var diagnosis: DevelopmentalDiagnosis? = .none
     static var key: String {
         "diagnosis"
     }
@@ -258,10 +278,19 @@ struct DiagnosisFilter: FilterElement {
         "Diagnosis"
     }
     var valueString: String {
-        diagnosis.concise
+        guard let diagnose = diagnosis else {
+            return "not specified"
+        }
+        return diagnose.concise
     }
     var hasValue: Bool {
-        diagnosis != .notSpecified
+        diagnosis != .none
+    }
+    func enumRawValue() -> Int {
+        diagnosis?.rawValue ?? invalidRawValue
+    }
+    func valueCount() -> Int {
+        DevelopmentalDiagnosis.allCases.count
     }
 }
 
