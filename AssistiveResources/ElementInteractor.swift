@@ -2,7 +2,7 @@
 //  ElementInteractor.swift
 //  AssistiveResources
 //
-//  Created by WCJ on 5/22/19.
+//  Created by Bill Johnson on 5/22/19.
 //  Copyright © 2019 SevenPlusTwo. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 
 
 enum EditType {
-    case list, numeric
+    case singleselect, numeric, multiselect
 }
 
 class ElementInteractor: NSObject {
@@ -26,33 +26,22 @@ class ElementInteractor: NSObject {
         switch element.self {
         case is AgeFilter:
             return .numeric
+        case is DiagnosisFilter:
+            return .multiselect
         default:
-            return .list
+            return .singleselect
         }
     }
 
     init(using filterElement: FilterElement) {
         element = filterElement
-        editableRowCount = element.valueCount()
+        editableRowCount = element.itemCount()
         selectedEnum = element.enumRawValue()
     }
 
     func selectEnum(rawValue: Int) {
         selectedEnum = rawValue
-        switch element {
-        case is AgeFilter:
-            element = AgeFilter(years: 21)
-        case is ProximityFilter:
-            element = ProximityFilter(range: Distance(rawValue: rawValue))
-        case is DevelopmentalAgeFilter:
-            element = DevelopmentalAgeFilter(developmentalAge: DevelopmentalStage(rawValue: rawValue))
-        case is MobilityFilter:
-            element = MobilityFilter(mobilityLimit: Limitation(rawValue: rawValue))
-        case is DiagnosisFilter:
-            element = DiagnosisFilter(diagnosis: DevelopmentalDiagnosis(rawValue: rawValue))
-        default:
-            fatalError()
-        }
+        element.update(rawValue: rawValue)
     }
 
     func enumText(rawValue: Int) -> String {
@@ -71,7 +60,7 @@ class ElementInteractor: NSObject {
         case is DiagnosisFilter:
             return DevelopmentalDiagnosis.allCases[rawValue].verbose
         default:
-            fatalError()
+            fatalError("in \(#function)")
         }
     }
 
@@ -82,5 +71,45 @@ class ElementInteractor: NSObject {
         filterDict[AgeFilter.key] = age
         return filterDict
     }
+
+    class func naturalLanguageText(filters: FilterDictionary) -> String {
+        var accumulateString = "Events "
+        let ageFilter: AgeFilter? = filters[AgeFilter.key] as? AgeFilter
+        let proximityFilter: ProximityFilter? = filters[ProximityFilter.key] as? ProximityFilter
+        let mobilityValue: MobilityFilter? = filters[MobilityFilter.key] as? MobilityFilter
+        let dxFilter: DiagnosisFilter? = filters[DiagnosisFilter.key] as? DiagnosisFilter
+
+        let haveAge = ageFilter?.hasValue ?? false
+        let haveProximity = proximityFilter?.hasValue ?? false
+        let haveMobility = mobilityValue?.hasValue ?? false
+        let haveDx = dxFilter?.hasValue ?? false
+
+        guard haveAge || haveProximity || haveMobility || haveDx else {
+            return "Upcoming events"
+        }
+        if let proximity = proximityFilter?.valueString {
+            accumulateString.append(proximity)
+        }
+        if let age = ageFilter?.valueString {
+            accumulateString.append(" for ")
+            accumulateString.append(age)
+        }
+        if let primaryDx = dxFilter?.valueString {
+            if ageFilter?.valueString != nil {
+                accumulateString.append(" with ")
+            } else {
+                accumulateString.append("for someone with ")
+            }
+            accumulateString.append(primaryDx)
+        }
+        if let mobility = mobilityValue?.valueString {
+            accumulateString.append(". ")
+            accumulateString.append(mobility)
+            accumulateString.append(".")
+        }
+
+        return accumulateString
+    }
+
 }
 

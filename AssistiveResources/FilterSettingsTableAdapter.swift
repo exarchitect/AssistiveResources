@@ -2,7 +2,7 @@
 //  FilterSettingsTableAdapter.swift
 //  AssistiveResources
 //
-//  Created by WCJ on 1/30/18.
+//  Created by Bill Johnson on 1/30/18.
 //  Copyright © 2018 SevenPlusTwo. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
     var tableView: UITableView!
     private var filterItems: [ElementInteractor]!
-    private var indexOfCurrentEditableSection: Int = Constants.noSectionOpen
+    private var currentEditableSectionIndex: Int = Constants.noSectionOpen
 
     init(table: UITableView, filterWhat: [ElementInteractor]) {
         super.init()
@@ -73,8 +73,10 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
 
         switch filterItems[indexPath.section].editType {
-        case .list:
+        case .singleselect:
             selectListCell(at: indexPath)
+        case .multiselect:
+            selectMultiCell(at: indexPath)
         case .numeric:
             selectNumericCell(at: indexPath)
         }
@@ -83,22 +85,60 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     // MARK:- utilities
     
     private func configHeaderCell (cell:FilterTableHeaderCell, section:Int){
-        let selectedCellIndex = self.filterItems[section].selectedEnum + 1
+        var subtitle: String = ""
+
+        switch filterItems[section].element {
+        case is DiagnosisFilter:
+            subtitle = filterItems[section].element.valueString
+        default:
+            let selectedCellIndex = self.filterItems[section].selectedEnum + 1
+            subtitle = filterItems[section].enumText(rawValue: selectedCellIndex - 1)
+        }
         cell.configure (mainText: self.filterItems[section].element.label,
                         headerEnabled: self.filterItems[section].sectionEnabled,
-                        subText: filterItems[section].enumText(rawValue: selectedCellIndex - 1),
+                        subText: subtitle,
                         subTextEnabled: filterItems[section].element.hasValue)
     }
 
+    func selectMultiCell(at indexPath: IndexPath) {
+        // hide current editable section if open and different header is tapped
+        if (currentEditableSectionIndex != Constants.noSectionOpen && currentEditableSectionIndex != indexPath.section) {
+            self.filterItems[currentEditableSectionIndex].rowsVisible = false
+        }
+
+        // reveal section if hidden (dont auto-hide)
+        if filterItems[indexPath.section].rowsVisible == false {
+            filterItems[indexPath.section].rowsVisible = true
+            currentEditableSectionIndex = indexPath.section
+        } else if indexPath.row == 0 {
+            filterItems[indexPath.section].rowsVisible = false
+            currentEditableSectionIndex = Constants.noSectionOpen
+        }
+
+        // update row cells
+        if indexPath.row > 0 {
+            filterItems[indexPath.section].element.update(rawValue: indexPath.row - 1)
+            updateSection(indexPath.section)
+
+            // update header with selection
+            let headerCellIndex:IndexPath = IndexPath(row: 0, section: indexPath.section)
+            let headerCell = tableView.cellForRow(at: headerCellIndex) as! FilterTableHeaderCell
+            self.configHeaderCell(cell: headerCell, section: indexPath.section)
+        }
+
+        self.tableView.beginUpdates()
+        self.tableView.endUpdates()
+    }
+
     func selectListCell(at indexPath: IndexPath) {
-        // hide this section when open, either if the header is tapped, or one of its rows is tapped
-        if (indexOfCurrentEditableSection != Constants.noSectionOpen && indexOfCurrentEditableSection != indexPath.section) {
-            self.filterItems[indexOfCurrentEditableSection].rowsVisible = false
+        // hide CurrentEditableSection if open and different header is tapped
+        if (currentEditableSectionIndex != Constants.noSectionOpen && currentEditableSectionIndex != indexPath.section) {
+            self.filterItems[currentEditableSectionIndex].rowsVisible = false
         }
 
         // set section visible/hidden
         filterItems[indexPath.section].rowsVisible = !self.filterItems[indexPath.section].rowsVisible
-        indexOfCurrentEditableSection = filterItems[indexPath.section].rowsVisible ? indexPath.section : Constants.noSectionOpen
+        currentEditableSectionIndex = filterItems[indexPath.section].rowsVisible ? indexPath.section : Constants.noSectionOpen
 
         // update row cells
         if indexPath.row > 0 {
@@ -132,15 +172,15 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     }
 
     func selectNumericCell(at indexPath: IndexPath) {
-        // hide this section when open if the header is tapped
+        // hide CurrentEditableSection if open and different header is tapped
         if indexPath.row == 0 {
-            if (indexOfCurrentEditableSection != Constants.noSectionOpen && indexOfCurrentEditableSection != indexPath.section) {
-                self.filterItems[indexOfCurrentEditableSection].rowsVisible = false
+            if (currentEditableSectionIndex != Constants.noSectionOpen && currentEditableSectionIndex != indexPath.section) {
+                self.filterItems[currentEditableSectionIndex].rowsVisible = false
             }
 
             // set section visible/hidden
             filterItems[indexPath.section].rowsVisible = !self.filterItems[indexPath.section].rowsVisible
-            indexOfCurrentEditableSection = filterItems[indexPath.section].rowsVisible ? indexPath.section : Constants.noSectionOpen
+            currentEditableSectionIndex = filterItems[indexPath.section].rowsVisible ? indexPath.section : Constants.noSectionOpen
 
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
@@ -150,5 +190,16 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         if indexPath.row > 0 {
             // tbd
         }
+    }
+
+    func updateSection(_ section: Int) {
+        let rowCount = filterItems[section].editableRowCount
+        for index in 1 ..< rowCount {
+            let isSelected = filterItems[section].element.isValueSelected(rawValue: index - 1)
+            let cell: FilterTableRowCell = tableView.cellForRow(at: IndexPath(row: index, section: section)) as! FilterTableRowCell
+            cell.checkmarkImageOutlet.isHidden = !isSelected
+            cell.backgroundView?.setNeedsDisplay()
+        }
+        //tableView.reloadSections([section], with: UITableViewRowAnimation.automatic)
     }
 }

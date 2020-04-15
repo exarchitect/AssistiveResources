@@ -44,7 +44,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
     func setFilter(fltr: FilterDictionary) {
         filter = fltr
-        filterValueDescriptionLabelOutlet.text = naturalLanguageText(filters: fltr)
+        filterValueDescriptionLabelOutlet.text = ElementInteractor.naturalLanguageText(filters: fltr)
     }
 
     //MARK: - overrides
@@ -66,7 +66,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
         
-        filterValueDescriptionLabelOutlet.text = naturalLanguageText(filters: filter)
+        filterValueDescriptionLabelOutlet.text = ElementInteractor.naturalLanguageText(filters: filter)
 
         eventAccessor.requestData(filteredBy: FilterDictionary())
         if (self.eventAccessor.state == .notLoaded) {

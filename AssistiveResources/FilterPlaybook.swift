@@ -19,7 +19,15 @@ protocol FilterElement {
     var valueString: String { get }
     var hasValue: Bool { get }
     func enumRawValue() -> Int
-    func valueCount() -> Int
+    func itemCount() -> Int
+    mutating func update(rawValue: Int)
+    func isValueSelected(rawValue: Int) -> Bool
+}
+
+extension FilterElement {
+    func isValueSelected(rawValue: Int) -> Bool {
+        rawValue == enumRawValue()
+    }
 }
 
 protocol DescribeEnum {
@@ -44,8 +52,11 @@ struct AgeFilter: FilterElement {
     func enumRawValue() -> Int {
         1
     }
-    func valueCount() -> Int {
+    func itemCount() -> Int {
         1
+    }
+    mutating func update(rawValue: Int) {
+        years = rawValue
     }
 }
 
@@ -82,6 +93,13 @@ enum Distance: Int, CaseIterable, DescribeEnum {
             return "at any distance"
         }
     }
+    static let distanceMap: [Distance: Int] = [
+        .tenMiles: 10,
+        .twentyFiveMiles: 25,
+        .fiftyMiles: 50,
+        .oneHundredMiles: 100,
+        .anyDistance: 1_000_000
+    ]
 }
 
 struct ProximityFilter: FilterElement {
@@ -102,21 +120,17 @@ struct ProximityFilter: FilterElement {
     func enumRawValue() -> Int {
         range?.rawValue ?? invalidRawValue
     }
-    func valueCount() -> Int {
+    func itemCount() -> Int {
         Distance.allCases.count
     }
-    static let distanceMap: [Distance: Int] = [
-        .tenMiles: 10,
-        .twentyFiveMiles: 25,
-        .fiftyMiles: 50,
-        .oneHundredMiles: 100,
-        .anyDistance: 1_000_000
-    ]
     var distanceValue: Int {
         guard let index = range else {
-            return -1
+            return 0
         }
-        return ProximityFilter.distanceMap[index]!
+        return Distance.distanceMap[index]!
+    }
+    mutating func update(rawValue: Int) {
+        range = Distance(rawValue: rawValue)
     }
 }
 
@@ -166,8 +180,11 @@ struct MobilityFilter: FilterElement {
     func enumRawValue() -> Int {
         mobilityLimit?.rawValue ?? invalidRawValue
     }
-    func valueCount() -> Int {
+    func itemCount() -> Int {
         Limitation.allCases.count
+    }
+    mutating func update(rawValue: Int) {
+        mobilityLimit = Limitation(rawValue: rawValue)
     }
 }
 
@@ -233,8 +250,11 @@ struct DevelopmentalAgeFilter: FilterElement {
     func enumRawValue() -> Int {
         developmentalAge?.rawValue ?? invalidRawValue
     }
-    func valueCount() -> Int {
+    func itemCount() -> Int {
         DevelopmentalStage.allCases.count
+    }
+    mutating func update(rawValue: Int) {
+        developmentalAge = DevelopmentalStage(rawValue: rawValue)
     }
 }
 
@@ -269,8 +289,12 @@ enum DevelopmentalDiagnosis: Int, CaseIterable, DescribeEnum {
     }
 }
 
+protocol MultiSelectFilterElement {
+    func toggle(rawValue: Int)
+}
+
 struct DiagnosisFilter: FilterElement {
-    var diagnosis: DevelopmentalDiagnosis? = .none
+    var diagnoses: [DevelopmentalDiagnosis] = []
     static var key: String {
         "diagnosis"
     }
@@ -278,59 +302,40 @@ struct DiagnosisFilter: FilterElement {
         "Diagnosis"
     }
     var valueString: String {
-        guard let diagnose = diagnosis else {
+        guard diagnoses.count > 0 else {
             return "not specified"
         }
-        return diagnose.concise
+//        return diagnoses[0].concise
+        var stringArray = [String]()
+        diagnoses.forEach { stringArray.append($0.concise) }
+        return stringArray.joined(separator: ", ")
     }
     var hasValue: Bool {
-        diagnosis != .none
+        diagnoses.isEmpty == false
     }
     func enumRawValue() -> Int {
-        diagnosis?.rawValue ?? invalidRawValue
+        guard hasValue else {
+            return invalidRawValue
+        }
+        return diagnoses[0].rawValue
     }
-    func valueCount() -> Int {
+    func itemCount() -> Int {
         DevelopmentalDiagnosis.allCases.count
     }
-}
-
-
-func naturalLanguageText(filters: FilterDictionary) -> String {
-    var accumulateString = "Events "
-    let ageFilter: AgeFilter? = filters[AgeFilter.key] as? AgeFilter
-    let proximityFilter: ProximityFilter? = filters[ProximityFilter.key] as? ProximityFilter
-    let mobilityValue: MobilityFilter? = filters[MobilityFilter.key] as? MobilityFilter
-    let dxFilter: DiagnosisFilter? = filters[DiagnosisFilter.key] as? DiagnosisFilter
-
-    let haveAge = ageFilter?.hasValue ?? false
-    let haveProximity = proximityFilter?.hasValue ?? false
-    let haveMobility = mobilityValue?.hasValue ?? false
-    let haveDx = dxFilter?.hasValue ?? false
-
-    guard haveAge || haveProximity || haveMobility || haveDx else {
-        return "Upcoming events"
-    }
-    if let proximity = proximityFilter?.valueString {
-        accumulateString.append(proximity)
-    }
-    if let age = ageFilter?.valueString {
-        accumulateString.append(" for ")
-        accumulateString.append(age)
-    }
-    if let primaryDx = dxFilter?.valueString {
-        if ageFilter?.valueString != nil {
-            accumulateString.append(" with ")
-        } else {
-            accumulateString.append("for someone with ")
+    mutating func update(rawValue: Int) {
+        guard let newDiagnosis = DevelopmentalDiagnosis(rawValue: rawValue) else {
+            return
         }
-        accumulateString.append(primaryDx)
+        if diagnoses.contains(newDiagnosis) {
+            diagnoses.removeAll { $0 == newDiagnosis }
+        } else {
+            diagnoses.append(newDiagnosis)
+        }
     }
-    if let mobility = mobilityValue?.valueString {
-        accumulateString.append(". ")
-        accumulateString.append(mobility)
-        accumulateString.append(".")
+    func isValueSelected(rawValue: Int) -> Bool {
+        guard let newDiagnosis = DevelopmentalDiagnosis(rawValue: rawValue) else {
+            return false
+        }
+        return diagnoses.contains(newDiagnosis)
     }
-
-    return accumulateString
 }
-
