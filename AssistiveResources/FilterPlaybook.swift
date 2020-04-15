@@ -30,7 +30,7 @@ extension FilterElement {
     }
 }
 
-protocol DescribeEnum {
+protocol DescribableEnum {
     var concise: String { get }
     var verbose: String { get }
 }
@@ -60,7 +60,7 @@ struct AgeFilter: FilterElement {
     }
 }
 
-enum Distance: Int, CaseIterable, DescribeEnum {
+enum Distance: Int, CaseIterable, DescribableEnum {
     case tenMiles = 0, twentyFiveMiles, fiftyMiles, oneHundredMiles, anyDistance
     static var AllCases: [Distance] {
         return [.tenMiles, .twentyFiveMiles, .fiftyMiles, .oneHundredMiles, .anyDistance]
@@ -142,7 +142,7 @@ struct ProximityFilter: FilterElement {
     }
 }
 
-enum Limitation: Int, CaseIterable, DescribeEnum {
+enum Limitation: Int, CaseIterable, DescribableEnum {
     case noLimitation = 0, walksWithAid, wheelchair
     static var AllCases: [Limitation] {
         return [.noLimitation, .walksWithAid, .wheelchair]
@@ -201,7 +201,7 @@ struct MobilityFilter: FilterElement {
     }
 }
 
-enum DevelopmentalStage: Int, CaseIterable, DescribeEnum {
+enum DevelopmentalStage: Int, CaseIterable, DescribableEnum {
     case infant = 0, toddler, preschool, gradeschool, preTeen, teen, adult
     static var AllCases: [DevelopmentalStage] {
         return [.infant, .toddler, .preschool, .gradeschool, .preTeen, .teen, .adult]
@@ -276,7 +276,7 @@ struct DevelopmentalAgeFilter: FilterElement {
     }
 }
 
-enum DevelopmentalDiagnosis: Int, CaseIterable, DescribeEnum {
+enum DevelopmentalDiagnosis: Int, CaseIterable, DescribableEnum {
     case autism = 0, cerebralPalsy, spinaBifida, otherDiagnosis
     static var AllCases: [DevelopmentalDiagnosis] {
         return [.autism, .cerebralPalsy, .spinaBifida, .otherDiagnosis]

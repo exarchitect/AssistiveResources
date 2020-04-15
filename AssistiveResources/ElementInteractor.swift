@@ -15,9 +15,10 @@ enum EditType {
 
 class ElementInteractor: NSObject {
     var element: FilterElement
-    var editableRowCount = 0
-    var sectionEnabled = true
-    var rowsVisible = false
+    var editableRowCount: Int {
+        element.itemCount()
+    }
+    var editInProgress = false
     var editType: EditType {
         switch element.self {
         case is AgeFilter:
@@ -31,7 +32,6 @@ class ElementInteractor: NSObject {
 
     init(using filterElement: FilterElement) {
         element = filterElement
-        editableRowCount = element.itemCount()
     }
 
     func summaryText(rawValue: Int) -> String {

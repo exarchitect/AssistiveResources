@@ -2,7 +2,7 @@
 //  RegionalResourcesRemoteDatasource.swift
 //  AssistiveResources
 //
-//  Created by WCJ on 2/4/18.
+//  Created by Bill Johnson on 2/4/18.
 //  Copyright © 2018 SevenPlusTwo. All rights reserved.
 //
 
