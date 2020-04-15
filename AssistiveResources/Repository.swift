@@ -29,30 +29,30 @@ protocol RemoteDatasourceProtocol: class {
 class Repository: NSObject {
     
     var localRepositoryAvailable = false
-    var dataUpdateCompletion: RepositoryUpdateCompletionHandlerType? = nil
+    var dataUpdateCompletion: RepositoryUpdateCompletionHandlerType?
     
     func load (completion: @escaping RepositoryUpdateCompletionHandlerType) {
-        self.dataUpdateCompletion = completion
+        dataUpdateCompletion = completion
         
         let repoStartupState = self.checkRepositoryState()
         
         switch repoStartupState {
             
         case .current:
-            self.localRepositoryAvailable = true
-            self.dataUpdateCompletion?(true)
-            self.dataUpdateCompletion = nil
+            localRepositoryAvailable = true
+            dataUpdateCompletion?(true)
+            dataUpdateCompletion = nil
 
-        case .outdated:      // do nothing here? - after accessor is done, then update will be called
-            self.localRepositoryAvailable = true
-            self.dataUpdateCompletion?(true)
-            self.dataUpdateCompletion = nil
+        case .outdated:
+            localRepositoryAvailable = true
+            dataUpdateCompletion?(true)
+            dataUpdateCompletion = nil
 
         case .invalidLocation:
-            self.initiateRemoteLoading()
+            initiateRemoteLoading()
             
         case .empty:
-            self.initiateRemoteLoading()
+            initiateRemoteLoading()
         }
     }
 
@@ -61,17 +61,17 @@ class Repository: NSObject {
         
         switch repoCurrentState {
         case .current:
-            let _ = 3       // do nothing
+            break
         case .outdated:
-            self.initiateRemoteLoading()
+            initiateRemoteLoading()
         case .invalidLocation:
-            self.initiateRemoteLoading()
+            initiateRemoteLoading()
         case .empty:
-            self.initiateRemoteLoading()
+            initiateRemoteLoading()
         }
     }
-    
-    
+
+
     // MARK: - methods to override
     
     internal func checkRepositoryState() -> RepositoryState {

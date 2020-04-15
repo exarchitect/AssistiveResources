@@ -38,7 +38,7 @@ class EventFilterViewController: UIViewController {
         filterList.append(ElementInteractor(using: AgeFilter(years: 21)))
         filterList.append(ElementInteractor(using: DevelopmentalAgeFilter(developmentalAge: .gradeschool)))
         filterList.append(ElementInteractor(using: MobilityFilter(mobilityLimit: .wheelchair)))
-        filterList.append(ElementInteractor(using: DiagnosisFilter(diagnoses: [.autism])))
+        filterList.append(ElementInteractor(using: DiagnosisFilter(diagnoses: [.autism, .cerebralPalsy])))
 
         self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterList)
     }

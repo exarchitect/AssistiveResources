@@ -15,8 +15,8 @@ let updateNavigationNotificationKeyName = NSNotification.Name(rawValue: "key_not
 class NavListViewController: ProcessViewController {
 
     private var navigationItems = NavigationCategories()
-    private var isVisible: Bool = false
-    private var needContentRefresh: Bool = false
+    private var isVisible = false
+    private var needContentRefresh = false
     
     @IBOutlet weak var navTable: UITableView!
     var tableAdaptor:MainNavigationTableAdaptor?

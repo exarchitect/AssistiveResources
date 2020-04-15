@@ -18,10 +18,6 @@ class ElementInteractor: NSObject {
     var editableRowCount = 0
     var sectionEnabled = true
     var rowsVisible = false
-    public private(set) var selectedEnum: Int
-    var hasSelection: Bool {
-        selectedEnum != invalidRawValue
-    }
     var editType: EditType {
         switch element.self {
         case is AgeFilter:
@@ -36,15 +32,9 @@ class ElementInteractor: NSObject {
     init(using filterElement: FilterElement) {
         element = filterElement
         editableRowCount = element.itemCount()
-        selectedEnum = element.enumRawValue()
     }
 
-    func selectEnum(rawValue: Int) {
-        selectedEnum = rawValue
-        element.update(rawValue: rawValue)
-    }
-
-    func enumText(rawValue: Int) -> String {
+    func summaryText(rawValue: Int) -> String {
         if rawValue == -1 && !element.hasValue {
             return "not specified"
         }
@@ -87,22 +77,21 @@ class ElementInteractor: NSObject {
         guard haveAge || haveProximity || haveMobility || haveDx else {
             return "Upcoming events"
         }
-        if let proximity = proximityFilter?.valueString {
+        if let proximity = proximityFilter?.range?.concise {
             accumulateString.append(proximity)
         }
-        if let age = ageFilter?.valueString {
-            accumulateString.append(" for ")
-            accumulateString.append(age)
+        if haveAge == true, let age = ageFilter?.years {
+            accumulateString.append(" for \(age)yo")
         }
-        if let primaryDx = dxFilter?.valueString {
-            if ageFilter?.valueString != nil {
+        if let dxSummary = dxFilter?.valueString {
+            if haveAge {
                 accumulateString.append(" with ")
             } else {
                 accumulateString.append("for someone with ")
             }
-            accumulateString.append(primaryDx)
+            accumulateString.append(dxSummary)
         }
-        if let mobility = mobilityValue?.valueString {
+        if let mobility = mobilityValue?.mobilityLimit?.concise {
             accumulateString.append(". ")
             accumulateString.append(mobility)
             accumulateString.append(".")

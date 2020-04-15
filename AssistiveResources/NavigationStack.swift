@@ -19,7 +19,7 @@ class NavigationStack: NSObject, Commandable {
         self.navController = navController
     }
 
-    @discardableResult func instantiateProcess<T: ProcessController>(ofType: T.Type) -> T? {
+    @discardableResult func launchProcess<T: ProcessController>(ofType: T.Type) -> T? {
         let processController = T.init()
         let viewController = processController.createPrimaryViewController()
 
@@ -42,13 +42,13 @@ class NavigationStack: NSObject, Commandable {
 
         switch command {
         case .dismissCurrentProcess:
-            guard let pController = processControllerStack.popLast(), let previousViewController = processControllerStack.last?.primaryProcessViewController else {
+            guard let currentProcessController = processControllerStack.popLast(), let previousViewController = processControllerStack.last?.primaryProcessViewController else {
                 return
             }
-            pController.terminate(navController: navController, previousTopViewController: previousViewController)
+            currentProcessController.terminate(navController: navController, previousTopViewController: previousViewController)
 
         case .requestUserIdentity:
-            instantiateProcess(ofType: AuthenticationProcessController.self)
+            launchProcess(ofType: AuthenticationProcessController.self)
 
         case .userSuccessfullyIdentified:
             services?.loadRepositoryIfNeeded()
@@ -57,10 +57,10 @@ class NavigationStack: NSObject, Commandable {
         case .selectCategory(let destination):
             switch destination {
             case .organizations:
-                instantiateProcess(ofType: OrganizationListProcessController.self)
+                launchProcess(ofType: OrganizationListProcessController.self)
 
             case .events:
-                instantiateProcess(ofType: EventListProcessController.self)
+                launchProcess(ofType: EventListProcessController.self)
 
             case .facilities:
                 let _ = 7
@@ -77,11 +77,11 @@ class NavigationStack: NSObject, Commandable {
             case .profile:
                 // temp for testing
                 services?.userModel.logout()
-                instantiateProcess(ofType: AuthenticationProcessController.self)
+                launchProcess(ofType: AuthenticationProcessController.self)
             }
 
         case .selectEvent(let event):
-            guard let eventDetailProcessController = instantiateProcess(ofType: EventDetailProcessController.self) else {
+            guard let eventDetailProcessController = launchProcess(ofType: EventDetailProcessController.self) else {
                 return
             }
             eventDetailProcessController.filter = event

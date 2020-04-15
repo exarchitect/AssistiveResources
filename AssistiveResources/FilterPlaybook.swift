@@ -20,7 +20,7 @@ protocol FilterElement {
     var hasValue: Bool { get }
     func enumRawValue() -> Int
     func itemCount() -> Int
-    mutating func update(rawValue: Int)
+    mutating func toggleSelection(rawValue: Int)
     func isValueSelected(rawValue: Int) -> Bool
 }
 
@@ -55,7 +55,7 @@ struct AgeFilter: FilterElement {
     func itemCount() -> Int {
         1
     }
-    mutating func update(rawValue: Int) {
+    mutating func toggleSelection(rawValue: Int) {
         years = rawValue
     }
 }
@@ -112,7 +112,10 @@ struct ProximityFilter: FilterElement {
         "Proximity"
     }
     var valueString: String {
-        range?.concise ?? ""
+        guard let proximity = range else {
+            return "not specified"
+        }
+        return proximity.verbose
     }
     var hasValue: Bool {
         range != .none
@@ -129,8 +132,13 @@ struct ProximityFilter: FilterElement {
         }
         return Distance.distanceMap[index]!
     }
-    mutating func update(rawValue: Int) {
-        range = Distance(rawValue: rawValue)
+    mutating func toggleSelection(rawValue: Int) {
+        let newrange = Distance(rawValue: rawValue)
+        if newrange == range {
+            range = .none
+        } else {
+            range = newrange
+        }
     }
 }
 
@@ -172,7 +180,7 @@ struct MobilityFilter: FilterElement {
         guard let limit = mobilityLimit else {
             return "not specified"
         }
-        return limit.concise
+        return limit.verbose
     }
     var hasValue: Bool {
         mobilityLimit != .none
@@ -183,8 +191,13 @@ struct MobilityFilter: FilterElement {
     func itemCount() -> Int {
         Limitation.allCases.count
     }
-    mutating func update(rawValue: Int) {
-        mobilityLimit = Limitation(rawValue: rawValue)
+    mutating func toggleSelection(rawValue: Int) {
+        let newmobilityLimit = Limitation(rawValue: rawValue)
+        if newmobilityLimit == mobilityLimit {
+            mobilityLimit = .none
+        } else {
+            mobilityLimit = newmobilityLimit
+        }
     }
 }
 
@@ -242,7 +255,7 @@ struct DevelopmentalAgeFilter: FilterElement {
         guard let stage = developmentalAge else {
             return "not specified"
         }
-        return stage.concise
+        return stage.verbose
     }
     var hasValue: Bool {
         developmentalAge != .none
@@ -253,8 +266,13 @@ struct DevelopmentalAgeFilter: FilterElement {
     func itemCount() -> Int {
         DevelopmentalStage.allCases.count
     }
-    mutating func update(rawValue: Int) {
-        developmentalAge = DevelopmentalStage(rawValue: rawValue)
+    mutating func toggleSelection(rawValue: Int) {
+        let newdevelopmentalAge = DevelopmentalStage(rawValue: rawValue)
+        if newdevelopmentalAge == developmentalAge {
+            developmentalAge = .none
+        } else {
+            developmentalAge = newdevelopmentalAge
+        }
     }
 }
 
@@ -289,10 +307,6 @@ enum DevelopmentalDiagnosis: Int, CaseIterable, DescribeEnum {
     }
 }
 
-protocol MultiSelectFilterElement {
-    func toggle(rawValue: Int)
-}
-
 struct DiagnosisFilter: FilterElement {
     var diagnoses: [DevelopmentalDiagnosis] = []
     static var key: String {
@@ -305,13 +319,16 @@ struct DiagnosisFilter: FilterElement {
         guard diagnoses.count > 0 else {
             return "not specified"
         }
-//        return diagnoses[0].concise
         var stringArray = [String]()
         diagnoses.forEach { stringArray.append($0.concise) }
         return stringArray.joined(separator: ", ")
     }
     var hasValue: Bool {
         diagnoses.isEmpty == false
+    }
+
+    init(diagnoses: [DevelopmentalDiagnosis]) {
+        self.diagnoses = diagnoses
     }
     func enumRawValue() -> Int {
         guard hasValue else {
@@ -322,7 +339,7 @@ struct DiagnosisFilter: FilterElement {
     func itemCount() -> Int {
         DevelopmentalDiagnosis.allCases.count
     }
-    mutating func update(rawValue: Int) {
+    mutating func toggleSelection(rawValue: Int) {
         guard let newDiagnosis = DevelopmentalDiagnosis(rawValue: rawValue) else {
             return
         }
