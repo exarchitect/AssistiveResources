@@ -12,7 +12,6 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
     var tableView: UITableView!
     private var filterItems: [ElementInteractor]!
-    private var currentEditableSectionIndex: Int = Constants.noSectionOpen
 
     init(table: UITableView, filterWhat: [ElementInteractor]) {
         super.init()
@@ -40,23 +39,23 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         if indexPath.row == 0 {
             return 68       // header
         } else {
-            return self.filterItems[indexPath.section].editInProgress ? 45 : 0
+            return filterItems[indexPath.section].editInProgress ? 45 : 0
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.filterItems.count
+        return filterItems.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.filterItems[section].editableRowCount + 1
+        return filterItems[section].editableRowCount + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if (indexPath.row == 0) {
             // section heading is first row cell so we can detect hits
-            let cell:FilterTableHeaderCell = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableHeaderCell
+            let cell: FilterTableHeaderCell = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableHeaderCell
             configHeaderCell(cell: cell, section: indexPath.section)
             return cell
             
@@ -80,8 +79,8 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         case .numeric:
             selectNumericCell(at: indexPath)
         }
-        self.tableView.beginUpdates()
-        self.tableView.endUpdates()
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
     
     // MARK:- utilities
@@ -105,7 +104,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             // update header with selection
             let headerCellIndex:IndexPath = IndexPath(row: 0, section: indexPath.section)
             let headerCell = tableView.cellForRow(at: headerCellIndex) as! FilterTableHeaderCell
-            self.configHeaderCell(cell: headerCell, section: indexPath.section)
+            configHeaderCell(cell: headerCell, section: indexPath.section)
         }
     }
 
@@ -120,7 +119,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             // update header with selection
             let headerCellIndex:IndexPath = IndexPath(row: 0, section: indexPath.section)
             let headerCell:FilterTableHeaderCell = tableView.cellForRow(at: headerCellIndex) as! FilterTableHeaderCell
-            self.configHeaderCell(cell: headerCell, section: indexPath.section)
+            configHeaderCell(cell: headerCell, section: indexPath.section)
         }
     }
 
@@ -136,24 +135,23 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     }
 
     func showHideSections(at indexPath: IndexPath, multiSelect: Bool = false) {
+        let previousEditableSectionIndex = filterItems.firstIndex { $0.editInProgress == true }
+
         // hide previous editable section if open and different section is becoming editable
-        if (currentEditableSectionIndex != Constants.noSectionOpen && currentEditableSectionIndex != indexPath.section) {
-            filterItems[currentEditableSectionIndex].editInProgress = false
+        if let previousSectionIndex = previousEditableSectionIndex, previousSectionIndex != indexPath.section {
+            filterItems[previousSectionIndex].editInProgress = false
         }
 
         if multiSelect {
             // reveal section if hidden (dont auto-hide)
             if filterItems[indexPath.section].editInProgress == false {
                 filterItems[indexPath.section].editInProgress = true
-                currentEditableSectionIndex = indexPath.section
             } else if indexPath.row == 0 {
                 filterItems[indexPath.section].editInProgress = false
-                currentEditableSectionIndex = Constants.noSectionOpen
             }
         } else {
             // set section visible/hidden
             filterItems[indexPath.section].editInProgress = !self.filterItems[indexPath.section].editInProgress
-            currentEditableSectionIndex = filterItems[indexPath.section].editInProgress ? indexPath.section : Constants.noSectionOpen
         }
     }
 
