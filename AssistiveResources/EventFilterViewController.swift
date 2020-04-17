@@ -16,10 +16,9 @@ protocol EventFilterResponseProtocol: class {
 
 class EventFilterViewController: UIViewController {
 
-    private var tableAdapter: FilterSettingsTableAdapter! = nil
+    private var tableAdapter: FilterSettingsTableAdapter?
     weak private var selectorDelegate:EventFilterResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
-    var filterList: [ElementInteractor] = []
     var filterProfile:FilterDictionary! = nil
 
     @IBOutlet weak var filterTableViewOutlet: UITableView!
@@ -33,14 +32,7 @@ class EventFilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // TODO: pull this from ?
-        filterList.append(ElementInteractor(using: ProximityFilter(range: .twentyFiveMiles)))
-        filterList.append(ElementInteractor(using: AgeFilter(years: 21)))
-        filterList.append(ElementInteractor(using: DevelopmentalAgeFilter(developmentalAge: .gradeschool)))
-        filterList.append(ElementInteractor(using: MobilityFilter(mobilityLimit: .wheelchair)))
-        filterList.append(ElementInteractor(using: DiagnosisFilter(diagnoses: [.autism, .cerebralPalsy])))
-
-        self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterList)
+        self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterProfile)
     }
 
     deinit {
@@ -53,7 +45,10 @@ class EventFilterViewController: UIViewController {
     }
     
     @IBAction func okButtonAction(_ sender: Any) {
-        let filterResults = ElementInteractor.createFilterDictionary(from: filterList)
-        self.selectorDelegate.okFilterButtonAction(filter: filterResults)
+        guard let filterList = tableAdapter?.filterItems else {
+            return
+        }
+        let filterDictionary = ElementInteractor.createFilterDictionary(from: filterList)
+        self.selectorDelegate.okFilterButtonAction(filter: filterDictionary)
     }
 }

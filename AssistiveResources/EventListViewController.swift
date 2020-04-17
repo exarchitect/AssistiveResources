@@ -45,8 +45,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
         
         if segue.identifier == "EventContainerSegueID" {
             containerViewController = segue.destination as? EventContainerViewController
-            containerViewController?.configuration(rsrcModelController: rsrcsModelController, delegate: self, filter: filterDict)
-            //containerViewController?.setFilterDescription(desrc: filter.naturalLanguageText())
+            containerViewController?.configuration(rsrcModelController: rsrcsModelController, delegate: self)
         }
         
     }
@@ -66,6 +65,10 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     func setupFilter() {
         filterDict[ProximityFilter.key] = ProximityFilter(range: .twentyFiveMiles)
         filterDict[AgeFilter.key] = AgeFilter(years: 21)
+        filterDict[DiagnosisFilter.key] = DiagnosisFilter(diagnoses: [.spinaBifida])
+        filterDict[MobilityFilter.key] = MobilityFilter(mobilityLimit: .walksWithAid)
+        
+        containerViewController?.setFilter(fltr: filterDict)
     }
 
     //MARK: - EventListContainerNotificationProtocol delegate
@@ -77,7 +80,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     
     func notifyFilterSelected() {
 
-        let filterViewController:EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
+        let filterViewController: EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
         
         filterViewController?.configuration(resources: resourcesModelController, selectorDelegate: self, filter: filterDict)
 

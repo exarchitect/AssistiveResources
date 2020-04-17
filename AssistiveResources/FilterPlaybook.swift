@@ -30,6 +30,28 @@ extension FilterElement {
     }
 }
 
+func getFilter<T: FilterElement>(type: T.Type, from dictionary: FilterDictionary) -> T {
+    let dictionaryEntry: T? = dictionary[T.key] as? T
+
+    if dictionaryEntry != nil {
+        return dictionaryEntry!
+    }
+    switch type {
+    case is AgeFilter.Type:
+        return AgeFilter() as! T
+    case is ProximityFilter.Type:
+        return ProximityFilter() as! T
+    case is DevelopmentalAgeFilter.Type:
+        return DevelopmentalAgeFilter() as! T
+    case is MobilityFilter.Type:
+        return MobilityFilter() as! T
+    case is DiagnosisFilter.Type:
+        return DiagnosisFilter(diagnoses: []) as! T
+    default:
+        fatalError("in \(#function)")
+    }
+}
+
 protocol DescribableEnum {
     var concise: String { get }
     var verbose: String { get }
@@ -44,10 +66,10 @@ struct AgeFilter: FilterElement {
         "Age"
     }
     var valueString: String {
-        hasValue ? "not set" : "\(years)yo"
+        hasValue ? "\(years)yo" : "not set"
     }
     var hasValue: Bool {
-        years <= -1
+        years >= 0
     }
     func enumRawValue() -> Int {
         1

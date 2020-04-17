@@ -18,33 +18,28 @@ protocol EventListContainerNotificationProtocol: class {
 class EventContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, RepositoryAccessorProtocol {
 
     @IBOutlet weak var containerTableView: UITableView!
-    @IBOutlet weak var filterValueDescriptionLabelOutlet: UILabel!
+    @IBOutlet weak var filterValueDescriptionLabelOutlet: UILabel?
     
     weak private var notificationDelegate:EventListContainerNotificationProtocol?
     private var expandedRowIndex = -1
     private var showLoadingIndicator: Bool = false
     private var eventAccessor: EventRepositoryAccessor!
-    private var filter: FilterDictionary!
+    private var filter: FilterDictionary?
 
 
-    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol, filter: FilterDictionary) {
+    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
     
-        self.notificationDelegate = delegate
-        self.filter = filter
-      
+        notificationDelegate = delegate
+
         self.eventAccessor = rsrcModelController.createEventAccessor(delegate: self)
         guard self.eventAccessor != nil else {
             return
         }
     }
     
-//    func setFilterDescription(desrc:String) {
-//        self.filterValueDescriptionLabelOutlet.text = desrc
-//    }
-    
     func setFilter(fltr: FilterDictionary) {
         filter = fltr
-        filterValueDescriptionLabelOutlet.text = ElementInteractor.naturalLanguageText(filters: fltr)
+        filterValueDescriptionLabelOutlet?.text = ElementInteractor.naturalLanguageText(filters: fltr)
     }
 
     //MARK: - overrides
@@ -66,8 +61,6 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
         
-        filterValueDescriptionLabelOutlet.text = ElementInteractor.naturalLanguageText(filters: filter)
-
         eventAccessor.requestData(filteredBy: FilterDictionary())
         if (self.eventAccessor.state == .notLoaded) {
             self.showLoadingIndicator = true
@@ -75,6 +68,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
                 startActivityIndicator(title: nil, message: "loading...")
             }
         }
+        guard let filterDictionary = filter else {
+            return
+        }
+        filterValueDescriptionLabelOutlet?.text = ElementInteractor.naturalLanguageText(filters: filterDictionary)
     }
 
     override func didReceiveMemoryWarning() {

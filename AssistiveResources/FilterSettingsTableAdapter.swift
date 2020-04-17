@@ -11,13 +11,13 @@ import UIKit
 class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
 
     var tableView: UITableView!
-    private var filterItems: [ElementInteractor]!
+    var filterItems: [ElementInteractor]!
 
-    init(table: UITableView, filterWhat: [ElementInteractor]) {
+    init(table: UITableView, filterWhat: FilterDictionary) {
         super.init()
         
         self.tableView = table
-        self.filterItems = filterWhat
+        self.filterItems = ElementInteractor.createElementInteractorList(from: filterWhat)
         
         // attach table
         tableView.delegate = self
@@ -93,7 +93,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
                         subTextEnabled: filterItems[section].element.hasValue)
     }
 
-    func selectMultiCell(at indexPath: IndexPath) {
+    private func selectMultiCell(at indexPath: IndexPath) {
         showHideSections(at: indexPath, multiSelect: true)
 
         // update rows
@@ -108,7 +108,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         }
     }
 
-    func selectListCell(at indexPath: IndexPath) {
+    private func selectListCell(at indexPath: IndexPath) {
         showHideSections(at: indexPath)
 
         // update rows
@@ -123,7 +123,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         }
     }
 
-    func selectNumericCell(at indexPath: IndexPath) {
+    private func selectNumericCell(at indexPath: IndexPath) {
         if indexPath.row == 0 {
             showHideSections(at: indexPath)
         }
@@ -134,7 +134,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         }
     }
 
-    func showHideSections(at indexPath: IndexPath, multiSelect: Bool = false) {
+    private func showHideSections(at indexPath: IndexPath, multiSelect: Bool = false) {
         let previousEditableSectionIndex = filterItems.firstIndex { $0.editInProgress == true }
 
         // hide previous editable section if open and different section is becoming editable
@@ -155,7 +155,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         }
     }
 
-    func updateSection(_ section: Int) {
+    private func updateSection(_ section: Int) {
         let rowCount = filterItems[section].editableRowCount
         for rowIndex in 1 ... rowCount {
             let isSelected = filterItems[section].element.isValueSelected(rawValue: rowIndex.rowToEnum())

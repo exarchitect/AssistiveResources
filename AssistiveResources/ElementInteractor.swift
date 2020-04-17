@@ -55,19 +55,52 @@ class ElementInteractor: NSObject {
     }
 
     class func createFilterDictionary(from elementList: [ElementInteractor]) -> FilterDictionary {
-        let proximity = ProximityFilter(range: Distance.twentyFiveMiles)
-        var filterDict: FilterDictionary = [ProximityFilter.key: proximity]
-        let age = AgeFilter(years: 21)
-        filterDict[AgeFilter.key] = age
-        return filterDict
+        var filterDictionary: FilterDictionary = [:]
+
+        elementList.forEach { interactor in
+            if interactor.element.hasValue {
+                switch interactor.element {
+                case is AgeFilter:
+                    filterDictionary[AgeFilter.key] = interactor.element
+                case is ProximityFilter:
+                    filterDictionary[ProximityFilter.key] = interactor.element
+                case is DevelopmentalAgeFilter:
+                    filterDictionary[DevelopmentalAgeFilter.key] = interactor.element
+                case is MobilityFilter:
+                    filterDictionary[MobilityFilter.key] = interactor.element
+                case is DiagnosisFilter:
+                    filterDictionary[DiagnosisFilter.key] = interactor.element
+                default:
+                    fatalError("in \(#function)")
+                }
+            }
+        }
+        return filterDictionary
+    }
+
+    class func createElementInteractorList(from dictionary: FilterDictionary) -> [ElementInteractor] {
+        var filterList: [ElementInteractor] = []
+
+        let proximityFilter = getFilter(type: ProximityFilter.self, from: dictionary)
+        filterList.append(ElementInteractor(using: proximityFilter as FilterElement))
+        let ageFilter = getFilter(type: AgeFilter.self, from: dictionary)
+        filterList.append(ElementInteractor(using: ageFilter as FilterElement))
+        let devAgeFilter = getFilter(type: DevelopmentalAgeFilter.self, from: dictionary)
+        filterList.append(ElementInteractor(using: devAgeFilter as FilterElement))
+        let mobilityFilter = getFilter(type: MobilityFilter.self, from: dictionary)
+        filterList.append(ElementInteractor(using: mobilityFilter as FilterElement))
+        let dxFilter = getFilter(type: DiagnosisFilter.self, from: dictionary)
+        filterList.append(ElementInteractor(using: dxFilter as FilterElement))
+
+        return filterList
     }
 
     class func naturalLanguageText(filters: FilterDictionary) -> String {
         var accumulateString = "Events "
-        let ageFilter: AgeFilter? = filters[AgeFilter.key] as? AgeFilter
-        let proximityFilter: ProximityFilter? = filters[ProximityFilter.key] as? ProximityFilter
-        let mobilityValue: MobilityFilter? = filters[MobilityFilter.key] as? MobilityFilter
-        let dxFilter: DiagnosisFilter? = filters[DiagnosisFilter.key] as? DiagnosisFilter
+        let ageFilter: AgeFilter? = getFilter(type: AgeFilter.self, from: filters)
+        let proximityFilter: ProximityFilter? = getFilter(type: ProximityFilter.self, from: filters)
+        let mobilityValue: MobilityFilter? = getFilter(type: MobilityFilter.self, from: filters)
+        let dxFilter: DiagnosisFilter? = getFilter(type: DiagnosisFilter.self, from: filters)
 
         let haveAge = ageFilter?.hasValue ?? false
         let haveProximity = proximityFilter?.hasValue ?? false
@@ -83,22 +116,19 @@ class ElementInteractor: NSObject {
         if haveAge == true, let age = ageFilter?.years {
             accumulateString.append(" for \(age)yo")
         }
-        if let dxSummary = dxFilter?.valueString {
+        if haveDx, let dxSummary = dxFilter?.valueString {
             if haveAge {
                 accumulateString.append(" with ")
             } else {
-                accumulateString.append("for someone with ")
+                accumulateString.append(" for someone with ")
             }
             accumulateString.append(dxSummary)
         }
         if let mobility = mobilityValue?.mobilityLimit?.concise {
-            accumulateString.append(". ")
-            accumulateString.append(mobility)
-            accumulateString.append(".")
+            accumulateString.append(". " + mobility + ".")
         }
 
         return accumulateString
     }
-
 }
 
