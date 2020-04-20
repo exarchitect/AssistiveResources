@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol EventFilterResponseProtocol: class {
-    func okFilterButtonAction(filter:FilterDictionary)
+    func okFilterButtonAction(filter: FilterDictionary)
     func cancelFilterButtonAction()
 }
 
@@ -19,20 +19,20 @@ class EventFilterViewController: UIViewController {
     private var tableAdapter: FilterSettingsTableAdapter?
     weak private var selectorDelegate:EventFilterResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
-    var filterProfile:FilterDictionary! = nil
+    var filter:FilterDictionary! = nil
 
     @IBOutlet weak var filterTableViewOutlet: UITableView!
     
-    func configuration(resources: RegionalResourcesModelController?, selectorDelegate: EventFilterResponseProtocol, filter:FilterDictionary) {
+    func configuration(resources: RegionalResourcesModelController?, selectorDelegate: EventFilterResponseProtocol, filter: FilterDictionary) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
-        self.filterProfile = filter
+        self.filter = filter
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterWhat: filterProfile)
+        self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterBy: filter)
     }
 
     deinit {

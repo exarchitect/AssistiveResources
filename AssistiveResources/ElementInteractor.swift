@@ -13,6 +13,28 @@ enum EditType {
     case singleselect, numeric, multiselect
 }
 
+func getFilterElement<T: FilterElement>(type: T.Type, from dictionary: FilterDictionary) -> T {
+    let dictionaryEntry: T? = dictionary[T.key] as? T
+
+    if dictionaryEntry != nil {
+        return dictionaryEntry!
+    }
+    switch type {
+    case is AgeFilter.Type:
+        return AgeFilter() as! T
+    case is ProximityFilter.Type:
+        return ProximityFilter() as! T
+    case is DevelopmentalAgeFilter.Type:
+        return DevelopmentalAgeFilter() as! T
+    case is MobilityFilter.Type:
+        return MobilityFilter() as! T
+    case is DiagnosisFilter.Type:
+        return DiagnosisFilter(diagnoses: []) as! T
+    default:
+        fatalError("in \(#function)")
+    }
+}
+
 class ElementInteractor: NSObject {
     var element: FilterElement
     var editableRowCount: Int {
@@ -40,7 +62,11 @@ class ElementInteractor: NSObject {
         }
         switch element {
         case is AgeFilter:
-            return (element as! AgeFilter).years.description
+            let ageFilter = (element as! AgeFilter)
+            guard ageFilter.hasValue == true else {
+                return "not specified"
+            }
+            return (element as! AgeFilter).subtitleString
         case is ProximityFilter:
             return Distance.allCases[rawValue].verbose
         case is DevelopmentalAgeFilter:
@@ -81,15 +107,15 @@ class ElementInteractor: NSObject {
     class func createElementInteractorList(from dictionary: FilterDictionary) -> [ElementInteractor] {
         var filterList: [ElementInteractor] = []
 
-        let proximityFilter = getFilter(type: ProximityFilter.self, from: dictionary)
+        let proximityFilter = getFilterElement(type: ProximityFilter.self, from: dictionary)
         filterList.append(ElementInteractor(using: proximityFilter as FilterElement))
-        let ageFilter = getFilter(type: AgeFilter.self, from: dictionary)
+        let ageFilter = getFilterElement(type: AgeFilter.self, from: dictionary)
         filterList.append(ElementInteractor(using: ageFilter as FilterElement))
-        let devAgeFilter = getFilter(type: DevelopmentalAgeFilter.self, from: dictionary)
+        let devAgeFilter = getFilterElement(type: DevelopmentalAgeFilter.self, from: dictionary)
         filterList.append(ElementInteractor(using: devAgeFilter as FilterElement))
-        let mobilityFilter = getFilter(type: MobilityFilter.self, from: dictionary)
+        let mobilityFilter = getFilterElement(type: MobilityFilter.self, from: dictionary)
         filterList.append(ElementInteractor(using: mobilityFilter as FilterElement))
-        let dxFilter = getFilter(type: DiagnosisFilter.self, from: dictionary)
+        let dxFilter = getFilterElement(type: DiagnosisFilter.self, from: dictionary)
         filterList.append(ElementInteractor(using: dxFilter as FilterElement))
 
         return filterList
@@ -97,10 +123,10 @@ class ElementInteractor: NSObject {
 
     class func naturalLanguageText(filters: FilterDictionary) -> String {
         var accumulateString = "Events "
-        let ageFilter: AgeFilter? = getFilter(type: AgeFilter.self, from: filters)
-        let proximityFilter: ProximityFilter? = getFilter(type: ProximityFilter.self, from: filters)
-        let mobilityValue: MobilityFilter? = getFilter(type: MobilityFilter.self, from: filters)
-        let dxFilter: DiagnosisFilter? = getFilter(type: DiagnosisFilter.self, from: filters)
+        let ageFilter: AgeFilter? = getFilterElement(type: AgeFilter.self, from: filters)
+        let proximityFilter: ProximityFilter? = getFilterElement(type: ProximityFilter.self, from: filters)
+        let mobilityValue: MobilityFilter? = getFilterElement(type: MobilityFilter.self, from: filters)
+        let dxFilter: DiagnosisFilter? = getFilterElement(type: DiagnosisFilter.self, from: filters)
 
         let haveAge = ageFilter?.hasValue ?? false
         let haveProximity = proximityFilter?.hasValue ?? false
@@ -113,7 +139,7 @@ class ElementInteractor: NSObject {
         if let proximity = proximityFilter?.range?.concise {
             accumulateString.append(proximity)
         }
-        if haveAge == true, let age = ageFilter?.years {
+        if haveAge == true, let age = ageFilter?.age {
             accumulateString.append(" for \(age)yo")
         }
         if haveDx, let dxSummary = dxFilter?.valueString {

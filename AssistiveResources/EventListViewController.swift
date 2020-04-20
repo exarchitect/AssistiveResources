@@ -64,7 +64,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
 
     func setupFilter() {
         filterDict[ProximityFilter.key] = ProximityFilter(range: .twentyFiveMiles)
-        filterDict[AgeFilter.key] = AgeFilter(years: 21)
+        filterDict[AgeFilter.key] = AgeFilter(monthOfBirth: 4, yearOfBirth: 1994)
         filterDict[DiagnosisFilter.key] = DiagnosisFilter(diagnoses: [.spinaBifida])
         filterDict[MobilityFilter.key] = MobilityFilter(mobilityLimit: .walksWithAid)
         
@@ -81,19 +81,17 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     func notifyFilterSelected() {
 
         let filterViewController: EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
-        
-        filterViewController?.configuration(resources: resourcesModelController, selectorDelegate: self, filter: filterDict)
-
-        if let filterVC = filterViewController {
-            present(filterVC, animated: true, completion: nil)
-            self.filterViewController = filterVC
+        if let filterVwCtl = filterViewController {
+            filterVwCtl.configuration(resources: resourcesModelController, selectorDelegate: self, filter: filterDict)
+            present(filterVwCtl, animated: true, completion: nil)
+            self.filterViewController = filterVwCtl
         }
     }
     
     //MARK: - EventFilterResponseProtocol delegate
 
     func okFilterButtonAction(filter:FilterDictionary) {
-        self.filterDict = filter
+        filterDict = filter
         if let container = containerViewController {
             container.setFilter(fltr: filter)
         }

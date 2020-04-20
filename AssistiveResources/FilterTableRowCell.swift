@@ -23,7 +23,7 @@ class FilterTableRowCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configure (text: String, isChecked: Bool) {
+    func configure (text: String, isChecked: Bool = false) {
         checkmarkImageOutlet.isHidden = !isChecked
         backgroundColor = UIColor.white
         titleLabelOutlet.text = text

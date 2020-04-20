@@ -11,14 +11,12 @@ import Foundation
 
 typealias FilterDictionary = [String: FilterElement]
 
-let invalidRawValue = -1
-
 protocol FilterElement {
     static var key: String { get }
     var label: String { get }
     var valueString: String { get }
     var hasValue: Bool { get }
-    func enumRawValue() -> Int
+    func enumRawValue() -> Int?
     func itemCount() -> Int
     mutating func toggleSelection(rawValue: Int)
     func isValueSelected(rawValue: Int) -> Bool
@@ -26,29 +24,16 @@ protocol FilterElement {
 
 extension FilterElement {
     func isValueSelected(rawValue: Int) -> Bool {
-        rawValue == enumRawValue()
+        guard let raw = enumRawValue() else {
+            return false
+        }
+        return rawValue == raw
     }
-}
-
-func getFilter<T: FilterElement>(type: T.Type, from dictionary: FilterDictionary) -> T {
-    let dictionaryEntry: T? = dictionary[T.key] as? T
-
-    if dictionaryEntry != nil {
-        return dictionaryEntry!
+    mutating func toggleSelection(rawValue: Int) {
+        return      // func unused
     }
-    switch type {
-    case is AgeFilter.Type:
-        return AgeFilter() as! T
-    case is ProximityFilter.Type:
-        return ProximityFilter() as! T
-    case is DevelopmentalAgeFilter.Type:
-        return DevelopmentalAgeFilter() as! T
-    case is MobilityFilter.Type:
-        return MobilityFilter() as! T
-    case is DiagnosisFilter.Type:
-        return DiagnosisFilter(diagnoses: []) as! T
-    default:
-        fatalError("in \(#function)")
+    func enumRawValue() -> Int? {
+        return nil  // func unused
     }
 }
 
@@ -58,35 +43,59 @@ protocol DescribableEnum {
 }
 
 struct AgeFilter: FilterElement {
-    var years: Int = -1
+    var monthOfBirth: Int?
+    var yearOfBirth: Int?
+    var age: Int {
+        guard let month = monthOfBirth, let year = yearOfBirth else {
+            return 0
+        }
+        return ageSince(monthOfBirth: month, yearOfBirth: year)
+    }
+    private var dob: Date? {
+        guard let month = monthOfBirth, let year = yearOfBirth else {
+            return nil
+        }
+        return dobUsing(monthOfBirth: month, yearOfBirth: year)
+    }
+
     static var key: String {
         "age"
     }
     var label: String {
         "Age"
     }
+    var subtitleString: String {
+        guard let year = yearOfBirth, let dobApproximate = dob else {
+            return "not specified"
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "LLLL"
+        let nameOfMonth = dateFormatter.string(from: dobApproximate)
+        return "Born \(nameOfMonth), \(year)"
+    }
     var valueString: String {
-        hasValue ? "\(years)yo" : "not set"
+        guard hasValue == true, let monthsMatch = dob?.matchesCurrentMonth() else {
+            return "not set"
+        }
+        return monthsMatch ? "\(age) years old this month" : "\(age) years old"
     }
     var hasValue: Bool {
-        years >= 0
-    }
-    func enumRawValue() -> Int {
-        1
+        guard monthOfBirth != nil, yearOfBirth != nil else {
+            return false
+        }
+        return true
     }
     func itemCount() -> Int {
         1
     }
-    mutating func toggleSelection(rawValue: Int) {
-        years = rawValue
+    mutating func setDOB(month: Int, year: Int) {
+        monthOfBirth = month
+        yearOfBirth = year
     }
 }
 
 enum Distance: Int, CaseIterable, DescribableEnum {
     case tenMiles = 0, twentyFiveMiles, fiftyMiles, oneHundredMiles, anyDistance
-    static var AllCases: [Distance] {
-        return [.tenMiles, .twentyFiveMiles, .fiftyMiles, .oneHundredMiles, .anyDistance]
-    }
     var verbose: String {
         switch self {
         case .tenMiles:
@@ -142,8 +151,11 @@ struct ProximityFilter: FilterElement {
     var hasValue: Bool {
         range != .none
     }
-    func enumRawValue() -> Int {
-        range?.rawValue ?? invalidRawValue
+    func enumRawValue() -> Int? {
+        guard let raw = range?.rawValue else {
+            return nil
+        }
+        return raw
     }
     func itemCount() -> Int {
         Distance.allCases.count
@@ -166,9 +178,6 @@ struct ProximityFilter: FilterElement {
 
 enum Limitation: Int, CaseIterable, DescribableEnum {
     case noLimitation = 0, walksWithAid, wheelchair
-    static var AllCases: [Limitation] {
-        return [.noLimitation, .walksWithAid, .wheelchair]
-    }
     var verbose: String {
         switch self {
         case .noLimitation:
@@ -207,8 +216,11 @@ struct MobilityFilter: FilterElement {
     var hasValue: Bool {
         mobilityLimit != .none
     }
-    func enumRawValue() -> Int {
-        mobilityLimit?.rawValue ?? invalidRawValue
+    func enumRawValue() -> Int? {
+        guard let raw = mobilityLimit?.rawValue else {
+            return nil
+        }
+        return raw
     }
     func itemCount() -> Int {
         Limitation.allCases.count
@@ -225,9 +237,6 @@ struct MobilityFilter: FilterElement {
 
 enum DevelopmentalStage: Int, CaseIterable, DescribableEnum {
     case infant = 0, toddler, preschool, gradeschool, preTeen, teen, adult
-    static var AllCases: [DevelopmentalStage] {
-        return [.infant, .toddler, .preschool, .gradeschool, .preTeen, .teen, .adult]
-    }
     var verbose: String {
         switch self {
         case .infant:
@@ -282,8 +291,11 @@ struct DevelopmentalAgeFilter: FilterElement {
     var hasValue: Bool {
         developmentalAge != .none
     }
-    func enumRawValue() -> Int {
-        developmentalAge?.rawValue ?? invalidRawValue
+    func enumRawValue() -> Int? {
+        guard let raw = developmentalAge?.rawValue else {
+            return nil
+        }
+        return raw
     }
     func itemCount() -> Int {
         DevelopmentalStage.allCases.count
@@ -300,9 +312,6 @@ struct DevelopmentalAgeFilter: FilterElement {
 
 enum DevelopmentalDiagnosis: Int, CaseIterable, DescribableEnum {
     case autism = 0, cerebralPalsy, spinaBifida, otherDiagnosis
-    static var AllCases: [DevelopmentalDiagnosis] {
-        return [.autism, .cerebralPalsy, .spinaBifida, .otherDiagnosis]
-    }
     var verbose: String {
            switch self {
            case .autism:
@@ -351,12 +360,6 @@ struct DiagnosisFilter: FilterElement {
 
     init(diagnoses: [DevelopmentalDiagnosis]) {
         self.diagnoses = diagnoses
-    }
-    func enumRawValue() -> Int {
-        guard hasValue else {
-            return invalidRawValue
-        }
-        return diagnoses[0].rawValue
     }
     func itemCount() -> Int {
         DevelopmentalDiagnosis.allCases.count

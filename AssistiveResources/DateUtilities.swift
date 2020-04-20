@@ -63,36 +63,37 @@ struct TimeBlockDescriptor {
     }
 }
 
-//func createTimeString (hours: Int, minutes: Int) -> String {
-//    var startTime: String
-//    var totalMinutes = hours*60 + minutes
-//    let actualMinutes = totalMinutes % 60
-//    var actualHours = (totalMinutes - actualMinutes) / 60
-//
-//    if (totalMinutes == (12*60)) {
-//        return "Noon"
-//    }
-//    if (totalMinutes == (24*60)) {
-//        return "Midnight"
-//    }
-//
-//    if (totalMinutes > (24*60)) {
-//        totalMinutes = totalMinutes % (24*60)
-//        actualHours = actualHours % 24
-//    }
-//
-//    if (totalMinutes < (12*60)) {
-//        if actualMinutes == 0 {
-//            startTime = "\(actualHours)am"
-//        } else {
-//            startTime = "\(actualHours):\(actualMinutes)am"
-//        }
-//    } else {
-//        if actualMinutes == 0 {
-//            startTime = "\(actualHours-12)pm"
-//        } else {
-//            startTime = "\(actualHours-12):\(actualMinutes)pm"
-//        }
-//    }
-//    return startTime
-//}
+func ageSince(monthOfBirth: Int, yearOfBirth: Int) -> Int {
+    guard let dobApproximate = dobUsing(monthOfBirth: monthOfBirth, yearOfBirth: yearOfBirth) else {
+        return 0
+    }
+    let ageComponents = Calendar.current.dateComponents([.year], from: dobApproximate, to: Date())
+    guard let age = ageComponents.year else {
+        return 0
+    }
+    return age
+}
+
+func dobUsing(monthOfBirth: Int, yearOfBirth: Int) -> Date? {
+    let calendar = Calendar.current
+    var components = DateComponents()
+    components.day = 1
+    components.month = monthOfBirth
+    components.year = yearOfBirth
+    guard let dobApproximate = calendar.date(from: components) else {
+        return nil
+    }
+    return dobApproximate
+}
+
+extension Date {
+    func matchesCurrentMonth() -> Bool {
+        let calendar = Calendar.current
+        let targetDateComponents = calendar.dateComponents([.month], from: self)
+        let currentDateComponents = calendar.dateComponents([.month], from: Date())
+        guard let targetMonth = targetDateComponents.month, let currentMonth = currentDateComponents.month else {
+            return false
+        }
+        return targetMonth == currentMonth
+    }
+}

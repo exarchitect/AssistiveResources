@@ -662,7 +662,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/ReachabilitySwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -681,7 +681,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AssistiveResources/Pods-AssistiveResources-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		93D701079285C363926CC20D /* [CP] Check Pods Manifest.lock */ = {

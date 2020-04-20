@@ -13,11 +13,11 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     var tableView: UITableView!
     var filterItems: [ElementInteractor]!
 
-    init(table: UITableView, filterWhat: FilterDictionary) {
+    init(table: UITableView, filterBy: FilterDictionary) {
         super.init()
         
         self.tableView = table
-        self.filterItems = ElementInteractor.createElementInteractorList(from: filterWhat)
+        self.filterItems = ElementInteractor.createElementInteractorList(from: filterBy)
         
         // attach table
         tableView.delegate = self
@@ -99,7 +99,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         // update rows
         if indexPath.row > 0 {
             filterItems[indexPath.section].element.toggleSelection(rawValue: indexPath.row.rowToEnum())
-            updateSection(indexPath.section)
+            updateSectionCheckmarks(for: indexPath.section)
 
             // update header with selection
             let headerCellIndex:IndexPath = IndexPath(row: 0, section: indexPath.section)
@@ -114,7 +114,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         // update rows
         if indexPath.row > 0 {
             filterItems[indexPath.section].element.toggleSelection(rawValue: indexPath.row.rowToEnum())
-            updateSection(indexPath.section)
+            updateSectionCheckmarks(for: indexPath.section)
 
             // update header with selection
             let headerCellIndex:IndexPath = IndexPath(row: 0, section: indexPath.section)
@@ -130,7 +130,20 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
         // tap row cell
         if indexPath.row > 0 {
-            // tbd
+            guard var ageFilter = filterItems[indexPath.section].element as? AgeFilter else {
+                return
+            }
+            ageFilter.setDOB(month: 6, year: 1978)
+            filterItems[indexPath.section].element = ageFilter
+            // the row text only changes for the age filter - the lists only check/uncheck
+            let rowCell: FilterTableRowCell = tableView.cellForRow(at: indexPath) as! FilterTableRowCell
+            rowCell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.rowToEnum()))
+            updateSectionCheckmarks(for: indexPath.section)
+
+            // update header with selection
+            let headerCellIndex: IndexPath = IndexPath(row: 0, section: indexPath.section)
+            let headerCell: FilterTableHeaderCell = tableView.cellForRow(at: headerCellIndex) as! FilterTableHeaderCell
+            configHeaderCell(cell: headerCell, section: indexPath.section)
         }
     }
 
@@ -155,7 +168,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         }
     }
 
-    private func updateSection(_ section: Int) {
+    private func updateSectionCheckmarks(for section: Int) {
         let rowCount = filterItems[section].editableRowCount
         for rowIndex in 1 ... rowCount {
             let isSelected = filterItems[section].element.isValueSelected(rawValue: rowIndex.rowToEnum())
