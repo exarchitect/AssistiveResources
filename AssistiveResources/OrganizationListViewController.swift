@@ -43,7 +43,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     
     func notifyRowDetailSelected(rowIndex: Int) {
         let testOrg = OrganizationDescriptor(name: "TestOrg", identifier: 2)
-        processController?.executeCommand(.selectOrganization(testOrg))
+        processController?.executeCommand(.showOrganizationDetail(testOrg))
     }
     
     func notifyFilterSelected() {

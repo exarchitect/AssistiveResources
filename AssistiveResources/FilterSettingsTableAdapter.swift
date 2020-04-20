@@ -26,7 +26,6 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.separatorColor = UIColor.white
         tableView.backgroundColor = UIColor.white
-        
     }
     
     deinit {

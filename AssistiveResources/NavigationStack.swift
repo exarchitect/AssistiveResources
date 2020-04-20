@@ -54,7 +54,7 @@ class NavigationStack: NSObject, Commandable {
             services?.loadRepositoryIfNeeded()
             requestMainNavigationRefresh()
 
-        case .selectCategory(let destination):
+        case .navigateTo(let destination):
             switch destination {
             case .organizations:
                 launchProcess(ofType: OrganizationListProcessController.self)
@@ -80,13 +80,13 @@ class NavigationStack: NSObject, Commandable {
                 launchProcess(ofType: AuthenticationProcessController.self)
             }
 
-        case .selectEvent(let event):
+        case .showEventDetail(let event):
             guard let eventDetailProcessController = launchProcess(ofType: EventDetailProcessController.self) else {
                 return
             }
             eventDetailProcessController.filter = event
 
-        case .selectOrganization(let organization):
+        case .showOrganizationDetail(let organization):
             _ = organization.identifier
         }
     }
