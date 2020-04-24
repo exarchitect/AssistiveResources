@@ -11,12 +11,14 @@ import UIKit
 class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
 
     var tableView: UITableView!
+    var parentViewController: UIViewController!
     var filterItems: [ElementInteractor]!
 
-    init(table: UITableView, filterBy: FilterDictionary) {
+    init(table: UITableView, parentViewController: UIViewController, filterBy: FilterDictionary) {
         super.init()
         
         self.tableView = table
+        self.parentViewController = parentViewController
         self.filterItems = ElementInteractor.createElementInteractorList(from: filterBy)
         
         // attach table
@@ -129,11 +131,8 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
         // tap row cell
         if indexPath.row > 0 {
-            guard var ageFilter = filterItems[indexPath.section].element as? AgeFilter else {
-                return
-            }
-            ageFilter.setDOB(month: 6, year: 1978)
-            filterItems[indexPath.section].element = ageFilter
+            pickMonthYearOfBirth(section: indexPath.section)
+
             // the row text only changes for the age filter - the lists only check/uncheck
             let rowCell: FilterTableRowCell = tableView.cellForRow(at: indexPath) as! FilterTableRowCell
             rowCell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.rowToEnum()))
@@ -187,3 +186,47 @@ extension Int {
         self - 1
     }
 }
+
+
+extension FilterSettingsTableAdapter: UIPopoverPresentationControllerDelegate {
+    func pickMonthYearOfBirth(section: Int) {
+        guard var ageFilter = filterItems[section].element as? AgeFilter else {
+            return
+        }
+//        showPicker()
+
+        ageFilter.setDOB(month: 6, year: 1978)
+        filterItems[section].element = ageFilter
+    }
+
+    func showPicker() {
+        let pickerViewController: MonthYearPickerViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "moyrPickerStoryboardID")
+        pickerViewController?.modalPresentationStyle = .popover
+        if let pickerVwCtl = pickerViewController {
+            pickerVwCtl.modalPresentationStyle = .popover
+
+            if let popoverPresentationController = pickerVwCtl.popoverPresentationController {
+                popoverPresentationController.permittedArrowDirections = .up
+                popoverPresentationController.sourceView = parentViewController.view
+                //popoverPresentationController.sourceRect = buttonFrame
+                popoverPresentationController.delegate = self
+                parentViewController.present(pickerVwCtl, animated: true, completion: nil)
+            }
+
+        }
+    }
+
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+
+    //UIPopoverPresentationControllerDelegate
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+
+    }
+
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
+        return true
+    }
+}
+

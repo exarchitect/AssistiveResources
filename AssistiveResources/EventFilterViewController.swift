@@ -32,7 +32,7 @@ class EventFilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, filterBy: filter)
+        self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, parentViewController: self, filterBy: filter)
     }
 
     deinit {

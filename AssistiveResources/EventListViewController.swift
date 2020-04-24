@@ -103,6 +103,4 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
         dismiss(animated: true, completion: nil)
         filterViewController = nil
     }
-    
 }
-

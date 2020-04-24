@@ -21,6 +21,7 @@
 		D22768561DEFBB4D00C1917A /* MainNavTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22768541DEFBB4D00C1917A /* MainNavTableViewCell.swift */; };
 		D22C973A202A8A1F001C311A /* FilterTableRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22C9739202A8A1F001C311A /* FilterTableRowCell.swift */; };
 		D2309DE71E2B481E0056A66C /* AssistiveCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2309DE61E2B481E0056A66C /* AssistiveCommand.swift */; };
+		D234A93A2450E2770053B84F /* MonthYearPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D234A9392450E2770053B84F /* MonthYearPickerViewController.swift */; };
 		D23767E2229583A9004C8E85 /* ElementInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D23767E1229583A9004C8E85 /* ElementInteractor.swift */; };
 		D2446FC320282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2446FC220282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift */; };
 		D24E4DB21DE3F0E8008A11FB /* PropertySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */; };
@@ -110,6 +111,7 @@
 		D22768541DEFBB4D00C1917A /* MainNavTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavTableViewCell.swift; sourceTree = "<group>"; };
 		D22C9739202A8A1F001C311A /* FilterTableRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTableRowCell.swift; sourceTree = "<group>"; };
 		D2309DE61E2B481E0056A66C /* AssistiveCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistiveCommand.swift; sourceTree = "<group>"; };
+		D234A9392450E2770053B84F /* MonthYearPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthYearPickerViewController.swift; sourceTree = "<group>"; };
 		D23767E1229583A9004C8E85 /* ElementInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementInteractor.swift; sourceTree = "<group>"; };
 		D2446FC220282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionalResourcesRemoteDatasource.swift; sourceTree = "<group>"; };
 		D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertySettings.swift; sourceTree = "<group>"; };
@@ -249,6 +251,13 @@
 			name = EventDetail;
 			sourceTree = "<group>";
 		};
+		D234A938244FA3050053B84F /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
 		D24E4DAB1DE3E553008A11FB /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +307,7 @@
 				D24E4DB11DE3F0E8008A11FB /* PropertySettings.swift */,
 				D24E4DC91DE741E4008A11FB /* DateUtilities.swift */,
 				D27440EE1DF6459C008E0476 /* UXUtilities.swift */,
+				D234A938244FA3050053B84F /* Libraries */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -339,6 +349,7 @@
 				D22C9739202A8A1F001C311A /* FilterTableRowCell.swift */,
 				D2C61309202B5C7000F6EE53 /* FilterPlaybook.swift */,
 				D23767E1229583A9004C8E85 /* ElementInteractor.swift */,
+				D234A9392450E2770053B84F /* MonthYearPickerViewController.swift */,
 			);
 			name = Filter;
 			sourceTree = "<group>";
@@ -735,6 +746,7 @@
 				D24E4DBB1DE56ACF008A11FB /* AuthenticationProcessController.swift in Sources */,
 				D202D52F243E55DD00B77958 /* EntityPlaybook.swift in Sources */,
 				D28338EC20293F2400A1837D /* FilterTableHeaderCell.swift in Sources */,
+				D234A93A2450E2770053B84F /* MonthYearPickerViewController.swift in Sources */,
 				D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */,
 				D27440F51DF903B3008E0476 /* HeaderView.swift in Sources */,
 				D255504A1E234626004FE72B /* Repository.swift in Sources */,
