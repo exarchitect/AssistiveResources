@@ -103,8 +103,10 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             updateSectionCheckmarks(for: indexPath.section)
 
             // update header with selection
-            let headerCellIndex:IndexPath = IndexPath(row: 0, section: indexPath.section)
-            let headerCell = tableView.cellForRow(at: headerCellIndex) as! FilterTableHeaderCell
+            let headerCellIndex = IndexPath(row: 0, section: indexPath.section)
+            guard let headerCell = tableView.cellForRow(at: headerCellIndex) as? FilterTableHeaderCell else {
+                return
+            }
             configHeaderCell(cell: headerCell, section: indexPath.section)
         }
     }
@@ -118,8 +120,10 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             updateSectionCheckmarks(for: indexPath.section)
 
             // update header with selection
-            let headerCellIndex:IndexPath = IndexPath(row: 0, section: indexPath.section)
-            let headerCell:FilterTableHeaderCell = tableView.cellForRow(at: headerCellIndex) as! FilterTableHeaderCell
+            let headerCellIndex = IndexPath(row: 0, section: indexPath.section)
+            guard let headerCell = tableView.cellForRow(at: headerCellIndex) as? FilterTableHeaderCell else {
+                return
+            }
             configHeaderCell(cell: headerCell, section: indexPath.section)
         }
     }
@@ -134,13 +138,17 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             pickMonthYearOfBirth(section: indexPath.section)
 
             // the row text only changes for the age filter - the lists only check/uncheck
-            let rowCell: FilterTableRowCell = tableView.cellForRow(at: indexPath) as! FilterTableRowCell
+            guard let rowCell = tableView.cellForRow(at: indexPath) as? FilterTableRowCell else {
+                return
+            }
             rowCell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.rowToEnum()))
             updateSectionCheckmarks(for: indexPath.section)
 
             // update header with selection
-            let headerCellIndex: IndexPath = IndexPath(row: 0, section: indexPath.section)
-            let headerCell: FilterTableHeaderCell = tableView.cellForRow(at: headerCellIndex) as! FilterTableHeaderCell
+            let headerCellIndex = IndexPath(row: 0, section: indexPath.section)
+            guard let headerCell = tableView.cellForRow(at: headerCellIndex) as? FilterTableHeaderCell else {
+                return
+            }
             configHeaderCell(cell: headerCell, section: indexPath.section)
         }
     }
@@ -170,7 +178,9 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         let rowCount = filterItems[section].editableRowCount
         for rowIndex in 1 ... rowCount {
             let isSelected = filterItems[section].element.isValueSelected(rawValue: rowIndex.rowToEnum())
-            let cell: FilterTableRowCell = tableView.cellForRow(at: IndexPath(row: rowIndex, section: section)) as! FilterTableRowCell
+            guard let cell: FilterTableRowCell = tableView.cellForRow(at: IndexPath(row: rowIndex, section: section)) as? FilterTableRowCell else {
+                return
+            }
             cell.checkmarkImageOutlet.isHidden = !isSelected
             cell.backgroundView?.setNeedsDisplay()
         }

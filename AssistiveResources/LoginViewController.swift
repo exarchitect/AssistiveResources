@@ -50,8 +50,10 @@ class LoginViewController: ProcessViewController {
     }
 
     @IBAction func segmentedControlAction(_ sender: Any) {
-        let ctrl:UISegmentedControl = sender as! UISegmentedControl
-        
+        guard let ctrl = sender as? UISegmentedControl else {
+            return
+        }
+
         let isTryout = (ctrl.selectedSegmentIndex == 2)
         subtitleLabel.isHidden = isTryout
         emailTextField.isHidden = isTryout
