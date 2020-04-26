@@ -13,6 +13,8 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     var tableView: UITableView!
     var parentViewController: UIViewController!
     var filterItems: [ElementInteractor]!
+    var pickerData = MonthYearPickerData()
+
 
     init(table: UITableView, parentViewController: UIViewController, filterBy: FilterDictionary) {
         super.init()
@@ -62,9 +64,9 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
             
         } else {
             // row for selecting an enumerated type (except for age)
-            let isSelectedRow = filterItems[indexPath.section].element.isValueSelected(rawValue: indexPath.row.rowToEnum())
+            let isSelectedRow = filterItems[indexPath.section].element.isValueSelected(rawValue: indexPath.row.convertToEnum())
             let cell: FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
-            cell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.rowToEnum()), isChecked: isSelectedRow)
+            cell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.convertToEnum()), isChecked: isSelectedRow)
             return cell
         }
     }
@@ -99,7 +101,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
         // update rows
         if indexPath.row > 0 {
-            filterItems[indexPath.section].element.toggleSelection(rawValue: indexPath.row.rowToEnum())
+            filterItems[indexPath.section].element.toggleSelection(rawValue: indexPath.row.convertToEnum())
             updateSectionCheckmarks(for: indexPath.section)
 
             // update header with selection
@@ -116,7 +118,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
         // update rows
         if indexPath.row > 0 {
-            filterItems[indexPath.section].element.toggleSelection(rawValue: indexPath.row.rowToEnum())
+            filterItems[indexPath.section].element.toggleSelection(rawValue: indexPath.row.convertToEnum())
             updateSectionCheckmarks(for: indexPath.section)
 
             // update header with selection
@@ -135,13 +137,22 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
         // tap row cell
         if indexPath.row > 0 {
-            pickMonthYearOfBirth(section: indexPath.section)
+//        guard var ageFilter = filterItems[section].element as? AgeFilter else {
+//            return
+//        }
+            pickMonthYearOfBirth()
+            selectMonthYearOfBirth(dobMonth: 5, dobYear: 1958) { (_ dobMonth: Int?, _ dobYear: Int?) in
+                let _ = 9
+            }
+
+//        ageFilter.setDOB(month: 6, year: 1978)
+//        filterItems[section].element = ageFilter
 
             // the row text only changes for the age filter - the lists only check/uncheck
             guard let rowCell = tableView.cellForRow(at: indexPath) as? FilterTableRowCell else {
                 return
             }
-            rowCell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.rowToEnum()))
+            rowCell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.convertToEnum()))
             updateSectionCheckmarks(for: indexPath.section)
 
             // update header with selection
@@ -177,7 +188,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
     private func updateSectionCheckmarks(for section: Int) {
         let rowCount = filterItems[section].editableRowCount
         for rowIndex in 1 ... rowCount {
-            let isSelected = filterItems[section].element.isValueSelected(rawValue: rowIndex.rowToEnum())
+            let isSelected = filterItems[section].element.isValueSelected(rawValue: rowIndex.convertToEnum())
             guard let cell: FilterTableRowCell = tableView.cellForRow(at: IndexPath(row: rowIndex, section: section)) as? FilterTableRowCell else {
                 return
             }
@@ -188,55 +199,111 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 }
 
 extension Int {
-    func enumToRow() -> Int {
-        self + 1
-    }
-
-    func rowToEnum() -> Int {
+    func convertToEnum() -> Int {
         self - 1
     }
 }
 
+extension FilterSettingsTableAdapter: UIPickerViewDelegate, UIPickerViewDataSource {
 
-extension FilterSettingsTableAdapter: UIPopoverPresentationControllerDelegate {
-    func pickMonthYearOfBirth(section: Int) {
-        guard var ageFilter = filterItems[section].element as? AgeFilter else {
-            return
+    func selectMonthYearOfBirth(dobMonth: Int, dobYear: Int, closure: @escaping (_ dobMonth: Int?, _ dobYear: Int?) -> Void) {
+        var month = dobMonth
+        var year = dobYear
+
+        let alert = UIAlertController(title: "Select Birth Month and Year", message: "\n\n\n\n\n\n", preferredStyle: .alert)
+        alert.isModalInPopover = true
+
+        let picker = UIPickerView(frame: CGRect(x: 5, y: 30, width: 250, height: 140))
+
+        alert.view.addSubview(picker)
+        picker.dataSource = self
+        picker.delegate = self
+        picker.selectRow(month, inComponent: 0, animated: false)
+        picker.selectRow(95-(2020-year), inComponent: 1, animated: false)
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
+            closure(nil, nil)
+        }))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+            closure(month, year)
+        }))
+        parentViewController.present(alert, animated: true)
+    }
+
+    func pickMonthYearOfBirth() {
+        let alert = UIAlertController(title: "Select Birth Month and Year", message: "\n\n\n\n\n\n", preferredStyle: .alert)
+        alert.isModalInPopover = true
+
+        let picker = UIPickerView(frame: CGRect(x: 5, y: 30, width: 250, height: 140))
+
+        alert.view.addSubview(picker)
+        picker.dataSource = self
+        picker.delegate = self
+        picker.selectRow(pickerData.month, inComponent: 0, animated: false)
+        picker.selectRow(pickerData.yearCount, inComponent: 1, animated: false)
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+
+            //print("You selected " + self.typeValue )
+
+        }))
+        parentViewController.present(alert,animated: true, completion: nil )
+    }
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 2
+    }
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch component {
+        case 0:
+            return pickerData.months[row]
+        case 1:
+            return "\(pickerData.years[row])"
+        default:
+            return nil
         }
-//        showPicker()
-
-        ageFilter.setDOB(month: 6, year: 1978)
-        filterItems[section].element = ageFilter
     }
 
-    func showPicker() {
-        let pickerViewController: MonthYearPickerViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "moyrPickerStoryboardID")
-        pickerViewController?.modalPresentationStyle = .popover
-        if let pickerVwCtl = pickerViewController {
-            pickerVwCtl.modalPresentationStyle = .popover
-
-            if let popoverPresentationController = pickerVwCtl.popoverPresentationController {
-                popoverPresentationController.permittedArrowDirections = .up
-                popoverPresentationController.sourceView = parentViewController.view
-                //popoverPresentationController.sourceRect = buttonFrame
-                popoverPresentationController.delegate = self
-                parentViewController.present(pickerVwCtl, animated: true, completion: nil)
-            }
-
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch component {
+        case 0:
+            return pickerData.months.count
+        case 1:
+            return pickerData.years.count
+        default:
+            return 0
         }
     }
 
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let month = pickerView.selectedRow(inComponent: 0) + 1
+        let year = pickerData.years[pickerView.selectedRow(inComponent: 1)]
+        pickerData.month = month
+        pickerData.year = year
     }
 
-    //UIPopoverPresentationControllerDelegate
-    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
-
-    }
-
-    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
-        return true
-    }
 }
 
+struct MonthYearPickerData {
+    let yearCount: Int
+    var months: [String] = []
+    var month: Int!
+    var years: [Int] = []
+    var year: Int!
+
+    init() {
+        yearCount = 95
+        let currentYear = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!.component(.year, from: NSDate() as Date)
+        for year in currentYear-yearCount...currentYear {
+            years.append(year)
+        }
+        self.year = currentYear
+        // population months with localized names
+        for month in 0...11 {
+            months.append(DateFormatter().monthSymbols[month].capitalized)
+        }
+        self.month = 0
+    }
+}

@@ -19,7 +19,7 @@ class NavigationStack: NSObject, Commandable {
         self.navController = navController
     }
 
-    @discardableResult func launchProcess<T: ProcessController>(ofType: T.Type) -> T? {
+    @discardableResult func launchProcess<T: ProcessController>(ofType: T.Type, animated: Bool) -> T? {
         let processController = T.init()
         let viewController = processController.createPrimaryViewController()
 
@@ -31,7 +31,7 @@ class NavigationStack: NSObject, Commandable {
         processControllerStack.append(processController)
 
         processViewController.processController = processController
-        navController.pushViewController(processViewController, animated: false)
+        navController.pushViewController(processViewController, animated: animated)
 
         return processController
     }
@@ -48,7 +48,7 @@ class NavigationStack: NSObject, Commandable {
             currentProcessController.terminate(navController: navController, previousTopViewController: previousViewController)
 
         case .requestUserIdentity:
-            launchProcess(ofType: AuthenticationProcessController.self)
+            launchProcess(ofType: AuthenticationProcessController.self, animated: false)
 
         case .userSuccessfullyIdentified:
             services?.loadRepositoryIfNeeded()
@@ -57,10 +57,10 @@ class NavigationStack: NSObject, Commandable {
         case .navigateTo(let destination):
             switch destination {
             case .organizations:
-                launchProcess(ofType: OrganizationListProcessController.self)
+                launchProcess(ofType: OrganizationListProcessController.self, animated: true)
 
             case .events:
-                launchProcess(ofType: EventListProcessController.self)
+                launchProcess(ofType: EventListProcessController.self, animated: true)
 
             case .facilities:
                 let _ = 7
@@ -77,11 +77,11 @@ class NavigationStack: NSObject, Commandable {
             case .profile:
                 // temp for testing
                 services?.userModel.logout()
-                launchProcess(ofType: AuthenticationProcessController.self)
+                launchProcess(ofType: AuthenticationProcessController.self, animated: true)
             }
 
         case .showEventDetail(let event):
-            guard let eventDetailProcessController = launchProcess(ofType: EventDetailProcessController.self) else {
+            guard let eventDetailProcessController = launchProcess(ofType: EventDetailProcessController.self, animated: true) else {
                 return
             }
             eventDetailProcessController.filter = event

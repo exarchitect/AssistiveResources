@@ -69,7 +69,7 @@ class AssistiveAppController: AppController {
         }
         
         navigationStack = NavigationStack(services: sharedServices, navController: navigationController)
-        navigationStack.launchProcess(ofType: NavListProcessController.self)
+        navigationStack.launchProcess(ofType: NavListProcessController.self, animated: false)
 
         // temp override to fail login for testing
         sharedServices.userModel.storeUserCredentials(username: "", password: "")

@@ -51,7 +51,7 @@ struct AgeFilter: FilterElement {
         }
         return ageSince(monthOfBirth: month, yearOfBirth: year)
     }
-    private var dob: Date? {
+    private var approximateDOB: Date? {
         guard let month = monthOfBirth, let year = yearOfBirth else {
             return nil
         }
@@ -65,7 +65,7 @@ struct AgeFilter: FilterElement {
         "Age"
     }
     var subtitleString: String {
-        guard let year = yearOfBirth, let dobApproximate = dob else {
+        guard let year = yearOfBirth, let dobApproximate = approximateDOB else {
             return "not specified"
         }
         let dateFormatter = DateFormatter()
@@ -74,7 +74,7 @@ struct AgeFilter: FilterElement {
         return "Born \(nameOfMonth), \(year)"
     }
     var valueString: String {
-        guard hasValue == true, let monthsMatch = dob?.matchesCurrentMonth() else {
+        guard hasValue == true, let monthsMatch = approximateDOB?.matchesCurrentMonth() else {
             return "not set"
         }
         return monthsMatch ? "\(age) years old this month" : "\(age) years old"

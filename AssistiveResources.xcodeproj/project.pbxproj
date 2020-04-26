@@ -935,7 +935,7 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Timepiece\"",
 				);
 				INFOPLIST_FILE = AssistiveResources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sevenplustwo.AssistiveResources;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -961,7 +961,7 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Timepiece\"",
 				);
 				INFOPLIST_FILE = AssistiveResources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sevenplustwo.AssistiveResources;
 				PRODUCT_NAME = "$(TARGET_NAME)";

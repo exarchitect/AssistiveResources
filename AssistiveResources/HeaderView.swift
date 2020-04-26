@@ -15,7 +15,7 @@ class HeaderView: UIView {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet var view: UIView!
-    //@IBOutlet var view: HeaderView!
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initializeSubviews()
@@ -31,5 +31,4 @@ class HeaderView: UIView {
         self.addSubview(view)
         view.frame = self.bounds
     }
-
 }
