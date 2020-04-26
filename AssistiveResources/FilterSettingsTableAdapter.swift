@@ -6,36 +6,23 @@
 //  Copyright © 2018 SevenPlusTwo. All rights reserved.
 //
 
+// This was previously a separate object used by EventFilterViewController, but UIAlertController
+// will not work correctly unless called from a view controller.
+
 import UIKit
 
-class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewDataSource {
+extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource {
 
-    var tableView: UITableView!
-    var parentViewController: UIViewController!
-    var filterItems: [ElementInteractor]!
-    var pickerData = MonthYearPickerData()
-
-
-    init(table: UITableView, parentViewController: UIViewController, filterBy: FilterDictionary) {
-        super.init()
-        
-        self.tableView = table
-        self.parentViewController = parentViewController
+    func initTable(filterBy: FilterDictionary) {
         self.filterItems = ElementInteractor.createElementInteractorList(from: filterBy)
-        
-        // attach table
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.separatorInset = UIEdgeInsets.zero
-        tableView.separatorColor = UIColor.white
-        tableView.backgroundColor = UIColor.white
+
+        tableView?.delegate = self
+        tableView?.dataSource = self
+        tableView?.separatorInset = UIEdgeInsets.zero
+        tableView?.separatorColor = UIColor.white
+        tableView?.backgroundColor = UIColor.white
     }
     
-    deinit {
-        print("deallocating FilterSettingsTableAdapter")
-    }
-
     //MARK: tableView delegate
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -106,7 +93,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
             // update header with selection
             let headerCellIndex = IndexPath(row: 0, section: indexPath.section)
-            guard let headerCell = tableView.cellForRow(at: headerCellIndex) as? FilterTableHeaderCell else {
+            guard let headerCell = tableView?.cellForRow(at: headerCellIndex) as? FilterTableHeaderCell else {
                 return
             }
             configHeaderCell(cell: headerCell, section: indexPath.section)
@@ -123,7 +110,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
             // update header with selection
             let headerCellIndex = IndexPath(row: 0, section: indexPath.section)
-            guard let headerCell = tableView.cellForRow(at: headerCellIndex) as? FilterTableHeaderCell else {
+            guard let headerCell = tableView?.cellForRow(at: headerCellIndex) as? FilterTableHeaderCell else {
                 return
             }
             configHeaderCell(cell: headerCell, section: indexPath.section)
@@ -137,30 +124,30 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
 
         // tap row cell
         if indexPath.row > 0 {
-//        guard var ageFilter = filterItems[section].element as? AgeFilter else {
-//            return
-//        }
-            pickMonthYearOfBirth()
-            selectMonthYearOfBirth(dobMonth: 5, dobYear: 1958) { (_ dobMonth: Int?, _ dobYear: Int?) in
-                let _ = 9
-            }
+            guard var ageFilter = filterItems[indexPath.section].element as? AgeFilter, let month = ageFilter.monthOfBirth, let year = ageFilter.yearOfBirth else {
+            return
+        }
+            selectMonthYearOfBirth(dobMonth: month, dobYear: year) { (_ dobMonth: Int?, _ dobYear: Int?) in
+                guard let dobMonth = dobMonth, let dobYear = dobYear else {
+                    return
+                }
+                ageFilter.setDOB(month: dobMonth, year: dobYear)
+                self.filterItems[indexPath.section].element = ageFilter     // ageFilter is passed by value and must be replaced
 
-//        ageFilter.setDOB(month: 6, year: 1978)
-//        filterItems[section].element = ageFilter
+                // the row text changes for the age filter and must be redrawn
+                guard let rowCell = self.tableView?.cellForRow(at: indexPath) as? FilterTableRowCell else {
+                    return
+                }
+                rowCell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.convertToEnum()))
+                self.updateSectionCheckmarks(for: indexPath.section)
 
-            // the row text only changes for the age filter - the lists only check/uncheck
-            guard let rowCell = tableView.cellForRow(at: indexPath) as? FilterTableRowCell else {
-                return
+                // update header with selection
+                let headerCellIndex = IndexPath(row: 0, section: indexPath.section)
+                guard let headerCell = self.tableView?.cellForRow(at: headerCellIndex) as? FilterTableHeaderCell else {
+                    return
+                }
+                self.configHeaderCell(cell: headerCell, section: indexPath.section)
             }
-            rowCell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.convertToEnum()))
-            updateSectionCheckmarks(for: indexPath.section)
-
-            // update header with selection
-            let headerCellIndex = IndexPath(row: 0, section: indexPath.section)
-            guard let headerCell = tableView.cellForRow(at: headerCellIndex) as? FilterTableHeaderCell else {
-                return
-            }
-            configHeaderCell(cell: headerCell, section: indexPath.section)
         }
     }
 
@@ -189,7 +176,7 @@ class FilterSettingsTableAdapter: NSObject, UITableViewDelegate, UITableViewData
         let rowCount = filterItems[section].editableRowCount
         for rowIndex in 1 ... rowCount {
             let isSelected = filterItems[section].element.isValueSelected(rawValue: rowIndex.convertToEnum())
-            guard let cell: FilterTableRowCell = tableView.cellForRow(at: IndexPath(row: rowIndex, section: section)) as? FilterTableRowCell else {
+            guard let cell: FilterTableRowCell = tableView?.cellForRow(at: IndexPath(row: rowIndex, section: section)) as? FilterTableRowCell else {
                 return
             }
             cell.checkmarkImageOutlet.isHidden = !isSelected
@@ -204,12 +191,9 @@ extension Int {
     }
 }
 
-extension FilterSettingsTableAdapter: UIPickerViewDelegate, UIPickerViewDataSource {
+extension EventFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
     func selectMonthYearOfBirth(dobMonth: Int, dobYear: Int, closure: @escaping (_ dobMonth: Int?, _ dobYear: Int?) -> Void) {
-        var month = dobMonth
-        var year = dobYear
-
         let alert = UIAlertController(title: "Select Birth Month and Year", message: "\n\n\n\n\n\n", preferredStyle: .alert)
         alert.isModalInPopover = true
 
@@ -218,37 +202,16 @@ extension FilterSettingsTableAdapter: UIPickerViewDelegate, UIPickerViewDataSour
         alert.view.addSubview(picker)
         picker.dataSource = self
         picker.delegate = self
-        picker.selectRow(month, inComponent: 0, animated: false)
-        picker.selectRow(95-(2020-year), inComponent: 1, animated: false)
+        picker.selectRow(dobMonth - 1, inComponent: 0, animated: false)
+        picker.selectRow(pickerData.yearToIndex(dobYear), inComponent: 1, animated: false)
 
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
             closure(nil, nil)
         }))
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
-            closure(month, year)
+            closure(self.pickerData.month, self.pickerData.year)
         }))
-        parentViewController.present(alert, animated: true)
-    }
-
-    func pickMonthYearOfBirth() {
-        let alert = UIAlertController(title: "Select Birth Month and Year", message: "\n\n\n\n\n\n", preferredStyle: .alert)
-        alert.isModalInPopover = true
-
-        let picker = UIPickerView(frame: CGRect(x: 5, y: 30, width: 250, height: 140))
-
-        alert.view.addSubview(picker)
-        picker.dataSource = self
-        picker.delegate = self
-        picker.selectRow(pickerData.month, inComponent: 0, animated: false)
-        picker.selectRow(pickerData.yearCount, inComponent: 1, animated: false)
-
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
-
-            //print("You selected " + self.typeValue )
-
-        }))
-        parentViewController.present(alert,animated: true, completion: nil )
+        present(alert, animated: true)
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -278,25 +241,32 @@ extension FilterSettingsTableAdapter: UIPickerViewDelegate, UIPickerViewDataSour
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let month = pickerView.selectedRow(inComponent: 0) + 1
-        let year = pickerData.years[pickerView.selectedRow(inComponent: 1)]
-        pickerData.month = month
-        pickerData.year = year
+        pickerData.month = pickerView.selectedRow(inComponent: 0) + 1
+        pickerData.year = pickerData.years[pickerView.selectedRow(inComponent: 1)]
     }
 
 }
 
 struct MonthYearPickerData {
-    let yearCount: Int
+    let startYear: Int
     var months: [String] = []
     var month: Int!
     var years: [Int] = []
     var year: Int!
 
+    static let yearRange = 95
+
+    func yearToIndex(_ year: Int) -> Int {
+        return year - startYear
+    }
+    func indexToYear(_ index: Int) -> Int {
+        return index + startYear
+    }
+
     init() {
-        yearCount = 95
         let currentYear = NSCalendar(identifier: NSCalendar.Identifier.gregorian)!.component(.year, from: NSDate() as Date)
-        for year in currentYear-yearCount...currentYear {
+        startYear = currentYear - MonthYearPickerData.yearRange
+        for year in startYear...currentYear {
             years.append(year)
         }
         self.year = currentYear

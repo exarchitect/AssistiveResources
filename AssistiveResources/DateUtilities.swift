@@ -64,6 +64,9 @@ struct TimeBlockDescriptor {
 }
 
 func ageSince(monthOfBirth: Int, yearOfBirth: Int) -> Int {
+    guard (1 ... 12).contains(monthOfBirth), (1900 ... 2100).contains(yearOfBirth) else {
+        return 0
+    }
     guard let dobApproximate = dobUsing(monthOfBirth: monthOfBirth, yearOfBirth: yearOfBirth) else {
         return 0
     }
@@ -75,6 +78,9 @@ func ageSince(monthOfBirth: Int, yearOfBirth: Int) -> Int {
 }
 
 func dobUsing(monthOfBirth: Int, yearOfBirth: Int) -> Date? {
+    guard (1 ... 12).contains(monthOfBirth), (1900 ... 2100).contains(yearOfBirth) else {
+        return nil
+    }
     let calendar = Calendar.current
     var components = DateComponents()
     components.day = 1

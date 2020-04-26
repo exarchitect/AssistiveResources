@@ -452,48 +452,6 @@
             </objects>
             <point key="canvasLocation" x="2212" y="522.18890554722645"/>
         </scene>
-        <!--Month Year Picker View Controller-->
-        <scene sceneID="njP-ry-McW">
-            <objects>
-                <viewController storyboardIdentifier="moyrPickerStoryboardID" id="5RI-ew-A29" customClass="MonthYearPickerViewController" customModule="AssistiveResources" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="xQh-0o-lFw"/>
-                        <viewControllerLayoutGuide type="bottom" id="oq5-LS-VmT"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="f5E-o8-DSY">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wZz-sW-WMx">
-                                <rect key="frame" x="40" y="8" width="48" height="30"/>
-                                <state key="normal" title="Cancel"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WSv-gN-vLg">
-                                <rect key="frame" x="293" y="8" width="37" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Done"/>
-                            </button>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jdp-De-5PN">
-                                <rect key="frame" x="0.0" y="46" width="375" height="216"/>
-                            </pickerView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="wZz-sW-WMx" firstAttribute="top" secondItem="xQh-0o-lFw" secondAttribute="bottom" constant="8" id="30H-CN-HpT"/>
-                            <constraint firstItem="Jdp-De-5PN" firstAttribute="top" secondItem="f5E-o8-DSY" secondAttribute="top" constant="46" id="5ae-Zf-4dp"/>
-                            <constraint firstItem="wZz-sW-WMx" firstAttribute="leading" secondItem="f5E-o8-DSY" secondAttribute="leadingMargin" constant="24" id="fQG-XZ-axA"/>
-                            <constraint firstItem="Jdp-De-5PN" firstAttribute="leading" secondItem="f5E-o8-DSY" secondAttribute="leading" id="pKF-Fp-LNr"/>
-                            <constraint firstAttribute="trailing" secondItem="Jdp-De-5PN" secondAttribute="trailing" id="vCm-Bq-NGb"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="pickerOutlet" destination="Jdp-De-5PN" id="aR0-cA-y4m"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="973-HE-YzK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2980" y="376"/>
-        </scene>
     </scenes>
     <resources>
         <image name="404-200" width="200" height="200"/>

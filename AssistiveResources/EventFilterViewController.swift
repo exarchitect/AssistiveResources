@@ -16,10 +16,13 @@ protocol EventFilterResponseProtocol: class {
 
 class EventFilterViewController: UIViewController {
 
-    private var tableAdapter: FilterSettingsTableAdapter?
     weak private var selectorDelegate:EventFilterResponseProtocol!
     weak private var resourcesModelController:RegionalResourcesModelController?
-    var filter:FilterDictionary! = nil
+    var filter:FilterDictionary?
+
+    var tableView: UITableView?
+    var filterItems: [ElementInteractor]!
+    var pickerData = MonthYearPickerData()
 
     @IBOutlet weak var filterTableViewOutlet: UITableView!
     
@@ -31,8 +34,11 @@ class EventFilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.tableAdapter = FilterSettingsTableAdapter(table: self.filterTableViewOutlet, parentViewController: self, filterBy: filter)
+        guard let filterList = filter else {
+            return
+        }
+        self.tableView = self.filterTableViewOutlet
+        initTable(filterBy: filterList)
     }
 
     deinit {
@@ -45,7 +51,7 @@ class EventFilterViewController: UIViewController {
     }
     
     @IBAction func okButtonAction(_ sender: Any) {
-        guard let filterList = tableAdapter?.filterItems else {
+        guard let filterList = filterItems else {
             return
         }
         let filterDictionary = ElementInteractor.createFilterDictionary(from: filterList)

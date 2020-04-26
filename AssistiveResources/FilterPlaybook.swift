@@ -43,7 +43,7 @@ protocol DescribableEnum {
 }
 
 struct AgeFilter: FilterElement {
-    var monthOfBirth: Int?
+    var monthOfBirth: Int?      // 1-12
     var yearOfBirth: Int?
     var age: Int {
         guard let month = monthOfBirth, let year = yearOfBirth else {
