@@ -132,7 +132,7 @@ extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource 
                     return
                 }
                 ageFilter.setDOB(month: dobMonth, year: dobYear)
-                self.filterItems[indexPath.section].element = ageFilter     // ageFilter is passed by value and must be replaced
+                self.filterItems[indexPath.section].element = ageFilter     // ageFilter is passed by value so replace the previous one
 
                 // the row text changes for the age filter and must be redrawn
                 guard let rowCell = self.tableView?.cellForRow(at: indexPath) as? FilterTableRowCell else {
@@ -258,9 +258,6 @@ struct MonthYearPickerData {
 
     func yearToIndex(_ year: Int) -> Int {
         return year - startYear
-    }
-    func indexToYear(_ index: Int) -> Int {
-        return index + startYear
     }
 
     init() {
