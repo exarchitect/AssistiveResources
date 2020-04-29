@@ -18,7 +18,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     weak private var containerViewController:EventContainerViewController?
     var filterDict = FilterDictionary()
     var resourcesModelController: RegionalResourcesModelController? {
-        return processController?.sharedServices.regionalResourcesModelController
+        return parentProcessController?.sharedServices.regionalResourcesModelController
     }
 
     override func viewDidLoad() {
@@ -35,7 +35,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     }
     
     deinit {
-        let _ = 0
+        print("deallocating EventListViewController")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -53,7 +53,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     //MARK:- @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
-        processController?.executeCommand(.dismissCurrentProcess)
+        parentProcessController?.executeCommand(.dismissCurrentProcess)
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {
@@ -75,7 +75,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     
     func notifyRowDetailSelected(rowIndex: Int) {
         let testEvent = EventDescriptor(name: "TestEvent", identifier: 3)
-        processController?.executeCommand(.showEventDetail(testEvent))
+        parentProcessController?.executeCommand(.showEventDetail(testEvent))
     }
     
     func notifyFilterSelected() {

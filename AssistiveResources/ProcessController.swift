@@ -13,28 +13,28 @@ class ProcessController: NSObject {
 
     var sharedServices: SharedServices!
     weak var commandHandler: Commandable!
-    weak var primaryProcessViewController: ProcessViewController?
+    weak var primaryViewController: UIViewController?
 
     required override init(){
         super.init()
     }
 
-    func setup(commandHandler: Commandable, services: SharedServices, primaryViewController: ProcessViewController) {
+    func setup(commandHandler: Commandable, services: SharedServices, primaryViewController: UIViewController) {
         self.commandHandler = commandHandler
         self.sharedServices = services
-        self.primaryProcessViewController = primaryViewController
+        self.primaryViewController = primaryViewController
     }
 
     func terminate(navController: UINavigationController, previousTopViewController: UIViewController) {
         navController.popToViewController(previousTopViewController, animated: true)
-        self.primaryProcessViewController = nil;
+        self.primaryViewController = nil;
     }
 
     final func executeCommand(_ command: AssistiveCommand){
         self.commandHandler.execute(command: command)
     }
 
-    func createPrimaryViewController() -> ProcessViewController? {
+    func createPrimaryViewController() -> UIViewController? {
         fatalError("override \(#function)")
     }
 }

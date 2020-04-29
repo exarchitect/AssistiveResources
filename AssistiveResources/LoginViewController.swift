@@ -12,10 +12,10 @@ import UIKit
 class LoginViewController: ProcessViewController {
 
     var user: User? {
-        processController?.sharedServices.userModel
+        parentProcessController?.sharedServices.userModel
     }
     var authenticationDelegate: AuthenticationProtocol? {
-        processController as? AuthenticationProtocol
+        parentProcessController as? AuthenticationProtocol
     }
 
     @IBOutlet weak var selectLoginType: UISegmentedControl!
@@ -38,8 +38,7 @@ class LoginViewController: ProcessViewController {
     }
     
     deinit {
-        let _ = 0
-        //print("deallocating LoginViewController")
+        print("deallocating LoginViewController")
     }
     
     //MARK:-  IBActions

@@ -30,7 +30,6 @@ class NavigationStack: NSObject, Commandable {
         processController.commandHandler = self
         processControllerStack.append(processController)
 
-        processViewController.processController = processController
         navController.pushViewController(processViewController, animated: animated)
 
         return processController
@@ -42,7 +41,7 @@ class NavigationStack: NSObject, Commandable {
 
         switch command {
         case .dismissCurrentProcess:
-            guard let currentProcessController = processControllerStack.popLast(), let previousViewController = processControllerStack.last?.primaryProcessViewController else {
+            guard let currentProcessController = processControllerStack.popLast(), let previousViewController = processControllerStack.last?.primaryViewController else {
                 return
             }
             currentProcessController.terminate(navController: navController, previousTopViewController: previousViewController)
@@ -84,10 +83,14 @@ class NavigationStack: NSObject, Commandable {
             guard let eventDetailProcessController = launchProcess(ofType: EventDetailProcessController.self, animated: true) else {
                 return
             }
-            eventDetailProcessController.filter = event
+            eventDetailProcessController.event = event
 
         case .showOrganizationDetail(let organization):
-            _ = organization.identifier
+//            _ = organization.identifier
+            guard let eventDetailProcessController = launchProcess(ofType: EventDetailProcessController.self, animated: true) else {
+                return
+            }
+            eventDetailProcessController.event = EventDescriptor(name: "TestOrg", identifier: 235)
         }
     }
 }

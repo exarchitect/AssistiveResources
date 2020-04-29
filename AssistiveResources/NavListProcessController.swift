@@ -20,12 +20,14 @@ class NavListProcessController: ProcessController {
         NotificationCenter.default.removeObserver(self)
     }
 
-    override func createPrimaryViewController() -> ProcessViewController? {
-        return instantiateProcessViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID")
+    override func createPrimaryViewController() -> UIViewController? {
+        let primaryViewController = instantiateProcessViewController(storyboardName: "NavList", storyboardID: "navListStoryboardID")
+        primaryViewController?.parentProcessController = self
+        return primaryViewController
     }
 
     @objc func refreshNavigationContent() {
-        (primaryProcessViewController as? NavListViewController)?.refreshContent()
+        (primaryViewController as? NavListViewController)?.refreshContent()
     }
 }
 

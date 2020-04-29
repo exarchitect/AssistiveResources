@@ -11,15 +11,15 @@ import UIKit
 
 class EventDetailProcessController: ProcessController {
 
-    var filter:EventDescriptor?
-    
-    override func createPrimaryViewController() -> ProcessViewController? {
-        return instantiateProcessViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")
+    var event: EventDescriptor?
+
+    override func createPrimaryViewController() -> UIViewController? {
+        let primaryViewController = instantiateProcessViewController(storyboardName: "EventDetailStoryboard", storyboardID: "EventDetailStoryboardID")
+        primaryViewController?.parentProcessController = self
+        return primaryViewController
     }
 
     deinit {
-        let _ = 0
-        //print("deallocating eventdetailPC")
+        print("deallocating eventdetailPC")
     }
-    
 }

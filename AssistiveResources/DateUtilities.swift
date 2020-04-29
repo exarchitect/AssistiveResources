@@ -1,6 +1,6 @@
 //
 //  DateUtilities.swift
-//  SwiftNeed
+//  AssistiveResources
 //
 //  Created by Bill Johnson on 5/26/16.
 //  Copyright © 2016 SevenPlusTwo. All rights reserved.
@@ -9,58 +9,59 @@
 import Foundation
 import SwiftDate
 
-struct TimeBlockDescriptor {
-    var startdatetime:Date!
+struct TimeBlock {
+    var startDateTime: Date!
     var durationMinutes: Int
-    var whenDescription:String!
+    var rangeDescription: String!
     var year: Int {
-        return startdatetime.year
+        return startDateTime.year
     }
     var month: Int {
-        return startdatetime.month
+        return startDateTime.month
     }
     var day: Int {
-        return startdatetime.day
+        return startDateTime.day
     }
     var hour: Int {
-        return startdatetime.hour
+        return startDateTime.hour
     }
     var minute: Int {
-        return startdatetime.minute
+        return startDateTime.minute
     }
-    private var durationInterval:TimeInterval {
-        return Double(durationMinutes * 60)
-    }
-    var month3Char:String {
-        let monthInCaps = startdatetime.monthName(SymbolFormatStyle.short)
+    var monthAbbreviation: String {
+        let monthInCaps = startDateTime.monthName(SymbolFormatStyle.short)
         return monthInCaps.uppercased()
     }
-    var dayOfWeek:String {
-        let dowInCaps = startdatetime.weekdayName(SymbolFormatStyle.short)
+    var weekdayAbbreviation: String {
+        let dowInCaps = startDateTime.weekdayName(SymbolFormatStyle.short)
         return dowInCaps.uppercased()
     }
     
     init(date:Date, durationMin: Int)
     {
-        self.startdatetime = date
+        self.startDateTime = date
         self.durationMinutes = durationMin
-
-        var startTimeDescription:String
-        var timeDescription:String
-        startTimeDescription = self.startdatetime.toFormat("h:mm a")
-        if (durationMin == 0) {
-            timeDescription = "Starts at " + startTimeDescription
-        } else {
-            let endTimeDescription = self.startdatetime.addingTimeInterval(durationInterval).toFormat("h:mm a")
-            timeDescription = startTimeDescription + "-" + endTimeDescription
-        }
-        timeDescription = timeDescription.replacingOccurrences(of: "12:00 PM", with: "Noon")
-        timeDescription = timeDescription.replacingOccurrences(of: "12:00 AM", with: "Midnight")
-        timeDescription = timeDescription.replacingOccurrences(of: ":00", with: "")
-        timeDescription = timeDescription.replacingOccurrences(of: " PM", with: "pm")
-        timeDescription = timeDescription.replacingOccurrences(of: " AM", with: "am")
-        self.whenDescription = timeDescription
+        self.rangeDescription = timeRange(date: date, durationInMinutes: durationMin)
     }
+}
+
+func timeRange(date: Date, durationInMinutes: Int) -> String {
+    var startTimeDescription: String
+    var timeDescription: String
+    startTimeDescription = date.toFormat("h:mm a")
+    if (durationInMinutes == 0) {
+        timeDescription = "Starts at " + startTimeDescription
+    } else {
+        let durationInterval = Double(durationInMinutes * 60)
+        let endTimeDescription = date.addingTimeInterval(durationInterval).toFormat("h:mm a")
+        timeDescription = startTimeDescription + "-" + endTimeDescription
+    }
+    timeDescription = timeDescription.replacingOccurrences(of: "12:00 PM", with: "Noon")
+    timeDescription = timeDescription.replacingOccurrences(of: "12:00 AM", with: "Midnight")
+    timeDescription = timeDescription.replacingOccurrences(of: ":00", with: "")
+    timeDescription = timeDescription.replacingOccurrences(of: " PM", with: "pm")
+    timeDescription = timeDescription.replacingOccurrences(of: " AM", with: "am")
+    return timeDescription
 }
 
 func ageSince(monthOfBirth: Int, yearOfBirth: Int) -> Int {

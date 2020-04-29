@@ -25,7 +25,7 @@ class NavListViewController: ProcessViewController {
         super.viewDidLoad()
 
         tableAdaptor = MainNavigationTableAdaptor.init(table: self.navTable, navItems: navigationItems, selector: { (destination:NavigationCategory) -> Void in
-            self.processController?.executeCommand(.navigateTo(destination))
+            self.parentProcessController?.executeCommand(.navigateTo(destination))
         })
     }
     
@@ -44,7 +44,7 @@ class NavListViewController: ProcessViewController {
     }
     
     deinit {
-        //print("deallocating NavListViewController")
+        print("deallocating NavListViewController")
     }
 
     func refreshContent() {

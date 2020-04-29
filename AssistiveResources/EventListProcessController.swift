@@ -11,14 +11,16 @@ import UIKit
 
 class EventListProcessController: ProcessController {
     
-    override func createPrimaryViewController() -> ProcessViewController? {
-        return instantiateProcessViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID")
+    override func createPrimaryViewController() -> UIViewController? {
+        let primaryViewController = instantiateProcessViewController(storyboardName: "EventList", storyboardID: "EventListStoryboardID")
+        primaryViewController?.parentProcessController = self
+        return primaryViewController
     }
 
     //MARK: - debug
     deinit {
         let _ = 0
-        //print("deallocating EventListPC")
+        print("deallocating EventListPC")
     }
     
 }

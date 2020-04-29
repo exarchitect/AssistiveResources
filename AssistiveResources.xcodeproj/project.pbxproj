@@ -61,6 +61,7 @@
 		D2B7D1511E46A8E500E69D1E /* OrganizationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1501E46A8E500E69D1E /* OrganizationContainerViewController.swift */; };
 		D2B7D1561E59422D00E69D1E /* RepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */; };
 		D2B7D1581E594B8400E69D1E /* AssistiveAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1571E594B8400E69D1E /* AssistiveAppController.swift */; };
+		D2C1522F2457FEF000E4EE87 /* OrganizationDetailProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C1522E2457FEF000E4EE87 /* OrganizationDetailProcessController.swift */; };
 		D2C445B820154ADB0065099A /* ProcessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C445B720154ADB0065099A /* ProcessViewController.swift */; };
 		D2C6130A202B5C7000F6EE53 /* FilterPlaybook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C61309202B5C7000F6EE53 /* FilterPlaybook.swift */; };
 		D2C9AD711DDFF5120028341D /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD701DDFF5120028341D /* AppController.swift */; };
@@ -151,6 +152,7 @@
 		D2B7D1501E46A8E500E69D1E /* OrganizationContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationContainerViewController.swift; sourceTree = "<group>"; };
 		D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryAccessor.swift; sourceTree = "<group>"; };
 		D2B7D1571E594B8400E69D1E /* AssistiveAppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistiveAppController.swift; sourceTree = "<group>"; };
+		D2C1522E2457FEF000E4EE87 /* OrganizationDetailProcessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationDetailProcessController.swift; sourceTree = "<group>"; };
 		D2C445B720154ADB0065099A /* ProcessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessViewController.swift; sourceTree = "<group>"; };
 		D2C61309202B5C7000F6EE53 /* FilterPlaybook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPlaybook.swift; sourceTree = "<group>"; };
 		D2C9AD701DDFF5120028341D /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				D28C80D21DF0E867002D3940 /* EventList */,
 				D209FAC31E00CE790099BD46 /* EventDetail */,
 				D2B7D1431E46A40F00E69D1E /* OrganizationList */,
+				D2C1522D2457FE8B00E4EE87 /* OrganizationDetail */,
 			);
 			name = ProcessControllers;
 			sourceTree = "<group>";
@@ -375,6 +378,14 @@
 				D2B7D14E1E46A65E00E69D1E /* OrganizationList.storyboard */,
 			);
 			name = OrganizationList;
+			sourceTree = "<group>";
+		};
+		D2C1522D2457FE8B00E4EE87 /* OrganizationDetail */ = {
+			isa = PBXGroup;
+			children = (
+				D2C1522E2457FEF000E4EE87 /* OrganizationDetailProcessController.swift */,
+			);
+			name = OrganizationDetail;
 			sourceTree = "<group>";
 		};
 		D2C9AD6C1DDFF3800028341D /* AppController */ = {
@@ -744,6 +755,7 @@
 				D202D52F243E55DD00B77958 /* EntityPlaybook.swift in Sources */,
 				D28338EC20293F2400A1837D /* FilterTableHeaderCell.swift in Sources */,
 				D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */,
+				D2C1522F2457FEF000E4EE87 /* OrganizationDetailProcessController.swift in Sources */,
 				D27440F51DF903B3008E0476 /* HeaderView.swift in Sources */,
 				D255504A1E234626004FE72B /* Repository.swift in Sources */,
 				D2C9AD731DE00A8D0028341D /* RootViewController.swift in Sources */,
@@ -922,6 +934,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AssistiveResources/AssistiveResources.entitlements;
+				CURRENT_PROJECT_VERSION = 0.9.3.1;
 				DEVELOPMENT_TEAM = EPRGW4NZ3Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -931,8 +944,9 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Timepiece\"",
 				);
 				INFOPLIST_FILE = AssistiveResources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.9.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sevenplustwo.AssistiveResources;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "${PODS_ROOT}/Headers/Public/Backendless/Backendless-Bridging-Header.h";
@@ -948,6 +962,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AssistiveResources/AssistiveResources.entitlements;
+				CURRENT_PROJECT_VERSION = 0.9.3.1;
 				DEVELOPMENT_TEAM = EPRGW4NZ3Y;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -957,8 +972,9 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Timepiece\"",
 				);
 				INFOPLIST_FILE = AssistiveResources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.9.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sevenplustwo.AssistiveResources;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "${PODS_ROOT}/Headers/Public/Backendless/Backendless-Bridging-Header.h";

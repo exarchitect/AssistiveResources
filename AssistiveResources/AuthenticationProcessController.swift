@@ -14,8 +14,10 @@ protocol AuthenticationProtocol: class {
 
 class AuthenticationProcessController: ProcessController, AuthenticationProtocol {
     
-    override func createPrimaryViewController() -> ProcessViewController? {
-        return instantiateProcessViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
+    override func createPrimaryViewController() -> UIViewController? {
+        let primaryViewController = instantiateProcessViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
+        primaryViewController?.parentProcessController = self
+        return primaryViewController
     }
 
     // MARK:- AuthenticationCoordinatorProtocol
@@ -44,7 +46,7 @@ class AuthenticationProcessController: ProcessController, AuthenticationProtocol
     
     deinit {
         let _ = 0
-        //print("deallocating AuthenticationProcessController")
+        print("deallocating AuthenticationProcessController")
     }
     
 }

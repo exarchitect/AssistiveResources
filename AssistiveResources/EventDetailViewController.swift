@@ -14,7 +14,7 @@ class EventDetailViewController: ProcessViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
     var resourcesModelController: RegionalResourcesModelController? {
-        return processController?.sharedServices.regionalResourcesModelController
+        return parentProcessController?.sharedServices.regionalResourcesModelController
     }
 
     override func viewDidLoad() {
@@ -27,17 +27,16 @@ class EventDetailViewController: ProcessViewController {
     }
     
     deinit {
-        let _ = 0
-        //print("deallocating eventdetailVC")
+        print("deallocating eventdetailVC")
     }
     
     @IBAction func evntDetailBackButtonAction(_ sender: Any) {
-        processController?.executeCommand(.dismissCurrentProcess)
+        parentProcessController?.executeCommand(.dismissCurrentProcess)
     }
 
     @IBAction func orgSelectedButtonAction(_ sender: Any) {
-        let testEvent = EventDescriptor(name: "test", identifier: 1)
-        processController?.executeCommand(.showEventDetail(testEvent))
+        let testOrg = OrganizationDescriptor(name: "test", identifier: 1)
+        parentProcessController?.executeCommand(.showOrganizationDetail(testOrg))
     }
 
 }

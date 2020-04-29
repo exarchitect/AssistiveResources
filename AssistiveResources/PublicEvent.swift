@@ -31,7 +31,7 @@ class StoredEvent: Object {
     @objc dynamic var durationMinutes: Int = 0
     @objc dynamic var eventDescriptionBrief: String = ""
 
-    var timeBlock: TimeBlockDescriptor?
+    var timeBlock: TimeBlock?
 
     convenience required init(event: EventDescriptor, organization: OrganizationDescriptor, facility: FacilityDescriptor, eventStart: Date, durationInMinutes: Int, eventDetail: String)
     {
@@ -42,10 +42,8 @@ class StoredEvent: Object {
         self.facilityTitle = facility.name
         self.eventDate = eventStart
         self.durationMinutes = durationInMinutes
-
         self.eventDescriptionBrief = eventDetail
-
-        self.timeBlock = TimeBlockDescriptor(date: eventDate, durationMin: durationInMinutes)
+        self.timeBlock = TimeBlock(date: eventDate, durationMin: durationInMinutes)
 
         //address = ""
         //directions = ""

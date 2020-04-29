@@ -36,11 +36,11 @@ class EventListTableViewCell: UITableViewCell {
         let sponsorPrefix = NSLocalizedString("Sponsored by ", comment: "Sponsored by....")
         sponsorLabel.text = sponsorPrefix + event.organizationTitle
         locationLabel.text = event.facilityTitle
-        dateTimeLabel.text = event.timeBlock!.whenDescription
+        dateTimeLabel.text = event.timeBlock!.rangeDescription
         
-        monthLabel.text = event.timeBlock!.month3Char
+        monthLabel.text = event.timeBlock!.monthAbbreviation
         dayOfMonthLabel.text = "\(event.timeBlock!.day)"
-        dayOfWeekLabel.text = event.timeBlock!.dayOfWeek
+        dayOfWeekLabel.text = event.timeBlock!.weekdayAbbreviation
         
         self.selectionStyle = UITableViewCellSelectionStyle.none
         

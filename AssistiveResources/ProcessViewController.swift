@@ -10,6 +10,6 @@ import UIKit
 
 class ProcessViewController: UIViewController {
 
-    weak var processController: ProcessController?
+    weak var parentProcessController: ProcessController?
 
 }

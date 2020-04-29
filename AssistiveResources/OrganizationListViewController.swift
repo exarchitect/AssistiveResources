@@ -15,7 +15,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     
     //private var filterViewController:OrganizationFilterViewController?
     var resourcesModelController: RegionalResourcesModelController? {
-        return processController?.sharedServices.regionalResourcesModelController
+        return parentProcessController?.sharedServices.regionalResourcesModelController
     }
     
     override func viewDidLoad() {
@@ -43,22 +43,23 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     
     func notifyRowDetailSelected(rowIndex: Int) {
         let testOrg = OrganizationDescriptor(name: "TestOrg", identifier: 2)
-        processController?.executeCommand(.showOrganizationDetail(testOrg))
+        parentProcessController?.executeCommand(.showOrganizationDetail(testOrg))
     }
     
     func notifyFilterSelected() {
-//        unowned var filterViewController:EventFilterViewController
-//        filterViewController = (instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID") as? EventFilterViewController)!
-//        filterViewController.dependencies(resources: self.resourcesModelController!, selectorDelegate: self)
-//        //guard?
-//        present(filterViewController, animated: true, completion: nil)
+//        let filterViewController: EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
+//        if let filterVwCtl = filterViewController {
+//            filterVwCtl.configuration(resources: resourcesModelController, selectorDelegate: self, filter: filterDict)
+//            present(filterVwCtl, animated: true, completion: nil)
+//            self.filterViewController = filterVwCtl
+//}
     }
     
     
     //MARK: @IBAction
     
     @IBAction func backButtonAction(_ sender: Any) {
-        processController?.executeCommand(.dismissCurrentProcess)
+        parentProcessController?.executeCommand(.dismissCurrentProcess)
     }
     
 }
