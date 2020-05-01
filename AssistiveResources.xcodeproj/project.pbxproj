@@ -62,6 +62,7 @@
 		D2B7D1561E59422D00E69D1E /* RepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */; };
 		D2B7D1581E594B8400E69D1E /* AssistiveAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1571E594B8400E69D1E /* AssistiveAppController.swift */; };
 		D2C1522F2457FEF000E4EE87 /* OrganizationDetailProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C1522E2457FEF000E4EE87 /* OrganizationDetailProcessController.swift */; };
+		D2C15233245C686700E4EE87 /* OrganizationDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C15232245C686700E4EE87 /* OrganizationDetailsView.swift */; };
 		D2C445B820154ADB0065099A /* ProcessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C445B720154ADB0065099A /* ProcessViewController.swift */; };
 		D2C6130A202B5C7000F6EE53 /* FilterPlaybook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C61309202B5C7000F6EE53 /* FilterPlaybook.swift */; };
 		D2C9AD711DDFF5120028341D /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C9AD701DDFF5120028341D /* AppController.swift */; };
@@ -153,6 +154,7 @@
 		D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryAccessor.swift; sourceTree = "<group>"; };
 		D2B7D1571E594B8400E69D1E /* AssistiveAppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistiveAppController.swift; sourceTree = "<group>"; };
 		D2C1522E2457FEF000E4EE87 /* OrganizationDetailProcessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationDetailProcessController.swift; sourceTree = "<group>"; };
+		D2C15232245C686700E4EE87 /* OrganizationDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationDetailsView.swift; sourceTree = "<group>"; };
 		D2C445B720154ADB0065099A /* ProcessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessViewController.swift; sourceTree = "<group>"; };
 		D2C61309202B5C7000F6EE53 /* FilterPlaybook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPlaybook.swift; sourceTree = "<group>"; };
 		D2C9AD701DDFF5120028341D /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 			isa = PBXGroup;
 			children = (
 				D2C1522E2457FEF000E4EE87 /* OrganizationDetailProcessController.swift */,
+				D2C15232245C686700E4EE87 /* OrganizationDetailsView.swift */,
 			);
 			name = OrganizationDetail;
 			sourceTree = "<group>";
@@ -757,6 +760,7 @@
 				D2F91E901DDFE5D20084F00E /* AppDelegate.swift in Sources */,
 				D2C1522F2457FEF000E4EE87 /* OrganizationDetailProcessController.swift in Sources */,
 				D27440F51DF903B3008E0476 /* HeaderView.swift in Sources */,
+				D2C15233245C686700E4EE87 /* OrganizationDetailsView.swift in Sources */,
 				D255504A1E234626004FE72B /* Repository.swift in Sources */,
 				D2C9AD731DE00A8D0028341D /* RootViewController.swift in Sources */,
 				D275718F1E415C3E0007CEF1 /* RepositoryProfile.swift in Sources */,

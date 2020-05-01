@@ -11,7 +11,7 @@ import UIKit
 class NavigationStack: NSObject, Commandable {
 
     var processControllerStack = [ProcessController]()
-    var services: SharedServices?
+    var services: SharedServices!
     weak var navController: UINavigationController!
 
     init(services: SharedServices, navController: UINavigationController) {
@@ -20,17 +20,11 @@ class NavigationStack: NSObject, Commandable {
     }
 
     @discardableResult func launchProcess<T: ProcessController>(ofType: T.Type, animated: Bool) -> T? {
-        let processController = T.init()
-        let viewController = processController.createPrimaryViewController()
-
-        guard let processViewController = viewController, let services = services else {
+        guard let processController = T.init(services: services, handler: self) else {
             return nil
         }
-        processController.setup(commandHandler: self, services: services, primaryViewController: processViewController)
-        processController.commandHandler = self
         processControllerStack.append(processController)
-
-        navController.pushViewController(processViewController, animated: animated)
+        navController.pushViewController(processController.primaryViewController, animated: animated)
 
         return processController
     }
@@ -87,10 +81,10 @@ class NavigationStack: NSObject, Commandable {
 
         case .showOrganizationDetail(let organization):
 //            _ = organization.identifier
-            guard let eventDetailProcessController = launchProcess(ofType: EventDetailProcessController.self, animated: true) else {
+            guard let orgDetailProcessController = launchProcess(ofType: OrganizationDetailProcessController.self, animated: true) else {
                 return
             }
-            eventDetailProcessController.event = EventDescriptor(name: "TestOrg", identifier: 235)
+            orgDetailProcessController.organization = organization
         }
     }
 }

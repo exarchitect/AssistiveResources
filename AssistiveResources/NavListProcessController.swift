@@ -11,8 +11,8 @@ import UIKit
 
 class NavListProcessController: ProcessController {
 
-    required init() {
-        super.init()
+    required init?(services: SharedServices, handler: Commandable) {
+        super.init(services: services, handler: handler)
         NotificationCenter.default.addObserver(self, selector: #selector(refreshNavigationContent), name: updateNavigationNotificationKeyName, object: nil)
     }
 

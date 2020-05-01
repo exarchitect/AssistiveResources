@@ -13,16 +13,16 @@ class ProcessController: NSObject {
 
     var sharedServices: SharedServices!
     weak var commandHandler: Commandable!
-    weak var primaryViewController: UIViewController?
+    var primaryViewController: UIViewController!
 
-    required override init(){
+    required init?(services: SharedServices, handler: Commandable) {
         super.init()
-    }
-
-    func setup(commandHandler: Commandable, services: SharedServices, primaryViewController: UIViewController) {
-        self.commandHandler = commandHandler
-        self.sharedServices = services
-        self.primaryViewController = primaryViewController
+        sharedServices = services
+        commandHandler = handler
+        guard let viewController = createPrimaryViewController() else {
+            return nil
+        }
+        primaryViewController = viewController
     }
 
     func terminate(navController: UINavigationController, previousTopViewController: UIViewController) {
