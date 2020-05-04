@@ -9,7 +9,6 @@
 import UIKit
 
 // MARK: -TO DO LIST-
-// TODO: Filter (UI and model) for EventList
 // TODO: Organization Detail
 // TODO: Filter for OrganizationList
 // TODO: Refactor Command Objects
@@ -19,16 +18,8 @@ import UIKit
 // TODO: UI Unit Tests -
 
 
-protocol UserProvider {
-    var userModel: User { get }
-}
-
-protocol RegionalResourcesProvider {
-    var regionalResourcesModelController: RegionalResourcesModelController? { get }
-}
-
-struct SharedServices: RegionalResourcesProvider, UserProvider {
-    var regionalResourcesModelController: RegionalResourcesModelController?
+struct SharedServices {
+    var regionalResources: RegionalResourcesModelController?
     var userModel: User
     var connectivityService: ConnectivityService
     init?() {
@@ -39,14 +30,14 @@ struct SharedServices: RegionalResourcesProvider, UserProvider {
 //        }
     }
 
-    mutating func loadRepositoryIfNeeded() {
-        guard regionalResourcesModelController == nil else {
+    mutating func loadRepository() {
+        guard regionalResources == nil else {
             return
         }
         let online = true       // TODO: implement
         let repository = RegionalResourcesModelController(atLocation: userModel.locationProfile, isOnline: online)
         repository.initiateLoading()
-        regionalResourcesModelController = repository
+        regionalResources = repository
     }
 }
 
@@ -69,7 +60,7 @@ class AssistiveAppController: AppController {
         }
         
         navigationStack = NavigationStack(services: sharedServices, navController: navigationController)
-        navigationStack.launchProcess(ofType: NavListProcessController.self, animated: false)
+        navigationStack.launchProcess(NavListProcessController.self, animated: false)
 
         // temp override to fail login for testing
         sharedServices.userModel.storeUserCredentials(username: "", password: "")
@@ -89,7 +80,7 @@ class AssistiveAppController: AppController {
     
 
     override func checkDatabaseRefresh() {
-        shared?.regionalResourcesModelController?.checkRepositoryUpdate()
+        shared?.regionalResources?.checkRepositoryUpdate()
     }
     
 }

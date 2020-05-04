@@ -17,7 +17,7 @@ struct OrganizationDetailsView: View {
         let view = NavigationView {
             VStack {
                 Button(action: {
-                    self.parentProcessController?.executeCommand(.dismissCurrentProcess)
+                    self.parentProcessController?.commandHandler.execute(command: .dismissCurrentProcess)
                 }) {
                     Text(verbatim: "Back")
                 }

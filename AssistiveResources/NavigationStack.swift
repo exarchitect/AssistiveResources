@@ -19,7 +19,7 @@ class NavigationStack: NSObject, Commandable {
         self.navController = navController
     }
 
-    @discardableResult func launchProcess<T: ProcessController>(ofType: T.Type, animated: Bool) -> T? {
+    @discardableResult func launchProcess<T: ProcessController>(_ ofType: T.Type, animated: Bool) -> T? {
         guard let processController = T.init(services: services, handler: self) else {
             return nil
         }
@@ -41,19 +41,19 @@ class NavigationStack: NSObject, Commandable {
             currentProcessController.terminate(navController: navController, previousTopViewController: previousViewController)
 
         case .requestUserIdentity:
-            launchProcess(ofType: AuthenticationProcessController.self, animated: false)
+            launchProcess(AuthenticationProcessController.self, animated: false)
 
         case .userSuccessfullyIdentified:
-            services?.loadRepositoryIfNeeded()
+            services?.loadRepository()
             requestMainNavigationRefresh()
 
         case .navigateTo(let destination):
             switch destination {
             case .organizations:
-                launchProcess(ofType: OrganizationListProcessController.self, animated: true)
+                launchProcess(OrganizationListProcessController.self, animated: true)
 
             case .events:
-                launchProcess(ofType: EventListProcessController.self, animated: true)
+                launchProcess(EventListProcessController.self, animated: true)
 
             case .facilities:
                 let _ = 7
@@ -70,18 +70,18 @@ class NavigationStack: NSObject, Commandable {
             case .profile:
                 // temp for testing
                 services?.userModel.logout()
-                launchProcess(ofType: AuthenticationProcessController.self, animated: true)
+                launchProcess(AuthenticationProcessController.self, animated: true)
             }
 
         case .showEventDetail(let event):
-            guard let eventDetailProcessController = launchProcess(ofType: EventDetailProcessController.self, animated: true) else {
+            guard let eventDetailProcessController = launchProcess(EventDetailProcessController.self, animated: true) else {
                 return
             }
             eventDetailProcessController.event = event
 
         case .showOrganizationDetail(let organization):
 //            _ = organization.identifier
-            guard let orgDetailProcessController = launchProcess(ofType: OrganizationDetailProcessController.self, animated: true) else {
+            guard let orgDetailProcessController = launchProcess(OrganizationDetailProcessController.self, animated: true) else {
                 return
             }
             orgDetailProcessController.organization = organization

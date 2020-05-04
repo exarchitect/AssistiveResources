@@ -13,7 +13,6 @@ class AppController: NSObject {
 
     var rootViewController: RootViewController?
     var navController: UINavigationController?
-    var processControllerStack = [ProcessController]()
     
         
     func setupApplicationWindow() -> UIWindow {

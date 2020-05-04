@@ -15,7 +15,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     
     //private var filterViewController:OrganizationFilterViewController?
     var resourcesModelController: RegionalResourcesModelController? {
-        return parentProcessController?.sharedServices.regionalResourcesModelController
+        return parentProcessController?.sharedServices.regionalResources
     }
     
     override func viewDidLoad() {
@@ -43,7 +43,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     
     func notifyRowDetailSelected(rowIndex: Int) {
         let testOrg = OrganizationDescriptor(name: "TestOrg", identifier: 2)
-        parentProcessController?.executeCommand(.showOrganizationDetail(testOrg))
+        execute(command: .showOrganizationDetail(testOrg))
     }
     
     func notifyFilterSelected() {
@@ -59,7 +59,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
     //MARK: @IBAction
     
     @IBAction func backButtonAction(_ sender: Any) {
-        parentProcessController?.executeCommand(.dismissCurrentProcess)
+        execute(command: .dismissCurrentProcess)
     }
     
 }

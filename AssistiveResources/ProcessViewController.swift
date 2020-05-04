@@ -12,4 +12,7 @@ class ProcessViewController: UIViewController {
 
     weak var parentProcessController: ProcessController?
 
+    final func execute(command: AssistiveCommand){
+        parentProcessController?.commandHandler.execute(command: command)
+    }
 }

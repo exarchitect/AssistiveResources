@@ -14,7 +14,7 @@ class EventDetailViewController: ProcessViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
     var resourcesModelController: RegionalResourcesModelController? {
-        return parentProcessController?.sharedServices.regionalResourcesModelController
+        return parentProcessController?.sharedServices.regionalResources
     }
 
     override func viewDidLoad() {
@@ -31,12 +31,12 @@ class EventDetailViewController: ProcessViewController {
     }
     
     @IBAction func evntDetailBackButtonAction(_ sender: Any) {
-        parentProcessController?.executeCommand(.dismissCurrentProcess)
+        execute(command: .dismissCurrentProcess)
     }
 
     @IBAction func orgSelectedButtonAction(_ sender: Any) {
         let testOrg = OrganizationDescriptor(name: "test", identifier: 1)
-        parentProcessController?.executeCommand(.showOrganizationDetail(testOrg))
+        execute(command: .showOrganizationDetail(testOrg))
     }
 
 }

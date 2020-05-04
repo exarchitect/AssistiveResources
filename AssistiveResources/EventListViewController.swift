@@ -18,7 +18,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     weak private var containerViewController:EventContainerViewController?
     var filterDict = FilterDictionary()
     var resourcesModelController: RegionalResourcesModelController? {
-        return parentProcessController?.sharedServices.regionalResourcesModelController
+        return parentProcessController?.sharedServices.regionalResources
     }
 
     override func viewDidLoad() {
@@ -53,7 +53,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     //MARK:- @IBAction
 
     @IBAction func backButtonAction(_ sender: Any) {
-        parentProcessController?.executeCommand(.dismissCurrentProcess)
+        execute(command: .dismissCurrentProcess)
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {
@@ -75,7 +75,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     
     func notifyRowDetailSelected(rowIndex: Int) {
         let testEvent = EventDescriptor(name: "TestEvent", identifier: 3)
-        parentProcessController?.executeCommand(.showEventDetail(testEvent))
+        execute(command: .showEventDetail(testEvent))
     }
     
     func notifyFilterSelected() {

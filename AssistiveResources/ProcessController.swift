@@ -30,10 +30,6 @@ class ProcessController: NSObject {
         self.primaryViewController = nil;
     }
 
-    final func executeCommand(_ command: AssistiveCommand){
-        self.commandHandler.execute(command: command)
-    }
-
     func createPrimaryViewController() -> UIViewController? {
         fatalError("override \(#function)")
     }
