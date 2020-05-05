@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol OrganizationListContainerNotificationProtocol: class {
-    func notifyRowDetailSelected(rowIndex: Int)
+    func notifyDetailSelected(descriptor: OrganizationDescriptor)
     func notifyFilterSelected()
 }
 
@@ -130,9 +130,9 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     // MARK: - @IBAction
     
     @IBAction func showOrgDetailButtonAction(_ sender: UIButton) {
-        let row = getRowFrom(sender, self.containerTableView)
+        let row = getRowFrom(sender, containerTableView)
         if row > -1 {
-            notificationDelegate?.notifyRowDetailSelected(rowIndex: row)
+            notificationDelegate?.notifyDetailSelected(descriptor: organizationAccessor[row].descriptor)
         }
     }
     

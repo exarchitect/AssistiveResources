@@ -8,6 +8,8 @@
 
 import Foundation
 
+typealias EntityDictionary = [String: Describable]
+
 enum EntityType : Int {
     case organization, chapter, event, facility
 }

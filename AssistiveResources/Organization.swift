@@ -58,7 +58,7 @@ class Service {
     var serviceTitle: String = ""
     var serviceDescription: String = ""
     var targetPopulation: String = ""
-    
+
     init(serviceTitle:String, serviceDescrip:String, serviceTarget:String) {
         self.serviceTitle = serviceTitle
         self.serviceDescription = serviceDescrip
@@ -89,6 +89,10 @@ class Organization: Object {
 
     @objc dynamic var proximityInMiles: Double = 0.0
     
+    var descriptor: OrganizationDescriptor {
+        OrganizationDescriptor(name: organizationTitle, identifier: organizationID)
+    }
+
     //var dummy: Double = 0.0
     
 //    var chapterList:[Chapter] = []

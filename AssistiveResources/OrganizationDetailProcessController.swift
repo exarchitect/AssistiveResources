@@ -11,11 +11,8 @@ import SwiftUI
 
 class OrganizationDetailProcessController: ProcessController {
 
-    var organization: OrganizationDescriptor?
-
     override func createPrimaryViewController() -> UIViewController? {
-        let organization = OrganizationDescriptor(name: "Easter Deals", identifier: 416462)
-        let detailsView = OrganizationDetailsView(organization: organization, parentProcessController: self)
+        let detailsView = OrganizationDetailsView(organization: sharedServices.selections.organization, parentProcessController: self)
         return UIHostingController(rootView: detailsView)
     }
 

@@ -41,11 +41,10 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
 
     //MARK: delegate
     
-    func notifyRowDetailSelected(rowIndex: Int) {
-        let testOrg = OrganizationDescriptor(name: "TestOrg", identifier: 2)
-        execute(command: .showOrganizationDetail(testOrg))
+    func notifyDetailSelected(descriptor: OrganizationDescriptor) {
+        execute(command: .showOrganizationDetail(descriptor))
     }
-    
+
     func notifyFilterSelected() {
 //        let filterViewController: EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
 //        if let filterVwCtl = filterViewController {
@@ -54,12 +53,11 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
 //            self.filterViewController = filterVwCtl
 //}
     }
-    
-    
+
+
     //MARK: @IBAction
     
     @IBAction func backButtonAction(_ sender: Any) {
         execute(command: .dismissCurrentProcess)
     }
-    
 }

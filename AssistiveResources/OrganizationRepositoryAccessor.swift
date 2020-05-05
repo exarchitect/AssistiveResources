@@ -21,7 +21,11 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
     subscript(pos: Int) -> Organization {
         organizations[pos]
     }
-    
+
+    func descriptor(at: Int) -> OrganizationDescriptor {
+        return organizations[at].descriptor
+    }
+
     func requestData(filteredBy: FilterDictionary){
         guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
             state = .notLoaded
