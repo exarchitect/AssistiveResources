@@ -12,7 +12,10 @@ import SwiftUI
 class OrganizationDetailProcessController: ProcessController {
 
     override func createPrimaryViewController() -> UIViewController? {
-        let detailsView = OrganizationDetailsView(organization: sharedServices.selections.organization, parentProcessController: self)
+        guard let orgID = sharedServices.selections.currentOrganization, let org = OrganizationRepositoryAccessor.retrieveOrganization(withIdentifier: orgID) else {
+            return nil
+        }
+        let detailsView = OrganizationDetailsView(organization: org, parentProcessController: self)
         return UIHostingController(rootView: detailsView)
     }
 

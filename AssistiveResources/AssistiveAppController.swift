@@ -44,33 +44,33 @@ struct SharedServices {
 }
 
 struct SelectionState {
-    private var descriptors: EntityDictionary = [:]
+    private var identifierDictionary: [String:Int] = [:]
     static var organizationKey: String {
         "organization_key"
     }
     static var eventKey: String {
         "event_key"
     }
-    var organization: OrganizationDescriptor? {
+    var currentOrganization: Int? {
         get {
-            descriptors[SelectionState.organizationKey] as? OrganizationDescriptor
+            identifierDictionary[SelectionState.organizationKey]
         }
         set {
             guard let newValue = newValue else {
                 return
             }
-            descriptors.updateValue(newValue, forKey: SelectionState.organizationKey)
+            identifierDictionary.updateValue(newValue, forKey: SelectionState.organizationKey)
         }
     }
-    var event: EventDescriptor? {
+    var currentEvent: Int? {
         get {
-            descriptors[SelectionState.eventKey] as? EventDescriptor
+            identifierDictionary[SelectionState.eventKey]
         }
         set {
             guard let newValue = newValue else {
                 return
             }
-            descriptors.updateValue(newValue, forKey: SelectionState.eventKey)
+            identifierDictionary.updateValue(newValue, forKey: SelectionState.eventKey)
         }
     }
 }

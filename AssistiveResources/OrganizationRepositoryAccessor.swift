@@ -26,6 +26,10 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
         return organizations[at].descriptor
     }
 
+    func eventMatching(identifier: Int) -> Organization? {
+        organizations.first { $0.organizationID == identifier }
+    }
+
     func requestData(filteredBy: FilterDictionary){
         guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
             state = .notLoaded
@@ -39,6 +43,17 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
         let needProfile = FilterDictionary()
         retrieve(usingFilter: needProfile)
         delegate?.notifyRepositoryWasUpdated()
+    }
+
+    class func retrieveOrganization(withIdentifier identifier: Int) -> Organization? {
+
+        do {
+            let uiRealm = try Realm()
+            return uiRealm.objects(Organization.self).first { $0.organizationID == identifier }
+
+        } catch {
+            return nil
+        }
     }
 
     // MARK: - PRIVATE

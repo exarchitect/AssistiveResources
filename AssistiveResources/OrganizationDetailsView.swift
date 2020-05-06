@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 
 struct OrganizationDetailsView: View {
-    var organization: OrganizationDescriptor?
+    var organization: Organization?
     var parentProcessController: ProcessController?
 
     var body: some View {
@@ -23,7 +23,7 @@ struct OrganizationDetailsView: View {
                 }
                 ScrollView {
                     VStack {
-                        Text(verbatim: organization?.name ?? "no org available")
+                        Text(verbatim: organization?.organizationTitle ?? "no org available")
                             .font(Font.largeTitle)
                             .multilineTextAlignment(.leading)
                         Text(verbatim: "Org detail")

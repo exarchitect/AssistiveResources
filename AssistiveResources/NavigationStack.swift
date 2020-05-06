@@ -74,13 +74,11 @@ class NavigationStack: NSObject, Commandable {
             }
 
         case .showEventDetail(let event):
-            guard let eventDetailProcessController = launchProcess(EventDetailProcessController.self, animated: true) else {
-                return
-            }
-            eventDetailProcessController.event = event
+            services.selections.currentEvent = event.identifier
+            launchProcess(EventDetailProcessController.self, animated: true)
 
         case .showOrganizationDetail(let organization):
-            services.selections.organization = organization
+            services.selections.currentOrganization = organization.identifier
             launchProcess(OrganizationDetailProcessController.self, animated: true)
         }
     }

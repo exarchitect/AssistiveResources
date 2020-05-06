@@ -32,12 +32,16 @@ class StoredEvent: Object {
     @objc dynamic var eventDescriptionBrief: String = ""
 
     var timeBlock: TimeBlock?
+    var descriptor: EventDescriptor {
+        EventDescriptor(name: eventTitle, identifier: eventID)
+    }
 
     convenience required init(event: EventDescriptor, organization: OrganizationDescriptor, facility: FacilityDescriptor, eventStart: Date, durationInMinutes: Int, eventDetail: String)
     {
         self.init()
         
         self.eventTitle = event.name
+        self.eventID = event.identifier
         self.organizationTitle = organization.name
         self.facilityTitle = facility.name
         self.eventDate = eventStart

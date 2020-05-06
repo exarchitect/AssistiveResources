@@ -22,6 +22,14 @@ class EventRepositoryAccessor: RepositoryAccessor {
         events[pos]
     }
     
+    func descriptor(at: Int) -> EventDescriptor {
+        events[at].descriptor
+    }
+
+    func eventMatching(identifier: Int) -> StoredEvent? {
+        events.first { $0.eventID == identifier }
+    }
+
     func requestData(filteredBy: FilterDictionary){
         guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
             state = .notLoaded
@@ -37,7 +45,17 @@ class EventRepositoryAccessor: RepositoryAccessor {
         delegate?.notifyRepositoryWasUpdated()
     }
     
-    
+    class func retrieveEvent(withIdentifier identifier: Int) -> StoredEvent? {
+
+        do {
+            let uiRealm = try Realm()
+            return uiRealm.objects(StoredEvent.self).first { $0.eventID == identifier }
+
+        } catch {
+            return nil
+        }
+    }
+
     // MARK: - PRIVATE
 
     private func retrieve(usingFilter individualNeedProfile: FilterDictionary) {

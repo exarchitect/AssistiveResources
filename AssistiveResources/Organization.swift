@@ -102,7 +102,7 @@ class Organization: Object {
         self.init()
         
         self.organizationTitle = entity.name
-        self.organizationID = 0
+        self.organizationID = entity.identifier
         self.hqLatitude = location.coordinates.latitude
         self.hqLongitude = location.coordinates.longitude
         self.hqZip = ""

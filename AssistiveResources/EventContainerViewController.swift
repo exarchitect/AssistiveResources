@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol EventListContainerNotificationProtocol: class {
-    func notifyRowDetailSelected(rowIndex: Int)
+    func showDetail(for descriptor: EventDescriptor)
     func notifyFilterSelected()
 }
 
@@ -132,9 +132,9 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         let kEventListCellID = "EventListCellIdentifier"
         
-        let cell:EventListTableViewCell = tableView.dequeueReusableCell(withIdentifier: kEventListCellID) as! EventListTableViewCell
+        let cell: EventListTableViewCell = tableView.dequeueReusableCell(withIdentifier: kEventListCellID) as! EventListTableViewCell
         
-        let event:StoredEvent = self.eventAccessor[indexPath.row]
+        let event: StoredEvent = eventAccessor[indexPath.row]
         cell.configureCell(event: event, expand: expandedRowIndex == indexPath.row)
         
         return cell
@@ -154,7 +154,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     @IBAction func showRowDetailButtonAction(_ sender: UIButton) {
         let row = getRowFrom(sender, self.containerTableView)
         if row > -1 {
-            notificationDelegate?.notifyRowDetailSelected(rowIndex: row)
+            notificationDelegate?.showDetail(for: eventAccessor[row].descriptor)
         }
     }
     
@@ -175,7 +175,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 
 // MARK: - funcs
 
-func getRowFrom(_ cellItem: UIView, _ fromTable: UITableView) -> Int {
+func getRowFrom(_ cellItem: UIView, _ table: UITableView) -> Int {
     var parentCell: UIView! = cellItem as UIView
     var returnRow = -1
     
@@ -183,7 +183,7 @@ func getRowFrom(_ cellItem: UIView, _ fromTable: UITableView) -> Int {
         parentCell = parentCell.superview!
     } while !(parentCell is UITableViewCell)
     let cell = parentCell as! UITableViewCell
-    let indxPath = fromTable.indexPath(for: cell)
+    let indxPath = table.indexPath(for: cell)
     
     if let row = indxPath?.row {
         returnRow = row

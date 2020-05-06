@@ -9,16 +9,25 @@
 import UIKit
 
 
-class EventDetailViewController: ProcessViewController {
+class EventDetailViewController: ProcessViewController, RepositoryAccessorProtocol {
 
     @IBOutlet weak var scrollView: UIScrollView!
-    
-    var resourcesModelController: RegionalResourcesModelController? {
+    @IBOutlet weak var headerTextLabel: UILabel!
+
+    private var event: StoredEvent?
+    private var eventAccessor: EventRepositoryAccessor!
+
+    var resourceModel: RegionalResourcesModelController? {
         return parentProcessController?.sharedServices.regionalResources
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let selectedEventID = parentProcessController?.sharedServices.selections.currentEvent else {
+            return
+        }
+        event = EventRepositoryAccessor.retrieveEvent(withIdentifier: selectedEventID)
+        headerTextLabel.text = event?.eventTitle
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,6 +37,10 @@ class EventDetailViewController: ProcessViewController {
     
     deinit {
         print("deallocating eventdetailVC")
+    }
+
+    func notifyRepositoryWasUpdated() {
+        // TODO
     }
     
     @IBAction func evntDetailBackButtonAction(_ sender: Any) {

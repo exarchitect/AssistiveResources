@@ -73,9 +73,8 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
 
     //MARK: - EventListContainerNotificationProtocol delegate
     
-    func notifyRowDetailSelected(rowIndex: Int) {
-        let testEvent = EventDescriptor(name: "TestEvent", identifier: 3)
-        execute(command: .showEventDetail(testEvent))
+    func showDetail(for descriptor: EventDescriptor) {
+        execute(command: .showEventDetail(descriptor))
     }
     
     func notifyFilterSelected() {
