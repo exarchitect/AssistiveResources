@@ -45,7 +45,7 @@ class EventRepositoryAccessor: RepositoryAccessor {
         delegate?.notifyRepositoryWasUpdated()
     }
     
-    class func retrieveEvent(withIdentifier identifier: Int) -> StoredEvent? {
+    class func cachedEvent(withIdentifier identifier: Int) -> StoredEvent? {
 
         do {
             let uiRealm = try Realm()

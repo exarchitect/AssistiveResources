@@ -45,7 +45,7 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
         delegate?.notifyRepositoryWasUpdated()
     }
 
-    class func retrieveOrganization(withIdentifier identifier: Int) -> Organization? {
+    class func cachedOrganization(withIdentifier identifier: Int) -> Organization? {
 
         do {
             let uiRealm = try Realm()
