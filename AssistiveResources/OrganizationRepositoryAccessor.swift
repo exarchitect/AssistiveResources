@@ -12,36 +12,31 @@ import RealmSwift
 
 class OrganizationRepositoryAccessor: RepositoryAccessor {
     
-    private var organizations: [Organization] = []
+    private var organizationCache: [Organization]?
     
     var count: Int {
-        organizations.count
-    }
-    
-    subscript(pos: Int) -> Organization {
-        organizations[pos]
+        organizationCache?.count ?? 0
     }
 
-    func descriptor(at: Int) -> OrganizationDescriptor {
-        return organizations[at].descriptor
+    subscript(pos: Int) -> Organization? {
+        organizationCache?[pos]
     }
 
-    func eventMatching(identifier: Int) -> Organization? {
-        organizations.first { $0.organizationID == identifier }
+    func descriptor(at: Int) -> OrganizationDescriptor? {
+        organizationCache?[at].descriptor
     }
 
-    func requestData(filteredBy: FilterDictionary){
-        guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
-            state = .notLoaded
-            return
-        }
-        retrieve(usingFilter: filteredBy)
-        state = .loaded
+    func organizationsMatching(identifier: Int) -> Organization? {
+        organizationCache?.first { $0.organizationID == identifier }
     }
-    
+
+    override func haveLocalData() -> Bool {
+        organizationCache != nil
+    }
+
     override func repositoryUpdateNotification() {
         let needProfile = FilterDictionary()
-        retrieve(usingFilter: needProfile)
+        updateLocalCache(using: needProfile)
         delegate?.notifyRepositoryWasUpdated()
     }
 
@@ -50,7 +45,6 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
         do {
             let uiRealm = try Realm()
             return uiRealm.objects(Organization.self).first { $0.organizationID == identifier }
-
         } catch {
             return nil
         }
@@ -58,28 +52,29 @@ class OrganizationRepositoryAccessor: RepositoryAccessor {
 
     // MARK: - PRIVATE
     
-    func retrieve(usingFilter individualNeedProfile: FilterDictionary) {
-        
+    override func updateLocalCache(using filter: FilterDictionary) {
+
+        organizationCache = []
         do {
             let uiRealm = try Realm()
             let organizations = uiRealm.objects(Organization.self)
             for organization in organizations {
                 addOrganization(organization)
             }
-            state = .loaded
-           
+
         } catch let error as NSError {
             // handle error
-            
+
             let _ = error
-            state = .notLoaded
         }
-        
     }
 
     func addOrganization(_ org: Organization) {
+        guard organizationCache != nil else {
+            return
+        }
         let newOrg = Organization(entity: OrganizationDescriptor(name: org.organizationTitle, identifier: org.organizationID), tagline: org.tagline, mission: org.mission, scope: org.geographicScope, location: LocationProfile(latitude: org.hqLatitude,longitude: org.hqLongitude,city: "",state: "",zip: org.hqZip), url: "")
-        organizations.append(newOrg)
+        organizationCache!.append(newOrg)
     }
     
 }

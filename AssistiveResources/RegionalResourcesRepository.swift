@@ -79,12 +79,12 @@ class RegionalResourcesRepository: Repository {
     
     private func repositoryState(db: Realm) -> RepositoryState {
         
-        var haveLocalDatabase = false
+        var haveLocalDatabase: Bool
         
         let profilesFound = db.objects(RepositoryProfile.self)
         haveLocalDatabase = !profilesFound.isEmpty
         
-        if (haveLocalDatabase) {
+        if haveLocalDatabase {
             
             let profile = profilesFound[0]
             let locationMatch: Bool = (profile.location == self.location?.zipCode)

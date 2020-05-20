@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol OrganizationListContainerNotificationProtocol: class {
-    func notifyDetailSelected(descriptor: OrganizationDescriptor)
+    func notifyDetailSelected(for descriptor: OrganizationDescriptor)
     func notifyFilterSelected()
 }
 
@@ -61,8 +61,8 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
         self.containerTableView.rowHeight = UITableViewAutomaticDimension
         self.containerTableView.estimatedRowHeight = 140
 
-        self.organizationAccessor.requestData(filteredBy: FilterDictionary())
-        if (self.organizationAccessor.state == .notLoaded) {
+        self.organizationAccessor.loadCache(using: FilterDictionary())
+        if self.organizationAccessor.localStoreState == .notLoaded {
             self.showLoadingIndicator = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
                 startActivityIndicator(title: nil, message: "loading...")
@@ -79,7 +79,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     // MARK: - REPOSITORY ACCESSOR PROTOCOL
     
     func notifyRepositoryWasUpdated() {
-        if (self.showLoadingIndicator) {
+        if self.showLoadingIndicator {
             self.showLoadingIndicator = false
             stopActivityIndicator()
         }
@@ -100,8 +100,10 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
         
         let cell:OrganizationListTableViewCell = tableView.dequeueReusableCell(withIdentifier: kOrganizationListCellID) as! OrganizationListTableViewCell
         
-        let organiz:Organization = self.organizationAccessor[indexPath.row]
-        cell.configureCell(org: organiz, expand: expandedRowIndex == indexPath.row)
+        guard let organizr = self.organizationAccessor[indexPath.row] else {
+            return cell
+        }
+        cell.configureCell(org: organizr, expand: expandedRowIndex == indexPath.row)
         
         return cell
     }
@@ -119,7 +121,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     // MARK: - UTILITIES
     
     func refreshOrgContent() {
-        if (self.showLoadingIndicator) {
+        if self.showLoadingIndicator {
             self.showLoadingIndicator = false
             stopActivityIndicator()
         }
@@ -131,9 +133,10 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     
     @IBAction func showOrgDetailButtonAction(_ sender: UIButton) {
         let row = getRowFrom(sender, containerTableView)
-        if row > -1 {
-            notificationDelegate?.notifyDetailSelected(descriptor: organizationAccessor[row].descriptor)
+        guard row > -1, let descriptor = organizationAccessor[row]?.descriptor else {
+            return
         }
+        notificationDelegate?.notifyDetailSelected(for: descriptor)
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {

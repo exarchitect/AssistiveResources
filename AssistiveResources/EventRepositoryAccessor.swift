@@ -11,40 +11,35 @@ import RealmSwift
 
 
 class EventRepositoryAccessor: RepositoryAccessor {
-    
-    private var events: [StoredEvent] = []
-    
+
+    private var eventCache: [StoredEvent]?
+
     var count: Int {
-        events.count
+        eventCache?.count ?? 0
     }
-    
-    subscript(pos: Int) -> StoredEvent {
-        events[pos]
+
+    subscript(pos: Int) -> StoredEvent? {
+        eventCache?[pos]
     }
-    
-    func descriptor(at: Int) -> EventDescriptor {
-        events[at].descriptor
+
+    func descriptor(at: Int) -> EventDescriptor? {
+        eventCache?[at].descriptor
     }
 
     func eventMatching(identifier: Int) -> StoredEvent? {
-        events.first { $0.eventID == identifier }
+        eventCache?.first { $0.eventID == identifier }
     }
 
-    func requestData(filteredBy: FilterDictionary){
-        guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
-            state = .notLoaded
-            return
-        }
-        retrieve(usingFilter: filteredBy)
-        state = .loaded
+    override func haveLocalData() -> Bool {
+        eventCache != nil
     }
-    
+
     override func repositoryUpdateNotification() {
         let needProfile = FilterDictionary()
-        retrieve(usingFilter: needProfile)
+        updateLocalCache(using: needProfile)
         delegate?.notifyRepositoryWasUpdated()
     }
-    
+
     class func cachedEvent(withIdentifier identifier: Int) -> StoredEvent? {
 
         do {
@@ -58,31 +53,33 @@ class EventRepositoryAccessor: RepositoryAccessor {
 
     // MARK: - PRIVATE
 
-    private func retrieve(usingFilter individualNeedProfile: FilterDictionary) {
-        
+    override func updateLocalCache(using filter: FilterDictionary) {
+
+        eventCache = []
         do {
             let uiRealm = try Realm()
             let events = uiRealm.objects(StoredEvent.self)
             for event in events {
                 addEvent(event)
             }
-            state = .loaded
-            
+
         } catch let error as NSError {
             // handle error
 
             let _ = error
-            state = .notLoaded
         }
         
     }
     
     private func addEvent(_ event: StoredEvent) {
+        guard eventCache != nil else {
+            return
+        }
         let eventdesc = EventDescriptor(name: event.eventTitle, identifier: event.eventID)
         let organization = OrganizationDescriptor(name: event.organizationTitle, identifier: event.organizationID)
         let facility = FacilityDescriptor(name: event.facilityTitle, identifier: event.facilityID)
         let newEvent = StoredEvent(event: eventdesc, organization: organization, facility: facility, eventStart: event.eventDate, durationInMinutes: event.durationMinutes, eventDetail: event.eventDescriptionBrief)
-        events.append(newEvent)
+        eventCache!.append(newEvent)
     }
     
 }

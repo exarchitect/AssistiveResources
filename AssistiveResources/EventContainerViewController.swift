@@ -60,11 +60,11 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
         
-        eventAccessor.requestData(filteredBy: FilterDictionary())
-        if (self.eventAccessor.state == .notLoaded) {
+        eventAccessor.loadCache(using: FilterDictionary())
+        if self.eventAccessor.localStoreState == .notLoaded {
             self.showLoadingIndicator = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
-                startActivityIndicator(title: nil, message: "loading...")
+                startActivityIndicator(title: nil, message: "loading...\n")
             }
         }
         guard let filterDictionary = filter else {
@@ -83,7 +83,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     //MARK: - RepositoryAccessorProtocol
     
     func notifyRepositoryWasUpdated() {
-        if (self.showLoadingIndicator) {
+        if self.showLoadingIndicator {
             self.showLoadingIndicator = false
             stopActivityIndicator()
         }
@@ -99,8 +99,8 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         var indexPathToCollapse : IndexPath
         var pathArray : NSArray
         
-        if (expandedRowIndex >= 0) {    // have an expanded row
-            if (row == expandedRowIndex) {
+        if expandedRowIndex >= 0 {    // have an expanded row
+            if row == expandedRowIndex {
                 indexPathToCollapse = IndexPath(row: row, section: 0)
                 pathArray = NSArray(objects: indexPathToCollapse)
                 expandedRowIndex = -1
@@ -134,7 +134,9 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         let cell: EventListTableViewCell = tableView.dequeueReusableCell(withIdentifier: kEventListCellID) as! EventListTableViewCell
         
-        let event: StoredEvent = eventAccessor[indexPath.row]
+        guard let event = eventAccessor[indexPath.row] else {
+            return cell
+        }
         cell.configureCell(event: event, expand: expandedRowIndex == indexPath.row)
         
         return cell
@@ -153,9 +155,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
     @IBAction func showRowDetailButtonAction(_ sender: UIButton) {
         let row = getRowFrom(sender, self.containerTableView)
-        if row > -1 {
-            notificationDelegate?.showDetail(for: eventAccessor[row].descriptor)
+        guard row > -1, let descriptor = eventAccessor[row]?.descriptor else {
+            return
         }
+        notificationDelegate?.showDetail(for: descriptor)
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {

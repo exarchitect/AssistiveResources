@@ -17,10 +17,15 @@ protocol RepositoryAccessorProtocol: class {
 }
 
 
-
 class RepositoryAccessor: NSObject {
 
-    var state: LocalStoreState = .notLoaded
+    var localStoreState: LocalStoreState {
+        guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
+            return .notLoaded
+        }
+        return haveLocalData() ? .loaded : .notLoaded
+    }
+
     weak var repo: Repository?
     weak var delegate: RepositoryAccessorProtocol?
     
@@ -42,4 +47,18 @@ class RepositoryAccessor: NSObject {
         fatalError("override \(#function)")
     }
 
+    public func updateLocalCache(using filter: FilterDictionary) {
+        fatalError("override \(#function)")
+    }
+
+    func haveLocalData() -> Bool {
+        fatalError("override \(#function)")
+    }
+
+    func loadCache(using dictionary: FilterDictionary){
+        guard localStoreState == .notLoaded else {
+            return
+        }
+        updateLocalCache(using: dictionary)
+    }
 }

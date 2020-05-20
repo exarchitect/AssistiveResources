@@ -41,7 +41,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
 
     //MARK: delegate
     
-    func notifyDetailSelected(descriptor: OrganizationDescriptor) {
+    func notifyDetailSelected(for descriptor: OrganizationDescriptor) {
         execute(command: .showOrganizationDetail(descriptor))
     }
 

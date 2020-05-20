@@ -62,7 +62,7 @@ class NavigationCategories: NSObject {
             case NavigationCategory.inbox:
                 let msgs = 3
                 var msgString = "no"
-                if (msgs > 0) {
+                if msgs > 0 {
                     msgString = "\(msgs)"
                 }
                 let prefix = NSLocalizedString("You have ", comment: "You have....")

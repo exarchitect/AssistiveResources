@@ -43,7 +43,7 @@ extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if (indexPath.row == 0) {
+        if indexPath.row == 0 {
             // section heading is first row cell so we can detect hits
             let cell: FilterTableHeaderCell = tableView.dequeueReusableCell(withIdentifier: "FilterHeaderCellIdentifier") as! FilterTableHeaderCell
             configHeaderCell(cell: cell, section: indexPath.section)

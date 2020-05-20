@@ -49,7 +49,7 @@ func timeRange(date: Date, durationInMinutes: Int) -> String {
     var startTimeDescription: String
     var timeDescription: String
     startTimeDescription = date.toFormat("h:mm a")
-    if (durationInMinutes == 0) {
+    if durationInMinutes == 0 {
         timeDescription = "Starts at " + startTimeDescription
     } else {
         let durationInterval = Double(durationInMinutes * 60)
