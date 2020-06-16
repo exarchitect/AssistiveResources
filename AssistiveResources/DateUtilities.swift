@@ -45,7 +45,7 @@ struct TimeBlock {
     }
 }
 
-func timeRange(date: Date, durationInMinutes: Int) -> String {
+private func timeRange(date: Date, durationInMinutes: Int) -> String {
     var startTimeDescription: String
     var timeDescription: String
     startTimeDescription = date.toFormat("h:mm a")

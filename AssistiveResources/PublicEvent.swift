@@ -13,10 +13,19 @@ import RealmSwift
 struct EntityFilter {
     var needProfile: ProvidedServicesProfile?
     var proximityRadius: Int = -1
-    var entityDescriptor: Describable
+    var entityDescriptor: Identifiable
 }
 
-class StoredEvent: Object {
+class StoredEvent: Object, Identifiable {
+    var name: String {
+        return self.eventTitle
+    }
+    var identifier: Int {
+        return self.eventID
+    }
+    var type: EntityType {
+        .event
+    }
     @objc dynamic var objectId: String?
     @objc dynamic var created: Date?
     @objc dynamic var updated: Date?
@@ -57,7 +66,7 @@ class StoredEvent: Object {
 
     //Specify properties to ignore (Realm won't persist)
     override static func ignoredProperties() -> [String] {
-        return ["eventDescriptor"]
+        return ["name", "identifier", "type", "eventDescriptor"]
     }
     
     func save() {

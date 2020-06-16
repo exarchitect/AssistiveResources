@@ -20,7 +20,7 @@ protocol RepositoryAccessorProtocol: class {
 class RepositoryAccessor: NSObject {
 
     var localStoreState: LocalStoreState {
-        guard let repoAvailable = repo?.localRepositoryAvailable, repoAvailable == true else {
+        guard let repoAvailable = repo?.available, repoAvailable == true else {
             return .notLoaded
         }
         return haveLocalData() ? .loaded : .notLoaded

@@ -8,26 +8,19 @@
 
 import Foundation
 
-typealias EntityDictionary = [String: Describable]
+protocol Identifiable {
+    var name: String { get }
+    var identifier: Int { get }
+    var type: EntityType { get }
+}
+
+typealias EntityDictionary = [String: Identifiable]
 
 enum EntityType : Int {
     case organization, chapter, event, facility
 }
 
-protocol Describable {
-    var name: String { get set }
-    var identifier: Int { get set }
-    var type: EntityType { get }
-    init(name: String, identifier: Int)
-}
-
-extension Describable {
-    init(name: String, identifier: Int) {
-        self.init(name: name, identifier: identifier)
-    }
-}
-
-struct EventDescriptor: Describable {
+struct EventDescriptor: Identifiable {
     var name: String
     var identifier: Int
     var type: EntityType {
@@ -37,7 +30,7 @@ struct EventDescriptor: Describable {
     }
 }
 
-struct OrganizationDescriptor: Describable {
+struct OrganizationDescriptor: Identifiable {
     var name: String
     var identifier: Int
     var type: EntityType {
@@ -47,7 +40,7 @@ struct OrganizationDescriptor: Describable {
     }
 }
 
-struct ChapterDescriptor: Describable {
+struct ChapterDescriptor: Identifiable {
     var name: String
     var identifier: Int
     var type: EntityType {
@@ -57,7 +50,7 @@ struct ChapterDescriptor: Describable {
     }
 }
 
-struct FacilityDescriptor: Describable {
+struct FacilityDescriptor: Identifiable {
     var name: String
     var identifier: Int
     var type: EntityType {

@@ -28,7 +28,7 @@ protocol RemoteDatasourceProtocol: class {
 
 class Repository: NSObject {
     
-    var localRepositoryAvailable = false
+    var available = false
     var dataUpdateCompletion: RepositoryUpdateCompletionHandlerType?
     
     func load (completion: @escaping RepositoryUpdateCompletionHandlerType) {
@@ -39,12 +39,12 @@ class Repository: NSObject {
         switch repoStartupState {
             
         case .current:
-            localRepositoryAvailable = true
+            available = true
             dataUpdateCompletion?(true)
             dataUpdateCompletion = nil
 
         case .outdated:
-            localRepositoryAvailable = true
+            available = true
             dataUpdateCompletion?(true)
             dataUpdateCompletion = nil
 
@@ -94,11 +94,11 @@ class Repository: NSObject {
     // MARK: - methods for subclass use
     
     internal func beginRepositoryUpdate() {
-        self.localRepositoryAvailable = false
+        self.available = false
     }
     
     internal func endRepositoryUpdate() {
-        self.localRepositoryAvailable = true
+        self.available = true
         
         let notificationkey = self.repositoryUpdateNotificationKey()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationkey), object: nil)

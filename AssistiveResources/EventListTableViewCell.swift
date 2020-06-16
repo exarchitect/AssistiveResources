@@ -36,11 +36,6 @@ class EventListTableViewCell: UITableViewCell {
         let sponsorPrefix = NSLocalizedString("Sponsored by ", comment: "Sponsored by....")
         sponsorLabel.text = sponsorPrefix + event.organizationTitle
         locationLabel.text = event.facilityTitle
-        dateTimeLabel.text = event.timeBlock!.rangeDescription
-        
-        monthLabel.text = event.timeBlock!.monthAbbreviation
-        dayOfMonthLabel.text = "\(event.timeBlock!.day)"
-        dayOfWeekLabel.text = event.timeBlock!.weekdayAbbreviation
         
         self.selectionStyle = UITableViewCellSelectionStyle.none
         
@@ -49,6 +44,13 @@ class EventListTableViewCell: UITableViewCell {
         } else {
             self.backgroundColor = UIColor.white
         }
+        guard let timeBlock = event.timeBlock else {
+            return
+        }
+        dateTimeLabel.text = timeBlock.rangeDescription
+        monthLabel.text = timeBlock.monthAbbreviation
+        dayOfMonthLabel.text = "\(timeBlock.day)"
+        dayOfWeekLabel.text = timeBlock.weekdayAbbreviation
     }
 
     @IBAction func showDetailButtonAction(_ sender: UIButton) {

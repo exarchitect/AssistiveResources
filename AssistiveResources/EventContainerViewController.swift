@@ -30,11 +30,10 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
     
         notificationDelegate = delegate
-
-        self.eventAccessor = rsrcModelController.createEventAccessor(delegate: self)
-        guard self.eventAccessor != nil else {
+        guard let eventAccessor = rsrcModelController.createEventAccessor(delegate: self) else {
             return
         }
+        self.eventAccessor = eventAccessor
     }
     
     func setFilter(fltr: FilterDictionary) {
@@ -61,7 +60,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
         
         eventAccessor.loadCache(using: FilterDictionary())
-        if self.eventAccessor.localStoreState == .notLoaded {
+        if self.eventAccessor.cacheState == .notLoaded {
             self.showLoadingIndicator = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
                 startActivityIndicator(title: nil, message: "loading...\n")

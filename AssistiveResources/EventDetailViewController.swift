@@ -15,7 +15,6 @@ class EventDetailViewController: ProcessViewController, RepositoryAccessorProtoc
     @IBOutlet weak var headerTextLabel: UILabel!
 
     private var event: StoredEvent?
-    private var eventAccessor: EventRepositoryAccessor!
 
     var resourceModel: RegionalResourcesModelController? {
         return parentProcessController?.sharedServices.regionalResources
