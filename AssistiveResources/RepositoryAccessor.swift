@@ -7,34 +7,22 @@
 //
 
 import UIKit
-
-enum LocalStoreState {
-    case notLoaded, loaded
-}
+import RealmSwift
 
 protocol RepositoryAccessorProtocol: class {
     func notifyRepositoryWasUpdated()
 }
-
-
-class RepositoryAccessor: NSObject {
-
-    var localStoreState: LocalStoreState {
-        guard let repoAvailable = repo?.available, repoAvailable == true else {
-            return .notLoaded
-        }
-        return haveLocalData() ? .loaded : .notLoaded
-    }
-
-    weak var repo: Repository?
+/*
+// generic class for all object accessors
+class RepositoryAccess <T: Object, Cacheable> {
+    var cachedElements: [T]?
+    weak var repository: Repository?
     weak var delegate: RepositoryAccessorProtocol?
-    
+
     init (repository: Repository, delegate: RepositoryAccessorProtocol) {
-        
-        super.init()
-        self.repo = repository
+        self.repository = repository
         self.delegate = delegate
-        
+
         let notificationkey = repository.repositoryUpdateNotificationKey()
         NotificationCenter.default.addObserver(self, selector: #selector(self.repositoryUpdateNotification), name: NSNotification.Name(rawValue: notificationkey), object: nil)
     }
@@ -44,21 +32,23 @@ class RepositoryAccessor: NSObject {
     }
 
     @objc func repositoryUpdateNotification() {
-        fatalError("override \(#function)")
+        let needProfile = FilterDictionary()
+        loadCache(using: needProfile)
+        delegate?.notifyRepositoryWasUpdated()
     }
 
-    public func updateLocalCache(using filter: FilterDictionary) {
-        fatalError("override \(#function)")
-    }
-
-    func haveLocalData() -> Bool {
-        fatalError("override \(#function)")
-    }
-
-    func loadCache(using dictionary: FilterDictionary){
-        guard localStoreState == .notLoaded else {
-            return
+    func loadCache(using filter: FilterDictionary) {
+        cachedElements = []
+        do {
+            let uiRealm = try Realm()
+            let events = uiRealm.objects(T.self)
+            for event in events {
+                cachedElements?.append(event)
+            }
+        } catch let error as NSError {
+            // handle error
+            let _ = error
         }
-        updateLocalCache(using: dictionary)
     }
 }
+*/

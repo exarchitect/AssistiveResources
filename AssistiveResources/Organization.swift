@@ -67,8 +67,17 @@ class Service {
 }
 
 
-class Organization: Object {
+class Organization: Object, Identifiable {
     
+    var name: String {
+        return self.organizationTitle
+    }
+    var identifier: Int {
+        return self.organizationID
+    }
+    var type: EntityType {
+        .organization
+    }
     // for backendless
     @objc dynamic var objectId: String?
     @objc dynamic var created: NSDate?

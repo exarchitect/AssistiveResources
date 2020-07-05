@@ -62,7 +62,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
         self.containerTableView.estimatedRowHeight = 140
 
         self.organizationAccessor.loadCache(using: FilterDictionary())
-        if self.organizationAccessor.localStoreState == .notLoaded {
+        if self.organizationAccessor.cacheState == .notLoaded {
             self.showLoadingIndicator = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
                 startActivityIndicator(title: nil, message: "loading...")

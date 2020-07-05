@@ -25,7 +25,7 @@ class EventDetailViewController: ProcessViewController, RepositoryAccessorProtoc
         guard let selectedEventID = parentProcessController?.sharedServices.selections.currentEvent else {
             return
         }
-        event = EventRepositoryAccessor.cachedEvent(withIdentifier: selectedEventID)
+        event = uncachedEvent(withIdentifier: selectedEventID)
         headerTextLabel.text = event?.eventTitle
     }
 

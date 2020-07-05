@@ -7,12 +7,16 @@
 //
 
 import UIKit
-import RealmSwift
+//import RealmSwift
 
 
 typealias Cacheable = Identifiable
 
-protocol RepositoryCache {
+enum CacheState {
+    case notLoaded, loaded      // TODO: need .loading state
+}
+
+protocol ElementCache {
     associatedtype DataType: Cacheable
     var repository: Repository? { get set }
     var cachedElements: [DataType]? { get set }
@@ -20,11 +24,10 @@ protocol RepositoryCache {
     subscript(pos: Int) -> DataType? { get }
     func loadCache(using filter: FilterDictionary)
     func element(matching identifier: Int) -> DataType?
-//    func repositoryUpdateNotification()
     mutating func add(_ element: DataType)
 }
 
-extension RepositoryCache {
+extension ElementCache {
     var count: Int {
         cachedElements?.count ?? 0
     }
@@ -44,39 +47,3 @@ extension RepositoryCache {
         cachedElements?.append(element)
     }
 }
-
-//class ElementCache<T: Object, CacheManager> {
-//
-//    private var cachedElements: [T]?
-//
-////    func repositoryUpdateNotification() {
-////        let needProfile = FilterDictionary()
-////        updateLocalCache(using: needProfile)
-////        delegate?.notifyRepositoryWasUpdated()
-////    }
-//
-//    func reloadCache(using filter: FilterDictionary) {
-//
-//        cachedElements = []
-//        do {
-//            let realm = try Realm()
-//            let events = realm.objects(T.self)
-//            for event in events {
-//                add(event)
-//            }
-//
-//        } catch let error as NSError {
-//            // handle error
-//
-//            let _ = error
-//        }
-//
-//    }
-//
-//    private func add(_ element: T) {
-//        guard cachedElements != nil else {
-//            return
-//        }
-//        cachedElements!.append(element)
-//    }
-//}
