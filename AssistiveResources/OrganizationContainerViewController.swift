@@ -16,14 +16,14 @@ protocol OrganizationListContainerNotificationProtocol: class {
 }
 
 
-class OrganizationContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, RepositoryAccessorProtocol {
+class OrganizationContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CacheUpdateProtocol {
 
     @IBOutlet weak var containerTableView: UITableView!
 
     weak private var notificationDelegate:OrganizationListContainerNotificationProtocol?
     private var expandedRowIndex = -1
     private var showLoadingIndicator: Bool = false
-    private var organizationAccessor: OrganizationRepositoryAccessor!
+    private var organizationAccessor: OrganizationCacheAccessor!
     
     //MARK: - INHERITED
     
@@ -33,7 +33,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
 
         self.organizationAccessor = rsrcModelController.createOrganizationAccessor(delegate: self)
         guard self.organizationAccessor != nil else {
-            return
+            return      // TODO - need actual fail mechanism
         }
     }
     

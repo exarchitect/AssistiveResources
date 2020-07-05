@@ -16,7 +16,7 @@ struct EntityFilter {
     var entityDescriptor: Identifiable
 }
 
-class StoredEvent: Object, Identifiable {
+class SPNEvent: Object, Identifiable {
     var name: String {
         return self.eventTitle
     }

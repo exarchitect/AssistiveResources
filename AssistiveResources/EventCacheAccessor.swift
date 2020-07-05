@@ -1,5 +1,5 @@
 //
-//  EventRepositoryAccessor.swift
+//  EventCacheAccessor.swift
 //  AssistiveResources
 //
 //  Created by Bill Johnson on 1/9/17.
@@ -9,12 +9,12 @@
 import UIKit
 import RealmSwift
 
-class EventRepositoryAccessor: ElementCache {
-    var cachedElements: [StoredEvent]?
+class EventCacheAccessor: ElementCache {
+    var cachedElements: [SPNEvent]?
     weak var repository: Repository?
-    weak var delegate: RepositoryAccessorProtocol?
+    weak var delegate: CacheUpdateProtocol?
 
-    init (repository: Repository, delegate: RepositoryAccessorProtocol) {
+    init (repository: Repository, delegate: CacheUpdateProtocol) {
         self.repository = repository
         self.delegate = delegate
 
@@ -32,11 +32,11 @@ class EventRepositoryAccessor: ElementCache {
         delegate?.notifyRepositoryWasUpdated()
     }
 
-    func loadCache(using filter: FilterDictionary) {
+    internal func loadCache(using filter: FilterDictionary) {
         cachedElements = []
         do {
             let uiRealm = try Realm()
-            let events = uiRealm.objects(StoredEvent.self)
+            let events = uiRealm.objects(SPNEvent.self)
             for event in events {
                 cachedElements?.append(event)
             }
@@ -47,11 +47,11 @@ class EventRepositoryAccessor: ElementCache {
     }
 }
 
-func uncachedEvent(withIdentifier identifier: Int) -> StoredEvent? {
+func uncachedEvent(withIdentifier identifier: Int) -> SPNEvent? {
 
     do {
         let uiRealm = try Realm()
-        return uiRealm.objects(StoredEvent.self).first { $0.identifier == identifier }
+        return uiRealm.objects(SPNEvent.self).first { $0.identifier == identifier }
     } catch {
         return nil
     }

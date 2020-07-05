@@ -39,8 +39,8 @@
 		D255504A1E234626004FE72B /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550491E234626004FE72B /* Repository.swift */; };
 		D255504D1E2491AA004FE72B /* RegionalResourcesModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D255504C1E2491AA004FE72B /* RegionalResourcesModelController.swift */; };
 		D255504F1E24934F004FE72B /* RegionalResourcesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */; };
-		D25550551E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */; };
-		D25550571E24A68F004FE72B /* EventRepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */; };
+		D25550551E24A5FF004FE72B /* OrganizationCacheAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550541E24A5FF004FE72B /* OrganizationCacheAccessor.swift */; };
+		D25550571E24A68F004FE72B /* EventCacheAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25550561E24A68F004FE72B /* EventCacheAccessor.swift */; };
 		D25B5839202164F5001FE284 /* FilterSettingsTableAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25B5838202164F5001FE284 /* FilterSettingsTableAdapter.swift */; };
 		D27440EF1DF6459C008E0476 /* UXUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27440EE1DF6459C008E0476 /* UXUtilities.swift */; };
 		D27440F11DF669A3008E0476 /* EventFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27440F01DF669A3008E0476 /* EventFilterViewController.swift */; };
@@ -60,7 +60,6 @@
 		D2B7D14D1E46A58400E69D1E /* OrganizationFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D14C1E46A58400E69D1E /* OrganizationFilterViewController.swift */; };
 		D2B7D14F1E46A65E00E69D1E /* OrganizationList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2B7D14E1E46A65E00E69D1E /* OrganizationList.storyboard */; };
 		D2B7D1511E46A8E500E69D1E /* OrganizationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1501E46A8E500E69D1E /* OrganizationContainerViewController.swift */; };
-		D2B7D1561E59422D00E69D1E /* RepositoryAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */; };
 		D2B7D1581E594B8400E69D1E /* AssistiveAppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7D1571E594B8400E69D1E /* AssistiveAppController.swift */; };
 		D2C1522F2457FEF000E4EE87 /* OrganizationDetailProcessController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C1522E2457FEF000E4EE87 /* OrganizationDetailProcessController.swift */; };
 		D2C15233245C686700E4EE87 /* OrganizationDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2C15232245C686700E4EE87 /* OrganizationDetailsView.swift */; };
@@ -131,8 +130,8 @@
 		D25550491E234626004FE72B /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		D255504C1E2491AA004FE72B /* RegionalResourcesModelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionalResourcesModelController.swift; sourceTree = "<group>"; };
 		D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionalResourcesRepository.swift; sourceTree = "<group>"; };
-		D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationRepositoryAccessor.swift; sourceTree = "<group>"; };
-		D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRepositoryAccessor.swift; sourceTree = "<group>"; };
+		D25550541E24A5FF004FE72B /* OrganizationCacheAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationCacheAccessor.swift; sourceTree = "<group>"; };
+		D25550561E24A68F004FE72B /* EventCacheAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventCacheAccessor.swift; sourceTree = "<group>"; };
 		D25B5838202164F5001FE284 /* FilterSettingsTableAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSettingsTableAdapter.swift; sourceTree = "<group>"; };
 		D27440EE1DF6459C008E0476 /* UXUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UXUtilities.swift; sourceTree = "<group>"; };
 		D27440F01DF669A3008E0476 /* EventFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFilterViewController.swift; sourceTree = "<group>"; };
@@ -153,7 +152,6 @@
 		D2B7D14C1E46A58400E69D1E /* OrganizationFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationFilterViewController.swift; sourceTree = "<group>"; };
 		D2B7D14E1E46A65E00E69D1E /* OrganizationList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OrganizationList.storyboard; sourceTree = "<group>"; };
 		D2B7D1501E46A8E500E69D1E /* OrganizationContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrganizationContainerViewController.swift; sourceTree = "<group>"; };
-		D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryAccessor.swift; sourceTree = "<group>"; };
 		D2B7D1571E594B8400E69D1E /* AssistiveAppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssistiveAppController.swift; sourceTree = "<group>"; };
 		D2C1522E2457FEF000E4EE87 /* OrganizationDetailProcessController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationDetailProcessController.swift; sourceTree = "<group>"; };
 		D2C15232245C686700E4EE87 /* OrganizationDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationDetailsView.swift; sourceTree = "<group>"; };
@@ -239,7 +237,6 @@
 			isa = PBXGroup;
 			children = (
 				D25550491E234626004FE72B /* Repository.swift */,
-				D2B7D1551E59422D00E69D1E /* RepositoryAccessor.swift */,
 				D2750D6C24764596003D5B22 /* ElementCache.swift */,
 				D202D52E243E55DD00B77958 /* EntityPlaybook.swift */,
 			);
@@ -338,9 +335,9 @@
 				D255504E1E24934F004FE72B /* RegionalResourcesRepository.swift */,
 				D2446FC220282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift */,
 				D275718E1E415C3E0007CEF1 /* RepositoryProfile.swift */,
-				D25550561E24A68F004FE72B /* EventRepositoryAccessor.swift */,
+				D25550561E24A68F004FE72B /* EventCacheAccessor.swift */,
 				D24E4DC71DE74167008A11FB /* PublicEvent.swift */,
-				D25550541E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift */,
+				D25550541E24A5FF004FE72B /* OrganizationCacheAccessor.swift */,
 				D24E4DC51DE74066008A11FB /* Organization.swift */,
 			);
 			name = RegionalResources;
@@ -757,7 +754,7 @@
 				D24E4DBF1DE56D6F008A11FB /* ProfilePlaybook.swift in Sources */,
 				D2446FC320282180008BE9D2 /* RegionalResourcesRemoteDatasource.swift in Sources */,
 				D24E4DD31DED2703008A11FB /* NavListViewController.swift in Sources */,
-				D25550571E24A68F004FE72B /* EventRepositoryAccessor.swift in Sources */,
+				D25550571E24A68F004FE72B /* EventCacheAccessor.swift in Sources */,
 				D24E4DBB1DE56ACF008A11FB /* AuthenticationProcessController.swift in Sources */,
 				D202D52F243E55DD00B77958 /* EntityPlaybook.swift in Sources */,
 				D28338EC20293F2400A1837D /* FilterTableHeaderCell.swift in Sources */,
@@ -773,8 +770,7 @@
 				D27440F11DF669A3008E0476 /* EventFilterViewController.swift in Sources */,
 				D209FAC51E00CF030099BD46 /* EventDetailProcessController.swift in Sources */,
 				D2B7D1511E46A8E500E69D1E /* OrganizationContainerViewController.swift in Sources */,
-				D25550551E24A5FF004FE72B /* OrganizationRepositoryAccessor.swift in Sources */,
-				D2B7D1561E59422D00E69D1E /* RepositoryAccessor.swift in Sources */,
+				D25550551E24A5FF004FE72B /* OrganizationCacheAccessor.swift in Sources */,
 				D2B7D1491E46A50F00E69D1E /* OrganizationListTableViewCell.swift in Sources */,
 				D255504F1E24934F004FE72B /* RegionalResourcesRepository.swift in Sources */,
 				D202D5252436AAED00B77958 /* User.swift in Sources */,

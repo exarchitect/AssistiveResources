@@ -67,7 +67,7 @@ class Service {
 }
 
 
-class Organization: Object, Identifiable {
+class SPNOrganization: Object, Identifiable {
     
     var name: String {
         return self.organizationTitle

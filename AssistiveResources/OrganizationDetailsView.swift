@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 
 struct OrganizationDetailsView: View {
-    var organization: Organization?
+    var organization: SPNOrganization?
     var parentProcessController: ProcessController?
 
     var body: some View {

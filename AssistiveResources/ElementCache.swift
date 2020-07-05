@@ -12,6 +12,10 @@ import UIKit
 
 typealias Cacheable = Identifiable
 
+protocol CacheUpdateProtocol: class {
+    func notifyRepositoryWasUpdated()
+}
+
 enum CacheState {
     case notLoaded, loaded      // TODO: need .loading state
 }
@@ -22,7 +26,6 @@ protocol ElementCache {
     var cachedElements: [DataType]? { get set }
     var cacheState: CacheState { get }
     subscript(pos: Int) -> DataType? { get }
-    func loadCache(using filter: FilterDictionary)
     func element(matching identifier: Int) -> DataType?
     mutating func add(_ element: DataType)
 }

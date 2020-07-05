@@ -30,7 +30,7 @@ class EventListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureCell(event: StoredEvent, expand: Bool) {
+    func configureCell(event: SPNEvent, expand: Bool) {
         mainTitle.text = event.eventTitle
         eventDetailLabel.text = event.eventDescriptionBrief
         let sponsorPrefix = NSLocalizedString("Sponsored by ", comment: "Sponsored by....")

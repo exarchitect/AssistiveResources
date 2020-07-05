@@ -9,12 +9,12 @@
 import UIKit
 
 
-class EventDetailViewController: ProcessViewController, RepositoryAccessorProtocol {
+class EventDetailViewController: ProcessViewController, CacheUpdateProtocol {
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var headerTextLabel: UILabel!
 
-    private var event: StoredEvent?
+    private var event: SPNEvent?
 
     var resourceModel: RegionalResourcesModelController? {
         return parentProcessController?.sharedServices.regionalResources

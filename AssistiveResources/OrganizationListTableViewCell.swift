@@ -25,7 +25,7 @@ class OrganizationListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configureCell(org: Organization, expand: Bool) {
+    func configureCell(org: SPNOrganization, expand: Bool) {
         self.organizationTitle.text = org.organizationTitle
         self.mission.text = org.mission
         self.geographicScope.text = org.geographicScope

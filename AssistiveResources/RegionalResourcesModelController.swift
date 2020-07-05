@@ -34,18 +34,18 @@ class RegionalResourcesModelController: NSObject {
         }
     }
 
-    func createEventAccessor(delegate: RepositoryAccessorProtocol) -> EventRepositoryAccessor? {
+    func createEventAccessor(delegate: CacheUpdateProtocol) -> EventCacheAccessor? {
         guard let repo = regionalRepository else {
             return nil
         }
-        return EventRepositoryAccessor(repository: repo, delegate: delegate)
+        return EventCacheAccessor(repository: repo, delegate: delegate)
     }
     
-    func createOrganizationAccessor(delegate: RepositoryAccessorProtocol) -> OrganizationRepositoryAccessor? {
+    func createOrganizationAccessor(delegate: CacheUpdateProtocol) -> OrganizationCacheAccessor? {
         guard let repo = regionalRepository else {
             return nil
         }
-        return OrganizationRepositoryAccessor(repository: repo, delegate: delegate)
+        return OrganizationCacheAccessor(repository: repo, delegate: delegate)
     }
     
     func checkRepositoryUpdate() {

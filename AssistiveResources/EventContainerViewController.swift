@@ -15,7 +15,7 @@ protocol EventListContainerNotificationProtocol: class {
 }
 
 
-class EventContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, RepositoryAccessorProtocol {
+class EventContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CacheUpdateProtocol {
 
     @IBOutlet weak var containerTableView: UITableView!
     @IBOutlet weak var filterValueDescriptionLabelOutlet: UILabel?
@@ -23,7 +23,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     weak private var notificationDelegate:EventListContainerNotificationProtocol?
     private var expandedRowIndex = -1
     private var showLoadingIndicator: Bool = false
-    private var eventAccessor: EventRepositoryAccessor!
+    private var eventAccessor: EventCacheAccessor!
     private var filter: FilterDictionary?
 
 

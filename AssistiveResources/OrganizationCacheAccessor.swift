@@ -1,25 +1,21 @@
 //
-//  RepositoryAccessor.swift
+//  OrganizationCacheAccessor.swift
 //  AssistiveResources
 //
-//  Created by Bill Johnson on 2/18/17.
+//  Created by Bill Johnson on 1/9/17.
 //  Copyright © 2017 SevenPlusTwo. All rights reserved.
 //
 
 import UIKit
 import RealmSwift
 
-protocol RepositoryAccessorProtocol: class {
-    func notifyRepositoryWasUpdated()
-}
-/*
-// generic class for all object accessors
-class RepositoryAccess <T: Object, Cacheable> {
-    var cachedElements: [T]?
-    weak var repository: Repository?
-    weak var delegate: RepositoryAccessorProtocol?
 
-    init (repository: Repository, delegate: RepositoryAccessorProtocol) {
+class OrganizationCacheAccessor: ElementCache {
+    var cachedElements: [SPNOrganization]?
+    weak var repository: Repository?
+    weak var delegate: CacheUpdateProtocol?
+
+    init (repository: Repository, delegate: CacheUpdateProtocol) {
         self.repository = repository
         self.delegate = delegate
 
@@ -37,11 +33,11 @@ class RepositoryAccess <T: Object, Cacheable> {
         delegate?.notifyRepositoryWasUpdated()
     }
 
-    func loadCache(using filter: FilterDictionary) {
+    internal func loadCache(using filter: FilterDictionary) {
         cachedElements = []
         do {
             let uiRealm = try Realm()
-            let events = uiRealm.objects(T.self)
+            let events = uiRealm.objects(SPNOrganization.self)
             for event in events {
                 cachedElements?.append(event)
             }
@@ -51,4 +47,12 @@ class RepositoryAccess <T: Object, Cacheable> {
         }
     }
 }
-*/
+
+func uncachedOrganization(withIdentifier identifier: Int) -> SPNOrganization? {
+    do {
+        let uiRealm = try Realm()
+        return uiRealm.objects(SPNOrganization.self).first { $0.identifier == identifier }
+    } catch {
+        return nil
+    }
+}
