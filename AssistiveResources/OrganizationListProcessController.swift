@@ -11,7 +11,6 @@ import UIKit
 class OrganizationListProcessController: ProcessController {
     
     override func createPrimaryViewController() -> UIViewController? {
-//        return instantiateProcessViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID")
         let primaryViewController = instantiateProcessViewController(storyboardName: "OrganizationList", storyboardID: "OrganizationListStoryboardID")
         primaryViewController?.parentProcessController = self
         return primaryViewController
@@ -19,9 +18,6 @@ class OrganizationListProcessController: ProcessController {
 
     //MARK: - debug
     deinit {
-        let _ = 0
         print("deallocating OrganizationListPC")
     }
-    
-
 }

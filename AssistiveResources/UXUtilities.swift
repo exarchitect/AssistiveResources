@@ -38,6 +38,7 @@ func stopActivityIndicator() {
 
 
 extension UIApplication {
+    // can ignore "keyWindow was deprecated in iOS 13.0" warning as we do not use multiple scenes
     class func topViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
         if let navigationController = controller as? UINavigationController {
             return topViewController(controller: navigationController.visibleViewController)
@@ -63,7 +64,7 @@ func instantiateViewController<T>(storyboardName: String, storyboardID: String) 
     return viewController as? T
 }
 
-func instantiateProcessViewController(storyboardName: String, storyboardID: String) -> ProcessViewController? {
+func instantiateProcessViewController(storyboardName: String, storyboardID: String) -> ViewControllable? {
     let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)
-    return storyboard.instantiateViewController(withIdentifier: storyboardID) as? ProcessViewController
+    return storyboard.instantiateViewController(withIdentifier: storyboardID) as? ViewControllable
 }

@@ -12,7 +12,9 @@ import UIKit
 let updateNavigationNotificationKeyName = NSNotification.Name(rawValue: "key_notify_navigation_content_changed")
 
 
-class NavListViewController: ProcessViewController {
+class NavListViewController: UIViewController, ViewControllable {
+
+    weak var parentProcessController: ProcessController?
 
     private var navigationItems = NavigationCategories()
     private var isVisible = false

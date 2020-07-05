@@ -10,16 +10,15 @@ import UIKit
 
 
 
-class EventListViewController: ProcessViewController, EventListContainerNotificationProtocol, EventFilterResponseProtocol {
+class EventListViewController: UIViewController, ViewControllable, EventListContainerNotificationProtocol, EventFilterResponseProtocol {
+
+    weak var parentProcessController: ProcessController?
 
     @IBOutlet weak var headerView: HeaderView!
     
     var filterViewController:EventFilterViewController?
     weak private var containerViewController:EventContainerViewController?
     var filterDict = FilterDictionary()
-    var resourcesModelController: RegionalResourcesModelController? {
-        return parentProcessController?.sharedServices.regionalResources
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +38,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let rsrcsModelController = resourcesModelController else {
+        guard let rsrcsModelController = resourcesModel else {
             return
         }
         
@@ -81,7 +80,7 @@ class EventListViewController: ProcessViewController, EventListContainerNotifica
 
         let filterViewController: EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
         if let filterVwCtl = filterViewController {
-            filterVwCtl.configuration(resources: resourcesModelController, selectorDelegate: self, filter: filterDict)
+            filterVwCtl.configuration(resources: resourcesModel, selectorDelegate: self, filter: filterDict)
             present(filterVwCtl, animated: true, completion: nil)
             self.filterViewController = filterVwCtl
         }

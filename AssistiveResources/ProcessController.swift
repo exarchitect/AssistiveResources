@@ -34,3 +34,22 @@ class ProcessController: NSObject {
         fatalError("override \(#function)")
     }
 }
+
+protocol ViewControllable: UIViewController {
+    var parentProcessController: ProcessController? { get set }
+    var userModel: User? { get }
+    var resourcesModel: RegionalResourcesModelController? { get }
+    func execute(command: AssistiveCommand)
+}
+
+extension ViewControllable {
+    var userModel: User? {
+        parentProcessController?.sharedServices.userModel
+    }
+    var resourcesModel: RegionalResourcesModelController? {
+        parentProcessController?.sharedServices.regionalResources
+    }
+    func execute(command: AssistiveCommand){
+        parentProcessController?.commandHandler.execute(command: command)
+    }
+}

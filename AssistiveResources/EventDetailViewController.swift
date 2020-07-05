@@ -9,16 +9,14 @@
 import UIKit
 
 
-class EventDetailViewController: ProcessViewController, CacheUpdateProtocol {
+class EventDetailViewController: UIViewController, ViewControllable, CacheUpdateProtocol {
+
+    weak var parentProcessController: ProcessController?
 
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var headerTextLabel: UILabel!
 
     private var event: SPNEvent?
-
-    var resourceModel: RegionalResourcesModelController? {
-        return parentProcessController?.sharedServices.regionalResources
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

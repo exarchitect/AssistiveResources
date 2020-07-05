@@ -9,14 +9,13 @@
 import UIKit
 
 
-class OrganizationListViewController: ProcessViewController, OrganizationListContainerNotificationProtocol {
+class OrganizationListViewController: UIViewController, ViewControllable, OrganizationListContainerNotificationProtocol {
+
+    weak var parentProcessController: ProcessController?
 
     @IBOutlet weak var headerView: HeaderView!
     
     //private var filterViewController:OrganizationFilterViewController?
-    var resourcesModelController: RegionalResourcesModelController? {
-        return parentProcessController?.sharedServices.regionalResources
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +29,7 @@ class OrganizationListViewController: ProcessViewController, OrganizationListCon
 
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let rsrcModelController = resourcesModelController else {
+        guard let rsrcModelController = resourcesModel else {
             return
         }
         if segue.identifier == "OrganizationContainerSegueID" {

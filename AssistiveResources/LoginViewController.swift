@@ -9,11 +9,9 @@
 import UIKit
 
 
-class LoginViewController: ProcessViewController {
+class LoginViewController: UIViewController, ViewControllable {
 
-    var user: User? {
-        parentProcessController?.sharedServices.userModel
-    }
+    weak var parentProcessController: ProcessController?
     var authenticationDelegate: AuthenticationProtocol? {
         parentProcessController as? AuthenticationProtocol
     }
@@ -28,7 +26,7 @@ class LoginViewController: ProcessViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        precondition(user != nil)
+        precondition(userModel != nil)
         precondition(authenticationDelegate != nil)
     }
 
