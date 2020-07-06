@@ -11,10 +11,10 @@ import RealmSwift
 
 class EventCacheAccessor: ElementCache {
     var cachedElements: [SPNEvent]?
-    weak var repository: Repository?
+    weak var repository: LocalRepository?
     weak var delegate: CacheUpdateProtocol?
 
-    init (repository: Repository, delegate: CacheUpdateProtocol) {
+    init (repository: LocalRepository, delegate: CacheUpdateProtocol) {
         self.repository = repository
         self.delegate = delegate
 
@@ -56,13 +56,3 @@ func uncachedEvent(withIdentifier identifier: Int) -> SPNEvent? {
         return nil
     }
 }
-
-//func uncachedObject<T: Object>(withIdentifier identifier: Int) -> T? {
-//
-//    do {
-//        let uiRealm = try Realm()
-//        return uiRealm.objects(T.self).first { $0.identifier == identifier }
-//    } catch {
-//        return nil
-//    }
-//}

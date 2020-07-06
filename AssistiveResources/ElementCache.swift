@@ -22,7 +22,7 @@ enum CacheState {
 
 protocol ElementCache {
     associatedtype DataType: Cacheable
-    var repository: Repository? { get set }
+    var repository: LocalRepository? { get set }
     var cachedElements: [DataType]? { get set }
     var cacheState: CacheState { get }
     subscript(pos: Int) -> DataType? { get }

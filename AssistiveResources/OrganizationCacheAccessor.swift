@@ -12,10 +12,10 @@ import RealmSwift
 
 class OrganizationCacheAccessor: ElementCache {
     var cachedElements: [SPNOrganization]?
-    weak var repository: Repository?
+    weak var repository: LocalRepository?
     weak var delegate: CacheUpdateProtocol?
 
-    init (repository: Repository, delegate: CacheUpdateProtocol) {
+    init (repository: LocalRepository, delegate: CacheUpdateProtocol) {
         self.repository = repository
         self.delegate = delegate
 

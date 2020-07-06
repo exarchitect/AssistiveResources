@@ -11,98 +11,78 @@ import UIKit
 
 let kExpirationSeconds = 60 * 60 * 24       // 24 hours
 
-
 typealias RepositoryUpdateCompletionHandlerType = (_ success: Bool) -> Void
 typealias RemoteDataRetrievalCompletionType = (_ success: Bool) -> Void
-
 
 enum RepositoryState {
     case current, outdated, invalidLocation, empty
 }
 
-protocol RemoteDatasourceProtocol: class {
+protocol RemoteDatasource {
     func validateConnection ()
     func pull (completion: @escaping RemoteDataRetrievalCompletionType)
 }
 
+protocol LocalRepository: class {
+    var available: Bool { get set }
+    var dataUpdateCompletion: RepositoryUpdateCompletionHandlerType? { get set }
 
-class Repository: NSObject {
-    
-    var available = false
-    var dataUpdateCompletion: RepositoryUpdateCompletionHandlerType?
-    
-    func load (completion: @escaping RepositoryUpdateCompletionHandlerType) {
+    func repositoryStateUpdate() -> RepositoryState
+    func initiateRemoteLoading()
+    func clearLocalStore()
+    func repositoryUpdateNotificationKey() -> String
+
+    func load(completion: @escaping RepositoryUpdateCompletionHandlerType)
+    func backgroundUpdate()
+    func beginRepositoryUpdate()
+    func endRepositoryUpdate()
+}
+
+extension LocalRepository {
+    func load(completion: @escaping RepositoryUpdateCompletionHandlerType) {
+
+        let repoStartupState = self.repositoryStateUpdate()
         dataUpdateCompletion = completion
-        
-        let repoStartupState = self.checkRepositoryState()
-        
+
         switch repoStartupState {
-            
+
         case .current:
             available = true
-            dataUpdateCompletion?(true)
+            completion(true)
             dataUpdateCompletion = nil
 
-        case .outdated:
+        case .outdated:     // handled on background update
             available = true
-            dataUpdateCompletion?(true)
+            completion(true)
             dataUpdateCompletion = nil
 
         case .invalidLocation:
             initiateRemoteLoading()
-            
+
         case .empty:
             initiateRemoteLoading()
         }
     }
 
     func backgroundUpdate() {
-        let repoCurrentState = self.checkRepositoryState()
-        
-        switch repoCurrentState {
+        let repoState = repositoryStateUpdate()
+
+        switch repoState {
         case .current:
             break
-        case .outdated:
-            initiateRemoteLoading()
-        case .invalidLocation:
-            initiateRemoteLoading()
-        case .empty:
+        case .outdated, .invalidLocation, .empty:
             initiateRemoteLoading()
         }
     }
 
+    func beginRepositoryUpdate() {
+        available = false
+    }
 
-    // MARK: - methods to override
-    
-    internal func checkRepositoryState() -> RepositoryState {
-        fatalError("override \(#function)")
-    }
-    
-    internal func initiateRemoteLoading() {
-        fatalError("override \(#function)")
-    }
-    
-    internal func clearLocalStore() {
-        fatalError("override \(#function)")
-    }
-    
-    internal func repositoryUpdateNotificationKey () -> String {
-        fatalError("override \(#function)")
-    }
-    
+    func endRepositoryUpdate() {
+        available = true
 
-    // MARK: - methods for subclass use
-    
-    internal func beginRepositoryUpdate() {
-        self.available = false
-    }
-    
-    internal func endRepositoryUpdate() {
-        self.available = true
-        
         let notificationkey = self.repositoryUpdateNotificationKey()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationkey), object: nil)
     }
-
 }
-

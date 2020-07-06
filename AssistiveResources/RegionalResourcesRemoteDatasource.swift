@@ -9,10 +9,8 @@
 import UIKit
 import SwiftDate
 
-class RegionalResourcesRemoteDatasource: NSObject, RemoteDatasourceProtocol {
+class RegionalResourcesRemoteDatasource: RemoteDatasource {
     
-//    var eventList: [StoredEvent]! = nil
-//    var orgList: [Organization]! = nil
     var isRetrievingData: Bool = false
 
     func validateConnection() {
@@ -20,16 +18,9 @@ class RegionalResourcesRemoteDatasource: NSObject, RemoteDatasourceProtocol {
     }
     
     func pull(completion: @escaping RemoteDataRetrievalCompletionType) {
-
-        self.isRetrievingData = true
+        isRetrievingData = true
         
-        // GET THE DATA
-        
-//        // TEST
-//        self.eventList = testEvents()
-//
-//        // TEST
-//        self.orgList = testOrganizations()
+        // remote call to retrieve data
         
         DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 4.0)) {
             self.isRetrievingData = false
@@ -44,11 +35,6 @@ class RegionalResourcesRemoteDatasource: NSObject, RemoteDatasourceProtocol {
     func getOrganizations() -> [SPNOrganization] {
         return testOrganizations()
     }
-    
-//    func releaseRemote () {
-//        self.eventList = nil;
-//        self.orgList = nil;
-//    }
 }
 
 

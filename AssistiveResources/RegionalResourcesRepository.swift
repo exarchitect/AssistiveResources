@@ -10,8 +10,10 @@ import UIKit
 import RealmSwift
 
 
-class RegionalResourcesRepository: Repository {
-    
+class RegionalResourcesRepository: LocalRepository {
+    var available = false
+    var dataUpdateCompletion: RepositoryUpdateCompletionHandlerType?
+
     private var location: LocationProfile?
     private var remoteDataSource = RegionalResourcesRemoteDatasource()
 
@@ -23,16 +25,14 @@ class RegionalResourcesRepository: Repository {
 
     init(location: LocationProfile)
     {
-        super.init()
-        
         self.location = location
     }
-    
-    override func checkRepositoryState() -> RepositoryState {
+
+    func repositoryStateUpdate() -> RepositoryState {
 
         do {
             let realmDB = try Realm()
-            return self.repositoryState(db: realmDB)
+            return internalRepositoryStateUpdate(db: realmDB)
         } catch let error as NSError {
             // handle error
             // TODO - if try fails, then the db format has changed - invalidate the database & delete
@@ -41,10 +41,9 @@ class RegionalResourcesRepository: Repository {
             return RepositoryState.empty
         }
     }
-    
 
-    override func initiateRemoteLoading() {
-        
+    func initiateRemoteLoading() {
+
         guard self.retrievingData == false else {
             return
         }
@@ -71,52 +70,43 @@ class RegionalResourcesRepository: Repository {
             }
         }
     }
-    
-    override func clearLocalStore() {
+
+    func clearLocalStore() {
         // TODO clear contents of invalid or outdated db
     }
 
-    
-    private func repositoryState(db: Realm) -> RepositoryState {
-        
-        var haveLocalDatabase: Bool
-        
-        let profilesFound = db.objects(RepositoryProfile.self)
-        haveLocalDatabase = !profilesFound.isEmpty
-        
-        if haveLocalDatabase {
-            
-            let profile = profilesFound[0]
-            let locationMatch: Bool = (profile.location == self.location?.zipCode)
-            let expireDate = profile.lastUpdated.addingTimeInterval(TimeInterval(kExpirationSeconds))
-            let now = Date()
-            let dateCompare = now.compare(expireDate)
-            let refreshLocalStore = (dateCompare == ComparisonResult.orderedDescending)
+    private func internalRepositoryStateUpdate(db: Realm) -> RepositoryState {
+        let repoProfiles = db.objects(RepositoryProfile.self)
 
-            guard locationMatch == true else {
-                return RepositoryState.invalidLocation
-            }
-            if refreshLocalStore == true {
-                return RepositoryState.outdated
-            } else {
-                return RepositoryState.current
-            }
-
-        } else {        // NO profiles found, so no valid database
+        guard repoProfiles.isEmpty == false else {
             // create empty database
             let dbProfile = RepositoryProfile()
             dbProfile.save()
             return RepositoryState.empty
         }
+
+        let profile = repoProfiles[0]
+        let locationMatch: Bool = (profile.location == self.location?.zipCode)
+        let expireDate = profile.lastUpdated.addingTimeInterval(TimeInterval(kExpirationSeconds))
+        let now = Date()
+        let dateCompare = now.compare(expireDate)
+        let staleLocalStore = (dateCompare == ComparisonResult.orderedDescending)
+
+        guard locationMatch == true else {
+            return RepositoryState.invalidLocation
+        }
+        if staleLocalStore == true {
+            return RepositoryState.outdated
+        } else {
+            return RepositoryState.current
+        }
     }
-    
-    override func repositoryUpdateNotificationKey () -> String {
+
+    func repositoryUpdateNotificationKey () -> String {
         "key_notify_resource_repository_changed"
     }
-    
 
-
-    // MARK: - Realm
+    // Realm
         
     //    func setupDatabasePath() {
     //        let dbName:String = "resources_v1.realm";
