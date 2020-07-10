@@ -50,7 +50,7 @@ extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource 
             return cell
             
         } else {
-            // row for selecting an enumerated type (except for age)
+            // row for selecting a filter item
             let isSelectedRow = filterItems[indexPath.section].element.isValueSelected(rawValue: indexPath.row.convertToEnum())
             let cell: FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
             cell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.convertToEnum()), isChecked: isSelectedRow)
@@ -195,7 +195,7 @@ extension EventFilterViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 
     func selectMonthYearOfBirth(dobMonth: Int, dobYear: Int, closure: @escaping (_ dobMonth: Int?, _ dobYear: Int?) -> Void) {
         let alert = UIAlertController(title: "Select Birth Month and Year", message: "\n\n\n\n\n\n", preferredStyle: .alert)
-        alert.isModalInPopover = true
+        //alert.isModalInPopover = true
 
         let picker = UIPickerView(frame: CGRect(x: 5, y: 30, width: 250, height: 140))
 

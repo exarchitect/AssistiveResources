@@ -10,9 +10,12 @@ import Foundation
 import SwiftDate
 
 struct TimeBlock {
-    var startDateTime: Date!
+    var startDateTime: Date
     var durationMinutes: Int
-    var rangeDescription: String!
+    private var rangeDescription: String
+    var verboseDescription: String {
+        rangeDescription
+    }
     var year: Int {
         return startDateTime.year
     }
@@ -65,7 +68,9 @@ private func timeRange(date: Date, durationInMinutes: Int) -> String {
 }
 
 func ageSince(monthOfBirth: Int, yearOfBirth: Int) -> Int {
-    guard (1 ... 12).contains(monthOfBirth), (1900 ... 2100).contains(yearOfBirth) else {
+    let thisYear = Calendar.current.component(.year, from: Date())
+
+    guard (1 ... 12).contains(monthOfBirth), (1900 ... thisYear).contains(yearOfBirth) else {
         return 0
     }
     guard let dobApproximate = dobUsing(monthOfBirth: monthOfBirth, yearOfBirth: yearOfBirth) else {
@@ -79,7 +84,9 @@ func ageSince(monthOfBirth: Int, yearOfBirth: Int) -> Int {
 }
 
 func dobUsing(monthOfBirth: Int, yearOfBirth: Int) -> Date? {
-    guard (1 ... 12).contains(monthOfBirth), (1900 ... 2100).contains(yearOfBirth) else {
+    let thisYear = Calendar.current.component(.year, from: Date())
+
+    guard (1 ... 12).contains(monthOfBirth), (1900 ... thisYear).contains(yearOfBirth) else {
         return nil
     }
     let calendar = Calendar.current

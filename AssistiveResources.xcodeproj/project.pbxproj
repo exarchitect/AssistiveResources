@@ -941,7 +941,6 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Realm\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/RealmSwift\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/Timepiece\"",
 				);
 				INFOPLIST_FILE = AssistiveResources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -950,7 +949,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sevenplustwo.AssistiveResources;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "${PODS_ROOT}/Headers/Public/Backendless/Backendless-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -969,7 +968,6 @@
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Realm\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/RealmSwift\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/Timepiece\"",
 				);
 				INFOPLIST_FILE = AssistiveResources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -978,7 +976,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sevenplustwo.AssistiveResources;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "${PODS_ROOT}/Headers/Public/Backendless/Backendless-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

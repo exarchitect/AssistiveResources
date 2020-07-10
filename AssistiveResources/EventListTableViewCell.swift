@@ -47,7 +47,7 @@ class EventListTableViewCell: UITableViewCell {
         guard let timeBlock = event.timeBlock else {
             return
         }
-        dateTimeLabel.text = timeBlock.rangeDescription
+        dateTimeLabel.text = timeBlock.verboseDescription
         monthLabel.text = timeBlock.monthAbbreviation
         dayOfMonthLabel.text = "\(timeBlock.day)"
         dayOfWeekLabel.text = timeBlock.weekdayAbbreviation

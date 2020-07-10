@@ -77,6 +77,9 @@ struct AgeFilter: FilterElement {
         guard hasValue == true, let monthsMatch = approximateDOB?.matchesCurrentMonth() else {
             return "not set"
         }
+        guard age > 0 else {
+            return "Less than 1 year old"
+        }
         return monthsMatch ? "\(age) years old this month" : "\(age) years old"
     }
     var hasValue: Bool {
@@ -339,7 +342,7 @@ enum DevelopmentalDiagnosis: Int, CaseIterable, DescribableEnum {
 }
 
 struct DiagnosisFilter: FilterElement {
-    var diagnoses: [DevelopmentalDiagnosis] = []
+    var diagnoses: [DevelopmentalDiagnosis] = []        // support multiple diagnoses
     static var key: String {
         "diagnosis"
     }

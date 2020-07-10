@@ -33,7 +33,7 @@ class OrganizationListTableViewCell: UITableViewCell {
         self.selectionStyle = UITableViewCellSelectionStyle.none
         
         if expand {
-            self.backgroundColor = UIColor.groupTableViewBackground
+            self.backgroundColor = UIColor.systemGroupedBackground
         } else {
             self.backgroundColor = UIColor.white
         }

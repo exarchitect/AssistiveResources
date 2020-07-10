@@ -31,7 +31,7 @@ class FilterTableHeaderCell: UITableViewCell {
         } else {
             headerLabelOutlet.textColor = UIColor.lightGray
         }
-        backgroundColor = UIColor.groupTableViewBackground
+        backgroundColor = UIColor.systemGroupedBackground
 
         self.subheadLabelOutlet.text = subText
         if subTextEnabled {
