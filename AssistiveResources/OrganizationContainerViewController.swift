@@ -11,8 +11,8 @@ import UIKit
 
 
 protocol OrganizationListContainerNotificationProtocol: class {
-    func notifyDetailSelected(for descriptor: OrganizationDescriptor)
-    func notifyFilterSelected()
+    func showOrganizationDetail(for descriptor: OrganizationDescriptor)
+    func modifyOrganizationFilter()
 }
 
 
@@ -22,7 +22,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
 
     weak private var notificationDelegate:OrganizationListContainerNotificationProtocol?
     private var expandedRowIndex = -1
-    private var showLoadingIndicator: Bool = false
+    private var isLoading: Bool = false
     private var organizationAccessor: OrganizationCacheAccessor!
     
     //MARK: - INHERITED
@@ -45,7 +45,6 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //precondition(self.resources != nil)
         precondition(self.notificationDelegate != nil)
         
         self.containerTableView.delegate = self
@@ -63,7 +62,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
 
         self.organizationAccessor.loadCache(using: FilterDictionary())
         if self.organizationAccessor.cacheState == .notLoaded {
-            self.showLoadingIndicator = true
+            isLoading = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
                 startActivityIndicator(title: nil, message: "loading...")
             }
@@ -78,9 +77,9 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     
     // MARK: - REPOSITORY ACCESSOR PROTOCOL
     
-    func notifyRepositoryWasUpdated() {
-        if self.showLoadingIndicator {
-            self.showLoadingIndicator = false
+    func cacheUpdateNotification() {
+        if isLoading == true {
+            isLoading = false
             stopActivityIndicator()
         }
         
@@ -121,8 +120,8 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     // MARK: - UTILITIES
     
     func refreshOrgContent() {
-        if self.showLoadingIndicator {
-            self.showLoadingIndicator = false
+        if isLoading == true {
+            isLoading = false
             stopActivityIndicator()
         }
         
@@ -136,11 +135,11 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
         guard row > -1, let descriptor = organizationAccessor[row]?.descriptor else {
             return
         }
-        notificationDelegate?.notifyDetailSelected(for: descriptor)
+        notificationDelegate?.showOrganizationDetail(for: descriptor)
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {
-        notificationDelegate?.notifyFilterSelected()
+        notificationDelegate?.modifyOrganizationFilter()
     }
     
 }

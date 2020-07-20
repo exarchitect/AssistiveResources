@@ -29,7 +29,7 @@ class EventCacheAccessor: ElementCache {
     @objc func repositoryUpdateNotification() {
         let needProfile = FilterDictionary()
         loadCache(using: needProfile)
-        delegate?.notifyRepositoryWasUpdated()
+        delegate?.cacheUpdateNotification()
     }
 
     internal func loadCache(using filter: FilterDictionary) {

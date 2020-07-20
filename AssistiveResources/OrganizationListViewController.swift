@@ -40,11 +40,11 @@ class OrganizationListViewController: UIViewController, ViewControllable, Organi
 
     //MARK: delegate
     
-    func notifyDetailSelected(for descriptor: OrganizationDescriptor) {
+    func showOrganizationDetail(for descriptor: OrganizationDescriptor) {
         execute(command: .showOrganizationDetail(descriptor))
     }
 
-    func notifyFilterSelected() {
+    func modifyOrganizationFilter() {
 //        let filterViewController: EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
 //        if let filterVwCtl = filterViewController {
 //            filterVwCtl.configuration(resources: resourcesModelController, selectorDelegate: self, filter: filterDict)

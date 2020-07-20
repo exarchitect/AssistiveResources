@@ -10,8 +10,8 @@ import UIKit
 
 
 protocol EventListContainerNotificationProtocol: class {
-    func showDetail(for descriptor: EventDescriptor)
-    func notifyFilterSelected()
+    func showEventDetail(for descriptor: EventDescriptor)
+    func modifyEventFilter()
 }
 
 
@@ -19,23 +19,22 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 
     @IBOutlet weak var containerTableView: UITableView!
     @IBOutlet weak var filterValueDescriptionLabelOutlet: UILabel?
-    
+
     weak private var notificationDelegate:EventListContainerNotificationProtocol?
     private var expandedRowIndex = -1
-    private var showLoadingIndicator: Bool = false
+    private var isLoading: Bool = false
     private var eventAccessor: EventCacheAccessor!
     private var filter: FilterDictionary?
 
-
     func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
-    
+
         notificationDelegate = delegate
         guard let eventAccessor = rsrcModelController.createEventAccessor(delegate: self) else {
             return
         }
         self.eventAccessor = eventAccessor
     }
-    
+
     func setFilter(fltr: FilterDictionary) {
         filter = fltr
         filterValueDescriptionLabelOutlet?.text = ElementInteractor.naturalLanguageText(filters: fltr)
@@ -46,7 +45,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     deinit {
         print("deallocating EventContainerVC")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,8 +59,8 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         containerTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))   // this gets rid of separator lines for empty cells
         
         eventAccessor.loadCache(using: FilterDictionary())
-        if self.eventAccessor.cacheState == .notLoaded {
-            self.showLoadingIndicator = true
+        if eventAccessor.cacheState == .notLoaded {
+            isLoading = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
                 startActivityIndicator(title: nil, message: "loading...\n")
             }
@@ -79,11 +78,11 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     
-    //MARK: - RepositoryAccessorProtocol
+    //MARK: - CacheUpdateProtocol
     
-    func notifyRepositoryWasUpdated() {
-        if self.showLoadingIndicator {
-            self.showLoadingIndicator = false
+    func cacheUpdateNotification() {
+        if isLoading == true {
+            isLoading = false
             stopActivityIndicator()
         }
         
@@ -91,15 +90,15 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     }
 
     //MARK: - utils
-    
+
     private func expandCollapseRow(row: Int)
     {
         var indexPathToExpand : IndexPath
         var indexPathToCollapse : IndexPath
         var pathArray : NSArray
-        
-        if expandedRowIndex >= 0 {    // have an expanded row
-            if row == expandedRowIndex {
+
+        if expandedRowIndex >= 0 {    // there is an existing expanded row
+            if row == expandedRowIndex {    // selected row is already expanded
                 indexPathToCollapse = IndexPath(row: row, section: 0)
                 pathArray = NSArray(objects: indexPathToCollapse)
                 expandedRowIndex = -1
@@ -116,17 +115,17 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         }
         containerTableView.reloadRows(at: pathArray as! [IndexPath], with: UITableViewRowAnimation.automatic)
     }
-    
+
     //MARK: - tableView delegates
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (expandedRowIndex == indexPath.row) ? 286.0 : 100
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.eventAccessor.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let kEventListCellID = "EventListCellIdentifier"
@@ -140,38 +139,37 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         expandCollapseRow(row: indexPath.row)
     }
-    
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return false
     }
-    
+
     // MARK: - @IBAction
-    
+
     @IBAction func showRowDetailButtonAction(_ sender: UIButton) {
         let row = getRowFrom(sender, self.containerTableView)
         guard row > -1, let descriptor = eventAccessor[row]?.descriptor else {
             return
         }
-        notificationDelegate?.showDetail(for: descriptor)
+        notificationDelegate?.showEventDetail(for: descriptor)
     }
-    
+
     @IBAction func filterButtonAction(_ sender: Any) {
-        if (!self.showLoadingIndicator) {
-            notificationDelegate?.notifyFilterSelected()
+        if isLoading == false {
+            notificationDelegate?.modifyEventFilter()
         }
     }
- 
+
     @IBAction func filterTextButtonAction(_ sender: Any) {
-        if (!self.showLoadingIndicator) {
-            notificationDelegate?.notifyFilterSelected()
+        if isLoading == false {
+            notificationDelegate?.modifyEventFilter()
         }
     }
-    
 }
 
 
@@ -180,7 +178,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 func getRowFrom(_ cellItem: UIView, _ table: UITableView) -> Int {
     var parentCell: UIView! = cellItem as UIView
     var returnRow = -1
-    
+
     repeat {
         parentCell = parentCell.superview!
     } while !(parentCell is UITableViewCell)

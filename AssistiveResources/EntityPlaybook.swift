@@ -11,7 +11,7 @@ import Foundation
 protocol Identifiable {
     var name: String { get }
     var identifier: Int { get }
-    var type: EntityType { get }
+//    var type: EntityType { get }
 }
 
 typealias EntityDictionary = [String: Identifiable]

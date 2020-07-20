@@ -23,7 +23,7 @@ class EventListViewController: UIViewController, ViewControllable, EventListCont
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupFilter()
+        setupFilterData()
         headerView.titleLabel.text = "Upcoming Events"
 }
     
@@ -56,12 +56,12 @@ class EventListViewController: UIViewController, ViewControllable, EventListCont
     }
     
     @IBAction func filterButtonAction(_ sender: Any) {
-        notifyFilterSelected()
+        modifyEventFilter()
     }
 
     //MARK:- Utilities
 
-    func setupFilter() {
+    func setupFilterData() {
         filterDict[ProximityFilter.key] = ProximityFilter(range: .twentyFiveMiles)
         filterDict[AgeFilter.key] = AgeFilter(monthOfBirth: 4, yearOfBirth: 1994)
         filterDict[DiagnosisFilter.key] = DiagnosisFilter(diagnoses: [.spinaBifida])
@@ -72,11 +72,11 @@ class EventListViewController: UIViewController, ViewControllable, EventListCont
 
     //MARK: - EventListContainerNotificationProtocol delegate
     
-    func showDetail(for descriptor: EventDescriptor) {
+    func showEventDetail(for descriptor: EventDescriptor) {
         execute(command: .showEventDetail(descriptor))
     }
     
-    func notifyFilterSelected() {
+    func modifyEventFilter() {
 
         let filterViewController: EventFilterViewController? = instantiateViewController(storyboardName: "EventList", storyboardID: "filterStoryboardID")
         if let filterVwCtl = filterViewController {

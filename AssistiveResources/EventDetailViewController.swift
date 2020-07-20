@@ -36,7 +36,7 @@ class EventDetailViewController: UIViewController, ViewControllable, CacheUpdate
         print("deallocating eventdetailVC")
     }
 
-    func notifyRepositoryWasUpdated() {
+    func cacheUpdateNotification() {
         // TODO
     }
     

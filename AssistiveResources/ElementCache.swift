@@ -13,7 +13,7 @@ import UIKit
 typealias Cacheable = Identifiable
 
 protocol CacheUpdateProtocol: class {
-    func notifyRepositoryWasUpdated()
+    func cacheUpdateNotification()
 }
 
 enum CacheState {
