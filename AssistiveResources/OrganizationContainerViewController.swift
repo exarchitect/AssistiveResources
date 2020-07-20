@@ -22,9 +22,9 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
 
     weak private var notificationDelegate:OrganizationListContainerNotificationProtocol?
     private var expandedRowIndex = -1
-    private var isLoading: Bool = false
     private var organizationAccessor: OrganizationCacheAccessor!
-    
+    private var activityIndicator = ActivityIndicator()
+
     //MARK: - INHERITED
     
     func configuration(rsrcModelController: RegionalResourcesModelController, delegate: OrganizationListContainerNotificationProtocol) {
@@ -62,9 +62,8 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
 
         self.organizationAccessor.loadCache(using: FilterDictionary())
         if self.organizationAccessor.cacheState == .notLoaded {
-            isLoading = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
-                startActivityIndicator(title: nil, message: "loading...")
+                self.activityIndicator.start(title: nil, message: "loading...")
             }
         }
     }
@@ -78,12 +77,8 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     // MARK: - REPOSITORY ACCESSOR PROTOCOL
     
     func cacheUpdateNotification() {
-        if isLoading == true {
-            isLoading = false
-            stopActivityIndicator()
-        }
-        
-        self.containerTableView.reloadData()
+        activityIndicator.stop()
+        containerTableView.reloadData()
     }
 
 
@@ -120,12 +115,8 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     // MARK: - UTILITIES
     
     func refreshOrgContent() {
-        if isLoading == true {
-            isLoading = false
-            stopActivityIndicator()
-        }
-        
-        self.containerTableView.reloadData()
+        activityIndicator.stop()
+        containerTableView.reloadData()
     }
     
     // MARK: - @IBAction

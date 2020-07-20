@@ -22,9 +22,9 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
 
     weak private var notificationDelegate:EventListContainerNotificationProtocol?
     private var expandedRowIndex = -1
-    private var isLoading: Bool = false
     private var eventAccessor: EventCacheAccessor!
     private var filter: FilterDictionary?
+    private var activityIndicator = ActivityIndicator()
 
     func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
 
@@ -60,9 +60,8 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
         
         eventAccessor.loadCache(using: FilterDictionary())
         if eventAccessor.cacheState == .notLoaded {
-            isLoading = true
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now())) {
-                startActivityIndicator(title: nil, message: "loading...\n")
+                self.activityIndicator.start(title: nil, message: "loading...\n")
             }
         }
         guard let filterDictionary = filter else {
@@ -81,12 +80,9 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     //MARK: - CacheUpdateProtocol
     
     func cacheUpdateNotification() {
-        if isLoading == true {
-            isLoading = false
-            stopActivityIndicator()
-        }
-        
-        self.containerTableView.reloadData()
+        activityIndicator.stop()
+
+        containerTableView.reloadData()
     }
 
     //MARK: - utils
@@ -160,13 +156,13 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     }
 
     @IBAction func filterButtonAction(_ sender: Any) {
-        if isLoading == false {
+        if eventAccessor.cacheState == .loaded {
             notificationDelegate?.modifyEventFilter()
         }
     }
 
     @IBAction func filterTextButtonAction(_ sender: Any) {
-        if isLoading == false {
+        if eventAccessor.cacheState == .loaded {
             notificationDelegate?.modifyEventFilter()
         }
     }

@@ -10,32 +10,40 @@
 
 import UIKit
 
+class ActivityIndicator {
+    var indicatorVisible = false
 
-func startActivityIndicator(title: String?, message: String?) {
+    func start(title: String?, message: String?) {
+        guard indicatorVisible == false else {
+            return
+        }
+        indicatorVisible = true
+        let presentingController = UIApplication.topViewController()
 
-    let presentingController = UIApplication.topViewController()
-    
-    //create an alert controller
-    let pending = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    
-    //create an activity indicator
-    let indicator = UIActivityIndicatorView(frame: pending.view.bounds)
-    indicator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    
-    //add the activity indicator as a subview of the alert controller's view
-    pending.view.addSubview(indicator)
-    indicator.isUserInteractionEnabled = false // required otherwise if there buttons in the UIAlertController you will not be able to press them
-    indicator.startAnimating()
-  
-    presentingController?.present(pending, animated: true, completion: nil)
+        //create an alert controller
+        let pending = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        //create an activity indicator
+        let indicator = UIActivityIndicatorView(frame: pending.view.bounds)
+        indicator.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+        //add the activity indicator as a subview of the alert controller's view
+        pending.view.addSubview(indicator)
+        indicator.isUserInteractionEnabled = false // required otherwise if there buttons in the UIAlertController you will not be able to press them
+        indicator.startAnimating()
+
+        presentingController?.present(pending, animated: true, completion: nil)
+    }
+
+    func stop() {
+        guard indicatorVisible == true else {
+            return
+        }
+        indicatorVisible = false
+        let presentingController = UIApplication.topViewController()
+        presentingController?.dismiss(animated: true, completion: nil)
+    }
 }
-
-func stopActivityIndicator() {
-    
-    let presentingController = UIApplication.topViewController()
-    presentingController?.dismiss(animated: true, completion: nil)
-}
-
 
 extension UIApplication {
     // can ignore "keyWindow was deprecated in iOS 13.0" warning as we do not use multiple scenes

@@ -25,10 +25,10 @@ final class User: NSObject {
     var locationZip: String = ""
     private var username: String = ""
     private var password: String = ""
-
     private var rememberMe: Bool
     private var loginType: UserAccess?
     private var backendlUser: BackendlessUser? = nil
+    private var activityIndicator = ActivityIndicator()
     static let sharedInstance = User()
 
     override init() {
@@ -53,14 +53,14 @@ final class User: NSObject {
             return
         }
         DispatchQueue.main.async {
-            startActivityIndicator(title: nil, message: "authenticating...")
+            self.activityIndicator.start(title: nil, message: "authenticating...")
         }
 
         Backendless.sharedInstance()?.userService.login(username, password: password, response: { (user: BackendlessUser?) in
             self.backendlUser = user
             self.storeUserCredentials(username: self.username, password: self.password)
 
-            stopActivityIndicator()
+            self.activityIndicator.stop()
 
             // temp
             self.storeUserCredentials (username: "exarchitect", password: "whatever**@^")
@@ -79,7 +79,7 @@ final class User: NSObject {
             self.loginType = .identified
 
             DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 0.5)) {
-                stopActivityIndicator()
+                self.activityIndicator.stop()
                 // temp
                 completion(.authenticated)
             }
