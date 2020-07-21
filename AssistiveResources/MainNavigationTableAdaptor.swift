@@ -75,7 +75,7 @@ class MainNavigationTableAdaptor: NSObject, UITableViewDelegate, UITableViewData
     // debug
     deinit {
         let _ = 0
-        //print("deallocating MainNavigationTableAdaptor")
+        print("deallocating MainNavigationTableAdaptor")
     }
     
 }

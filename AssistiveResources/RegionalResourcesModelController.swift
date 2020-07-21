@@ -49,7 +49,7 @@ class RegionalResourcesModelController: NSObject {
     }
     
     func checkRepositoryUpdate() {
-        regionalRepository?.backgroundUpdate()
+        regionalRepository?.checkNeedUpdate()
     }
 }
 

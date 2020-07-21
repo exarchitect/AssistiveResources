@@ -49,6 +49,9 @@ struct LocationProfile {
         zipCode = zip
         coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
+
+    func matches(zipcode: String) -> Bool {
+        self.zipCode == zipcode    }
 }
 
 

@@ -32,7 +32,6 @@ class NavigationStack: NSObject, Commandable {
     // MARK: - Commandable Protocol
 
     func execute(command: AssistiveCommand) {
-
         switch command {
         case .dismissCurrentProcess:
             guard let currentProcessController = processControllerStack.popLast(), let previousViewController = processControllerStack.last?.primaryViewController else {

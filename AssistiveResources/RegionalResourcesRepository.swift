@@ -86,7 +86,7 @@ class RegionalResourcesRepository: LocalRepository {
         }
 
         let profile = repoProfiles[0]
-        let locationMatch: Bool = (profile.location == self.location?.zipCode)
+        let locationMatch = self.location?.matches (zipcode: profile.location)
         let expireDate = profile.lastUpdated.addingTimeInterval(TimeInterval(kExpirationSeconds))
         let now = Date()
         let dateCompare = now.compare(expireDate)

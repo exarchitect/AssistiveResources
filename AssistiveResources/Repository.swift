@@ -33,7 +33,7 @@ protocol LocalRepository: class {
     func repositoryUpdateNotificationKey() -> String
 
     func load(completion: @escaping RepositoryUpdateCompletionHandlerType)
-    func backgroundUpdate()
+    func checkNeedUpdate()
     func beginRepositoryUpdate()
     func endRepositoryUpdate()
 }
@@ -64,7 +64,7 @@ extension LocalRepository {
         }
     }
 
-    func backgroundUpdate() {
+    func checkNeedUpdate() {
         let repoState = repositoryStateUpdate()
 
         switch repoState {

@@ -8,12 +8,9 @@
 
 import Foundation
 
-
-
 enum NavigationCategory : String {
     case organizations, events, facilities, travel, inbox, profile, news
 }
-
 
 class NavigationCategories: NSObject {
     

@@ -12,3 +12,12 @@ struct Credentials {
     var userName: String
     var password: String
 }
+
+enum LoginResponse {
+    case authenticated, unknown, needCredentials
+}
+
+enum UserAccess {
+    case anonymous, identified, pendingSignup
+}
+

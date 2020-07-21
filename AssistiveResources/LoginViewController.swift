@@ -14,7 +14,7 @@ class LoginViewController: UIViewController, ViewControllable {
     weak var parentProcessController: ProcessController?
     var accessType: UserAccess = .identified
 
-    var authenticationDelegate: AuthenticationHandler? {
+    var authenticator: AuthenticationHandler? {
         parentProcessController as? AuthenticationHandler
     }
 
@@ -44,14 +44,21 @@ class LoginViewController: UIViewController, ViewControllable {
     @IBAction func loginButtonAction(_ sender: Any) {
         switch accessType {
         case .identified:
-            // TODO: need real values
-            authenticationDelegate?.userEnteredCredentials(Credentials(userName: "exarchitect@gmail.com", password: "alongishpassword"))
+            // TODO: need real credential values
+            authenticator?.userEnteredCredentials(Credentials(userName: "exarchitect@gmail.com", password: "alongishpassword"))
         case .pendingSignup:
-            // TODO: need real values
-            authenticationDelegate?.userSignupRequest(credentials: Credentials(userName: "exarchitect@gmail.com", password: "alongishpassword"), location: LocationProfile(zip: "61614"))
+            guard let zipText = zipcodeTextField.text, Int(zipText) != nil, zipText.count == 5 else {
+                // warn invalid zip
+                return
+            }
+            // TODO: need real credential values
+            authenticator?.userSignupRequest(credentials: Credentials(userName: "exarchitect@gmail.com", password: "alongishpassword"), location: LocationProfile(zip: zipText))
         case .anonymous:
-            // TODO: need real values
-            authenticationDelegate?.userGuestAccessRequest(location: LocationProfile(zip: "61614"))
+            guard let zipText = zipcodeTextField.text, Int(zipText) != nil, zipText.count == 5 else {
+                // warn invalid zip
+                return
+            }
+            authenticator?.userGuestAccessRequest(location: LocationProfile(zip: zipText))
         }
     }
 

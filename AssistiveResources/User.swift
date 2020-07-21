@@ -9,14 +9,6 @@
 import UIKit
 
 
-enum LoginResponse {
-    case authenticated, unknown, needCredentials
-}
-
-enum UserAccess {
-    case anonymous, identified, pendingSignup
-}
-
 typealias LoginCompletionHandlerType = (_ loginResult: LoginResponse) -> Void
 
 final class User: NSObject {

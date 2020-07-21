@@ -10,28 +10,27 @@ import UIKit
 import SwiftDate
 
 class RegionalResourcesRemoteDatasource: RemoteDatasource {
-    
     var isRetrievingData: Bool = false
 
     func validateConnection() {
         let _ = 3
     }
-    
+
     func pull(completion: @escaping RemoteDataRetrievalCompletionType) {
         isRetrievingData = true
-        
+
         // remote call to retrieve data
-        
+
         DispatchQueue.main.asyncAfter(deadline: (DispatchTime.now() + 4.0)) {
             self.isRetrievingData = false
             completion(true)
         }
     }
-    
+
     func getEvents() -> [SPNEvent] {
         return testEvents()
     }
-    
+
     func getOrganizations() -> [SPNOrganization] {
         return testOrganizations()
     }
