@@ -20,15 +20,14 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
 
     @IBOutlet weak var containerTableView: UITableView!
 
-    weak private var notificationDelegate:OrganizationListContainerNotificationProtocol?
+    weak private var notificationDelegate: OrganizationListContainerNotificationProtocol?
     private var expandedRowIndex = -1
     private var organizationAccessor: OrganizationCacheAccessor!
-    private var activityIndicator = ActivityIndicator()
+    private var activityIndicator = ActivityIndicatorAlert()
 
     //MARK: - INHERITED
     
     func configuration(rsrcModelController: RegionalResourcesModelController, delegate: OrganizationListContainerNotificationProtocol) {
-        
         self.notificationDelegate = delegate
 
         self.organizationAccessor = rsrcModelController.createOrganizationAccessor(delegate: self)
@@ -44,9 +43,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        precondition(self.notificationDelegate != nil)
-        
+
         self.containerTableView.delegate = self
         self.containerTableView.dataSource = self
         

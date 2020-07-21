@@ -8,11 +8,13 @@
 
 import UIKit
 
-protocol AuthenticationProtocol: class {
-    func userEnteredCredentials (loginType: UserAccess, credentials: Credentials)
+protocol AuthenticationHandler: class {
+    func userEnteredCredentials(_ credentials: Credentials)
+    func userSignupRequest(credentials: Credentials, location: LocationProfile)
+    func userGuestAccessRequest(location: LocationProfile)
 }
 
-class AuthenticationProcessController: ProcessController, AuthenticationProtocol {
+class AuthenticationProcessController: ProcessController, AuthenticationHandler {
     
     override func createPrimaryViewController() -> UIViewController? {
         let primaryViewController = instantiateProcessViewController(storyboardName: "AuthenticationProcess", storyboardID: "LoginStoryboardID")
@@ -20,10 +22,9 @@ class AuthenticationProcessController: ProcessController, AuthenticationProtocol
         return primaryViewController
     }
 
-    // MARK:- AuthenticationCoordinatorProtocol
+    // MARK:- AuthenticationHandler
     
-    func userEnteredCredentials (loginType: UserAccess, credentials: Credentials) {
-
+    func userEnteredCredentials (_ credentials: Credentials) {
         sharedServices.userModel.validateCredentials(completion: { loginResult in
             switch loginResult {
             case .authenticated:
@@ -40,8 +41,19 @@ class AuthenticationProcessController: ProcessController, AuthenticationProtocol
             }
         })
     }
-    
-    
+
+    func userSignupRequest(credentials: Credentials, location: LocationProfile) {
+        // TODO - implement
+        userEnteredCredentials (credentials)
+    }
+
+    func userGuestAccessRequest(location: LocationProfile) {
+        // TODO - ?
+        print("guest access")
+        self.commandHandler.execute(command: .userSuccessfullyIdentified)
+        self.commandHandler.execute(command: .dismissCurrentProcess)
+    }
+
     //MARK:- debug
     
     deinit {

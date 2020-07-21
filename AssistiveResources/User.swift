@@ -28,7 +28,7 @@ final class User: NSObject {
     private var rememberMe: Bool
     private var loginType: UserAccess?
     private var backendlUser: BackendlessUser? = nil
-    private var activityIndicator = ActivityIndicator()
+    private var activityIndicator = ActivityIndicatorAlert()
     static let sharedInstance = User()
 
     override init() {

@@ -10,7 +10,7 @@
 
 import UIKit
 
-class ActivityIndicator {
+class ActivityIndicatorAlert {
     var indicatorVisible = false
 
     func start(title: String?, message: String?) {

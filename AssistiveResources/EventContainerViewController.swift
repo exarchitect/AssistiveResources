@@ -24,7 +24,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     private var expandedRowIndex = -1
     private var eventAccessor: EventCacheAccessor!
     private var filter: FilterDictionary?
-    private var activityIndicator = ActivityIndicator()
+    private var activityIndicator = ActivityIndicatorAlert()
 
     func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
 
