@@ -9,14 +9,14 @@
 import UIKit
 
 
-protocol EventFilterResponseProtocol: class {
+protocol EventFilterResponse: class {
     func okFilterButtonAction(filter: FilterDictionary)
     func cancelFilterButtonAction()
 }
 
 class EventFilterViewController: UIViewController {
 
-    weak private var selectorDelegate:EventFilterResponseProtocol!
+    weak private var selectorDelegate:EventFilterResponse!
     weak private var resourcesModelController:RegionalResourcesModelController?
     var filter:FilterDictionary?
 
@@ -26,7 +26,7 @@ class EventFilterViewController: UIViewController {
 
     @IBOutlet weak var filterTableViewOutlet: UITableView!
     
-    func configuration(resources: RegionalResourcesModelController?, selectorDelegate: EventFilterResponseProtocol, filter: FilterDictionary) {
+    func configuration(resources: RegionalResourcesModelController?, selectorDelegate: EventFilterResponse, filter: FilterDictionary) {
         self.selectorDelegate = selectorDelegate
         self.resourcesModelController = resources
         self.filter = filter

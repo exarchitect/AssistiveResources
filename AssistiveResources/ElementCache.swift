@@ -12,8 +12,8 @@ import UIKit
 
 typealias Cacheable = Identifiable
 
-protocol CacheUpdateProtocol: class {
-    func cacheUpdateNotification()
+protocol CacheUpdateNotification: class {
+    func cacheUpdated()
 }
 
 enum CacheState {

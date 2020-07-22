@@ -10,24 +10,24 @@ import UIKit
 
 
 
-protocol OrganizationListContainerNotificationProtocol: class {
+protocol OrganizationSelectionNotification: class {
     func showOrganizationDetail(for descriptor: OrganizationDescriptor)
     func modifyOrganizationFilter()
 }
 
 
-class OrganizationContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CacheUpdateProtocol {
+class OrganizationContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CacheUpdateNotification {
 
     @IBOutlet weak var containerTableView: UITableView!
 
-    weak private var notificationDelegate: OrganizationListContainerNotificationProtocol?
+    weak private var notificationDelegate: OrganizationSelectionNotification?
     private var expandedRowIndex = -1
     private var organizationAccessor: OrganizationCacheAccessor!
     private var activityIndicator = ActivityIndicatorAlert()
 
     //MARK: - INHERITED
     
-    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: OrganizationListContainerNotificationProtocol) {
+    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: OrganizationSelectionNotification) {
         self.notificationDelegate = delegate
 
         self.organizationAccessor = rsrcModelController.createOrganizationAccessor(delegate: self)
@@ -73,7 +73,7 @@ class OrganizationContainerViewController: UIViewController, UITableViewDelegate
     
     // MARK: - REPOSITORY ACCESSOR PROTOCOL
     
-    func cacheUpdateNotification() {
+    func cacheUpdated() {
         activityIndicator.stop()
         containerTableView.reloadData()
     }

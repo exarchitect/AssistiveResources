@@ -9,7 +9,7 @@
 import UIKit
 
 
-class EventDetailViewController: UIViewController, ViewControllable, CacheUpdateProtocol {
+class EventDetailViewController: UIViewController, ViewControllable, CacheUpdateNotification {
 
     weak var parentProcessController: ProcessController?
 
@@ -36,7 +36,7 @@ class EventDetailViewController: UIViewController, ViewControllable, CacheUpdate
         print("deallocating eventdetailVC")
     }
 
-    func cacheUpdateNotification() {
+    func cacheUpdated() {
         // TODO
     }
     

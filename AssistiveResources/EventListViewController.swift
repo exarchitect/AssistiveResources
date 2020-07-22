@@ -10,7 +10,7 @@ import UIKit
 
 
 
-class EventListViewController: UIViewController, ViewControllable, EventListContainerNotificationProtocol, EventFilterResponseProtocol {
+class EventListViewController: UIViewController, ViewControllable, EventSelectionNotification, EventFilterResponse {
 
     weak var parentProcessController: ProcessController?
 
@@ -70,7 +70,7 @@ class EventListViewController: UIViewController, ViewControllable, EventListCont
         containerViewController?.setFilter(fltr: filterDict)
     }
 
-    //MARK: - EventListContainerNotificationProtocol delegate
+    //MARK: - EventSelectionNotification delegate
     
     func showEventDetail(for descriptor: EventDescriptor) {
         execute(command: .showEventDetail(descriptor))
@@ -86,7 +86,7 @@ class EventListViewController: UIViewController, ViewControllable, EventListCont
         }
     }
     
-    //MARK: - EventFilterResponseProtocol delegate
+    //MARK: - EventFilterResponse delegate
 
     func okFilterButtonAction(filter:FilterDictionary) {
         filterDict = filter

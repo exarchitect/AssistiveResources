@@ -9,7 +9,7 @@
 import UIKit
 
 
-class OrganizationListViewController: UIViewController, ViewControllable, OrganizationListContainerNotificationProtocol {
+class OrganizationListViewController: UIViewController, ViewControllable, OrganizationSelectionNotification {
 
     weak var parentProcessController: ProcessController?
 

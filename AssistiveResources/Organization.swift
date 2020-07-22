@@ -18,7 +18,7 @@ enum GeographicScope : Int {
     case all = 0, global = 1, national = 2, regional = 3, local = 4
 }
 
-protocol OrganizationSearchProtocol {
+protocol OrganizationSearchable {
     func matchOrganizationID (cityName: String, regionName: String, postalCode: String, countryCode: ISOCountryCode) -> Int     // regionName=State in US
 }
 

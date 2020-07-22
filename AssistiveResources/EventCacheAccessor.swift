@@ -12,11 +12,11 @@ import RealmSwift
 class EventCacheAccessor: ElementCache {
     var cachedElements: [SPNEvent]?
     weak var repository: LocalRepository?
-    weak var delegate: CacheUpdateProtocol?
+    weak var cacheObserver: CacheUpdateNotification?
 
-    init (repository: LocalRepository, delegate: CacheUpdateProtocol) {
+    init (repository: LocalRepository, delegate: CacheUpdateNotification) {
         self.repository = repository
-        self.delegate = delegate
+        self.cacheObserver = delegate
 
         let notificationkey = repository.repositoryUpdateNotificationKey()
         NotificationCenter.default.addObserver(self, selector: #selector(self.repositoryUpdateNotification), name: NSNotification.Name(rawValue: notificationkey), object: nil)
@@ -29,7 +29,7 @@ class EventCacheAccessor: ElementCache {
     @objc func repositoryUpdateNotification() {
         let needProfile = FilterDictionary()
         loadCache(using: needProfile)
-        delegate?.cacheUpdateNotification()
+        cacheObserver?.cacheUpdated()
     }
 
     internal func loadCache(using filter: FilterDictionary) {

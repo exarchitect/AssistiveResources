@@ -9,24 +9,24 @@
 import UIKit
 
 
-protocol EventListContainerNotificationProtocol: class {
+protocol EventSelectionNotification: class {
     func showEventDetail(for descriptor: EventDescriptor)
     func modifyEventFilter()
 }
 
 
-class EventContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CacheUpdateProtocol {
+class EventContainerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CacheUpdateNotification {
 
     @IBOutlet weak var containerTableView: UITableView!
     @IBOutlet weak var filterValueDescriptionLabelOutlet: UILabel?
 
-    weak private var notificationDelegate:EventListContainerNotificationProtocol?
+    weak private var notificationDelegate:EventSelectionNotification?
     private var expandedRowIndex = -1
     private var eventAccessor: EventCacheAccessor!
     private var filter: FilterDictionary?
     private var activityIndicator = ActivityIndicatorAlert()
 
-    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventListContainerNotificationProtocol) {
+    func configuration(rsrcModelController: RegionalResourcesModelController, delegate: EventSelectionNotification) {
 
         notificationDelegate = delegate
         guard let eventAccessor = rsrcModelController.createEventAccessor(delegate: self) else {
@@ -79,7 +79,7 @@ class EventContainerViewController: UIViewController, UITableViewDelegate, UITab
     
     //MARK: - CacheUpdateProtocol
     
-    func cacheUpdateNotification() {
+    func cacheUpdated() {
         activityIndicator.stop()
 
         containerTableView.reloadData()
