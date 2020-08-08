@@ -147,6 +147,9 @@ extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource 
                     return
                 }
                 self.configHeaderCell(cell: headerCell, section: indexPath.section)
+                self.filterItems[indexPath.section].editInProgress = false
+                self.tableView?.beginUpdates()
+                self.tableView?.endUpdates()
             }
         }
     }
