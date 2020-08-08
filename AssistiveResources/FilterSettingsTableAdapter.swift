@@ -51,9 +51,9 @@ extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource 
             
         } else {
             // row for selecting a filter item
-            let isSelectedRow = filterItems[indexPath.section].element.isValueSelected(rawValue: indexPath.row.convertToEnum())
+            let isSelectedRow = filterItems[indexPath.section].element.isValueSelected(rawValue: indexPath.row.convertToFilterEnum())
             let cell: FilterTableRowCell = tableView.dequeueReusableCell(withIdentifier: "FilterRowCellIdentifier") as! FilterTableRowCell
-            cell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.convertToEnum()), isChecked: isSelectedRow)
+            cell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.convertToFilterEnum()), isChecked: isSelectedRow)
             return cell
         }
     }
@@ -88,7 +88,7 @@ extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource 
 
         // update rows
         if indexPath.row > 0 {
-            filterItems[indexPath.section].element.toggleSelection(rawValue: indexPath.row.convertToEnum())
+            filterItems[indexPath.section].element.toggleSelection(rawValue: indexPath.row.convertToFilterEnum())
             updateSectionCheckmarks(for: indexPath.section)
 
             // update header with selection
@@ -105,7 +105,7 @@ extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource 
 
         // update rows
         if indexPath.row > 0 {
-            filterItems[indexPath.section].element.toggleSelection(rawValue: indexPath.row.convertToEnum())
+            filterItems[indexPath.section].element.toggleSelection(rawValue: indexPath.row.convertToFilterEnum())
             updateSectionCheckmarks(for: indexPath.section)
 
             // update header with selection
@@ -138,7 +138,7 @@ extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource 
                 guard let rowCell = self.tableView?.cellForRow(at: indexPath) as? FilterTableRowCell else {
                     return
                 }
-                rowCell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.convertToEnum()))
+                rowCell.configure(text: self.filterItems[indexPath.section].summaryText(rawValue: indexPath.row.convertToFilterEnum()))
                 self.updateSectionCheckmarks(for: indexPath.section)
 
                 // update header with selection
@@ -148,7 +148,7 @@ extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource 
                 }
                 self.configHeaderCell(cell: headerCell, section: indexPath.section)
                 self.filterItems[indexPath.section].editInProgress = false
-                self.tableView?.beginUpdates()
+                self.tableView?.beginUpdates()      // needed to auto-close the date row
                 self.tableView?.endUpdates()
             }
         }
@@ -178,7 +178,7 @@ extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource 
     private func updateSectionCheckmarks(for section: Int) {
         let rowCount = filterItems[section].editableRowCount
         for rowIndex in 1 ... rowCount {
-            let isSelected = filterItems[section].element.isValueSelected(rawValue: rowIndex.convertToEnum())
+            let isSelected = filterItems[section].element.isValueSelected(rawValue: rowIndex.convertToFilterEnum())
             guard let cell: FilterTableRowCell = tableView?.cellForRow(at: IndexPath(row: rowIndex, section: section)) as? FilterTableRowCell else {
                 return
             }
@@ -189,7 +189,7 @@ extension EventFilterViewController: UITableViewDelegate, UITableViewDataSource 
 }
 
 extension Int {
-    func convertToEnum() -> Int {
+    func convertToFilterEnum() -> Int {
         self - 1
     }
 }
@@ -198,8 +198,6 @@ extension EventFilterViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 
     func selectMonthYearOfBirth(dobMonth: Int, dobYear: Int, closure: @escaping (_ dobMonth: Int?, _ dobYear: Int?) -> Void) {
         let alert = UIAlertController(title: "Select Birth Month and Year", message: "\n\n\n\n\n\n", preferredStyle: .alert)
-        //alert.isModalInPopover = true
-
         let picker = UIPickerView(frame: CGRect(x: 5, y: 30, width: 250, height: 140))
 
         alert.view.addSubview(picker)
